@@ -137,16 +137,25 @@ alias kc="$EDITOR ~/.config/sxhkd/sxhkdrc"
 alias zc="$EDITOR ~/.zshrc"
 alias oc="$EDITOR ~/.oh-my-zsh"
 
+# YADM alias
+alias yaa="yadm add"
+alias yac="yadm commit"
+alias yas="yadm status"
+alias yapush="yadm push origin main"
+alias yapull="yadm pull origin main"
+
 # Programming
 alias py='python3'
 alias npm='pnpm'
+alias vi="nvim"
 
 # Server
 alias sl="ssh wittano@${SERVER_IP}"
 alias re='sudo sshfs -o allow_other wittanosftp@192.168.10.160:/ /mnt/remote'
+
 # Utils
 alias cl="sudo poweroff"
 alias xc='xprop | grep CLASS'
-alias ya='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
+alias yta='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
 alias red='redshift -l 51.2181945:22.5546776'
 alias cld='bash $HOME/project/bash/cleanDocker.sh'
