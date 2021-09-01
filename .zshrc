@@ -115,9 +115,11 @@ fi
 
 # Void linux
 if [ -n "$(command -v xbps-install)" ]; then
-    alias xq='sudo xbps-query -R'
+    alias xq='xbps-query -R'
     alias xi='sudo xbps-install -S'
-    alias xu='sudo xbps-install -Su'
+    alias xiu='sudo xbps-install -Su'
+    alias xr='sudo xbps-remove'
+    alias xro='sudo xbps-remove -Oo'
 fi
 
 # Config shotcuts
