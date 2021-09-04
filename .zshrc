@@ -47,7 +47,7 @@ export UPDATE_ZSH_DAYS=7
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -159,3 +159,4 @@ alias xc='xprop | grep CLASS'
 alias yta='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
 alias red='redshift -l 51.2181945:22.5546776'
 alias cld='bash $HOME/project/bash/cleanDocker.sh'
+alias ra='ranger'
