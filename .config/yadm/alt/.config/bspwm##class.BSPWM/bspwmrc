@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Global variables
+HOSTNAME=$(cat /etc/hostname)
+
 # Functions
 function is_run(){
   echo $(ps x | awk '{print $5}' | grep $1)
@@ -12,15 +15,17 @@ if [ ! $KEYMAP -eq 'pl' ]; then
 fi
 
 # Keymap
-sxhkd &
+if [ -z $(is_run sxhkd) ]; then
+  sxhkd &
+fi
 
 # Startup
 wmname compiz &
 nitrogen --restore &
-emacs --daemon &
+qutebrowser &
 
-if [ -z $(is_run qutebrowser) ]; then
-  qutebrowser &
+if [ -z $(is_run emacs) ];then
+  emacs --daemon &
 fi
 
 if [ -z $(is_run syncthing) ]; then
@@ -35,12 +40,16 @@ MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l
 
 # Polybar
 if [ -z $(is_run polybar) ]; then
-  if type "xrandr"; then
+  if [ $MONITOR_COUNT -gt 1 ]; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
       MONITOR=$m polybar wittano &
     done
   else
-    polybar wittano &
+    if [ $HOSTNAME='wittano-laptop' ]; then
+      polybar laptop &
+    else
+      polybar wittano &
+    fi
   fi
 fi
 
@@ -50,7 +59,6 @@ if [ $MONITOR_COUNT -gt 1 ]; then
   bspc monitor HDMI-0 -d chat www doc
 else
   bspc monitor -d I II III IV V VI VII VIII IX X
-  # bspc monitor eDP1 -d I II III IV V VI VII VIII IX X
 fi
 
 bspc config border_width          2
