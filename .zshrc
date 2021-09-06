@@ -156,7 +156,7 @@ alias re='sudo sshfs -o allow_other wittanosftp@192.168.10.160:/ /mnt/remote'
 # Utils
 alias cl="sudo poweroff"
 alias xc='xprop | grep CLASS'
-alias yta='youtube-dl -x --audio-format mp3 --prefer-ffmpeg'
+alias yta='youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'
 alias red='redshift -l 51.2181945:22.5546776'
 alias cld='bash $HOME/project/bash/cleanDocker.sh'
 alias ra='ranger'
