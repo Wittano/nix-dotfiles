@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+
+# Functions
+function is_run(){
+  echo $(ps x | awk '{print $5}' | grep $1)
+}
 
 KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
 
@@ -13,19 +18,23 @@ sxhkd &
 wmname compiz &
 nitrogen --restore &
 emacs --daemon &
-qutebrowser &
-syncthing -no-browser &
 
-REDSHIFT_ACTIVE=$(ps x | awk '{print $5}' | grep redshift)
-if [ -z $REDSHIFT_ACTIVE ]; then
+if [ -z $(is_run qutebrowser) ]; then
+  qutebrowser &
+fi
+
+if [ -z $(is_run syncthing) ]; then
+  syncthing -no-browser &
+fi
+
+if [ -z $(is_run redshift) ]; then
   redshift -m randr -l 51.919438:19.145136 &
 fi
 
 MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
-POLYBAR_ACTIVE=$(ps x | awk '{print $5}' | grep polybar)
 
 # Polybar
-if [ -z $POLYBAR_ACTIVE ]; then
+if [ -z $(is_run polybar) ]; then
   if type "xrandr"; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
       MONITOR=$m polybar wittano &
