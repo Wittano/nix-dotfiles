@@ -2,19 +2,20 @@
 
 # Global variables
 HOSTNAME=$(cat /etc/hostname)
+MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
 
 # Functions
 function is_run(){
   echo $(ps x | awk '{print $5}' | grep $1)
 }
 
-KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
 
+# Keymap
+KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
 if [ ! $KEYMAP -eq 'pl' ]; then
   setxkbmap pl
 fi
 
-# Keymap
 if [ -z $(is_run sxhkd) ]; then
   sxhkd &
 fi
@@ -35,8 +36,6 @@ fi
 if [ -z $(is_run redshift) ]; then
   redshift -m randr -l 51.919438:19.145136 &
 fi
-
-MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
 
 # Polybar
 if [ -z $(is_run polybar) ]; then
