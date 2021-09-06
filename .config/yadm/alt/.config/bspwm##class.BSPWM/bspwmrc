@@ -1,5 +1,11 @@
 #!/bin/sh
 
+KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
+
+if [ ! $KEYMAP -eq 'pl' ]; then
+  setxkbmap pl
+fi
+
 # Keymap
 sxhkd &
 
