@@ -5,15 +5,17 @@ sxhkd &
 
 # Startup
 wmname compiz &
-redshift -m randr -l 51.919438:19.145136 &
-# redshift &
-# feh --bg-scale /usr/share/backgrounds/wallpaper-bspwm.jpg
 nitrogen --restore &
 emacs --daemon &
 qutebrowser &
 syncthing -no-browser &
 
-MONITOR_COUNT=$(xrandr --query | grep 'connected' | cut -d " " -f1 | wc -l)
+REDSHIFT_ACTIVE=$(ps x | awk '{print $5}' | grep redshift)
+if [ -z $REDSHIFT_ACTIVE ]; then
+  redshift -m randr -l 51.919438:19.145136 &
+fi
+
+MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
 POLYBAR_ACTIVE=$(ps x | awk '{print $5}' | grep polybar)
 
 # Polybar
@@ -32,7 +34,8 @@ if [ $MONITOR_COUNT -gt 1 ]; then
   bspc monitor DVI-D-0 -d dev www sys music mail game
   bspc monitor HDMI-0 -d chat www doc
 else
-  bspc monitor -d dev www sys music mail virt chat doc
+  bspc monitor -d I II III IV V VI VII VIII IX X
+  # bspc monitor eDP1 -d I II III IV V VI VII VIII IX X
 fi
 
 bspc config border_width          2
