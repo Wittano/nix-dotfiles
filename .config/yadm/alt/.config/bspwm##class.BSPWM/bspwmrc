@@ -83,6 +83,7 @@ fi
 bspc rule -a Emacs desktop='^1' state=fullscreen
 bspc rule -a Terminator desktop='^3'
 bspc rule -a jetbrains-idea desktop='^1'
+bspc rule -a jetbrains-toolbox desktop='^1'
 bspc rule -a discord desktop=$DISCORD_WORKSPACE
 bspc rule -a "Rhythmbox" desktop='^4'
 bspc rule -a Chromium desktop='^2'
