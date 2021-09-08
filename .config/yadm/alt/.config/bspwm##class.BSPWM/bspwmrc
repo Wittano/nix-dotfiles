@@ -33,9 +33,7 @@ if [ -z $(is_run syncthing) ]; then
   syncthing -no-browser &
 fi
 
-if [ -z $(is_run redshift) ]; then
-  redshift -m randr -l 51.919438:19.145136 &
-fi
+redshift -m randr -l 51.919438:19.145136 &
 
 # Polybar
 if [ -z $(is_run polybar) ]; then
