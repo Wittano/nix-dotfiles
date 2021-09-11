@@ -42,7 +42,7 @@ if [ -z $(is_run polybar) ]; then
       MONITOR=$m polybar wittano &
     done
   else
-    if [ $HOSTNAME='wittano-laptop' ]; then
+    if [ $HOSTNAME -eq 'wittano-laptop' ]; then
       polybar laptop &
     else
       polybar wittano &

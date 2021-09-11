@@ -36,6 +36,9 @@ super + e
 super + q
 	i3lock-fancy
 
+super + shift + q
+	  bash $HOME/projects/scripts/closeMenu.sh
+
 #
 # bspwm hotkeys
 #
