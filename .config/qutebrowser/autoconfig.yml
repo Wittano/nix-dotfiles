@@ -10,7 +10,10 @@ settings:
     global: '#434569'
   colors.tabs.selected.odd.bg:
     global: '#212337'
-  content.notifications:
+  content.geolocation:
+    https://helion.pl: false
+    https://www.o2.pl: false
+  content.notifications.enabled:
     https://www.reddit.com: false
   downloads.position:
     global: bottom
