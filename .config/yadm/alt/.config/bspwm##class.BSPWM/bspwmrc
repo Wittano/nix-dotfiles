@@ -99,6 +99,7 @@ bspc rule -a "Tor Browser" desktop='^2'
 bspc rule -a "jetbrains-webstorm" desktop='^1'
 bspc rule -a "jetbrains-pycharm" desktop='^1'
 bspc rule -a "Postman" desktop='^3'
+bspc rule -a "Signal" desktop='^7'
 
 
 # Games
