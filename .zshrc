@@ -147,7 +147,7 @@ alias yapull="yadm pull origin main"
 # Programming
 alias py='python3'
 alias npm='pnpm'
-alias vi="nvim"
+alias vi="vim"
 
 # Server
 alias sl="ssh wittano@${SERVER_IP}"
