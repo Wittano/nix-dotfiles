@@ -9,7 +9,6 @@ function is_run(){
   echo $(ps x | awk '{print $5}' | grep $1)
 }
 
-
 # Keymap
 KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
 if [ ! $KEYMAP -eq 'pl' ]; then
@@ -33,21 +32,19 @@ if [ -z $(is_run syncthing) ]; then
   syncthing -no-browser &
 fi
 
-redshift -m randr -l 51.919438:19.145136 &
+if [ -z $(is_run redshift) ]; then
+	redshift -m randr -l 51.919438:19.145136 &
+fi
 
 # Polybar
 if [ -z $(is_run polybar) ]; then
-  if [ $MONITOR_COUNT -gt 1 ]; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-      MONITOR=$m polybar wittano &
+    	if [ $HOSTNAME == 'wittano-laptop' ]; then
+    		MONITOR=$m polybar laptop &
+    	else
+      		MONITOR=$m polybar wittano &
+    	fi
     done
-  else
-    if [ $HOSTNAME -eq 'wittano-laptop' ]; then
-      MONITOR=eDP1 polybar laptop &
-    else
-      polybar wittano &
-    fi
-  fi
 fi
 
 # BSPWM config
