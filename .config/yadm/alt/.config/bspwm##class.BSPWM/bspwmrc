@@ -43,7 +43,7 @@ if [ -z $(is_run polybar) ]; then
     done
   else
     if [ $HOSTNAME -eq 'wittano-laptop' ]; then
-      polybar laptop &
+      MONITOR=eDP1 polybar laptop &
     else
       polybar wittano &
     fi
@@ -55,7 +55,7 @@ if [ $MONITOR_COUNT -gt 1 ]; then
   bspc monitor DVI-D-0 -d dev www sys music mail game
   bspc monitor HDMI-0 -d chat www doc
 else
-  bspc monitor -d I II III IV V VI VII VIII IX X
+  bspc monitor -d dev www sys music mail game chat www doc
 fi
 
 bspc config border_width          2
