@@ -20,7 +20,11 @@ wmname compiz &
 nitrogen --restore &
 qutebrowser &
 
-if [ -z $(is_run emacs) ] && [ -n $(command -v emacs) ];then
+if [ $HOSTNAME == 'wittano-laptop' ]; then
+	xbacklight -set 50
+fi
+
+if [ -z $(is_run emacs) ];then
   emacs --daemon &
 fi
 
