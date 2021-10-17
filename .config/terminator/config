@@ -1,113 +1,31 @@
 [global_config]
-  handle_size = 20
-  extra_styling = False
-  inactive_color_offset = 1.0
-  enabled_plugins = TestPlugin, TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, MavenPluginURLHandler, LaunchpadBugURLHandler
-  always_split_with_profile = True
-  title_use_system_font = False
-  title_font = Noto Sans 12
+  enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, TerminatorThemes
 [keybindings]
 [profiles]
   [[default]]
-    icon_bell = False
-    cursor_blink = False
     cursor_color = "#aaaaaa"
-    font = Monospace 16.8291015625
+    font = Monospace 14
     show_titlebar = False
     scrollbar_position = hidden
-    custom_command = neofetch
     use_system_font = False
-  [[Atom]]
-    icon_bell = False
-    background_color = "#161719"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#d0d0d0"
-    font = Monospace 16.8291015625
-    foreground_color = "#c5c8c6"
+  [[Halcyon]]
+    background_color = "#171c28"
+    cursor_color = "#5ccfe6"
+    font = Monospace 14
+    foreground_color = "#d7dce2"
     show_titlebar = False
     scrollbar_position = hidden
-    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
-    custom_command = neofetch
-    use_system_font = False
-  [[Gruvbox Dark]]
-    icon_bell = False
-    background_color = "#1e1e1e"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#bbbbbb"
-    font = Monospace 16.8291015625
-    foreground_color = "#e6d4a3"
-    show_titlebar = False
-    scrollbar_position = hidden
-    palette = "#161819:#f73028:#aab01e:#f7b125:#719586:#c77089:#7db669:#faefbb:#7f7061:#be0f17:#868715:#cc881a:#377375:#a04b73:#578e57:#e6d4a3"
-    custom_command = neofetch
+    palette = "#1d2433:#ef6b73:#bae67e:#ffd580:#6679a4:#c3a6ff:#5ccfe6:#d7dce2:#1d2433:#ef6b73:#bae67e:#ffd580:#6679a4:#c3a6ff:#5ccfe6:#d7dce2"
     use_system_font = False
   [[Night Owl]]
-    icon_bell = False
     background_color = "#011627"
-    cursor_blink = False
-    cursor_shape = ibeam
     cursor_color = "#80a4c2"
     cursor_color_fg = False
-    font = Monospace 16.8291015625
+    font = Monospace 14
     foreground_color = "#d6deeb"
     show_titlebar = False
     scrollbar_position = hidden
     palette = "#2e3436:#ef5350:#80cbc4:#ffeb95:#82aaff:#c792ea:#addb67:#d3d7cf:#555753:#ef5350:#80cbc4:#ffeb95:#82aaff:#c792ea:#addb67:#eeeeec"
-    custom_command = neofetch
-    use_system_font = False
-  [[Nord]]
-    icon_bell = False
-    background_color = "#2E3440"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#D8DEE9"
-    font = Monospace 16.8291015625
-    foreground_color = "#D8DEE9"
-    show_titlebar = False
-    scrollbar_position = hidden
-    palette = "#3b4252:#bf616a:#a3be8c:#ebcb8b:#81a1c1:#b48ead:#88c0d0:#e5e9f0:#4c566a:#bf616a:#a3be8c:#ebcb8b:#81a1c1:#b48ead:#8fbcbb:#eceff4"
-    custom_command = neofetch
-    use_system_font = False
-  [[Ocean dark]]
-    icon_bell = False
-    background_color = "#1c1f27"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#a0a4b2"
-    font = Monospace 16.8291015625
-    foreground_color = "#979cac"
-    show_titlebar = False
-    scrollbar_position = hidden
-    palette = "#4F4F4F:#AF4B57:#AFD383:#E5C079:#7D90A4:#A4799D:#85A6A5:#EEEDEE:#7B7B7B:#AF4B57:#CEFFAB:#FFFECC:#B5DCFE:#FB9BFE:#DFDFFD:#FEFFFE"
-    custom_command = neofetch
-    use_system_font = False
-  [[Spacedust]]
-    icon_bell = False
-    background_color = "#0a1e24"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#708284"
-    font = Monospace 16.8291015625
-    foreground_color = "#ecf0c1"
-    show_titlebar = False
-    scrollbar_position = hidden
-    palette = "#6e5346:#e35b00:#5cab96:#e3cd7b:#0f548b:#e35b00:#06afc7:#f0f1ce:#684c31:#ff8a3a:#aecab8:#ffc878:#67a0ce:#ff8a3a:#83a7b4:#fefff1"
-    custom_command = neofetch
-    use_system_font = False
-  [[Violet Dark]]
-    icon_bell = False
-    background_color = "#1c1d1f"
-    cursor_blink = False
-    cursor_shape = ibeam
-    cursor_color = "#708284"
-    font = Monospace 16.8291015625
-    foreground_color = "#708284"
-    show_titlebar = False
-    scrollbar_position = hidden
-    palette = "#56595c:#c94c22:#85981c:#b4881d:#2e8bce:#d13a82:#32a198:#c9c6bd:#45484b:#bd3613:#738a04:#a57705:#2176c7:#c61c6f:#259286:#c9c6bd"
-    custom_command = neofetch
     use_system_font = False
 [layouts]
   [[default]]
@@ -115,17 +33,17 @@
       type = Window
       parent = ""
       order = 0
-      position = 20:52
+      position = 12:44
       maximised = False
       fullscreen = False
-      size = 964, 1004
-      title = wittano@witkonix: ~
-      last_active_term = 80c5857d-b0e1-4822-972c-4a9f5811c15b
+      size = 976, 1020
+      title = wittano@wittano-pc:~
+      last_active_term = 68775d66-d664-4291-994a-0d03707672cd
       last_active_window = False
     [[[terminal1]]]
       type = Terminal
       parent = child0
       order = 0
-      profile = Night Owl
-      uuid = 80c5857d-b0e1-4822-972c-4a9f5811c15b
+      profile = Halcyon
+      uuid = 68775d66-d664-4291-994a-0d03707672cd
 [plugins]
