@@ -3,7 +3,6 @@
 # Global variables
 HOSTNAME=$(cat /etc/hostname)
 MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
-
 # Functions
 function is_run(){
   echo $(ps x | awk '{print $5}' | grep $1)
@@ -49,8 +48,8 @@ fi
 
 # BSPWM config
 if [ $MONITOR_COUNT -gt 1 ]; then
-  bspc monitor DVI-D-0 -d dev www sys music mail game
-  bspc monitor HDMI-0 -d chat www doc
+  bspc monitor DVI-D-1 -d dev www sys music mail game
+  bspc monitor HDMI-1 -d chat www doc
 else
   bspc monitor -d dev www sys music mail game chat www doc
 fi

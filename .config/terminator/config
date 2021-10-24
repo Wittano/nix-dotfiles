@@ -44,6 +44,6 @@
       type = Terminal
       parent = child0
       order = 0
-      profile = Halcyon
+      profile = Night Owl
       uuid = 68775d66-d664-4291-994a-0d03707672cd
 [plugins]
