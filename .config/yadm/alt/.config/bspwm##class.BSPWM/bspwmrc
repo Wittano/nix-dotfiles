@@ -48,8 +48,8 @@ fi
 
 # BSPWM config
 if [ $MONITOR_COUNT -gt 1 ]; then
-  bspc monitor DVI-D-1 -d dev www sys music mail game
-  bspc monitor HDMI-1 -d chat www doc
+  bspc monitor DVI-D-0 -d dev www sys music mail game
+  bspc monitor HDMI-0 -d chat www doc
 else
   bspc monitor -d dev www sys music mail game chat www doc
 fi
