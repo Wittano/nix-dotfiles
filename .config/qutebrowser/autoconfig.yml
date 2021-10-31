@@ -10,6 +10,8 @@ settings:
     global: '#434569'
   colors.tabs.selected.odd.bg:
     global: '#212337'
+  content.desktop_capture:
+    https://discord.com: true
   content.geolocation:
     https://helion.pl: false
     https://www.o2.pl: false

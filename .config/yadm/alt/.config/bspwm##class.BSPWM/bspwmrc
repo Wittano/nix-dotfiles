@@ -3,16 +3,13 @@
 # Global variables
 HOSTNAME=$(cat /etc/hostname)
 MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
+LAPTOP_NAME="wittano-laptop"
+PC_NAME="wittano-pc"
+
 # Functions
 function is_run(){
   echo $(ps x | awk '{print $5}' | grep $1)
 }
-
-# Keymap
-KEYMAP=$(setxkbmap -query | grep layout | awk '{print $2}')
-if [ ! $KEYMAP -eq 'pl' ]; then
-  setxkbmap pl
-fi
 
 if [ -z $(is_run sxhkd) ]; then
   sxhkd &
@@ -38,7 +35,7 @@ fi
 # Polybar
 if [ -z $(is_run polybar) ]; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    	if [ $HOSTNAME == 'wittano-laptop' ]; then
+    	if [ $HOSTNAME == $LAPTOP_NAME ]; then
     		MONITOR=$m polybar laptop &
     	else
       		MONITOR=$m polybar wittano &
@@ -96,6 +93,8 @@ bspc rule -a "jetbrains-webstorm" desktop='^1'
 bspc rule -a "jetbrains-pycharm" desktop='^1'
 bspc rule -a "Postman" desktop='^3'
 bspc rule -a "Signal" desktop='^7'
+bspc rule -a "Qmmp" desktop='^4'
+bspc rule -a "player" desktop='^4'
 
 
 # Games

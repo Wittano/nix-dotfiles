@@ -51,6 +51,7 @@
 
 (package! elfeed-org)
 (package! transient)
+(package! zeno-theme)
 (package! auto-package-update)
 (package! org-superstar)
 (straight-use-package '(nano-theme :type git :host github
