@@ -95,7 +95,7 @@ bspc rule -a "Postman" desktop='^3'
 bspc rule -a "Signal" desktop='^7'
 bspc rule -a "Qmmp" desktop='^4'
 bspc rule -a "player" desktop='^4'
-
+bspc rule -a "Vivaldi-stable" desktop=$FIREFOX_WORKSPACE
 
 # Games
 bspc rule -a openttd desktop='^6'

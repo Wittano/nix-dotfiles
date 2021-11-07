@@ -153,6 +153,10 @@ alias vi="vim"
 alias sl="ssh wittano@${SERVER_IP}"
 alias re='sudo sshfs -o allow_other wittanosftp@192.168.10.160:/ /mnt/remote'
 
+# Virtuals
+alias vu="ssh wittano@192.168.122.100"
+alias vd="ssh wittano@192.168.122.129"
+
 # Utils
 alias cl="sudo poweroff"
 alias xc='xprop | grep CLASS'
