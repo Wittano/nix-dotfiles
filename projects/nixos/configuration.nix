@@ -3,8 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
 {
+  # Nix configuration
+  nixpkgs.config.allowUnfree = true;
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -23,8 +25,14 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = true;
-  networking.interfaces.enp1s0.useDHCP = true;
+  networking.useDHCP = false;
+  networking.interfaces.enp1s0.useDHCP = false;
+  networking.interfaces.enp1s0.ipv4.addresses = [ {
+   address = "192.168.122.83";
+   prefixLength = 24;
+  } ];
+  networking.defaultGateway = "192.168.122.1";
+  networking.nameservers = [ "8.8.8.8" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -57,6 +65,9 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  # Enable video card
+  # services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
