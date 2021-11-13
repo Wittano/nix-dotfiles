@@ -45,10 +45,10 @@ fi
 
 # BSPWM config
 if [ $MONITOR_COUNT -gt 1 ]; then
-  bspc monitor DVI-D-0 -d dev www sys music mail game
+  bspc monitor DVI-D-0 -d dev www sys virt mail game
   bspc monitor HDMI-0 -d chat www doc
 else
-  bspc monitor -d dev www sys music mail game chat www doc
+  bspc monitor -d dev www sys virt mail game chat www doc
 fi
 
 bspc config border_width          2
@@ -96,6 +96,8 @@ bspc rule -a "Signal" desktop='^7'
 bspc rule -a "Qmmp" desktop='^4'
 bspc rule -a "player" desktop='^4'
 bspc rule -a "Vivaldi-stable" desktop=$FIREFOX_WORKSPACE
+bspc rule -a "virt-manager" desktop='^4'
+bspc rule -a "boincmgr" desktop='^4'
 
 # Games
 bspc rule -a openttd desktop='^6'
@@ -108,3 +110,5 @@ bspc rule -a "Cities.x64" desktop='^6'
 bspc rule -a "steam_app_813780" desktop='^6'
 bspc rule -a "mb_warband_linux" desktop='^6'
 bspc rule -a "hl2_linux" desktop='^6'
+bspc rule -a "minecraft-launcher" desktop='^6'
+bspc rule -a "Minecraft 1.17.1" desktop='^6'
