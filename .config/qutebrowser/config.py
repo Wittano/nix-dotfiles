@@ -17,7 +17,7 @@ config.set('content.javascript.enabled', True, 'devtools://*')
 config.set('content.javascript.enabled', True, 'chrome://*/*')
 config.set('content.javascript.enabled', True, 'qute://*/*')
 config.set('content.javascript.enabled', True, 'file://*/*')
-config.set('content.javascript.enabled', False, 'http://*/*')
+config.set('content.javascript.enabled', False, 'https://www.youtube.com/')
 
 # Enable JavaScript for local pages
 localhost = [ f'*://localhost:{x}/*' for x in ['3000', '4200', '8384', '8080'] ]
@@ -27,8 +27,8 @@ enableJS.extend(localhost)
 enableJS.extend(server)
 
 for domain in enableJS:
-    with config.pattern(domain) as p:
-        p.content.javascript.enabled = True
+    with config.pattern(domain) as pattern:
+        pattern.content.javascript.enabled = True
 
 # DuckDuckgo
 duckduckgo = 'https://duckduckgo.com/?kae=d&kn=-1&kah=us-en%2Cpl-pl&kl=us-en&q={}'

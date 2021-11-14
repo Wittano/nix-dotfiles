@@ -31,12 +31,10 @@ call plug#begin('~/.local/share/nvim/plugged')
   "Facilitate
   Plug 'jiangmiao/auto-pairs' " Added missing bracket
   Plug 'https://github.com/tpope/vim-fugitive.git'
-  Plug 'scrooloose/nerdtree' " File manager
   Plug 'https://github.com/tpope/vim-commentary.git' "Auto commentary
   Plug 'https://github.com/tpope/vim-surround.git' "Click link and you know what is it
   Plug 'https://github.com/tpope/vim-repeat.git' "Repeat last action if you click '.'
   Plug 'reedes/vim-pencil' "Facilitate read text
-  Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status
   Plug 'terryma/vim-multiple-cursors' " Modified code in few lines at same time
   Plug 'https://github.com/Shougo/echodoc.vim.git' " Show parms in function
 
