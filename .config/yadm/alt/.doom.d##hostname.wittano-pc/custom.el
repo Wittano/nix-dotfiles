@@ -37,7 +37,7 @@
  '(org-fontify-done-headline nil)
  '(org-fontify-todo-headline nil)
  '(package-selected-packages
-   '(zeno-theme exotica-theme rebecca-theme spacemacs-theme web-mode emmet-mode typescript-mode org-superstar org-fancy-priorities nanowrimo latex-preview-pane elfeed-org))
+   '(irony zeno-theme exotica-theme rebecca-theme spacemacs-theme web-mode emmet-mode typescript-mode org-superstar org-fancy-priorities nanowrimo latex-preview-pane elfeed-org))
  '(pdf-view-midnight-colors (cons "#c8d3f5" "#212337"))
  '(rustic-ansi-faces
    ["#212337" "#ff757f" "#c3e88d" "#ffc777" "#82aaff" "#c099ff" "#b4f9f8" "#c8d3f5"])

@@ -96,8 +96,8 @@ bspc rule -a "Signal" desktop='^7'
 bspc rule -a "Qmmp" desktop='^4'
 bspc rule -a "player" desktop='^4'
 bspc rule -a "Vivaldi-stable" desktop=$FIREFOX_WORKSPACE
-bspc rule -a "virt-manager" desktop='^4'
-bspc rule -a "boincmgr" desktop='^4'
+bspc rule -a "Virt-manager" desktop='^4'
+bspc rule -a "Boincmgr" desktop='^4'
 
 # Games
 bspc rule -a openttd desktop='^6'

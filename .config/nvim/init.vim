@@ -7,8 +7,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
   "Theme
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'sainnhe/gruvbox-material'
-  Plug 'https://github.com/morhetz/gruvbox.git'
   Plug 'jschmold/sweet-dark.vim'
 
   "Formater
@@ -18,7 +16,6 @@ call plug#begin('~/.local/share/nvim/plugged')
   "Syntax
   Plug 'https://github.com/PotatoesMaster/i3-vim-syntax.git' "Vim i3 syntax
   Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git' "Cpp syntax
-  Plug 'jelera/vim-javascript-syntax' " JavaScript syntax
   Plug 'https://github.com/pboettch/vim-cmake-syntax.git' " CMake syntax
   Plug 'sheerun/vim-polyglot' " Syntax for so much language
   Plug 'dense-analysis/ale' " ALE
@@ -41,11 +38,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'reedes/vim-pencil' "Facilitate read text
   Plug 'Xuyuanp/nerdtree-git-plugin' " Show file git status
   Plug 'terryma/vim-multiple-cursors' " Modified code in few lines at same time
-  Plug 'tyru/open-browser.vim' " Open link into brower
   Plug 'https://github.com/Shougo/echodoc.vim.git' " Show parms in function
-
-  " Fornt-end
-  Plug 'vim-scripts/HTML-AutoCloseTag' " Autoclose HTML tags
 
 call plug#end()
 
@@ -78,7 +71,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
 set termguicolors     " enable true colors support
 " Theme
-colorscheme gruvbox
+colorscheme sweet_dark
 
 " Always show lightline
 set laststatus=2
