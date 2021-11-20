@@ -20,11 +20,11 @@ wmname compiz &
 nitrogen --restore &
 qutebrowser &
 
-if [ -z $(is_run emacs) ];then
+if [ -z $(is_run emacs) ] && [ -n $(command -v emacs) ];then
   emacs --daemon &
 fi
 
-if [ -z $(is_run syncthing) ]; then
+if [ -z $(is_run syncthing) ] && [ -z $(command -v systemd) ]; then
   syncthing -no-browser &
 fi
 

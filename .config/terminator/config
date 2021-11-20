@@ -1,6 +1,7 @@
 [global_config]
   enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, TerminatorThemes
 [keybindings]
+  layout_launcher = ""
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"

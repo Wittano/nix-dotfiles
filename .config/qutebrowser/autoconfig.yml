@@ -15,6 +15,10 @@ settings:
   content.geolocation:
     https://helion.pl: false
     https://www.o2.pl: false
+  content.media.audio_capture:
+    https://teams.microsoft.com: true
+  content.media.video_capture:
+    https://teams.microsoft.com: true
   content.notifications.enabled:
     https://www.reddit.com: false
   downloads.position:
