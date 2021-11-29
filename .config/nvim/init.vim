@@ -23,6 +23,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+  Plug 'LnL7/vim-nix' " Vim-nix
 
   "Lightline
   Plug 'itchyny/lightline.vim' "Light line

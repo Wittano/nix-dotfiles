@@ -92,9 +92,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='emacs'
+  export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -114,7 +114,7 @@ SERVER_IP="192.168.1.160"
 
 # Debian/Ubuntu base
 if [ -n "$(command -v apt)" ]; then
-    alias ai="sudo apt install"
+    alias ai="sudo apt install --no-install-recommends --auto-remove --show-progress"
     alias au="sudo apt update && sudo apt upgrade"
     alias ar="sudo apt remove"
 	alias ara="sudo apt autoremove"
@@ -136,6 +136,7 @@ alias bc="$EDITOR ~/.config/bspwm/bspwmrc"
 alias kc="$EDITOR ~/.config/sxhkd/sxhkdrc"
 alias zc="$EDITOR ~/.zshrc"
 alias oc="$EDITOR ~/.oh-my-zsh"
+alias vc="$EDITOR ~/.config/nvim/init.vim"
 
 # YADM alias
 alias yaa="yadm add"
@@ -160,7 +161,7 @@ alias re='sudo sshfs -o allow_other wittanosftp@192.168.10.160:/ /mnt/remote'
 # Virtuals
 alias vu="ssh wittano@192.168.122.100"
 alias vd="ssh wittano@192.168.122.129"
-alias vn="ssh wittano@192.168.122.83" 
+alias vn="ssh wittano@192.168.122.83"
 
 # Utils
 alias cl="sudo poweroff"
