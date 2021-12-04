@@ -102,6 +102,7 @@ bspc rule -a "player" desktop='^4'
 bspc rule -a "Vivaldi-stable" desktop=$FIREFOX_WORKSPACE
 bspc rule -a "Virt-manager" desktop='^4'
 bspc rule -a "Boincmgr" desktop='^4'
+bspc rule -a "vivaldi-stable" desktop='^2'
 
 # Games
 bspc rule -a openttd desktop='^6'
@@ -116,3 +117,4 @@ bspc rule -a "mb_warband_linux" desktop='^6'
 bspc rule -a "hl2_linux" desktop='^6'
 bspc rule -a "minecraft-launcher" desktop='^6'
 bspc rule -a "Minecraft 1.17.1" desktop='^6'
+bspc rule -a "Shogun2" desktop='^6'
