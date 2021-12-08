@@ -102,7 +102,7 @@ bspc rule -a "player" desktop='^4'
 bspc rule -a "Vivaldi-stable" desktop=$FIREFOX_WORKSPACE
 bspc rule -a "Virt-manager" desktop='^4'
 bspc rule -a "Boincmgr" desktop='^4'
-bspc rule -a "vivaldi-stable" desktop='^2'
+bspc rule -a "Vivaldi-stable" desktop='^2'
 
 # Games
 bspc rule -a openttd desktop='^6'
