@@ -1,0 +1,66 @@
+border.width: 1
+padding.width: 7
+padding.height: 7
+window.handle.width: 0
+window.client.padding.width: 2
+window.client.padding.height: 2
+
+menu.overlap: 1
+menu.border.color: #24292e
+menu.border.width: 1
+
+menu.title.bg: Gradient Vertical Raised
+menu.title.bg.color: #3e4a56
+menu.title.bg.colorTo: #3a4550
+menu.title.text.color: #e0f0ff
+menu.title.text.justify: Center
+
+menu.items.bg: Solid Flat
+menu.items.bg.color: #14181c
+menu.items.text.color: #c9def2
+menu.items.active.bg: Gradient Vertical Flat
+menu.items.active.bg.color: #51a229
+menu.items.active.bg.colorTo: #499325
+menu.items.active.text.color: #e0f0ff
+
+menu.separator.width: 1
+menu.separator.padding.width: 4
+menu.separator.padding.height: 4
+
+window.active.border.color: #24292e
+window.active.title.separator.color: #328e06
+window.active.title.bg: Solid Flat
+window.active.title.bg.color: #14181c
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #c9def2
+window.active.client.color: #14181c
+window.active.button.unpressed.bg: Parentrelative
+window.active.button.unpressed.image.color: #aabbcc
+window.active.button.hover.bg: Parentrelative
+window.active.button.hover.color: #eff0f1
+window.active.button.hover.image.color: #66cc35
+window.active.button.pressed.bg: Parentrelative
+window.active.button.pressed.image.color: #cdcdcd
+window.active.button.hover.bg.border.color: #1d1e1b
+
+window.active.grip.bg: Raised Gradient Vertical
+window.active.grip.bg.color: #a67a3f
+window.active.grip.bg.colorTo: #2b2824
+window.active.handle.bg: Raised Gradient Vertical
+window.active.handle.bg.color: #a67a3f
+window.active.handle.bg.colorTo: #2b2824
+
+
+
+
+
+window.inactive.title.separator.color: #14181c
+window.inactive.border.color: #24292e
+window.inactive.title.bg: Solid Flat
+window.inactive.title.bg.color: #14181c
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #a5b7c7
+window.inactive.client.color: #14181c
+window.inactive.button.unpressed.bg: Parentrelative
+window.inactive.button.unpressed.image.color: #a5b7c7
+
