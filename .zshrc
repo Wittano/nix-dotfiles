@@ -165,7 +165,7 @@ alias vn="ssh wittano@192.168.122.83"
 
 # Utils
 alias cl="sudo poweroff"
-alias xc='xprop | grep CLASS'
+alias xc='xprop | grep _OB_APP_CLASS'
 alias yta='youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'
 alias red='redshift -l 51.2181945:22.5546776'
 alias cld='bash $HOME/project/bash/cleanDocker.sh'

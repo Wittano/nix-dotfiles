@@ -120,13 +120,15 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>4</number>
+    <number>6</number>
     <firstdesk>1</firstdesk>
     <names>
       <name>dev</name>
       <name>www</name>
-      <name>env</name>
+      <name>sys</name>
       <name>virt</name>
+      <name>chat</name>
+      <name>games</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -355,8 +357,76 @@
         <command>scrot</command>
       </action>
     </keybind>
-	<keybind key="W-x">
-		<action name="Close" />
+    <keybind key="W-x">
+      <action name="Close"/>
+    </keybind>
+	<!-- Switch desktop from keyboard -->
+	<keybind key="W-1">
+		<action name="GoToDesktop">
+			<to>1</to>
+		</action>
+	</keybind>
+	<keybind key="W-2">
+		<action name="GoToDesktop">
+			<to>2</to>
+		</action>
+	</keybind>
+	<keybind key="W-3">
+		<action name="GoToDesktop">
+			<to>3</to>
+		</action>
+	</keybind>
+	<keybind key="W-4">
+		<action name="GoToDesktop">
+			<to>4</to>
+		</action>
+	</keybind>
+	<keybind key="W-5">
+		<action name="GoToDesktop">
+			<to>5</to>
+		</action>
+	</keybind>
+	<!-- Move window to specify desktop -->
+	<keybind key="W-S-1">
+		<action name="SendToDesktop">
+			<to>1</to>
+		</action>
+	</keybind>
+	<keybind key="W-S-2">
+		<action name="SendToDesktop">
+			<to>2</to>
+		</action>
+	</keybind>
+	<keybind key="W-S-3">
+		<action name="SendToDesktop">
+			<to>3</to>
+		</action>
+	</keybind>
+	<keybind key="W-S-4">
+		<action name="SendToDesktop">
+			<to>4</to>
+		</action>
+	</keybind>
+	<keybind key="W-S-5">
+		<action name="SendToDesktop">
+			<to>5</to>
+		</action>
+	</keybind>
+	<!-- Volume keybinds -->
+	<keybind key="W-p">
+		<action name="Execute">
+			<command>amixer set Master 1%+</command>
+		</action>
+	</keybind>
+	<keybind key="W-o">
+		<action name="Execute">
+			<command>amixer set Master 1%-</command>
+		</action>
+	</keybind>
+	<keybind key="W-m">
+		<action name="Execute">
+			<command>amixer set Master toggle</command>
+		</action>
 	</keybind>
   </keyboard>
   <mouse>
@@ -815,5 +885,19 @@
 
   # end of the example
 -->
+  	<application class="X-terminal-emulator">
+		<size>
+			<width>30%</width>
+			<height>30%</height>
+		</size>
+  	</application>
+  	<application class="Vivaldi-stable">
+		<desktop>2</desktop>
+		<maximized>true</maximized>
+  	</application>
+	<application class="discord">
+		<desktop>5</desktop>
+    	<focus>no</focus>
+	</application>
   </applications>
 </openbox_config>
