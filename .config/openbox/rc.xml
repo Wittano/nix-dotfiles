@@ -324,7 +324,7 @@
       </action>
     </keybind>
     <!-- Keybindings for running applications -->
-    <keybind key="M-e">
+    <keybind key="W-e">
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
@@ -342,7 +342,7 @@
         <command>i3lock-fancy</command>
       </action>
     </keybind>
-    <keybind key="M-w">
+    <keybind key="W-w">
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
@@ -426,6 +426,12 @@
 	<keybind key="W-m">
 		<action name="Execute">
 			<command>amixer set Master toggle</command>
+		</action>
+	</keybind>
+	<!-- Launch terminal -->
+	<keybind key="W-Return">
+		<action name="Execute">
+			<command>terminator</command>
 		</action>
 	</keybind>
   </keyboard>

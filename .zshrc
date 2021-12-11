@@ -105,7 +105,7 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-EDITOR=vim
+EDITOR=nvim
 PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
 VISUAL=$EDITOR
 SERVER_IP="192.168.1.160"

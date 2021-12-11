@@ -9,7 +9,10 @@ super + Return
 # program launcher
 # super + d
 super + d
-	j4-dmenu-desktop --dmenu="dmenu -i -nb '#212337' -sb '#4782FF'"
+	rofi -show drun
+	#j4-dmenu-desktop --dmenu="dmenu -i -nb '#212337' -sb '#4782FF'"
+super + w
+	rofi -show window
 
 # make sxhkd reload its configuration files:
 super + Escape
