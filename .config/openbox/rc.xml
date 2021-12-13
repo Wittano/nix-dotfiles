@@ -34,7 +34,7 @@
     <!-- with Smart placement on a multi-monitor system, try to place new windows
        on: 'Any' - any monitor, 'Mouse' - where the mouse is, 'Active' - where
        the active window is, 'Primary' - only on the primary monitor -->
-    <primaryMonitor>2</primaryMonitor>
+    <primaryMonitor>Mouse</primaryMonitor>
     <!-- The monitor where Openbox should place popup dialogs such as the
        focus cycling popup, or the desktop switch popup.  It can be an index
        from 1, specifying a particular monitor.  Or it can be one of the
@@ -125,7 +125,7 @@
     <names>
       <name>dev</name>
       <name>www</name>
-      <name>sys</name>
+      <name>doc</name>
       <name>virt</name>
       <name>chat</name>
       <name>games</name>
@@ -360,80 +360,80 @@
     <keybind key="W-x">
       <action name="Close"/>
     </keybind>
-	<!-- Switch desktop from keyboard -->
-	<keybind key="W-1">
-		<action name="GoToDesktop">
-			<to>1</to>
-		</action>
-	</keybind>
-	<keybind key="W-2">
-		<action name="GoToDesktop">
-			<to>2</to>
-		</action>
-	</keybind>
-	<keybind key="W-3">
-		<action name="GoToDesktop">
-			<to>3</to>
-		</action>
-	</keybind>
-	<keybind key="W-4">
-		<action name="GoToDesktop">
-			<to>4</to>
-		</action>
-	</keybind>
-	<keybind key="W-5">
-		<action name="GoToDesktop">
-			<to>5</to>
-		</action>
-	</keybind>
-	<!-- Move window to specify desktop -->
-	<keybind key="W-S-1">
-		<action name="SendToDesktop">
-			<to>1</to>
-		</action>
-	</keybind>
-	<keybind key="W-S-2">
-		<action name="SendToDesktop">
-			<to>2</to>
-		</action>
-	</keybind>
-	<keybind key="W-S-3">
-		<action name="SendToDesktop">
-			<to>3</to>
-		</action>
-	</keybind>
-	<keybind key="W-S-4">
-		<action name="SendToDesktop">
-			<to>4</to>
-		</action>
-	</keybind>
-	<keybind key="W-S-5">
-		<action name="SendToDesktop">
-			<to>5</to>
-		</action>
-	</keybind>
-	<!-- Volume keybinds -->
-	<keybind key="W-p">
-		<action name="Execute">
-			<command>amixer set Master 1%+</command>
-		</action>
-	</keybind>
-	<keybind key="W-o">
-		<action name="Execute">
-			<command>amixer set Master 1%-</command>
-		</action>
-	</keybind>
-	<keybind key="W-m">
-		<action name="Execute">
-			<command>amixer set Master toggle</command>
-		</action>
-	</keybind>
-	<!-- Launch terminal -->
-	<keybind key="W-Return">
-		<action name="Execute">
-			<command>terminator</command>
-		</action>
-	</keybind>
+    <!-- Switch desktop from keyboard -->
+    <keybind key="W-1">
+      <action name="GoToDesktop">
+        <to>1</to>
+      </action>
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop">
+        <to>2</to>
+      </action>
+    </keybind>
+    <keybind key="W-3">
+      <action name="GoToDesktop">
+        <to>3</to>
+      </action>
+    </keybind>
+    <keybind key="W-4">
+      <action name="GoToDesktop">
+        <to>4</to>
+      </action>
+    </keybind>
+    <keybind key="W-5">
+      <action name="GoToDesktop">
+        <to>5</to>
+      </action>
+    </keybind>
+    <!-- Move window to specify desktop -->
+    <keybind key="W-S-1">
+      <action name="SendToDesktop">
+        <to>1</to>
+      </action>
+    </keybind>
+    <keybind key="W-S-2">
+      <action name="SendToDesktop">
+        <to>2</to>
+      </action>
+    </keybind>
+    <keybind key="W-S-3">
+      <action name="SendToDesktop">
+        <to>3</to>
+      </action>
+    </keybind>
+    <keybind key="W-S-4">
+      <action name="SendToDesktop">
+        <to>4</to>
+      </action>
+    </keybind>
+    <keybind key="W-S-5">
+      <action name="SendToDesktop">
+        <to>5</to>
+      </action>
+    </keybind>
+    <!-- Volume keybinds -->
+    <keybind key="W-p">
+      <action name="Execute">
+        <command>amixer set Master 1%+</command>
+      </action>
+    </keybind>
+    <keybind key="W-o">
+      <action name="Execute">
+        <command>amixer set Master 1%-</command>
+      </action>
+    </keybind>
+    <keybind key="W-m">
+      <action name="Execute">
+        <command>amixer set Master toggle</command>
+      </action>
+    </keybind>
+    <!-- Launch terminal -->
+    <keybind key="W-Return">
+      <action name="Execute">
+        <command>terminator</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
@@ -891,19 +891,37 @@
 
   # end of the example
 -->
-  	<application class="X-terminal-emulator">
-		<size>
-			<width>30%</width>
-			<height>30%</height>
-		</size>
-  	</application>
-  	<application class="Vivaldi-stable">
-		<desktop>2</desktop>
-		<maximized>true</maximized>
-  	</application>
-	<application class="discord">
+    <application class="X-terminal-emulator">
+      <size>
+        <width>30%</width>
+        <height>30%</height>
+      </size>
+    </application>
+    <application class="Vivaldi-stable">
+      <desktop>2</desktop>
+      <maximized>true</maximized>
+    </application>
+    <application class="discord">
+      <desktop>5</desktop>
+      <focus>no</focus>
+    </application>
+    <application class="Rhythmbox">
+      <desktop>4</desktop>
+    </application>
+    <application class="Steam">
+      <desktop>6</desktop>
+    </application>
+    <application class="hl2_linux">
+      <desktop>6</desktop>
+    </application>
+    <application class="Virt-manager">
+      <desktop>4</desktop>
+    </application>
+	<application class="Signal">
 		<desktop>5</desktop>
-    	<focus>no</focus>
-	</application>
+    </application>
+	<application class="thunderbird">
+		<desktop>3</desktop>
+    </application>
   </applications>
 </openbox_config>

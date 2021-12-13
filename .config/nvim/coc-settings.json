@@ -1,7 +1,7 @@
 {
   /* "clangd.path": "/home/wittano/.config/coc/extensions/coc-clangd-data/install/9.0.0/clangd_10.0.0/bin/clangd", */
-  "jedi.diagnostics.didSave": true
   "jedi.enable": true,
+  "jedi.diagnostics.didSave": true,
   "jedi.startupMessage": false,
   "jedi.markupKindPreferred": "plaintext",
   "jedi.trace.server": "off",
