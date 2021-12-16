@@ -15,10 +15,28 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "21.11";
-  nixpkgs.config.allowUnfree = true;
-  home.packages = with pkgs; [ firefox neofetch rofi terminator vscode st ];
 
-  # Let Home Manager install and manage itself.
+  nixpkgs.config.allowUnfree = true;
+  home.packages = with pkgs; [ 
+    firefox 
+    neofetch 
+    nitrogen
+    rofi
+    terminator
+    vscode
+    lxappearance
+    openbox-menu
+    lxmenu-data
+    obconf
+    tint2
+    rnix-lsp
+  ];
+
+  home.sessionVariables = {
+   EDITOR = "nvim";
+  };
+
+  # Programs
   programs = {
     home-manager.enable = true;
     git = {
