@@ -120,7 +120,7 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>6</number>
+    <number>5</number>
     <firstdesk>1</firstdesk>
     <names>
       <name>dev</name>
@@ -128,7 +128,7 @@
       <name>doc</name>
       <name>virt</name>
       <name>chat</name>
-      <name>games</name>
+      <name>(Unnamed desktop)</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -891,15 +891,12 @@
 
   # end of the example
 -->
-    <application class="X-terminal-emulator">
-      <size>
-        <width>30%</width>
-        <height>30%</height>
-      </size>
-    </application>
     <application class="Vivaldi-stable">
       <desktop>2</desktop>
       <maximized>true</maximized>
+    </application>
+    <application class="Conky">
+      <desktop>all</desktop>
     </application>
     <application class="discord">
       <desktop>5</desktop>
@@ -909,19 +906,22 @@
       <desktop>4</desktop>
     </application>
     <application class="Steam">
-      <desktop>6</desktop>
+      <desktop>5</desktop>
     </application>
     <application class="hl2_linux">
-      <desktop>6</desktop>
+      <desktop>5</desktop>
     </application>
     <application class="Virt-manager">
       <desktop>4</desktop>
     </application>
-	<application class="Signal">
-		<desktop>5</desktop>
+    <application class="Signal">
+      <desktop>5</desktop>
     </application>
-	<application class="thunderbird">
-		<desktop>3</desktop>
+    <application class="thunderbird">
+      <desktop>3</desktop>
+    </application>
+    <application class="Firefox">
+      <desktop>2</desktop>
     </application>
   </applications>
 </openbox_config>
