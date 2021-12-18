@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 let
    home-manager-config="/home/wittano/dotfiles/nix/home-manager";
+   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
   # Nix configuration
@@ -13,7 +14,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
+      (import "${home-manager}/nixos")
     ];
 
   # Auto Updating
@@ -92,12 +93,12 @@ in
 
       # Window manager
       windowManager = {
-	openbox.enable = true;
+	    openbox.enable = true;
       };
 
       displayManager = {
-	defaultSession = "none+openbox";
-	lightdm.enable = true;
+	    defaultSession = "openbox";
+	    gdm.enable = true;
       };
     };
   };
@@ -134,17 +135,15 @@ in
    NIXOS_CONFIG = "/home/wittano/dotfiles/nix/os/configuration.nix";
    HOME_MANAGER_CONFIG = home-manager-config;
   };
-  
+
   # Home-manager
   home-manager.users.wittano = import "${home-manager-config}/home.nix";
 
   # Global packages
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
-    python3
     virt-manager
-    firefox
   ];
 
   # Virtualization
@@ -152,7 +151,7 @@ in
     docker.enable = true;
     libvirtd.enable = true;
   };
-  
+
   programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -164,6 +163,6 @@ in
   # };
 
   # System version
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "21.11";
 
 }

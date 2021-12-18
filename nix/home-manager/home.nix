@@ -17,8 +17,8 @@
   home.stateVersion = "21.11";
 
   nixpkgs.config.allowUnfree = true;
-  home.packages = with pkgs; [ 
-    firefox 
+  home.packages = with pkgs; [
+    firefox
     nitrogen
     neofetch
     rofi
@@ -33,6 +33,7 @@
     thunderbird
     xfce.thunar
     xfce.exo
+    flameshot
   ];
 
   home.sessionVariables = {
