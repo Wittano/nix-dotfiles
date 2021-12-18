@@ -19,8 +19,8 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [ 
     firefox 
-    neofetch 
     nitrogen
+    neofetch
     rofi
     terminator
     vscode
@@ -28,8 +28,11 @@
     openbox-menu
     lxmenu-data
     obconf
-    tint2
+    polybar
     rnix-lsp
+    thunderbird
+    xfce.thunar
+    xfce.exo
   ];
 
   home.sessionVariables = {

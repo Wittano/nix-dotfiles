@@ -124,7 +124,8 @@
   # Enviroment variables
   environment.variables = {
     EDITOR="vim";
-    NIXOS_CONFIG_DIR="$HOME/dotfiles/nix/os";
+    NIX_BUILD_CORES="4";
+    NIXOS_CONFIG="/home/wittano/dotfiles/nix/os/configuration.nix";
     HOME_MANAGER_CONFIG_DIR="$HOME/dotfiles/nix/home-manager";
   };
 
