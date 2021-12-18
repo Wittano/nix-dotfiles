@@ -17,7 +17,10 @@
   system.autoUpgrade.allowReboot = false; # If varable is true, it'll auto reboot, when updating of NixOS will be finished
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
+  boot.loader = {
+   systemd-boot.enable = true;
+   efi.canTouchEfiVariables = true;
+  };
 
   # Time settings
   time.timeZone = "Europe/Warsaw";

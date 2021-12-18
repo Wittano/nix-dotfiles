@@ -17,15 +17,15 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6c1495ce-c9df-4ea3-aaa1-5f87d8b3a287";
-      fsType = "ext4";
-    };
+  fileSystems."/" = { 
+    device = "/dev/nixos/root";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/2BCC-DEBC";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" ={ 
+   device = "/dev/disk/by-label/BOOT";
+   fsType = "vfat";
+  };
 
   swapDevices = [ ];
 
