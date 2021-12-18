@@ -36,10 +36,6 @@
     flameshot
   ];
 
-  home.sessionVariables = {
-   EDITOR = "nvim";
-  };
-
   # Programs
   programs = {
     home-manager.enable = true;
@@ -50,6 +46,7 @@
     };
     neovim = {
       enable = true;
+      defaultEditor = true;
       extraConfig = ''
         source $HOME_MANAGER_CONFIG_DIR/nixpkgs/base.vim
         set rnu nu
