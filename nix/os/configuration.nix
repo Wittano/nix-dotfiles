@@ -3,6 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+   home-manager-config="/home/wittano/dotfiles/nix/home-manager";
+in
 {
   # Nix configuration
   nixpkgs.config.allowUnfree = true;
@@ -10,6 +13,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos>
     ];
 
   # Auto Updating
@@ -19,7 +23,16 @@
   # Bootloader
   boot.loader = {
    systemd-boot.enable = true;
-   efi.canTouchEfiVariables = true;
+   efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot/efi";
+   };
+   grub = {
+    efiSupport = true;
+    enable = true;
+    version = 2;
+    device = "nodev";
+   };
   };
 
   # Time settings
@@ -114,12 +127,15 @@
     extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
   };
 
+  # Home-manager
+  # home-manager.users.wittano = import home-manager-config + "/home.nix";
+
   # Enviroment variables
   environment.variables = {
-    EDITOR="vim";
-    NIX_BUILD_CORES="4";
-    NIXOS_CONFIG="/home/wittano/dotfiles/nix/os/configuration.nix";
-    HOME_MANAGER_CONFIG_DIR="$HOME/dotfiles/nix/home-manager";
+   EDITOR = "vim";
+   NIX_BUILD_CORES = "4";
+   NIXOS_CONFIG = "/home/wittano/dotfiles/nix/os/configuration.nix";
+   HOME_MANAGER_CONFIG = home-manager-config;
   };
 
   # Global packages
@@ -128,6 +144,7 @@
     wget
     python3
     virt-manager
+    firefox
   ];
 
   # Virtualization
