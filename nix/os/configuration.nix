@@ -127,9 +127,6 @@ in
     extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
   };
 
-  # Home-manager
-  # home-manager.users.wittano = import home-manager-config + "/home.nix";
-
   # Enviroment variables
   environment.variables = {
    EDITOR = "vim";
@@ -137,6 +134,9 @@ in
    NIXOS_CONFIG = "/home/wittano/dotfiles/nix/os/configuration.nix";
    HOME_MANAGER_CONFIG = home-manager-config;
   };
+  
+  # Home-manager
+  home-manager.users.wittano = import "${home-manager-config}/home.nix";
 
   # Global packages
   environment.systemPackages = with pkgs; [
