@@ -119,6 +119,12 @@ in
   # Enable video card
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # OpenGL and Vulkan
+  hardware.opengl = {
+   driSupport = true;
+   driSupport32Bit = true;
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
