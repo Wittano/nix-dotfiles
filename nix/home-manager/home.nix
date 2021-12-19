@@ -18,13 +18,15 @@
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
+    rhythmbox
     firefox
+    steam
+    vivaldi
     nitrogen
     neofetch
     rofi
     terminator
     vscode
-    lxappearance
     openbox-menu
     lxmenu-data
     obconf
@@ -35,7 +37,15 @@
     xfce.exo
     flameshot
     keepassxc
+    home-manager
+    discord
+    minecraft
+    redshift
   ];
+
+  home.sessionVariables = {
+    EDITOR="nvim";
+  };
 
   # Programs
   programs = {
@@ -48,7 +58,6 @@
     neovim = {
       enable = true;
       extraConfig = ''
-        source $HOME_MANAGER_CONFIG_DIR/nixpkgs/base.vim
         set rnu nu
       '';
       plugins = with pkgs.vimPlugins; [

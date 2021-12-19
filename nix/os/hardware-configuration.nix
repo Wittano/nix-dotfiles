@@ -28,8 +28,8 @@
   };
 
   fileSystems."/boot/efi" ={ 
-   device = "/dev/disk/by-label/BOOT";
-   fsType = "vfat";
+    device = "/dev/disk/by-label/BOOT";
+    fsType = "vfat";
   };
 
   swapDevices = [ { device = "/dev/nixos/swap"; } ];

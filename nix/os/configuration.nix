@@ -4,7 +4,9 @@
 
 { config, pkgs, ... }:
 let
-   home-manager-config="/home/nixos/dotfiles/nix/home-manager";
+   main_user = "wittano";
+   home = "/home/${main_user}";
+   home-manager-config="${home}/dotfiles/nix/home-manager";
    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
@@ -23,34 +25,38 @@ in
 
   # Bootloader
   boot.loader = {
-   systemd-boot.enable = true;
-   efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot/efi";
-   };
-   grub = {
-    efiSupport = true;
-    enable = true;
-    version = 2;
-    device = "nodev";
-   };
+    systemd-boot.enable = true;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      efiSupport = true;
+      enable = true;
+      version = 2;
+      device = "nodev";
+    };
   };
 
   # Time settings
   time.timeZone = "Europe/Warsaw";
 
   # Networking
-  networking.hostName = "nixos"; # Define your hostname.
+  networking = {
+    hostName = "nixos"; # Define your hostname.
+    useDHCP = false;
+    interfaces.eno1 = {
+      useDHCP = false;
+      ipv4.addresses = [ {
+        address = "192.168.1.160";
+        prefixLength = 24;
+      } ];
+   };
+    defaultGateway = "192.168.1.1";
+    nameservers = [ "8.8.8.8" ];
+    firewall.enable = true;
+  };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.useDHCP = false;
-  networking.interfaces.enp1s0.useDHCP = false;
-  networking.interfaces.enp1s0.ipv4.addresses = [ {
-   address = "192.168.122.83";
-   prefixLength = 24;
-  } ];
-  networking.defaultGateway = "192.168.122.1";
-  networking.nameservers = [ "8.8.8.8" ];
-  networking.firewall.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -70,12 +76,28 @@ in
     syncthing = {
       enable = true;
       systemService = true;
-      declarative = {
-        devices = {
-          phone = {
-            id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
-          };
+      configDir = "${home}/.config/syncthing";
+      user = "wittano";
+      folders = {
+        "${home}/Music" = {
+	  id = "epc3d-xkkkk";
+	  label = "Music";
+	  devices = [ "phone" ];
+	};
+
+	"${home}/.keepass" = {
+	  id = "xm73k-khame";
+	  label = "Passwords";
+	  devices = [ "phone" ];
+	};
+      };
+      devices = {
+        phone = {
+          id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
         };
+      };
+      extraOptions = {
+        gui.theme = "dark";
       };
     };
 
@@ -92,13 +114,11 @@ in
       xkbOptions = "eurosign:e";
 
       # Window manager
-      windowManager = {
-	    openbox.enable = true;
-      };
+      windowManager.openbox.enable = true;
 
       displayManager = {
-	    defaultSession = "none+openbox";
-	    gdm.enable = true;
+        defaultSession = "none+openbox";
+	gdm.enable = true;
       };
     };
   };
@@ -121,8 +141,8 @@ in
 
   # OpenGL and Vulkan
   hardware.opengl = {
-   driSupport = true;
-   driSupport32Bit = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -138,8 +158,8 @@ in
   environment.variables = {
    EDITOR = "vim";
    NIX_BUILD_CORES = "4";
-   NIXOS_CONFIG = "/home/wittano/dotfiles/nix/os/configuration.nix";
-   HOME_MANAGER_CONFIG = home-manager-config;
+   NIXOS_CONFIG = "${home}/dotfiles/nix/os/configuration.nix";
+   HOME_MANAGER_CONFIG = home-manager-config + "/home.nix";
   };
 
   # Home-manager
@@ -150,6 +170,7 @@ in
     vim
     wget
     virt-manager
+    lxappearance
   ];
 
   # Virtualization
