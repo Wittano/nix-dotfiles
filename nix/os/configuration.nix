@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-   home-manager-config="/home/wittano/dotfiles/nix/home-manager";
+   home-manager-config="/home/nixos/dotfiles/nix/home-manager";
    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
@@ -97,7 +97,7 @@ in
       };
 
       displayManager = {
-	    defaultSession = "openbox";
+	    defaultSession = "none+openbox";
 	    gdm.enable = true;
       };
     };
@@ -117,7 +117,7 @@ in
   hardware.pulseaudio.enable = true;
 
   # Enable video card
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

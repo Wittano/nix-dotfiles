@@ -22,11 +22,16 @@
     fsType = "ext4";
   };
 
+  fileSystems."/home" = { 
+    device = "/dev/nixos/home";
+    fsType = "ext4";
+  };
+
   fileSystems."/boot/efi" ={ 
    device = "/dev/disk/by-label/BOOT";
    fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  swapDevices = [ { device = "/dev/nixos/swap"; } ];
 
 }
