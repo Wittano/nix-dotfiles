@@ -32,6 +32,11 @@
     fsType = "vfat";
   };
 
+  fileSystems."/mnt/backup" ={ 
+    device = "/dev/disk/by-uuid/f031287c-48e3-479e-8958-1986a02d0a8f";
+    fsType = "ext4";
+  };
+
   swapDevices = [ { device = "/dev/nixos/swap"; } ];
 
 }

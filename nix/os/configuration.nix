@@ -54,7 +54,11 @@ in
    };
     defaultGateway = "192.168.1.1";
     nameservers = [ "8.8.8.8" ];
-    firewall.enable = true;
+    firewall = {
+      enable = true;
+      allowPing = false;
+      allowedTCPPorts = [ 31416 ];
+    };
   };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -104,14 +108,13 @@ in
     boinc = {
       enable = true;
       extraEnvPackages = with pkgs; [ ocl-icd linuxPackages.nvidia_x11 ];
+      allowRemoteGuiRpc = true;
     };
 
     # X server
     xserver = {
       enable = true;
-
       layout = "pl";
-      xkbOptions = "eurosign:e";
 
       # Window manager
       windowManager.openbox.enable = true;
@@ -151,7 +154,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wittano = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "libvirtd" "boinc" ]; # Enable ‘sudo’ for the user.
   };
 
   # Enviroment variables

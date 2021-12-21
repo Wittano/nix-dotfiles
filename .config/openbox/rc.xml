@@ -923,5 +923,19 @@
     <application class="Firefox">
       <desktop>2</desktop>
     </application>
+    <application class="openttd">
+      <desktop>5</desktop>
+    </application>
+    <application class="Terminator">
+	<position force="yes">
+		<x>center</x>
+		<y>center</y>
+	</position>
+    </application>
+    <application class="eu4">
+      <desktop>5</desktop>
+      <focus>yes</focus>
+      <fullscreen>yes</fullscreen>
+    </application>
   </applications>
 </openbox_config>

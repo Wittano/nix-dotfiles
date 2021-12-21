@@ -14,30 +14,26 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.11";
+  home.stateVersion = "21.05";
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     rhythmbox
-    firefox
+    i3lock-fancy
+    signal-desktop
     steam
     vivaldi
     nitrogen
-    neofetch
     rofi
     terminator
-    vscode
     openbox-menu
     lxmenu-data
     obconf
     polybar
-    rnix-lsp
     thunderbird
     xfce.thunar
-    xfce.exo
     flameshot
     keepassxc
-    home-manager
     discord
     minecraft
     redshift
