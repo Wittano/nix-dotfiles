@@ -75,7 +75,7 @@ in
 
   # Services
   services = {
-    openssh.enable = true;
+    # openssh.enable = true; # SSH deamon
 
     syncthing = {
       enable = true;
@@ -115,6 +115,7 @@ in
     xserver = {
       enable = true;
       layout = "pl";
+      videoDrivers = [ "nvidia" ];
 
       # Window manager
       windowManager.openbox.enable = true;
@@ -137,13 +138,14 @@ in
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  # Enable video card
-  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = config.hardware.pulseaudio.enable;
+  };
 
   # OpenGL and Vulkan
   hardware.opengl = {
+    enable = true;
     driSupport = true;
     driSupport32Bit = true;
   };
@@ -174,6 +176,8 @@ in
     wget
     virt-manager
     lxappearance
+    steam
+    steam-run-native
   ];
 
   # Virtualization
@@ -183,6 +187,9 @@ in
   };
 
   programs.dconf.enable = true;
+
+  # Steam
+  programs.steam.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

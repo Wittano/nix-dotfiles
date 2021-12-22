@@ -18,10 +18,10 @@
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
+    go_1_17
     rhythmbox
     i3lock-fancy
     signal-desktop
-    steam
     vivaldi
     nitrogen
     rofi
@@ -37,6 +37,7 @@
     discord
     minecraft
     redshift
+    vscode
   ];
 
   home.sessionVariables = {
@@ -50,6 +51,11 @@
       enable = true;
       userName = "wittano";
       userEmail = "radoslaw.ratyna@gmail.com";
+      extraConfig = {
+        core.editor = "vim";
+        init.defaultBranch = "main";
+        pull.rebase = true;
+      };
     };
     neovim = {
       enable = true;
