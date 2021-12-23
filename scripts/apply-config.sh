@@ -1,6 +1,11 @@
 #!/bin/bash
 
 DOTFILE_DIR=$HOME/dotfiles
+CONFIG_DIR=$HOME/.config
+
+if [ ! -d $CONFIG_DIR ]; then
+	mkdir -p $CONFIG_DIR
+fi
 
 for config in $(ls $DOTFILE_DIR/.config); do
 	if [ ! -L $HOME/.config/$config ]; then
