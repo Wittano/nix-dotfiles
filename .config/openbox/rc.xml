@@ -937,6 +937,9 @@
       <focus>yes</focus>
       <fullscreen>yes</fullscreen>
     </application>
+    <application class="Civ6Sub">
+      <desktop>5</desktop>
+    </application>
     <application class="Code">
       <desktop>1</desktop>
       <maximized>yes</maximized>

@@ -111,6 +111,8 @@ in
       allowRemoteGuiRpc = true;
     };
 
+	xautolock.enable = true;
+
     # X server
     xserver = {
       enable = true;
