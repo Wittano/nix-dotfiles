@@ -4,8 +4,8 @@
 
 { config, pkgs, ... }:
 let
-   main_user = "wittano";
-   home = "/home/${main_user}";
+   main_user = if builtins.pathExists /home/wittano then "wittano" else "nixos";
+   home =  "/home/${main_user}";
    home-manager-config="${home}/dotfiles/nix/home-manager";
    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
@@ -111,13 +111,13 @@ in
       allowRemoteGuiRpc = true;
     };
 
-	xautolock.enable = true;
 
     # X server
     xserver = {
       enable = true;
       layout = "pl";
       videoDrivers = [ "nvidia" ];
+      xautolock.enable = true;
 
       # Window manager
       windowManager.openbox.enable = true;
@@ -140,17 +140,23 @@ in
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    support32Bit = config.hardware.pulseaudio.enable;
-  };
 
-  # OpenGL and Vulkan
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+  # Hardware
+  hardware = {
+    pulseaudio = {
+      enable = true;
+      support32Bit = config.hardware.pulseaudio.enable;
+    };
+    nvidia.modesetting.enable = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      setLdLibraryPath = true;
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    };
   };
+  # OpenGL and Vulkan
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -158,7 +164,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wittano = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "libvirtd" "boinc" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
   };
 
   # Enviroment variables
@@ -167,6 +173,11 @@ in
    NIX_BUILD_CORES = "4";
    NIXOS_CONFIG = "${home}/dotfiles/nix/os/configuration.nix";
    HOME_MANAGER_CONFIG = home-manager-config + "/home.nix";
+
+  __NV_PRIME_RENDER_OFFLOAD = "1";
+  __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+  __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  __VK_LAYER_NV_optimus = "NVIDIA_only";
   };
 
   # Home-manager
@@ -175,9 +186,9 @@ in
   # Global packages
   environment.systemPackages = with pkgs; [
     vim
-    wget
     virt-manager
-    lxappearance
+
+    # Games
     steam
     steam-run-native
   ];
@@ -189,9 +200,6 @@ in
   };
 
   programs.dconf.enable = true;
-
-  # Steam
-  programs.steam.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

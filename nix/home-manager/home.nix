@@ -19,13 +19,13 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     go_1_17
+    joplin-desktop
+    lxappearance
     rhythmbox
-    i3lock-fancy
     signal-desktop
     vivaldi
     nitrogen
     rofi
-    terminator
     openbox-menu
     lxmenu-data
     obconf
@@ -38,6 +38,7 @@
     minecraft
     redshift
     vscode
+    alacritty
   ];
 
   home.sessionVariables = {
@@ -62,8 +63,11 @@
       extraConfig = ''
         set rnu nu
       '';
+      coc.enable = true;
       plugins = with pkgs.vimPlugins; [
         vim-nix
+        vim-go
+        coc-go
       ];
       viAlias = true;
       vimdiffAlias = true;

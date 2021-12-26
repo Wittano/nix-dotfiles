@@ -337,9 +337,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>i3lock</name>
+          <name>lock</name>
         </startupnotify>
-        <command>i3lock-fancy</command>
+        <command>xautolock -locknow</command>
       </action>
     </keybind>
     <keybind key="W-w">
@@ -938,6 +938,9 @@
       <fullscreen>yes</fullscreen>
     </application>
     <application class="Civ6Sub">
+      <desktop>5</desktop>
+    </application>
+    <application class="Shogun2">
       <desktop>5</desktop>
     </application>
     <application class="Code">

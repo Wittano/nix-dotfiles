@@ -37,6 +37,6 @@
     fsType = "ext4";
   };
 
-  swapDevices = [ { device = "/dev/nixos/swap"; } ];
+#  swapDevices = [ { device = "/dev/nixos/swap"; } ];
 
 }
