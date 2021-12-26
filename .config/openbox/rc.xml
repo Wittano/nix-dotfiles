@@ -431,7 +431,7 @@
     <!-- Launch terminal -->
     <keybind key="W-Return">
       <action name="Execute">
-        <command>terminator</command>
+        <command>alacritty</command>
       </action>
     </keybind>
   </keyboard>

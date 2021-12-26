@@ -7,12 +7,12 @@
     <menu id="root-menu" label="Openbox 3">
         <item label="Terminal emulator">
             <action name="Execute">
-                <execute>x-terminal-emulator</execute>
+                <execute>alacritty</execute>
             </action>
         </item>
         <item label="Web browser">
             <action name="Execute">
-                <execute>x-www-browser</execute>
+                <execute>vivaldi</execute>
             </action>
         </item>
         <separator />
