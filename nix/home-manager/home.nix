@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  fishConfig = import ./fish/fish.nix;
+in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -18,7 +20,7 @@
 
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
-    go_1_17
+    arandr
     joplin-desktop
     lxappearance
     rhythmbox
@@ -48,6 +50,9 @@
   # Programs
   programs = {
     home-manager.enable = true;
+
+    fish = fishConfig pkgs;
+
     git = {
       enable = true;
       userName = "wittano";
@@ -58,12 +63,12 @@
         pull.rebase = true;
       };
     };
+
     neovim = {
       enable = true;
       extraConfig = ''
         set rnu nu
       '';
-      coc.enable = true;
       plugins = with pkgs.vimPlugins; [
         vim-nix
         vim-go
@@ -74,5 +79,6 @@
       withNodeJs = true; # for coc.nvim
       withPython3 = true; # for plugins
     };
+
   };
 }

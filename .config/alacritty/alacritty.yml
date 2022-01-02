@@ -15,7 +15,7 @@ window:
 
 scrolling:
   history: 10000
-  multiplier: 100
+  multiplier: 10
 
   # Faux Scrolling
   #

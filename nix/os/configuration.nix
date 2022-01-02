@@ -14,7 +14,7 @@ in
   nixpkgs.config.allowUnfree = true;
 
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       ./hardware-configuration.nix
       (import "${home-manager}/nixos")
     ];
@@ -43,6 +43,7 @@ in
 
   # Networking
   networking = {
+
     hostName = "nixos"; # Define your hostname.
     useDHCP = false;
     interfaces.eno1 = {
@@ -52,6 +53,7 @@ in
         prefixLength = 24;
       } ];
    };
+
     defaultGateway = "192.168.1.1";
     nameservers = [ "8.8.8.8" ];
     firewall = {
@@ -59,6 +61,7 @@ in
       allowPing = false;
       allowedTCPPorts = [ 31416 ];
     };
+
   };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -75,7 +78,7 @@ in
 
   # Services
   services = {
-    # openssh.enable = true; # SSH deamon
+    openssh.enable = true; # SSH deamon
 
     syncthing = {
       enable = true;
@@ -147,6 +150,8 @@ in
       enable = true;
       support32Bit = config.hardware.pulseaudio.enable;
     };
+
+    # OpenGL and Vulkan
     nvidia.modesetting.enable = true;
     opengl = {
       enable = true;
@@ -156,7 +161,6 @@ in
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
   };
-  # OpenGL and Vulkan
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -164,8 +168,11 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wittano = {
     isNormalUser = true;
+    shell = pkgs.fish;
     extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
   };
+
+  programs.fish.enable = true;
 
   # Enviroment variables
   environment.variables = {
@@ -181,10 +188,15 @@ in
   };
 
   # Home-manager
-  home-manager.users.wittano = import "${home-manager-config}/home.nix";
+  home-manager = {
+    users.wittano = import "${home-manager-config}/home.nix";
+    useUserPackages = true;
+    backupFileExtension = "backup";
+  };
 
   # Global packages
   environment.systemPackages = with pkgs; [
+    # Dev
     vim
     virt-manager
 
@@ -199,7 +211,8 @@ in
     libvirtd.enable = true;
   };
 
-  programs.dconf.enable = true;
+  # programs.dconf.enable = true;
+  # programs.fish.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

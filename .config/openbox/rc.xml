@@ -947,5 +947,8 @@
       <desktop>1</desktop>
       <maximized>yes</maximized>
     </application>
+    <application class="Thunderbird">
+      <desktop>3</desktop>
+    </application>
   </applications>
 </openbox_config>
