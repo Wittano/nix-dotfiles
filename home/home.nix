@@ -56,54 +56,18 @@ in
   # Dirs and config files
   xdg.configFile = {
     "redshift.conf".source = "${configDir}/.config/redshift.conf";
-    "alacritty" = {
-      recursive = true;
-      source = "${configDir}/.config/alacritty";
-    };
-    "i3" = {
-      recursive = true;
-      source = "${configDir}/.config/i3";
-    }; 
-    "nitrogen" = {
-      recursive = true;
-      source = "${configDir}/.config/nitrogen";
-    };
-    "openbox" = {
-      recursive = true;
-      source = "${configDir}/.config/openbox";
-    };
-    "polybar" = {
-      recursive = true;
-      source = "${configDir}/.config/polybar";
-    };
-    "qtile" = {
-      recursive = true;
-      source = "${configDir}/.config/qtile";
-    };
-    "qutebrowser" = {
-      recursive = true;
-      source = "${configDir}/.config/qutebrowser";
-    };
-    "ranger" = {
-      recursive = true;
-      source = "${configDir}/.config/ranger";
-    };
-    "rofi" = {
-      recursive = true;
-      source = "${configDir}/.config/rofi";
-    };
-    "sxhkd" = {
-      source = "${configDir}/.config/sxhkd";
-      recursive = true;
-    };
-    "terminator" = {
-      source = "${configDir}/.config/terminator";
-      recursive = true;
-    };
-    "tint2" = {
-      source = "${configDir}/.config/tint2";
-      recursive = true;
-    };
+    "alacritty".source = "${configDir}/.config/alacritty";
+    "i3".source = "${configDir}/.config/i3";
+    "nitrogen".source = "${configDir}/.config/nitrogen";
+    "openbox".source = "${configDir}/.config/openbox";
+    "polybar".source = "${configDir}/.config/polybar";
+    "qtile".source = "${configDir}/.config/qtile";
+    "qutebrowser".source = "${configDir}/.config/qutebrowser";
+    "ranger".source = "${configDir}/.config/ranger";
+    "rofi".source = "${configDir}/.config/rofi";
+    "sxhkd".source = "${configDir}/.config/sxhkd";
+    "terminator".source = "${configDir}/.config/terminator";
+    "tint2".source = "${configDir}/.config/tint2";
   };
 
   home.file = {
