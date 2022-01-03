@@ -1,12 +1,14 @@
 { config, pkgs, ... }:
 let
   fishConfig = import ./fish/fish.nix;
+  homeDir = "/home/wittano";
+  configDir = "${homeDir}/dotfiles";
 in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "wittano";
-  home.homeDirectory = "/home/wittano";
+  home.homeDirectory = homeDir;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -33,7 +35,8 @@ in
     obconf
     polybar
     thunderbird
-    xfce.thunar
+    gnome.nautilus
+    gnome.file-roller
     flameshot
     keepassxc
     discord
@@ -41,11 +44,74 @@ in
     redshift
     vscode
     alacritty
+    tmux
+    gnome.eog
   ];
 
+  # Session variables
   home.sessionVariables = {
     EDITOR="nvim";
   };
+
+  # Dirs and config files
+  xdg.configFile = {
+    "redshift.conf".source = "${configDir}/.config/redshift.conf";
+    "alacritty" = {
+      recursive = true;
+      source = "${configDir}/.config/alacritty";
+    };
+    "i3" = {
+      recursive = true;
+      source = "${configDir}/.config/i3";
+    }; 
+    "nitrogen" = {
+      recursive = true;
+      source = "${configDir}/.config/nitrogen";
+    };
+    "openbox" = {
+      recursive = true;
+      source = "${configDir}/.config/openbox";
+    };
+    "polybar" = {
+      recursive = true;
+      source = "${configDir}/.config/polybar";
+    };
+    "qtile" = {
+      recursive = true;
+      source = "${configDir}/.config/qtile";
+    };
+    "qutebrowser" = {
+      recursive = true;
+      source = "${configDir}/.config/qutebrowser";
+    };
+    "ranger" = {
+      recursive = true;
+      source = "${configDir}/.config/ranger";
+    };
+    "rofi" = {
+      recursive = true;
+      source = "${configDir}/.config/rofi";
+    };
+    "sxhkd" = {
+      source = "${configDir}/.config/sxhkd";
+      recursive = true;
+    };
+    "terminator" = {
+      source = "${configDir}/.config/terminator";
+      recursive = true;
+    };
+    "tint2" = {
+      source = "${configDir}/.config/tint2";
+      recursive = true;
+    };
+  };
+
+  home.file = {
+    ".bg".source = "${configDir}/.bg";
+    ".themes".source = "${configDir}/.themes";
+    ".icons".source = "${configDir}/.icons";
+  };
+
 
   # Programs
   programs = {

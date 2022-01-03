@@ -4,19 +4,22 @@
 
 { config, pkgs, ... }:
 let
-   main_user = if builtins.pathExists /home/wittano then "wittano" else "nixos";
-   home =  "/home/${main_user}";
-   home-manager-config="${home}/dotfiles/nix/home-manager";
-   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+   mainUser = if builtins.pathExists /home/wittano then "wittano" else "nixos";
+   homeDir =  "/home/${mainUser}";
+   homeConfigDir = "${homeDir}/dotfiles/home";
+   homeManager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+   homeManagerConfig = "${homeConfigDir}/home.nix";
 in
 {
   # Nix configuration
   nixpkgs.config.allowUnfree = true;
+  nix.gc.automatic = true;
+  nix.autoOptimiseStore = true;
 
   imports =
     [ 
       ./hardware-configuration.nix
-      (import "${home-manager}/nixos")
+      (import "${homeManager}/nixos")
     ];
 
   # Auto Updating
@@ -83,16 +86,16 @@ in
     syncthing = {
       enable = true;
       systemService = true;
-      configDir = "${home}/.config/syncthing";
+      configDir = "${homeDir}/.config/syncthing";
       user = "wittano";
       folders = {
-        "${home}/Music" = {
+        "${homeDir}/Music" = {
 	  id = "epc3d-xkkkk";
 	  label = "Music";
 	  devices = [ "phone" ];
 	};
 
-	"${home}/.keepass" = {
+	"${homeDir}/.keepass" = {
 	  id = "xm73k-khame";
 	  label = "Passwords";
 	  devices = [ "phone" ];
@@ -114,8 +117,6 @@ in
       allowRemoteGuiRpc = true;
     };
 
-
-    # X server
     xserver = {
       enable = true;
       layout = "pl";
@@ -146,6 +147,9 @@ in
 
   # Hardware
   hardware = {
+    
+    trackpoint.emulateWheel = true;
+
     pulseaudio = {
       enable = true;
       support32Bit = config.hardware.pulseaudio.enable;
@@ -178,8 +182,8 @@ in
   environment.variables = {
    EDITOR = "vim";
    NIX_BUILD_CORES = "4";
-   NIXOS_CONFIG = "${home}/dotfiles/nix/os/configuration.nix";
-   HOME_MANAGER_CONFIG = home-manager-config + "/home.nix";
+   NIXOS_CONFIG = "${homeDir}/dotfiles/nix/os/configuration.nix";
+   HOME_MANAGER_CONFIG = homeManagerConfig;
 
   __NV_PRIME_RENDER_OFFLOAD = "1";
   __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
@@ -189,7 +193,7 @@ in
 
   # Home-manager
   home-manager = {
-    users.wittano = import "${home-manager-config}/home.nix";
+    users.wittano = import homeManagerConfig;
     useUserPackages = true;
     backupFileExtension = "backup";
   };
