@@ -71,15 +71,15 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
-         branch
-         colorize
-         colored-man-pages
-         docker
-         docker-compose
-         python
-         tmux
-         vi-mode
-        )
+  branch
+  colorize
+  colored-man-pages
+  docker
+  docker-compose
+  python
+  tmux
+  vi-mode
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,21 +114,21 @@ SERVER_IP="192.168.1.160"
 
 # Debian/Ubuntu base
 if [ -n "$(command -v apt)" ]; then
-    alias ai="sudo apt install --no-install-recommends --auto-remove --show-progress"
-    alias au="sudo apt update && sudo apt upgrade"
-    alias ar="sudo apt remove"
-	alias ara="sudo apt autoremove"
-    alias ap="sudo apt purge"
-    alias as="apt search"
+  alias ai="sudo apt install --no-install-recommends --auto-remove --show-progress"
+  alias au="sudo apt update && sudo apt upgrade"
+  alias ar="sudo apt remove"
+  alias ara="sudo apt autoremove"
+  alias ap="sudo apt purge"
+  alias as="apt search"
 fi
 
 # Void linux
 if [ -n "$(command -v xbps-install)" ]; then
-    alias xq='xbps-query -R'
-    alias xi='sudo xbps-install -S'
-    alias xiu='sudo xbps-install -Su'
-    alias xr='sudo xbps-remove'
-    alias xro='sudo xbps-remove -Oo'
+  alias xq='xbps-query -R'
+  alias xi='sudo xbps-install -S'
+  alias xiu='sudo xbps-install -Su'
+  alias xr='sudo xbps-remove'
+  alias xro='sudo xbps-remove -Oo'
 fi
 
 # Config shotcuts
@@ -149,9 +149,9 @@ alias yapull="yadm pull origin main"
 alias py='python3'
 alias npm='pnpm'
 if [ -z "$(command -v nvim)" ]; then
-	alias vi="vim"
+  alias vi="vim"
 else
-	alias vi="nvim"
+  alias vi="nvim"
 fi
 
 # Server
