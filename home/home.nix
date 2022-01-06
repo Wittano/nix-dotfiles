@@ -18,6 +18,7 @@ let
     redshift
     flameshot
     htop
+    youtube-dl
 
     # Organizations
     joplin-desktop

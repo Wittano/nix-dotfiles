@@ -1,14 +1,26 @@
-{ config, pkgs ? <nixpkgs>, ... }: {
+{ config, pkgs ? <nixpkgs>, ... }:
+let
+  wacomScript = "$HOME/dotfiles/scripts/wacom-multi-monitor.sh";
+in {
   programs.fish = {
     enable = true;
     shellAbbrs = {
       gst = "git status";
       gc = "git commit";
-      gcc = "git commit --amend";
-      gpush = "git push";
-      gpull = "git pull";
+      "gc!" = "git commit --amend";
+      gaa = "git add .";
+      ggpush = "git push";
+      ggpull = "git pull";
       boinc-gui = "sudo boincmgr -d /var/lib/boinc";
+      wacom = "bash ${wacomScript}";
+      ra = "ranger";
+      xc = "xprop | grep _OB_APP_CLASS";
+      yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
     };
+
+    loginShellInit = ''
+      bash ${wacomScript};
+    '';
 
     plugins = [{
       name = "dracula-theme";
