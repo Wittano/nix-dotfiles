@@ -16,7 +16,9 @@ for config in $(ls $DOTFILE_DIR/.config); do
 		ln -s $DOTFILE_DIR/.config/$config $HOME/.config/$config
 	fi
 done
+
 themes=(.bg .themes .icons)
+
 for dir in "${themes[@]}"; do
 	if [ ! -L $HOME/$dir ]; then
 		ln -s $DOTFILE_DIR/$dir $HOME

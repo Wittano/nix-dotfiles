@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/share/env bash
 
 if [ -z `which xsetwacom` ]; then
     echo "Wacom driver isn't installed!"

@@ -1,4 +1,6 @@
 { config, pkgs, ... }: {
+  users.users.wittano.extraGroups = [ "boinc" ];
+
   services.boinc = {
     enable = true;
     extraEnvPackages = with pkgs; [ ocl-icd linuxPackages.nvidia_x11 ];

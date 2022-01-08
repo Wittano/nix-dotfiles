@@ -12,23 +12,12 @@ let
     discord
 
     # Utils
-    arandr
-    lxappearance
-    nitrogen
     redshift
     flameshot
-    htop
     youtube-dl
 
     # Organizations
     joplin-desktop
-
-    # Desktop
-    rofi
-    openbox-menu
-    lxmenu-data
-    obconf
-    polybar
 
     # Apps
     rhythmbox
@@ -44,10 +33,6 @@ let
     alacritty
     vscode
     tmux
-
-    # Games
-    steam
-    steam-run-native
   ];
 
   # Funcations
@@ -61,7 +46,7 @@ let
 in {
   nixpkgs.config.allowUnfree = true;
 
-  imports = [ ./fish.nix ./git.nix ./neovim ];
+  imports = [ ./fish.nix ./git.nix ./neovim ./gaming ];
 
   home = {
     username = "wittano";

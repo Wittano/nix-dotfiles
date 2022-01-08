@@ -42,21 +42,15 @@ in {
 
   fonts.fonts = with pkgs; [ powerline-fonts font-awesome_5 source-code-pro ];
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound.
   sound.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Enviroment variables
   environment.variables = {
     EDITOR = "vim";
     NIX_BUILD_CORES = "4";
     NIXOS_CONFIG = "${homeDir}/dotfiles/nix/os/configuration.nix";
-    HOME_MANAGER_CONFIG = homeManagerConfig;
+    DOTFILES_DIR = "${homeDir}/dotfiles";
 
     __NV_PRIME_RENDER_OFFLOAD = "1";
     __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
@@ -74,27 +68,17 @@ in {
   users.users.wittano = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "libvirtd" ];
   };
 
   # Global packages
-  environment.systemPackages = with pkgs; [ vim virt-manager fish ];
+  environment.systemPackages = with pkgs; [ vim virt-manager fish htop ];
 
   # Virtualization
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
   };
-
-  # programs.dconf.enable = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # System version
   system.stateVersion = "21.11";
