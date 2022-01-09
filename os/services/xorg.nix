@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 let openbox = (import ./desktop/openbox.nix { inherit config pkgs; });
 in {
-  imports = [
-    (lib.mkIf config.services.xserver.windowManager.openbox.enable openbox)
-  ];
+  imports =
+    [ (lib.mkIf config.services.xserver.windowManager.openbox.enable openbox) ];
 
   services.xserver = {
     enable = true;
@@ -12,7 +11,7 @@ in {
 
     # Auto screen-lock
     xautolock = {
-      enable = true;
+      enable = !config.services.xserver.desktopManager.gnome.enable;
       time = 5;
     };
 
