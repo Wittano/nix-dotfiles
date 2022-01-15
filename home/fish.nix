@@ -17,6 +17,7 @@ in {
       xc = "xprop | grep _OB_APP_CLASS";
       yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
       re = "sudo nixos-rebuild switch";
+      neofetch = "nix-shell -p neofetch --run 'neofetch;exit'";
     };
 
     loginShellInit = ''

@@ -46,7 +46,7 @@ let
 in {
   nixpkgs.config.allowUnfree = true;
 
-  imports = [ ./fish.nix ./git.nix ./neovim ./python.nix ];
+  imports = [ ./fish.nix ./git.nix ./neovim ./programming ./gaming ];
 
   home = {
     username = "wittano";

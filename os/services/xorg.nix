@@ -12,7 +12,7 @@ in {
     # Auto screen-lock
     xautolock = {
       enable = !config.services.xserver.desktopManager.gnome.enable;
-      time = 5;
+      time = 15;
     };
 
     # Wacom tablet driver
