@@ -28,6 +28,7 @@ let
     keepassxc
     gnome.eog
     krita
+    evince
 
     # Dev
     alacritty

@@ -1,1 +1,6 @@
-{ config, pkgs, ... }: { imports = [ ./python.nix ]; }
+{ config, pkgs, ... }: {
+  imports = [ ./java.nix ./python.nix ];
+
+  home.packages = with pkgs; [ zeal ];
+
+}
