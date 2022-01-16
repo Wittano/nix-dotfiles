@@ -4,7 +4,7 @@ let
   homeDir = "/home/wittano";
   configDir = "${homeDir}/dotfiles";
   xdgConfigFiles =
-    [ "redshift.conf" "alacritty" "nitrogen" "openbox" "polybar" "rofi" ];
+    [ "redshift.conf" "alacritty" "nitrogen" "openbox" "polybar" "rofi" "tint2" ];
   homeFiles = [ ".bg" ".themes" ".icons" ".vimrc" ".tmux.conf" ];
   programs = with pkgs; [
     # Communicators

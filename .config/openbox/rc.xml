@@ -34,7 +34,7 @@
     <!-- with Smart placement on a multi-monitor system, try to place new windows
        on: 'Any' - any monitor, 'Mouse' - where the mouse is, 'Active' - where
        the active window is, 'Primary' - only on the primary monitor -->
-    <primaryMonitor>Mouse</primaryMonitor>
+    <primaryMonitor>1</primaryMonitor>
     <!-- The monitor where Openbox should place popup dialogs such as the
        focus cycling popup, or the desktop switch popup.  It can be an index
        from 1, specifying a particular monitor.  Or it can be one of the
@@ -913,9 +913,6 @@
     <application class="Signal">
       <desktop>5</desktop>
     </application>
-    <application class="thunderbird">
-      <desktop>3</desktop>
-    </application>
     <application class="Firefox">
       <desktop>2</desktop>
     </application>
@@ -923,10 +920,10 @@
       <desktop>5</desktop>
     </application>
     <application class="Terminator">
-	    <position force="yes">
+      <position force="yes">
         <x>center</x>
         <y>center</y>
-	    </position>
+      </position>
     </application>
     <application class="eu4">
       <desktop>5</desktop>
@@ -945,9 +942,6 @@
     </application>
     <application class="jetbrains-idea-ce">
       <desktop>1</desktop>
-    </application>
-    <application class="Thunderbird">
-      <desktop>3</desktop>
     </application>
   </applications>
 </openbox_config>

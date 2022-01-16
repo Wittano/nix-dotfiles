@@ -11,13 +11,13 @@ in {
       gaa = "git add .";
       ggpush = "git push";
       ggpull = "git pull";
-      bg = "sudo boincmgr -d /var/lib/boinc";
+      boinc = "sudo boincmgr -d /var/lib/boinc";
       wacom = "bash ${wacomScript}";
       ra = "ranger";
       xc = "xprop | grep _OB_APP_CLASS";
       yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
       re = "sudo nixos-rebuild switch";
-      neofetch = "nix-shell -p neofetch --run 'neofetch;exit'";
+      neofetch = "nix-shell -p neofetch --run 'neofetch'";
     };
 
     loginShellInit = ''

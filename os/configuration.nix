@@ -58,6 +58,8 @@ in {
     __VK_LAYER_NV_optimus = "NVIDIA_only";
   };
 
+  environment.shells = with pkgs; [ fish bash ];
+
   # Home-manager
   home-manager = {
     users.wittano = import homeManagerConfig;
