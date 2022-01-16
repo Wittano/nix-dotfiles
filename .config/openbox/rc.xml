@@ -128,7 +128,6 @@
       <name>doc</name>
       <name>virt</name>
       <name>chat</name>
-      <name>(Unnamed desktop)</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -911,9 +910,6 @@
     <application class="hl2_linux">
       <desktop>5</desktop>
     </application>
-    <application class="Virt-manager">
-      <desktop>4</desktop>
-    </application>
     <application class="Signal">
       <desktop>5</desktop>
     </application>
@@ -927,10 +923,10 @@
       <desktop>5</desktop>
     </application>
     <application class="Terminator">
-	<position force="yes">
-		<x>center</x>
-		<y>center</y>
-	</position>
+	    <position force="yes">
+        <x>center</x>
+        <y>center</y>
+	    </position>
     </application>
     <application class="eu4">
       <desktop>5</desktop>
