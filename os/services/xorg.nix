@@ -13,6 +13,8 @@ in {
     xautolock = {
       enable = !config.services.xserver.desktopManager.gnome.enable;
       time = 15;
+      enableNotifier = true;
+      notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
     };
 
     # Wacom tablet driver

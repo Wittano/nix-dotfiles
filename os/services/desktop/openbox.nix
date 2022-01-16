@@ -9,7 +9,6 @@
     openbox-menu
     lxmenu-data
     obconf
-    polybar
     tint2
     volumeicon
     gsimplecal

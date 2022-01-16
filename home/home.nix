@@ -3,9 +3,16 @@ let
   fishConfig = import ./fish;
   homeDir = "/home/wittano";
   configDir = "${homeDir}/dotfiles";
-  xdgConfigFiles =
-    [ "redshift.conf" "alacritty" "nitrogen" "openbox" "polybar" "rofi" "tint2" ];
-  homeFiles = [ ".bg" ".themes" ".icons" ".vimrc" ".tmux.conf" ];
+  xdgConfigFiles = [
+    "redshift.conf"
+    "alacritty"
+    "nitrogen"
+    "openbox"
+    "polybar"
+    "rofi"
+    "tint2"
+  ];
+  homeFiles = [ ".bg" ".themes" ".icons" ".vimrc" ];
   programs = with pkgs; [
     # Communicators
     signal-desktop
@@ -14,7 +21,6 @@ let
     # Utils
     redshift
     flameshot
-    youtube-dl
 
     # Organizations
     joplin-desktop
@@ -33,7 +39,6 @@ let
     # Dev
     alacritty
     vscode
-    tmux
   ];
 
   # Funcations

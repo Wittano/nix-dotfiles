@@ -433,6 +433,12 @@
         <command>alacritty</command>
       </action>
     </keybind>
+    <!-- Launch nautilus-->
+    <keybind key="W-i">
+      <action name="Execute">
+        <command>nautilus</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
@@ -940,7 +946,7 @@
       <desktop>1</desktop>
       <maximized>yes</maximized>
     </application>
-    <application class="jetbrains-idea-ce">
+    <application class="jetbrains*">
       <desktop>1</desktop>
     </application>
   </applications>
