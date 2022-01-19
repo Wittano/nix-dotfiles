@@ -21,13 +21,16 @@ let
     # Utils
     redshift
     flameshot
+    youtube-dl
 
     # Organizations
     joplin-desktop
 
+    # Web browser
+    vivaldi
+
     # Apps
     rhythmbox
-    vivaldi
     thunderbird
     gnome.nautilus
     gnome.file-roller

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+<head>
+<title>Feed Subscriptions</title>
+</head>
+<body>
+  <outline title="Programming" text="Programming">
+      <outline text="Nixpafx.dev" title="Nixpafx.dev" type="rss" 
+            xmlUrl="https://nipafx.dev/feed.xml" htmlUrl="https://nipafx.dev" entryContent="3"/>
+      <outline text="This Week in Rust" title="This Week in Rust" type="rss" 
+            xmlUrl="https://this-week-in-rust.org/rss.xml" htmlUrl="https://this-week-in-rust.org/"/>
+      <outline text="Bykowski" title="Bykowski" type="rss" 
+            xmlUrl="https://bykowski.pl/blog/feed/" htmlUrl="https://bykowski.pl"/>
+      <outline text="Krzaq.cc" title="Krzaq.cc" type="rss" 
+            xmlUrl="https://dev.krzaq.cc/feed/" htmlUrl="https://dev.krzaq.cc"/>
+      <outline text="Real Python" title="Real Python" type="rss" 
+            xmlUrl="https://realpython.com/atom.xml"/>
+  </outline>
+  <outline title="Linux" text="Linux">
+      <outline text="Linux.com" title="Linux.com" type="rss" 
+            xmlUrl="https://www.linux.com/feed/" htmlUrl="https://www.linux.com"/>
+      <outline text="Linux Foundation" title="Linux Foundation" type="rss" 
+            xmlUrl="https://www.linuxfoundation.org/feed/" htmlUrl="https://www.linuxfoundation.org"/>
+      <outline text="Redhat" title="Redhat" type="rss" 
+            xmlUrl="https://www.redhat.com/sysadmin/rss.xml" htmlUrl="https://www.redhat.com/sysadmin/"/>
+      <outline text="Linux handbook" title="Linux handbook" type="rss" 
+            xmlUrl="https://linuxhandbook.com/rss/" htmlUrl="https://linuxhandbook.com/"/>
+      <outline text="Subscribe to DenshiBlog" title="Subscribe to DenshiBlog" type="rss" 
+            xmlUrl="https://denshi.org/rss.xml" htmlUrl="http://denshi.org/rss.xml"/>
+  </outline>
+  <outline title="Emacs" text="Emacs">
+      <outline text="Emacsair" title="Emacsair" type="rss" 
+            xmlUrl="https://emacsair.me/feed.xml" htmlUrl="https://emacsair.me/"/>
+      <outline text="Emacs blog" title="Emacs blog" type="rss" 
+            xmlUrl="https://emacs.blog/feed/" htmlUrl="https://emacs.blog"/>
+  </outline>
+  <outline title="Server" text="Server">
+      <outline text="The digital life" title="The digital life" type="rss" 
+            xmlUrl="https://www.the-digital-life.com/feed/" htmlUrl="https://www.the-digital-life.com"/>
+  </outline>
+  <outline title="Tricks and tips" text="Tricks and tips">
+      <outline text="Tecmint" title="Tecmint" type="rss" 
+            xmlUrl="https://www.tecmint.com/feed/" htmlUrl="https://www.tecmint.com"/>
+      <outline text="It&#39;s FOSS" title="It&#39;s FOSS" type="rss" 
+            xmlUrl="https://itsfoss.com/feed/" htmlUrl="https://itsfoss.com"/>
+      <outline text="Cyberciti" title="Cyberciti" type="rss" 
+            xmlUrl="https://www.cyberciti.biz/atom/atom.xml" htmlUrl="https://www.cyberciti.biz/atom/"/>
+      <outline text="Sysads" title="Sysads" type="rss" 
+            xmlUrl="https://sysads.co.uk/index.xml" htmlUrl="https://sysads.co.uk/"/>
+      <outline text="FOSSmint" title="FOSSmint" type="rss" 
+            xmlUrl="https://www.fossmint.com/feed/" htmlUrl="https://www.fossmint.com"/>
+      <outline text="Linoxide" title="Linoxide" type="rss" 
+            xmlUrl="https://linoxide.com/feed/" htmlUrl="https://linoxide.com"/>
+  </outline>
+  <outline title="Org mode" text="Org mode">
+      <outline text="Tecosaur" title="Tecosaur" type="rss" 
+            xmlUrl="https://blog.tecosaur.com/tmio/rss.xml" htmlUrl="https://blog.tecosaur.com/tmio/"/>
+  </outline>
+  <outline title="Nix" text="Nix">
+      <outline text="Nix news" title="RSS feed" type="rss" 
+            xmlUrl="https://nixos.org/blog/announcements-rss.xml" htmlUrl="https://nixos.org/news.html"/>
+      <outline text="Tweag - Nix blog" title="Tweag - Nix blog" type="rss" 
+            xmlUrl="https://www.tweag.io/rss-nix.xml" htmlUrl="https://tweag.io"/>
+      <outline text="Nasir Hussain&#39;s Blog" title="Nasir Hussain&#39;s Blog" type="rss" 
+            xmlUrl="https://nasirhm.github.io/index.xml" htmlUrl="https://nasirhm.github.io/"/>
+      <outline text="RSS Feed myme.no" title="RSS Feed myme.no" type="rss" 
+            xmlUrl="https://myme.no/posts/../feed.xml" htmlUrl="https://myme.no"/>
+  </outline>
+</body>
+</opml>
