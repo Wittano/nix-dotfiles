@@ -1,6 +1,6 @@
 { config, pkgs ? <nixpkgs>, ... }:
 let
-  wacomScript = "$HOME/dotfiles/scripts/wacom-multi-monitor.sh";
+  wacomScript = "$DOTFILES_DIR/scripts/wacom-multi-monitor.sh";
 in {
   programs.fish = {
     enable = true;

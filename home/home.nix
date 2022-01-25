@@ -1,17 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   fishConfig = import ./fish;
   homeDir = "/home/wittano";
   configDir = "${homeDir}/dotfiles";
-  xdgConfigFiles = [
-    "redshift.conf"
-    "alacritty"
-    "nitrogen"
-    "openbox"
-    "polybar"
-    "rofi"
-    "tint2"
-  ];
+  xdgConfigFiles = [ "redshift.conf" "alacritty" "openbox" "polybar" "rofi" ];
   homeFiles = [ ".bg" ".themes" ".icons" ".vimrc" ];
   programs = with pkgs; [
     # Communicators
@@ -60,10 +52,16 @@ in {
   home = {
     username = "wittano";
     homeDirectory = homeDir;
-    stateVersion = "21.05";
+    stateVersion = "21.11";
     file = linkConfigFiles homeFiles "";
     sessionVariables = { EDITOR = "nvim"; };
     packages = programs;
+
+    activation.linkUpdatableConfigurationDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      echo "Run activation script!"
+
+      bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
+    '';
   };
 
   xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";

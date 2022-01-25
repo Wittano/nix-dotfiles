@@ -949,5 +949,8 @@
     <application class="jetbrains*">
       <desktop>1</desktop>
     </application>
+    <application class="steam_*">
+      <desktop>5</desktop>
+    </application>
   </applications>
 </openbox_config>
