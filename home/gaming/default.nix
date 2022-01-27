@@ -1,3 +1,3 @@
 { config, pkgs, ... }: {
-  home.packages = with pkgs; [ steam steam-run-native ];
+  home.packages = with pkgs; [ steam steam-run-native lutris ];
 }
