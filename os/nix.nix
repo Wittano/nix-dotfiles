@@ -8,5 +8,9 @@ in {
     gc.automatic = true;
     autoOptimiseStore = true;
     buildCores = maxJobs;
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 }
