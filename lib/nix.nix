@@ -1,4 +1,6 @@
 { config, pkgs, ... }:
+with lib;
+with lib.my;
 let maxJobs = 16;
 in {
   nixpkgs.config.allowUnfree = true;
