@@ -17,31 +17,40 @@
       mkPkgs = p:
         import p {
           inherit system;
-
           config.allowUnfree = true;
         };
+
       pkgs = mkPkgs nixpkgs;
       unstable = mkPkgs nixpkgs-unstable;
+
+      lib = nixpkgs.lib.extend (self: super: {
+        my = import ./lib {
+          inherit pkgs;
+          lib = self;
+        };
+      });
     in {
-      nixosConfigurations = with nixpkgs.lib; {
+      lib = lib.my;
+
+      nixosConfigurations = with lib; {
         pc = nixosSystem {
           inherit system;
-          specialArgs = { unstable = unstable; };
+          specialArgs = { inherit pkgs unstable lib; };
 
           modules = [
-            ./os/configuration.nix
-            ./os/hardware.nix
-            ./os/nix.nix
-            ./os/networking.nix
-            ./os/services
+            ./modules/configuration.nix
+            ./modules/hardware
+            ./modules/networking/networking.nix
+            ./modules/services
+            ./modules/desktop/openbox.nix
 
             home-manager.nixosModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = { inherit unstable; };
+                extraSpecialArgs = { inherit pkgs unstable lib; };
                 useUserPackages = true;
                 backupFileExtension = "backup";
-                users.wittano = ./home/home.nix;
+                users.wittano = ./hosts/pc/home.nix;
               };
             }
           ];

@@ -51,6 +51,16 @@
 
   # swapDevices = [{ device = "/dev/nixos/swap"; }];
 
+  # Enable sound.
+  sound.enable = true;
+
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
+
+  environment.systemPackages = with pkgs; [ virt-manager ];
+
   hardware = {
     trackpoint.emulateWheel = true;
 

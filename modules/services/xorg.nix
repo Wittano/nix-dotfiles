@@ -1,9 +1,4 @@
-{ config, pkgs, lib, ... }:
-let openbox = (import ./desktop/openbox.nix { inherit config pkgs; });
-in {
-  imports =
-    [ (lib.mkIf config.services.xserver.windowManager.openbox.enable openbox) ];
-
+{ config, pkgs, ... }: {
   services.xserver = {
     enable = true;
     layout = "pl";

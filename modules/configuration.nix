@@ -3,8 +3,22 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let homeDir = "/home/wittano";
+let
+  homeDir = "/home/wittano";
+  maxJobs = 16;
 in {
+
+  nix = {
+    inherit maxJobs;
+
+    gc.automatic = true;
+    autoOptimiseStore = true;
+    buildCores = maxJobs;
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   # System
   system.autoUpgrade = {
@@ -23,20 +37,11 @@ in {
     keyMap = "pl";
   };
 
-  fonts.fonts = with pkgs; [
-    powerline-fonts
-    font-awesome_5
-    source-code-pro
-  ];
-
-  # Enable sound.
-  sound.enable = true;
+  fonts.fonts = with pkgs; [ powerline-fonts font-awesome_5 source-code-pro ];
 
   # Enviroment variables
   environment.variables = {
     EDITOR = "vim";
-    NIX_BUILD_CORES = "4";
-    NIXOS_CONFIG = "${homeDir}/dotfiles/nix/os/configuration.nix";
     DOTFILES_DIR = "${homeDir}/dotfiles";
 
     __NV_PRIME_RENDER_OFFLOAD = "1";
@@ -54,13 +59,7 @@ in {
   };
 
   # Global packages
-  environment.systemPackages = with pkgs; [ vim virt-manager fish htop ];
-
-  # Virtualization
-  virtualisation = {
-    docker.enable = true;
-    libvirtd.enable = true;
-  };
+  environment.systemPackages = with pkgs; [ vim fish htop ];
 
   # System version
   system.stateVersion = "21.11";
