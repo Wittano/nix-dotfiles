@@ -3,25 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  mainUser = if builtins.pathExists /home/wittano then "wittano" else "nixos";
-  homeDir = "/home/${mainUser}";
-  homeManagerConfig = "${homeDir}/dotfiles/home/home.nix";
-
-  homeManager = builtins.fetchTarball
-    "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+let homeDir = "/home/wittano";
 in {
-
-  imports = [
-    ./hardware.nix
-    ./nix.nix
-    ./networking.nix
-    (import ./services {
-      inherit config pkgs;
-      homeDir = homeDir;
-    })
-    (import "${homeManager}/nixos")
-  ];
 
   # System
   system.autoUpgrade = {
@@ -40,7 +23,11 @@ in {
     keyMap = "pl";
   };
 
-  fonts.fonts = with pkgs; [ powerline-fonts font-awesome_5 source-code-pro ];
+  fonts.fonts = with pkgs; [
+    powerline-fonts
+    font-awesome_5
+    source-code-pro
+  ];
 
   # Enable sound.
   sound.enable = true;
@@ -59,13 +46,6 @@ in {
   };
 
   environment.shells = with pkgs; [ fish bash ];
-
-  # Home-manager
-  home-manager = {
-    users.wittano = import homeManagerConfig;
-    useUserPackages = true;
-    backupFileExtension = "backup";
-  };
 
   users.users.wittano = {
     isNormalUser = true;

@@ -10,22 +10,38 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
-    let system = "x86_64-linux";
-    in {
-      nixosConfigurations = {
-        pc = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
+    let
+      system = "x86_64-linux";
+
+      mkPkgs = p:
+        import p {
           inherit system;
+
+          config.allowUnfree = true;
+        };
+      pkgs = mkPkgs nixpkgs;
+      unstable = mkPkgs nixpkgs-unstable;
+    in {
+      nixosConfigurations = with nixpkgs.lib; {
+        pc = nixosSystem {
+          inherit system;
+          specialArgs = { unstable = unstable; };
 
           modules = [
             ./os/configuration.nix
+            ./os/hardware.nix
+            ./os/nix.nix
+            ./os/networking.nix
+            ./os/services
 
             home-manager.nixosModules.home-manager
             {
               home-manager = {
+                extraSpecialArgs = { inherit unstable; };
                 useUserPackages = true;
                 backupFileExtension = "backup";
-                users.wittano = import ./home/home.nix;
+                users.wittano = ./home/home.nix;
               };
             }
           ];

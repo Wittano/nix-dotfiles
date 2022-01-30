@@ -1,4 +1,4 @@
-{ config, pkgs ? <nixpkgs>, ... }:
+{ config, pkgs, ... }:
 let
   wacomScript = "$DOTFILES_DIR/scripts/wacom-multi-monitor.sh";
 in {

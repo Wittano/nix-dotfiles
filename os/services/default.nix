@@ -1,12 +1,5 @@
-{ config, pkgs, homeDir, ... }: {
-  imports = [
-    ./boinc.nix
-    ./xorg.nix
-    (import ./syncthing.nix {
-      inherit config pkgs;
-      homeDir = homeDir;
-    })
-  ];
+{ config, pkgs, ... }: {
+  imports = [ ./boinc.nix ./xorg.nix ./syncthing.nix ];
 
   services.openssh.enable = true;
 }

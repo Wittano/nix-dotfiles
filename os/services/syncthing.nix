@@ -1,4 +1,6 @@
-{ config, pkgs, homeDir, ... }: {
+{ config, pkgs, ... }:
+let homeDir = "/home/wittano";
+in {
   services.syncthing = {
     enable = true;
     systemService = true;

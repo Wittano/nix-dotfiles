@@ -1,10 +1,9 @@
 { config, pkgs, lib, ... }:
 let
-  fishConfig = import ./fish;
   homeDir = "/home/wittano";
   configDir = "${homeDir}/dotfiles";
-  xdgConfigFiles = [ "redshift.conf" "alacritty" "openbox" "polybar" "rofi" ];
-  homeFiles = [ ".bg" ".themes" ".icons" ".vimrc" ];
+  xdgConfigFiles = [ "redshift.conf" "alacritty" "openbox" "rofi" ];
+  homeFiles = [ ".themes" ".icons" ];
   programs = with pkgs; [
     # Communicators
     signal-desktop
@@ -35,15 +34,6 @@ let
     alacritty
     vscode
   ];
-
-  # Funcations
-  linkConfigFiles = list: path:
-    let
-      attr = map (x: {
-        name = x;
-        value = { source = "${configDir}/${path}${x}"; };
-      }) list;
-    in builtins.listToAttrs attr;
 in {
   nixpkgs.config.allowUnfree = true;
 
@@ -53,18 +43,19 @@ in {
     username = "wittano";
     homeDirectory = homeDir;
     stateVersion = "21.11";
-    file = linkConfigFiles homeFiles "";
+    # file = linkConfigFiles homeFiles "";
     sessionVariables = { EDITOR = "nvim"; };
     packages = programs;
 
-    activation.linkUpdatableConfigurationDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      echo "Run activation script!"
+    activation.linkUpdatableConfigurationDirs =
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        echo "Run activation script!"
 
-      bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
-    '';
+        bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
+      '';
   };
 
-  xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";
+  # xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";
 
   programs.home-manager.enable = true;
 }

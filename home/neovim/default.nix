@@ -1,4 +1,4 @@
-{ config, pkgs ? <nixpkgs>, ... }: {
+{ config, pkgs, ... }: {
   programs.neovim = {
     enable = true;
     extraConfig = ''
