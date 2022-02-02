@@ -1,9 +1,7 @@
-{ config, pkgs, ... }: {
+{ ... }: {
   networking = {
-    hostName = "nixos";
     useDHCP = false;
 
-    # PC
     interfaces.eno1 = {
       useDHCP = false;
       ipv4.addresses = [{
@@ -13,12 +11,11 @@
     };
 
     defaultGateway = "192.168.1.1";
-    nameservers = [ "8.8.8.8" ];
+    nameservers = [ "1.1.1.1" ];
     firewall = {
       enable = true;
       allowPing = false;
-      allowedTCPPorts = [ 31416 ];
     };
-
   };
+
 }

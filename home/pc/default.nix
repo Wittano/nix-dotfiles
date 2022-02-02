@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   homeDir = "/home/wittano";
-  configDir = "${homeDir}/dotfiles";
-  xdgConfigFiles = [ "redshift.conf" "alacritty" "openbox" "rofi" ];
   homeFiles = [ ".themes" ".icons" ];
   programs = with pkgs; [
     # Communicators
@@ -35,33 +33,23 @@ let
     vscode
   ];
 in {
-  nixpkgs.config.allowUnfree = true;
-
-  imports = [
-    ./../../modules/shell/fish.nix
-    ./../../modules/dev/git.nix
-    ./../../modules/editors/neovim
-    ./../../modules/dev
-    ./../../modules/desktop/gaming
-  ];
-
   home = {
-    username = "wittano";
+    username = wittano;
     homeDirectory = homeDir;
     stateVersion = "21.11";
     # file = linkConfigFiles homeFiles "";
     sessionVariables = { EDITOR = "nvim"; };
     packages = programs;
 
-    activation.linkUpdatableConfigurationDirs =
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        echo "Run activation script!"
+    # activation.linkUpdatableConfigurationDirs =
+    #   lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #     echo "Run activation script!"
 
-        bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
-      '';
+    #     bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
+    #   '';
   };
 
   # xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";
 
-  programs.home-manager.enable = true;
+  # programs.home-manager.enable = true;
 }

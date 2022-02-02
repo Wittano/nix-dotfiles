@@ -1,22 +1,70 @@
-{ config, pkgs, ... }: {
-  services.picom = {
-    enable = true;
-    fade = false;
+{ config, pkgs, lib, configDir, ... }:
+let
+  inherit (lib) mkEnableOption mkOption mkIf types;
+  cfg = config.modules.desktop.openbox;
+in {
+
+  options = {
+    modules.desktop.openbox = {
+      enable = mkEnableOption "Enable Openbox desktop";
+      
+      enableRofi = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Enable Rofi - Program launcher";
+      };
+    };
   };
 
-  environment.systemPackages = with pkgs; [
-    rofi
-    openbox-menu
-    lxmenu-data
-    obconf
-    tint2
-    volumeicon
-    gsimplecal
-    notify-osd-customizable
+  config = mkIf cfg.enable {
+    config.modules.desktop.apps.rofi.enable = cfg.enableRofi;
 
-    # Utils
-    arandr
-    lxappearance
-    nitrogen
-  ];
+    home-manager.users.wittano.home = {
+      packages = with pkgs; [
+        openbox-menu
+        lxmenu-data
+        obconf
+        tint2
+        volumeicon
+        gsimplecal
+        notify-osd-customizable
+
+        # Utils
+        arandr
+        lxappearance
+        nitrogen
+      ];
+
+      xdg.configFile."nitrogen" = "${configDir}/nitrogen";
+      xdg.configFile."tint2" = "${configDir}/tint2";
+    };
+
+    services = {
+      xserver = {
+        enable = true;
+
+        xautolock = {
+          enable = true;
+          time = 15;
+          enableNotifier = true;
+          notifier =
+            ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+        };
+
+        windowManager.openbox.enable = true;
+
+        displayManager = {
+          defaultSession = "none+openbox";
+          gdm.enable = true;
+        };
+      };
+
+      picom = {
+        enable = true;
+        fade = false;
+      };
+
+    };
+  };
+
 }

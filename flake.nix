@@ -12,6 +12,9 @@
 
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
     let
+      inherit (lib) nixosSystem;
+      inherit (builtins) path;
+
       system = "x86_64-linux";
 
       mkPkgs = p:
@@ -23,35 +26,45 @@
       pkgs = mkPkgs nixpkgs;
       unstable = mkPkgs nixpkgs-unstable;
 
-      lib = nixpkgs.lib.extend (self: super: {
-        my = import ./lib {
-          inherit pkgs;
-          lib = self;
-        };
-      });
-    in {
-      lib = lib.my;
+      lib = nixpkgs.lib;
 
-      nixosConfigurations = with lib; {
+      homeManager = home-manager.nixosModules.home-manager;
+
+      configDir = path {
+        path = ./.config;
+        recurisve = true;
+      };
+    in {
+      nixosConfigurations = {
         pc = nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit pkgs unstable lib configDir;
+            home-manager = homeManager;
+          };
+
+          modules = [
+            ./hosts/pc/configuration.nix
+            home-manager.nixosModules
+            ./modules
+            ./configuration.nix
+          ];
+        };
+
+        laptop = nixosSystem {
           inherit system;
           specialArgs = { inherit pkgs unstable lib; };
 
           modules = [
-            ./modules/configuration.nix
-            ./modules/hardware
-            ./modules/networking/networking.nix
-            ./modules/services
-            ./modules/desktop/openbox.nix
+            ./hosts/laptop
 
-            home-manager.nixosModules.home-manager
+            home-manager.nixosModules
+
             {
-              home-manager = {
-                extraSpecialArgs = { inherit pkgs unstable lib; };
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.wittano = ./hosts/pc/home.nix;
-              };
+              extraSpecialArgs = { inherit pkgs unstable lib; };
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              users.wittano = ./home/pc/home.nix;
             }
           ];
         };

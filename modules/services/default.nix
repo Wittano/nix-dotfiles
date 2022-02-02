@@ -1,5 +1,1 @@
-{ config, pkgs, ... }: {
-  imports = [ ./boinc.nix ./xorg.nix ./syncthing.nix ];
-
-  services.openssh.enable = true;
-}
+{ ... }: { imports = [ ./boinc.nix ./syncthing.nix ./ssh.nix ]; }
