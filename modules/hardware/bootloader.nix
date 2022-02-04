@@ -1,15 +1,30 @@
-{ config, pkgs, ... }: {
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";
+{ config, pkgs, lib, ... }:
+let
+  inherit (lib) mkIf mkEnableOption;
+
+  cfg = config.modules.hardware.grub;
+in {
+  options = {
+    modules.hardware.grub = {
+      enable = mkEnableOption ''
+        Enable GRUB2 as bootloader
+      '';
     };
-    grub = {
-      efiSupport = true;
-      enable = true;
-      version = 2;
-      device = "nodev";
+  };
+
+  config = mkIf cfg.enable {
+    boot.loader = {
+      systemd-boot.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+      grub = {
+        efiSupport = true;
+        enable = true;
+        version = 2;
+        device = "nodev";
+      };
     };
   };
 }

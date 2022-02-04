@@ -20,34 +20,32 @@
       mkPkgs = p:
         import p {
           inherit system;
+
           config.allowUnfree = true;
         };
 
       pkgs = mkPkgs nixpkgs;
       unstable = mkPkgs nixpkgs-unstable;
 
-      lib = nixpkgs.lib;
-
-      homeManager = home-manager.nixosModules.home-manager;
-
-      configDir = path {
-        path = ./.config;
-        recurisve = true;
-      };
+      lib = nixpkgs.lib.extend (sefl: super: {
+        hm = home-manager.lib.hm;
+        my = import ./lib { inherit lib pkgs; };
+      });
     in {
+      inherit lib;
+
       nixosConfigurations = {
         pc = nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit pkgs unstable lib configDir;
-            home-manager = homeManager;
-          };
+
+          specialArgs = { inherit pkgs unstable lib; };
 
           modules = [
-            ./hosts/pc/configuration.nix
-            home-manager.nixosModules
             ./modules
             ./configuration.nix
+            ./hosts/pc/configuration.nix
+
+            home-manager.nixosModules.home-manager
           ];
         };
 
@@ -61,10 +59,12 @@
             home-manager.nixosModules
 
             {
-              extraSpecialArgs = { inherit pkgs unstable lib; };
-              useUserPackages = true;
-              backupFileExtension = "backup";
-              users.wittano = ./home/pc/home.nix;
+              home-manager = {
+                extraSpecialArgs = { inherit pkgs unstable lib; };
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                users.wittano = ./home/pc/home.nix;
+              };
             }
           ];
         };

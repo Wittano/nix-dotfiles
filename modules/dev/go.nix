@@ -1,9 +1,6 @@
-{ config, pkgs, unstable, lib, home-manager, mainUser, ... }:
-let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-
-  cfg = config.modules.dev.go;
-  golandPackages = with pkgs; [ jetbrains.goland gnumake gcc ];
+{ config, pkgs, unstable, lib, home-manager, ... }:
+with lib;
+let cfg = config.modules.dev.go;
 in {
   options = {
     modules.dev.go = {
@@ -27,11 +24,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${mainUser}.home.packages = with pkgs; [
-      unstable."go_1_${cfg.version}"
-
-      (mkIf cfg.useGoland golandPackages)
-    ];
+    home-manager.users.wittano.home.packages = with pkgs;
+      [ unstable."go_1_${cfg.version}" ]
+      ++ (if cfg.useGoland then [ jetbrains.goland gnumake gcc ] else [ ]);
   };
 
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, mainUser, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -13,8 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${mainUser}.home = {
-      programs.neovim = {
+    home-manager.users.wittano.programs = {
+      neovim = {
         enable = true;
         extraConfig = ''
           set rnu nu

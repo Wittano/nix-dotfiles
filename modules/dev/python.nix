@@ -1,10 +1,6 @@
-{ config, pkgs, lib, home-manager, mainUser, ... }:
-let
-  inherit (lib) mkEnableOption mkIf;
-
-  cfg = config.modules.dev.python;
-
-  pycharmPackages = with pkgs; [ jetbrains.pycharm-community ];
+{ config, pkgs, lib, home-manager, ... }:
+with lib;
+let cfg = config.modules.dev.python;
 in {
   options = {
     modules.dev.python = {
@@ -19,9 +15,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${mainUser}.home = {
-      packages = with pkgs;
-        [ virtualenv ] ++ (mkIf cfg.usePycharm pycharmPackages);
+    home-manager.users.wittano.home = {
+      packages = with pkgs; [
+        virtualenv
+        (mkIf cfg.usePycharm jetbrains.pycharm-community)
+      ];
       file.".ideavimrc".text = ''
         set rnu nu
       '';

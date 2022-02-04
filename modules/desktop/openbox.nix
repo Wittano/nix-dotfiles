@@ -1,42 +1,37 @@
-{ config, pkgs, lib, configDir, ... }:
-let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-  cfg = config.modules.desktop.openbox;
+{ config, pkgs, lib, ... }:
+with lib;
+with lib.my;
+let cfg = config.modules.desktop.openbox;
 in {
 
-  options = {
-    modules.desktop.openbox = {
-      enable = mkEnableOption "Enable Openbox desktop";
-      
-      enableRofi = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable Rofi - Program launcher";
-      };
-    };
+  options.modules.desktop.openbox = {
+    enable = mkEnableOption "Enable Openbox desktop";
   };
 
   config = mkIf cfg.enable {
-    config.modules.desktop.apps.rofi.enable = cfg.enableRofi;
+    home-manager.users.wittano = {
+      home = {
+        packages = with pkgs; [
+          openbox-menu
+          lxmenu-data
+          obconf
+          tint2
+          volumeicon
+          gsimplecal
+          notify-osd-customizable
 
-    home-manager.users.wittano.home = {
-      packages = with pkgs; [
-        openbox-menu
-        lxmenu-data
-        obconf
-        tint2
-        volumeicon
-        gsimplecal
-        notify-osd-customizable
+          # Utils
+          arandr
+          lxappearance
+          nitrogen
+        ];
 
-        # Utils
-        arandr
-        lxappearance
-        nitrogen
-      ];
+      };
 
-      xdg.configFile."nitrogen" = "${configDir}/nitrogen";
-      xdg.configFile."tint2" = "${configDir}/tint2";
+      xdg.configFile = {
+        nitrogen.source = path.getConfigFile "nitrogen";
+        tint2.source = path.getConfigFile "tint2";
+      };
     };
 
     services = {

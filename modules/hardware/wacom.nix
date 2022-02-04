@@ -1,8 +1,7 @@
 { config, pkgs, lib, home-manager, ... }:
+with lib;
+with builtins;
 let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (builtins) toFile;
-
   cfg = config.modules.hardware.wacom;
 
   wacomScript = toFile "wacom-multi-monitor.sh" ''
@@ -29,7 +28,7 @@ in {
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = cfg.enable;
 
-    home-manager.users.wittano.home.programs = {
+    home-manager.users.wittano.programs = {
       fish = mkIf config.modules.shell.fish.enable {
         shellAbbrs = { wacom = "bash ${wacomScript}"; };
       };

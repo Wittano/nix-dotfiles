@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-  homeDir = "/home/wittano";
   homeFiles = [ ".themes" ".icons" ];
   programs = with pkgs; [
     # Communicators
@@ -34,8 +33,8 @@ let
   ];
 in {
   home = {
-    username = wittano;
-    homeDirectory = homeDir;
+    username = "wittano";
+    homeDirectory = "/home/wittano";
     stateVersion = "21.11";
     # file = linkConfigFiles homeFiles "";
     sessionVariables = { EDITOR = "nvim"; };

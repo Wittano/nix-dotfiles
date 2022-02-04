@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./openbox.nix ./gaming ]; }
+{ ... }: { imports = [ ./openbox.nix ./gaming ./apps ]; }

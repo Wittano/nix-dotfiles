@@ -1,13 +1,11 @@
-{ config, pkgs, unstable, lib, home-manager,  ... }:
-let jobs = 16;
-in {
+{ config, pkgs, unstable, lib, home-manager, ... }: {
 
   # Nix configuration
   nix = {
-    maxJobs = jobs;
+    maxJobs = 16;
     gc.automatic = true;
     autoOptimiseStore = true;
-    buildCores = jobs;
+    buildCores = 4;
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -19,10 +17,12 @@ in {
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
   console = {
     font = "Lat2-Terminus16";
     keyMap = "pl";
   };
+
   services.xserver.layout = "pl";
 
   # System

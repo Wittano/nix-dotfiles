@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, mainUser, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -13,6 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${mainUser}.home.packages = with pkgs; [ postman ];
+    home-manager.users.wittano.home.packages = with pkgs; [ postman ];
   };
 }

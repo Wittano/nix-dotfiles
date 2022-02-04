@@ -1,7 +1,6 @@
 { config, pkgs, lib, home-manager, ... }:
-let
-  inherit (lib) mkEnableOption mkIf;
-  cfg = config.modules.desktop.apps.zeal;
+with lib;
+let cfg = config.modules.desktop.apps.zeal;
 in {
   options = {
     modules.desktop.apps.zeal = {

@@ -1,13 +1,13 @@
-{ config, pkgs, lib, ... }:
-let
-  inherit (lib) mkEnableOption mkIf;
-
-  cfg = config.modules.hardware.virutalization;
+{ config, pkgs, lib, modulesPath, ... }:
+with lib;
+let cfg = config.modules.hardware.virtualization;
 in {
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+
   options = {
     modules.hardware.virtualization = {
       enable = mkEnableOption ''
-        Enable virutalization tootls
+        Enable virutalization tools
       '';
 
       enableDocker = mkEnableOption ''
@@ -22,7 +22,8 @@ in {
       libvirtd.enable = true;
     };
 
-    users.users.wittano.extraGroups = [ "docker" "libvirtd" ];
+    users.users.wittano.extraGroups =
+      [ (mkIf cfg.enableDocker "docker") "libvirtd" ];
 
     environment.systemPackages = with pkgs; [ virt-manager ];
 

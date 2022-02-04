@@ -1,7 +1,6 @@
 { config, pkgs, home-manager, lib, ... }:
-let
-  inherit (lib) mkOption types mkIf;
-  cfg = config.modules.dev.git;
+with lib;
+let cfg = config.modules.dev.git;
 in {
   options = {
     modules.dev.git = {
@@ -15,7 +14,7 @@ in {
 
   config = mkIf cfg.enable {
 
-    home-manager.users.wittano.home.programs = {
+    home-manager.users.wittano.programs = {
       git = {
         enable = true;
         userName = "Wittano";

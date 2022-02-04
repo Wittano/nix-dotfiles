@@ -1,8 +1,6 @@
 { config, lib, pkgs, home-manager, ... }:
-let
-  inherit (lib) mkOption mkEnableOption types mkIf;
-
-  cfg = config.shell.fish;
+with lib;
+let cfg = config.modules.shell.fish;
 in {
 
   options = {
@@ -22,7 +20,7 @@ in {
 
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
-    home-manager.users.wittano.home.programs.fish = {
+    home-manager.users.wittano.programs.fish = {
       enable = true;
       shellAbbrs = {
         boinc = "sudo boincmgr -d /var/lib/boinc";

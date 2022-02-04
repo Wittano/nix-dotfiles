@@ -5,8 +5,6 @@
 
 {
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
-
     ./wacom.nix
     ./bootloader.nix
     ./nvidia.nix
@@ -14,15 +12,17 @@
     ./virutalization.nix
   ];
 
-  boot = {
-    initrd = {
-      availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-      kernelModules = [ ];
+  config = {
+    boot = {
+      initrd = {
+        availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+        kernelModules = [ ];
+      };
+
+      extraModulePackages = [ ];
     };
 
-    extraModulePackages = [ ];
+    hardware.trackpoint.emulateWheel = true;
   };
-
-  hardware.trackpoint.emulateWheel = true;
 
 }
