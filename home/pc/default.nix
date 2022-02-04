@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-  homeFiles = [ ".themes" ".icons" ];
   programs = with pkgs; [
     # Communicators
     signal-desktop

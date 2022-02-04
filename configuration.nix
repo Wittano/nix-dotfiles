@@ -6,7 +6,7 @@
     gc.automatic = true;
     autoOptimiseStore = true;
     buildCores = 4;
-    package = pkgs.nixFlakes;
+    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

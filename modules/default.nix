@@ -7,5 +7,6 @@
     ./networking
     ./services
     ./shell
+    ./themes
   ];
 }

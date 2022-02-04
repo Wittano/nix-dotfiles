@@ -1,10 +1,14 @@
 { config, pkgs, ... }: {
 
-  imports = [ ./hardware.nix ./networking.nix  ];
+  imports = [ ./hardware.nix ./networking.nix ];
 
   home-manager.users.wittano = ./../../home/pc;
 
   modules = {
+    themes = {
+      enable = true;
+      dracula.enable = true;
+    };
     desktop = {
       openbox.enable = true;
       apps = {
