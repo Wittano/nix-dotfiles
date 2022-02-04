@@ -1,7 +1,17 @@
 { config, pkgs, lib, ... }:
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.openbox;
+let
+  cfg = config.modules.desktop.openbox;
+  
+  linkMutableConfig = name:
+    hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [ -d "$HOME/.config/${name}" ]; then
+        mv $HOME/.config/${name} $HOME/.config/${name}.old
+      fi
+
+      ln -s $DOTFILES/.config/${name} $HOME/.config/${name}
+    '';
 in {
 
   options.modules.desktop.openbox = {
@@ -26,12 +36,11 @@ in {
           nitrogen
         ];
 
-      };
-
-      xdg.configFile = {
-        openbox.source = path.getConfigFile "openbox";
-        nitrogen.source = path.getConfigFile "nitrogen";
-        tint2.source = path.getConfigFile "tint2";
+        activation = {
+          linkOpenboxConfig = linkMutableConfig "openbox";
+          linkNitrogenConfig = linkMutableConfig "nitrogen";
+          linkTint2Config = linkMutableConfig "tint2";
+        };
       };
     };
 
