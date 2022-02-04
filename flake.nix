@@ -12,8 +12,8 @@
 
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
     let
-      inherit (lib) nixosSystem;
       inherit (builtins) path;
+      inherit (lib.my.hosts) mkHost;
 
       system = "x86_64-linux";
 
@@ -29,45 +29,14 @@
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib pkgs; };
+        my = import ./lib { inherit lib pkgs system home-manager unstable; };
       });
     in {
       inherit lib;
 
-      nixosConfigurations = {
-        pc = nixosSystem {
-          inherit system;
-
-          specialArgs = { inherit pkgs unstable lib; };
-
-          modules = [
-            ./modules
-            ./configuration.nix
-            ./hosts/pc/configuration.nix
-
-            home-manager.nixosModules.home-manager
-          ];
-        };
-
-        laptop = nixosSystem {
-          inherit system;
-          specialArgs = { inherit pkgs unstable lib; };
-
-          modules = [
-            ./hosts/laptop
-
-            home-manager.nixosModules
-
-            {
-              home-manager = {
-                extraSpecialArgs = { inherit pkgs unstable lib; };
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.wittano = ./home/pc/home.nix;
-              };
-            }
-          ];
-        };
-      };
+      nixosConfigurations = builtins.listToAttrs [rec {
+        name = "pc";
+        value = mkHost name;
+      }];
     };
 }

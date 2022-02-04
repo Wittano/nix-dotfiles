@@ -13,15 +13,6 @@
   ];
 
   config = {
-    boot = {
-      initrd = {
-        availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-        kernelModules = [ ];
-      };
-
-      extraModulePackages = [ ];
-    };
-
     hardware.trackpoint.emulateWheel = true;
   };
 
