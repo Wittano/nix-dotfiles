@@ -29,6 +29,7 @@ in {
       };
 
       xdg.configFile = {
+        openbox.source = path.getConfigFile "openbox";
         nitrogen.source = path.getConfigFile "nitrogen";
         tint2.source = path.getConfigFile "tint2";
       };

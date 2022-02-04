@@ -31,7 +31,7 @@ in {
     home-manager.users.wittano = {
       home.file = {
         ".themes/dracula-gtk".source = draculaGTK;
-        ".themes/dracula-openbox".source = draculaOpenbox;
+        ".themes/Dracula-withoutBorder".source = builtins.toPath "${draculaOpenbox}/Dracula-withoutBorder";
         ".icons/dracula".source = draculaIcon;
       };
     };
