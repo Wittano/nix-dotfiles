@@ -6,7 +6,7 @@
     gc.automatic = true;
     autoOptimiseStore = true;
     buildCores = 4;
-    package = pkgs.nixUnstable;
+    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -37,9 +37,33 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop ];
-    variables.EDITOR = "vim";
+    variables = {
+      EDITOR = "vim";
+      DOTFILES = "/home/wittano/dotfiles";
+    };
 
     shells = with pkgs; [ bash ];
+  };
+
+  # Linux Kernel settings
+  boot = {
+    initrd = {
+      availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+      kernelModules = [ ];
+    };
+    
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+    };
+
+    extraModulePackages = [ ];
   };
 
   #User settings

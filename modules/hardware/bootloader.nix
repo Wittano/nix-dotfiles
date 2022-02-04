@@ -14,11 +14,7 @@ in {
 
   config = mkIf cfg.enable {
     boot.loader = {
-      systemd-boot.enable = true;
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
+      
       grub = {
         efiSupport = true;
         enable = true;
