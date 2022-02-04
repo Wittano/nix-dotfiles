@@ -14,6 +14,7 @@
       apps = {
         rofi.enable = true;
         zeal.enable = true;
+        alacritty.enable = true;
       };
     };
     dev = {
