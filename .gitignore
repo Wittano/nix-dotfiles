@@ -152,6 +152,6 @@ cython_debug/
 
 .vscode
 venv/
-.config/tint2/*.backup.*
+config/tint2/*.backup.*
 
 result

@@ -204,7 +204,7 @@ separator_padding = 2 3
 #-------------------------------------
 # Executor 1
 execp = new
-execp_command = bash $HOME/.config/openbox/volume.sh
+execp_command = bash $HOME/config/openbox/volume.sh
 execp_interval = 1
 execp_has_icon = 0
 execp_cache_icon = 1

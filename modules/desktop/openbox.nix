@@ -6,11 +6,15 @@ let
   
   linkMutableConfig = name:
     hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ -d "$HOME/.config/${name}" ]; then
-        mv $HOME/.config/${name} $HOME/.config/${name}.old
+      config=$HOME/.config/${name}
+
+      if [ -d $config ]; then
+        mv $config $config.old
       fi
 
-      ln -s $DOTFILES/.config/${name} $HOME/.config/${name}
+      if [ ! -L $config ]; then
+        ln -s $DOTFILES/.config/${name} $config
+      fi
     '';
 in {
 

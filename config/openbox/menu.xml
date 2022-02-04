@@ -21,7 +21,7 @@
         <separator />
         <item label="Configurations">
             <action name="Execute">
-                <execute>obconf --config-file /home/wittano/dotfiles/.config/openbox/rc.xml</execute>
+                <execute>obconf --config-file /home/wittano/dotfiles/config/openbox/rc.xml</execute>
             </action>
         </item>
         <item label="Reconfigure">
