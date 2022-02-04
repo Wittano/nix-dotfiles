@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+with lib.my;
 let
   programs = with pkgs; [
     # Communicators
@@ -46,6 +47,8 @@ in {
     #     bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
     #   '';
   };
+
+  xdg.configFile."redshift.conf".source = path.getConfigFile "redshift.conf";
 
   # xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";
 
