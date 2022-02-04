@@ -35,6 +35,12 @@
       sound.enable = true;
       nvidia.enable = true;
     };
+    shell = {
+      fish = {
+        enable = true;
+        default = true;
+      };
+    };
     services = {
       boinc.enable = true;
       ssh.enable = true;
