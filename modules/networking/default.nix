@@ -1,1 +1,1 @@
-{ config, pkgs, ... }: { networking.hostName = "wittano-nixos"; }
+{ config, pkgs, ... }: { networking.hostName = "nixos"; }
