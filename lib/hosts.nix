@@ -4,7 +4,7 @@ with lib; {
     nixosSystem {
       inherit system;
 
-      specialArgs = { inherit pkgs unstable lib; };
+      specialArgs = { inherit pkgs unstable lib; hostName = name; };
 
       modules = [
         ./../modules
