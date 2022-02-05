@@ -1,1 +1,3 @@
-{ ... }: { imports = [ ./python.nix ./go.nix ./java.nix ./git.nix ./apps ]; }
+{ ... }: {
+  imports = [ ./python.nix ./go.nix ./java.nix ./git.nix ./apps ./cpp.nix ];
+}

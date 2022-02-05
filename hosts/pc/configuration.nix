@@ -22,10 +22,7 @@
         enable = true;
         useGpg = true;
       };
-      go = {
-        enable = false;
-        useGoland = true;
-      };
+      cpp.enable = true;
       python = {
         enable = true;
         usePycharm = true;
