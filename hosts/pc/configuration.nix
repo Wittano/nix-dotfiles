@@ -18,7 +18,10 @@
       };
     };
     dev = {
-      git.enable = true;
+      git = {
+        enable = true;
+        useGpg = true;
+      };
       go = {
         enable = false;
         useGoland = true;
