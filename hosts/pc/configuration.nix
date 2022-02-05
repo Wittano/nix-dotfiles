@@ -20,7 +20,7 @@
     dev = {
       git.enable = true;
       go = {
-        enable = true;
+        enable = false;
         useGoland = true;
       };
       python = {
