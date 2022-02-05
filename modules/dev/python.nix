@@ -19,7 +19,6 @@ in {
       packages = with pkgs; [
         virtualenv
         pipenv
-        mypy
         unstable.python3Full
         (mkIf cfg.usePycharm jetbrains.pycharm-community)
       ];
