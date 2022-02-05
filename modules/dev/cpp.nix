@@ -11,6 +11,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.clion ];
+    home-manager.users.wittano.home.packages = with pkgs; [
+      cmake
+      gcc_multi
+      gnumake
+      glibc
+      jetbrains.clion
+    ];
   };
 }
