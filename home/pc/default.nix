@@ -36,21 +36,9 @@ in {
     username = "wittano";
     homeDirectory = "/home/wittano";
     stateVersion = "21.11";
-    # file = linkConfigFiles homeFiles "";
     sessionVariables = { EDITOR = "nvim"; };
     packages = programs;
-
-    # activation.linkUpdatableConfigurationDirs =
-    #   lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    #     echo "Run activation script!"
-
-    #     bash $DOTFILES_DIR/scripts/directly-link-config-dirs.sh
-    #   '';
   };
 
   xdg.configFile."redshift.conf".source = path.getConfigFile "redshift.conf";
-
-  # xdg.configFile = linkConfigFiles xdgConfigFiles ".config/";
-
-  # programs.home-manager.enable = true;
 }
