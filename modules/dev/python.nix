@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, unstable, ... }:
 with lib;
 let cfg = config.modules.dev.python;
 in {
@@ -18,6 +18,8 @@ in {
     home-manager.users.wittano.home = {
       packages = with pkgs; [
         virtualenv
+        pipenv
+        unstable.python3Full
         (mkIf cfg.usePycharm jetbrains.pycharm-community)
       ];
       file.".ideavimrc".text = ''
