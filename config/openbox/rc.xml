@@ -952,5 +952,11 @@
     <application class="steam_*">
       <desktop>5</desktop>
     </application>
+    <application class="*.exe">
+      <desktop>5</desktop>
+    </application>
+    <application class="Lutris">
+      <desktop>5</desktop>
+    </application>
   </applications>
 </openbox_config>
