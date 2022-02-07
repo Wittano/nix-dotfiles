@@ -1,6 +1,5 @@
 #!/bin/bash
 nitrogen --restore &
-redshift &
 tint2 &
 notify-osd &
 

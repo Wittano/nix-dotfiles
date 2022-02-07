@@ -39,6 +39,4 @@ in {
     sessionVariables = { EDITOR = "nvim"; };
     packages = programs;
   };
-
-  xdg.configFile."redshift.conf".source = path.getConfigFile "redshift.conf";
 }
