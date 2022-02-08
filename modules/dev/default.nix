@@ -1,3 +1,11 @@
 { ... }: {
-  imports = [ ./python.nix ./go.nix ./java.nix ./git.nix ./apps ./cpp.nix ];
+  imports = [
+    ./python.nix
+    ./go.nix
+    ./java.nix
+    ./git.nix
+    ./apps
+    ./cpp.nix
+    ./csharp.nix
+  ];
 }

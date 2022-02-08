@@ -22,6 +22,7 @@
         enable = true;
         useGpg = true;
       };
+      csharp.enable = true;
       cpp.enable = true;
       python = {
         enable = true;
