@@ -21,6 +21,14 @@ in {
           day = 6000;
           night = 4300;
         };
+        settings = {
+          redshift = {
+            brightness-day = 0.85;
+            brightness-night = 0.7;
+            transition = 1;
+            adjustment-method = "randr";
+          };
+        };
       };
     };
   };
