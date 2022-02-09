@@ -51,7 +51,7 @@
       availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
       kernelModules = [ ];
     };
-    
+
     loader = {
       systemd-boot = {
         enable = true;
@@ -77,6 +77,35 @@
     extraSpecialArgs = { inherit pkgs unstable lib; };
     useUserPackages = true;
     backupFileExtension = "backup";
+  };
+
+  # Internal modules
+  modules = {
+    themes = {
+      enable = true;
+      dracula.enable = true;
+    };
+    dev = {
+      git = {
+        enable = true;
+        useGpg = true;
+      };
+      csharp.enable = true;
+      cpp.enable = true;
+      python = {
+        enable = true;
+        usePycharm = true;
+      };
+    };
+    editors.neovim.enable = true;
+    hardware = {
+      sound.enable = true;
+      grub.enable = true;
+    };
+    shell.fish = {
+      enable = true;
+      default = true;
+    };
   };
 
   # System version
