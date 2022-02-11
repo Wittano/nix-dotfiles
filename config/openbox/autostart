@@ -1,8 +1,0 @@
-#!/bin/bash
-nitrogen --restore &
-tint2 &
-notify-osd &
-
-# for m in $(xrandr --query | awk '{if($2 == "connected"){print $1}}'); do
-# 	MONITOR=$m polybar wittano &
-# done
