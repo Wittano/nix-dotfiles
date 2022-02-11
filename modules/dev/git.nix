@@ -29,6 +29,7 @@ in {
             core.editor = "vim";
             init.defaultBranch = "main";
             pull.rebase = true;
+            commit.gpgsign = true;
           };
         };
 
