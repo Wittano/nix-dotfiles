@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, ... }:
+{ config, pkgs, home-manager, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.alacritty;
@@ -15,7 +15,7 @@ in {
     home-manager.users.wittano = {
       home.packages = with pkgs; [ alacritty ];
 
-      xdg.configFile."alacritty".source = path.getConfigFile "alacritty";
+      xdg.configFile."alacritty".source = dotfiles.alacritty;
     };
   };
 }

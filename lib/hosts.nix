@@ -1,10 +1,10 @@
-{ lib, system, home-manager, unstable, pkgs, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, ... }:
 with lib; {
   mkHost = name:
     nixosSystem {
       inherit system;
 
-      specialArgs = { inherit pkgs unstable lib; hostName = name; };
+      specialArgs = { inherit pkgs unstable lib dotfiles; hostName = name; };
 
       modules = [
         ./../modules

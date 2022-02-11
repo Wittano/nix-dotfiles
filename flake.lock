@@ -55,7 +55,24 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "wittano-dotfiles": "wittano-dotfiles"
+      }
+    },
+    "wittano-dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1644608427,
+        "narHash": "sha256-+FABw0Vt/65Cxi/4fTNkX8NaZp6aRu62nZmyooHSC1w=",
+        "owner": "Wittano",
+        "repo": "dotfiles",
+        "rev": "0c49e9947629f6703d3efd41d878e3024da05b50",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Wittano",
+        "repo": "dotfiles",
+        "type": "github"
       }
     }
   },

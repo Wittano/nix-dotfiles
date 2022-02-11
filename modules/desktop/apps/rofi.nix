@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, dotfiles, ... }:
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.rofi;
@@ -11,7 +11,7 @@ in {
     home-manager.users.wittano = {
       home.packages = with pkgs; [ rofi ];
 
-      xdg.configFile.rofi.source = path.getConfigFile "rofi";
+      xdg.configFile.rofi.source = dotfiles.rofi;
     };
   };
 }
