@@ -1,4 +1,12 @@
 { ... }: {
+  services.xserver.xrandrHeads = [
+    "HDMI-0"
+    {
+      output = "DIV-D-0";
+      primary = true;
+    }
+  ];
+
   fileSystems = {
     "/" = {
       device = "/dev/nixos/root";

@@ -17,7 +17,6 @@
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
     , ... }@inputs:
     let
-      inherit (builtins) path;
       inherit (lib.my.hosts) mkHost;
 
       system = "x86_64-linux";
