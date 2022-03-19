@@ -48,6 +48,11 @@
       nixosConfigurations = builtins.listToAttrs [rec {
         name = "pc";
         value = mkHost name;
-      }];
+      }
+      rec {
+        name = "virt";
+        value = mkHost name;
+      }
+      ];
     };
 }

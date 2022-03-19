@@ -7,7 +7,6 @@ let
     discord
 
     # Utils
-    redshift
     flameshot
     youtube-dl
 
@@ -28,7 +27,6 @@ let
     evince
 
     # Dev
-    alacritty
     vscode
   ];
 in {
