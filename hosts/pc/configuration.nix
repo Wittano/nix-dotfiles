@@ -7,6 +7,7 @@
   modules = {
     desktop = {
       openbox.enable = true;
+      gaming.enable = true;
       apps = {
         rofi.enable = true;
         zeal.enable = true;
