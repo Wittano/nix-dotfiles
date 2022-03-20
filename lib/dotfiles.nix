@@ -1,2 +1,2 @@
 { lib, dotfiles }:
-builtins.mapAttrs (n: v: "${dotfiles}/${n}") (builtins.readDir dotfiles)
+builtins.mapAttrs (n: v: "${dotfiles}/.config/${n}") (builtins.readDir dotfiles)
