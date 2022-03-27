@@ -39,7 +39,8 @@
     systemPackages = with pkgs; [ vim htop ];
     variables = {
       EDITOR = "vim";
-      DOTFILES = "/home/wittano/dotfiles";
+      DOTFILES = "/home/wittano/project/config/dotfiles";
+      NIX_DOTFILES = "/home/wittano/project/config/nix-dotfiles";
     };
 
     shells = with pkgs; [ bash ];
@@ -90,7 +91,6 @@
         enable = true;
         useGpg = true;
       };
-      csharp.enable = true;
       cpp.enable = true;
       python = {
         enable = true;
