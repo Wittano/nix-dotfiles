@@ -9,11 +9,11 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/nixos/root";
+      device = "/dev/pc/root";
       fsType = "ext4";
     };
     "/home" = {
-      device = "/dev/nixos/home";
+      device = "/dev/pc/home";
       fsType = "xfs";
     };
     "/boot/efi" = {
