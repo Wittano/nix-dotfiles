@@ -10,6 +10,7 @@
       gaming.enable = true;
       apps = {
         rofi.enable = true;
+        terminator.enable = true;
         zeal.enable = true;
       };
     };
