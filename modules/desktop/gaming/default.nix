@@ -6,7 +6,7 @@ in {
   options = {
     modules.desktop.gaming = {
       enable = mkEnableOption ''
-        Enable games utilites
+        Enable games tools
       '';
     };
   };
@@ -16,6 +16,9 @@ in {
       steam
       steam-run-native
       lutris
+      xdelta
+      xterm
+      gnome.zenity
     ];
   };
   
