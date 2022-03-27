@@ -3,13 +3,6 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-  
-  linkMutableConfig = name:
-    hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -L $HOME/.config/${name} ]; then
-        ln -s $DOTFILES/.config/${name} $HOME/.config/${name}
-      fi
-    '';
 in {
 
   options.modules.desktop.openbox = {
