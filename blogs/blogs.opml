@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+<head>
+<title>Feed Subscriptions</title>
+</head>
+<body>
+  <outline title="Programming" text="Programming">
+      <outline text="Krzaq.cc" title="Krzaq.cc" type="rss" 
+            xmlUrl="https://dev.krzaq.cc/feed/" htmlUrl="https://dev.krzaq.cc"/>
+      <outline text="gynvael.coldwind//vx.log (EN)" title="gynvael.coldwind//vx.log (EN)" type="rss" 
+            xmlUrl="https://gynvael.coldwind.pl/rss_en.php" htmlUrl="https://gynvael.coldwind.pl/"/>
+  </outline>
+  <outline title="Linux" text="Linux">
+      <outline text="Redhat" title="Redhat" type="rss" 
+            xmlUrl="https://www.redhat.com/sysadmin/rss.xml" htmlUrl="https://www.redhat.com/sysadmin/"/>
+      <outline text="Linux handbook" title="Linux handbook" type="rss" 
+            xmlUrl="https://linuxhandbook.com/rss/" htmlUrl="https://linuxhandbook.com/"/>
+      <outline text="Subscribe to DenshiBlog" title="Subscribe to DenshiBlog" type="rss" 
+            xmlUrl="https://denshi.org/rss.xml" htmlUrl="http://denshi.org/rss.xml"/>
+      <outline text="Phoronix" title="Phoronix" type="rss" 
+            xmlUrl="https://www.phoronix.com/rss.php" htmlUrl="https://www.phoronix.com/"/>
+      <outline text="9to5Linux » Feed" title="9to5Linux » Feed" type="rss" 
+            xmlUrl="https://9to5linux.com/feed" htmlUrl="https://9to5linux.com"/>
+  </outline>
+  <outline title="Emacs" text="Emacs">
+      <outline text="Emacsair" title="Emacsair" type="rss" 
+            xmlUrl="https://emacsair.me/feed.xml" htmlUrl="https://emacsair.me/"/>
+      <outline text="Emacs blog" title="Emacs blog" type="rss" 
+            xmlUrl="https://emacs.blog/feed/" htmlUrl="https://emacs.blog"/>
+  </outline>
+  <outline title="Server" text="Server">
+      <outline text="The digital life" title="The digital life" type="rss" 
+            xmlUrl="https://www.the-digital-life.com/feed/" htmlUrl="https://www.the-digital-life.com"/>
+  </outline>
+  <outline title="Tricks and tips" text="Tricks and tips">
+      <outline text="Tecmint" title="Tecmint" type="rss" 
+            xmlUrl="https://www.tecmint.com/feed/" htmlUrl="https://www.tecmint.com"/>
+      <outline text="It&#39;s FOSS" title="It&#39;s FOSS" type="rss" 
+            xmlUrl="https://itsfoss.com/feed/" htmlUrl="https://itsfoss.com"/>
+      <outline text="Cyberciti" title="Cyberciti" type="rss" 
+            xmlUrl="https://www.cyberciti.biz/atom/atom.xml" htmlUrl="https://www.cyberciti.biz/atom/"/>
+      <outline text="Sysads" title="Sysads" type="rss" 
+            xmlUrl="https://sysads.co.uk/index.xml" htmlUrl="https://sysads.co.uk/"/>
+      <outline text="FOSSmint" title="FOSSmint" type="rss" 
+            xmlUrl="https://www.fossmint.com/feed/" htmlUrl="https://www.fossmint.com"/>
+      <outline text="Linoxide" title="Linoxide" type="rss" 
+            xmlUrl="https://linoxide.com/feed/" htmlUrl="https://linoxide.com"/>
+  </outline>
+  <outline title="Org mode" text="Org mode">
+      <outline text="Tecosaur" title="Tecosaur" type="rss" 
+            xmlUrl="https://blog.tecosaur.com/tmio/rss.xml" htmlUrl="https://blog.tecosaur.com/tmio/"/>
+  </outline>
+  <outline title="Nix" text="Nix">
+      <outline text="Nix news" title="RSS feed" type="rss" 
+            xmlUrl="https://nixos.org/blog/announcements-rss.xml" htmlUrl="https://nixos.org/news.html"/>
+      <outline text="Tweag - Nix blog" title="Tweag - Nix blog" type="rss" 
+            xmlUrl="https://www.tweag.io/rss-nix.xml" htmlUrl="https://tweag.io"/>
+      <outline text="Nasir Hussain&#39;s Blog" title="Nasir Hussain&#39;s Blog" type="rss" 
+            xmlUrl="https://nasirhm.github.io/index.xml" htmlUrl="https://nasirhm.github.io/"/>
+      <outline text="RSS Feed myme.no" title="RSS Feed myme.no" type="rss" 
+            xmlUrl="https://myme.no/posts/../feed.xml" htmlUrl="https://myme.no"/>
+  </outline>
+</body>
+</opml>
