@@ -1,6 +1,0 @@
-[submodule "config"]
-	path = config
-	url = git@github.com:Wittano/dotfiles.git
-[submodule "modules/desktop/gaming/config"]
-	path = modules/desktop/gaming/config
-	url = git@github.com:Wittano/gaming-config.git
