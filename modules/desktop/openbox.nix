@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 let
@@ -34,11 +34,11 @@ in {
           nitrogen
         ];
 
-        activation = {
-          linkOpenboxConfig = linkMutableConfig "openbox";
-          linkNitrogenConfig = linkMutableConfig "nitrogen";
-          linkTint2Config = linkMutableConfig "tint2";
-        };
+      };
+
+      xdg.configFile = {
+        openbox.source = dotfiles.openbox;
+        tint2.source = dotfiles.tint2;
       };
     };
 

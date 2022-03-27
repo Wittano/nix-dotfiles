@@ -81,7 +81,7 @@
   };
 
   # Internal modules
-  modules = {
+  modules = { 
     themes = {
       enable = true;
       dracula.enable = true;
