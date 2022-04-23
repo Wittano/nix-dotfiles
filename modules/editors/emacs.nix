@@ -14,7 +14,7 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.wittano.home = {
-      packages = with pkgs; [ emacs rnix-lsp ];
+      packages = with pkgs; [ emacs rnix-lsp wakatime ];
     };
   };
 }
