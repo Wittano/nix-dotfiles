@@ -5,6 +5,7 @@ let
     # Communicators
     signal-desktop
     discord
+    spotify
 
     # Utils
     flameshot
