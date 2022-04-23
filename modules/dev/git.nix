@@ -17,6 +17,13 @@ in {
   };
 
   config = mkIf cfg.enable {
+    services.pcscd.enable = cfg.useGpg;
+    programs.gnupg.agent = {
+      enable = cfg.useGpg;
+      pinentryFlavor = "curses";
+      enableSSHSupport = true;
+    };
+
     home-manager.users.wittano = {
       services.gpg-agent.enable = cfg.useGpg;
 
