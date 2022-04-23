@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, home-manager, lib, ... }:
 with lib;
 let
  cfg = config.modules.desktop.gaming;
