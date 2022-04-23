@@ -9,7 +9,7 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/pc/root";
+      device = "/dev/pc/nixos";
       fsType = "ext4";
     };
     "/home" = {
