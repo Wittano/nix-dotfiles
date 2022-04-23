@@ -2,7 +2,7 @@
 
   # Nix configuration
   nix = {
-    maxJobs = 16;
+    maxJobs = 4;
     gc.automatic = true;
     autoOptimiseStore = true;
     buildCores = 4;
