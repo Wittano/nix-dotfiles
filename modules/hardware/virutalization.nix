@@ -26,7 +26,7 @@ in {
     users.users.wittano.extraGroups =
       [ (mkIf cfg.enableDocker "docker") "libvirtd" "vboxusers" ];
 
-    environment.systemPackages = with pkgs; [ virt-manager ];
+    environment.systemPackages = with pkgs; [ virt-manager vagrant ];
 
     boot.kernelModules = [ "kvm-intel" ];
   };
