@@ -1,15 +1,12 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, isDevMode ? false, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
   home-manager.users.wittano = ./../../home/pc;
 
   modules = let
-    enableDevMode = false;
-
     onlyEnableWithDevMode = {
-      inherit enableDevMode;
-
+      enableDevMode = isDevMode;
       enable = true;
     };
   in {

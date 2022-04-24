@@ -1,17 +1,21 @@
 { lib, system, home-manager, unstable, pkgs, dotfiles, ... }:
 with lib; {
-  mkHost = name:
+  mkHost =  { name, isDevMode ? false }:
     nixosSystem rec {
       inherit system;
 
-      specialArgs = { inherit pkgs unstable lib dotfiles; hostName = name; };
+      specialArgs = { inherit pkgs unstable lib dotfiles isDevMode; hostName = name; };
 
-      modules = [
-        ./../modules
-        ./../configuration.nix
-        ./../hosts/${name}/configuration.nix
+      modules =
+        let
+          hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+        in
+          [
+            ./../modules
+            ./../configuration.nix
+            ./../hosts/${hostName}/configuration.nix
 
-        home-manager.nixosModules.home-manager
-      ];
+            home-manager.nixosModules.home-manager
+          ];
     };
 }

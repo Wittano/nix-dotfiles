@@ -22,15 +22,19 @@ in {
 
     home-manager.users.wittano.programs.fish = {
       enable = true;
-      shellAbbrs = {
-        boinc = "sudo boincmgr -d /var/lib/boinc";
-        ra = "ranger";
-        xc = "xprop | grep _OB_APP_CLASS";
-        yta = ''
-          youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
-        re = "sudo nixos-rebuild switch --flake '/home/wittano/dotfiles#${hostName}'";
-        neofetch = "nix-shell -p neofetch --run 'neofetch'";
-      };
+      shellAbbrs =
+        let
+          rebuild = name: "sudo nixos-rebuild switch --flake '$NIX_DOTFILES#${name}'";
+        in {
+          boinc = "sudo boincmgr -d /var/lib/boinc";
+          ra = "ranger";
+          xc = "xprop | grep _OB_APP_CLASS";
+          yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
+          re = rebuild hostName;
+          dev = rebuild "${hostName}-dev";
+          vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
+          neofetch = "nix-shell -p neofetch --run 'neofetch'";
+        };
 
       plugins = [{
         name = "dracula-theme";

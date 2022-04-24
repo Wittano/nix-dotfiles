@@ -43,6 +43,18 @@
     in {
       inherit lib;
 
-      nixosConfigurations = builtins.mapAttrs (n: v: mkHost n) (builtins.readDir ./hosts);
+      nixosConfigurations =
+        let
+          inherit (lib.attrsets) mapAttrs' nameValuePair;
+
+          hosts = builtins.readDir ./hosts;
+          devHosts = mapAttrs' (n: v:
+            let
+              devName = "${n}-dev";
+            in
+              nameValuePair (devName) (mkHost { name = devName; isDevMode = true; } )) hosts;
+          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; } ) hosts;
+        in
+          normalHosts // devHosts;
     };
 }

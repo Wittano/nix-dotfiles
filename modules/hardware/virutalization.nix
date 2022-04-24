@@ -19,11 +19,12 @@ in {
   config = mkIf cfg.enable {
     virtualisation = {
       docker.enable = cfg.enableDocker;
+      virtualbox.host.enable = true;
       libvirtd.enable = true;
     };
 
     users.users.wittano.extraGroups =
-      [ (mkIf cfg.enableDocker "docker") "libvirtd" ];
+      [ (mkIf cfg.enableDocker "docker") "libvirtd" "vboxusers" ];
 
     environment.systemPackages = with pkgs; [ virt-manager ];
 
