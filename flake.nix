@@ -18,6 +18,7 @@
     , ... }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
+      inherit (lib.my.mapper) mapDirToAttrs;
 
       system = "x86_64-linux";
 
@@ -31,10 +32,7 @@
       pkgs = mkPkgs nixpkgs;
       unstable = mkPkgs nixpkgs-unstable;
 
-      dotfiles = import ./lib/dotfiles.nix {
-        inherit lib;
-        dotfiles = wittano-dotfiles;
-      };
+      dotfiles = mapDirToAttrs wittano-dotfiles;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
@@ -45,10 +43,6 @@
     in {
       inherit lib;
 
-      nixosConfigurations = builtins.listToAttrs [rec {
-        name = "pc";
-        value = mkHost name;
-      }
-      ];
+      nixosConfigurations = builtins.mapAttrs (n: v: mkHost n) (builtins.readDir ./hosts);
     };
 }

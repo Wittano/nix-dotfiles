@@ -29,9 +29,11 @@ in {
 
       };
 
-      xdg.configFile = {
-        openbox.source = dotfiles.openbox;
-        tint2.source = dotfiles.tint2;
+      xdg.configFile = let
+        configDir = dotfiles.".config";
+      in {
+        openbox.source = configDir.openbox.source;
+        tint2.source = configDir.tint2.source;
       };
     };
 

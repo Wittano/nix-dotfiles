@@ -11,7 +11,7 @@ in {
     home-manager.users.wittano = {
       home.packages = with pkgs; [ rofi ];
 
-      xdg.configFile.rofi.source = dotfiles.rofi;
+      xdg.configFile.rofi.source = dotfiles.".config".rofi.source;
     };
   };
 }

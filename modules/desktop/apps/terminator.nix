@@ -13,7 +13,7 @@ in {
     home-manager.users.wittano = {
       home.packages = with pkgs; [ terminator ];
 
-      xdg.configFile.terminator.source = dotfiles.terminator;
+      xdg.configFile.terminator.source = dotfiles.".config".terminator.source;
     };
   };
 }
