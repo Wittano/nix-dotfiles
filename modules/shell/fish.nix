@@ -24,7 +24,7 @@ in {
       enable = true;
       shellAbbrs =
         let
-          rebuild = name: "sudo nixos-rebuild switch --flake '$NIX_DOTFILES#${name}'";
+          rebuild = name: "sudo nixos-rebuild switch --flake $NIX_DOTFILES#${name}";
         in {
           boinc = "sudo boincmgr -d /var/lib/boinc";
           ra = "ranger";
