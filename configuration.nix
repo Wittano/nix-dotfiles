@@ -3,7 +3,11 @@
   # Nix configuration
   nix = {
     maxJobs = 4;
-    gc.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
     autoOptimiseStore = true;
     buildCores = 4;
     package = pkgs.nixFlakes;
@@ -24,12 +28,6 @@
   };
 
   services.xserver.layout = "pl";
-
-  # System
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = false;
-  };
 
   # Fonts
   fonts.fonts = with pkgs; [ powerline-fonts font-awesome_5 source-code-pro ];
@@ -111,7 +109,13 @@
     };
   };
 
-  # System version
-  system.stateVersion = "21.11";
+  # System
+  system = {
+    autoUpgrade = {
+      enable = true;
+      channel = "https://nixos.org/channels/nixos-unstable";
+    };
+    stateVersion = "21.11";
+  };
 
 }
