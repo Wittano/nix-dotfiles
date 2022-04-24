@@ -39,7 +39,7 @@
     systemPackages = with pkgs; [ vim htop ];
     variables = {
       EDITOR = "vim";
-      DOTFILES = "/home/wittano/project/config/dotfiles";
+      DOTFILES = "/home/wittano/projects/config/dotfiles";
       NIX_DOTFILES = "/home/wittano/project/config/nix-dotfiles";
     };
 

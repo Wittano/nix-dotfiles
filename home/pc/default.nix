@@ -35,7 +35,7 @@ in {
     username = "wittano";
     homeDirectory = "/home/wittano";
     stateVersion = "21.11";
-    sessionVariables = { EDITOR = "nvim"; };
+    sessionVariables = { EDITOR = "emcas"; };
     packages = programs;
   };
 }

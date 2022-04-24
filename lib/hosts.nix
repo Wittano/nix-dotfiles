@@ -9,7 +9,7 @@ with lib; {
       modules = [
         ./../modules
         ./../configuration.nix
-        ./../hosts/pc/configuration.nix
+        ./../hosts/${name}/configuration.nix
 
         home-manager.nixosModules.home-manager
       ];

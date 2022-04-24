@@ -4,14 +4,21 @@
 
   home-manager.users.wittano = ./../../home/pc;
 
-  modules = {
+  modules = let
+    enableDevMode = false;
+
+    onlyEnableWithDevMode = {
+      inherit enableDevMode;
+
+      enable = true;
+    };
+  in {
     desktop = {
-      openbox.enable = true;
+      openbox = onlyEnableWithDevMode;
       gaming.enable = true;
       apps = {
-        rofi.enable = true;
-        terminator.enable = true;
-        zeal.enable = true;
+        rofi = onlyEnableWithDevMode;
+        terminator = onlyEnableWithDevMode;
       };
     };
     hardware = {

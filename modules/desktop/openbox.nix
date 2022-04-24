@@ -7,6 +7,10 @@ in {
 
   options.modules.desktop.openbox = {
     enable = mkEnableOption "Enable Openbox desktop";
+    enableDevMode = mkEnableOption ''
+      Enable dev mode.
+      Special mode, that every external configuration will be mutable
+    '';
   };
 
   config = mkIf cfg.enable {
@@ -27,14 +31,21 @@ in {
           nitrogen
         ];
 
+        activation = let
+          customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
+        in {
+          linkMutableOpenboxConfig = customeActivation ".config/openbox";
+          linkMutableTint2Config = customeActivation ".config/tint2";
+        };
       };
 
       xdg.configFile = let
         configDir = dotfiles.".config";
-      in {
+      in mkIf (cfg.enableDevMode == false) {
         openbox.source = configDir.openbox.source;
         tint2.source = configDir.tint2.source;
       };
+
     };
 
     services = {
