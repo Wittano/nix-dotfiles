@@ -37,11 +37,14 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop ];
-    variables = {
-      EDITOR = "vim";
-      DOTFILES = "/home/wittano/projects/config/dotfiles";
-      NIX_DOTFILES = "/home/wittano/project/config/nix-dotfiles";
-    };
+    variables =
+      let
+        projectConfigDir = "/home/wittano/projects/config";
+      in {
+        EDITOR = "vim";
+        DOTFILES = "${projectConfigDir}/dotfiles";
+        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+      };
 
     shells = with pkgs; [ bash ];
   };
