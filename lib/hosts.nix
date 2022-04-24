@@ -1,10 +1,10 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, ... }:
 with lib; {
   mkHost =  { name, isDevMode ? false }:
     nixosSystem rec {
       inherit system;
 
-      specialArgs = { inherit pkgs unstable lib dotfiles isDevMode; hostName = name; };
+      specialArgs = { inherit pkgs unstable lib dotfiles isDevMode systemStaff; hostName = name; };
 
       modules =
         let

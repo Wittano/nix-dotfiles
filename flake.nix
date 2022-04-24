@@ -12,10 +12,19 @@
       url = "github:Wittano/dotfiles";
       flake = false;
     };
+    system-staff = {
+      url = "github:Wittano/system-staff";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
-    , ... }@inputs:
+  outputs = { self,
+              nixpkgs,
+              home-manager,
+              nixpkgs-unstable,
+              wittano-dotfiles,
+              system-staff,
+              ... }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
       inherit (lib.my.mapper) mapDirToAttrs;
@@ -34,10 +43,12 @@
 
       dotfiles = mapDirToAttrs wittano-dotfiles;
 
+      systemStaff = mapDirToAttrs system-staff;
+
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
         my = import ./lib {
-          inherit lib pkgs system home-manager unstable dotfiles;
+          inherit lib pkgs system home-manager unstable dotfiles systemStaff;
         };
       });
     in {

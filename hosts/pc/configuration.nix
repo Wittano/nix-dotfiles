@@ -28,6 +28,7 @@
       ssh.enable = true;
       syncthing.enable = true;
       redshift.enable = true;
+      cron.enable = true;
     };
   };
 
