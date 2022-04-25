@@ -22,7 +22,7 @@ in {
 
     home-manager.users.wittano.programs.fish = {
       enable = true;
-      shellAbbrs =
+      shellAliases =
         let
           rebuild = name: "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
         in {
