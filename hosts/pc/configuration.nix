@@ -29,6 +29,7 @@
       syncthing.enable = true;
       redshift.enable = true;
       cron.enable = true;
+      prometheus.enable = true;
     };
   };
 
