@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, unstable, ... }:
 with lib.my;
 let
   programs = with pkgs; [
@@ -12,7 +12,7 @@ let
     youtube-dl
 
     # Organizations
-    joplin-desktop
+    unstable.joplin-desktop
 
     # Web browser
     vivaldi
