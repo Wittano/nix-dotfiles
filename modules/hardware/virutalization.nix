@@ -28,6 +28,8 @@ in {
 
     environment.systemPackages = with pkgs; [ virt-manager vagrant ansible ];
 
+    services.nfs.server.enable = true;
+
     boot.kernelModules = [ "kvm-intel" ];
   };
 }

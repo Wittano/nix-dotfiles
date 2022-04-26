@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./rofi.nix ./alacritty.nix ./terminator.nix ]; }
+{ ... }: { imports = [ ./rofi.nix ./alacritty.nix ./terminator.nix ./tmux.nix ]; }

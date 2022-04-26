@@ -16,6 +16,7 @@
       apps = {
         rofi = onlyEnableWithDevMode;
         terminator = onlyEnableWithDevMode;
+        tmux = onlyEnableWithDevMode;
       };
     };
     hardware = {
