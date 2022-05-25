@@ -3,6 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
+  displayManager = pkgs.callPackage ./display-manager.nix { };
 in {
 
   options.modules.desktop.openbox = {
@@ -61,11 +62,7 @@ in {
         };
 
         windowManager.openbox.enable = true;
-
-        displayManager = {
-          defaultSession = "none+openbox";
-          gdm.enable = true;
-        };
+        displayManager.defaultSession = "none+openbox";
       };
 
       picom = {
@@ -73,7 +70,7 @@ in {
         fade = false;
       };
 
-    };
+    } // displayManager.gdm;
   };
 
 }
