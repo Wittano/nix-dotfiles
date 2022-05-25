@@ -12,7 +12,7 @@
   in {
     desktop = {
       openbox = onlyEnableWithDevMode;
-      bspwm = onlyEnableWithDevMode;
+      qtile = onlyEnableWithDevMode;
       gaming.enable = true;
       apps = {
         rofi = onlyEnableWithDevMode;
