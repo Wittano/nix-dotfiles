@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     services.xserver.videoDrivers =
       mkIf config.services.xserver.enable [ "nvidia" ];
-      
+
     services.boinc.extraEnvPackages = mkIf config.services.boinc.enable
       (with pkgs; [ linuxPackages.nvidia_x11 ]);
 
