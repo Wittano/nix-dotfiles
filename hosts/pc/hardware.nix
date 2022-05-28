@@ -1,11 +1,11 @@
 { ... }: {
   fileSystems = {
     "/" = {
-      device = "/dev/pc/nixos";
+      device = "/dev/disk/by-label/ROOT";
       fsType = "ext4";
     };
     "/home" = {
-      device = "/dev/pc/home";
+      device = "/dev/disk/by-label/HOME";
       fsType = "xfs";
     };
     "/boot/efi" = {

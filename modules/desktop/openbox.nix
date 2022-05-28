@@ -63,6 +63,7 @@ in {
 
         windowManager.openbox.enable = true;
         displayManager.defaultSession = "none+openbox";
+	displayManager.gdm.enable = true;
       };
 
       picom = {
@@ -70,7 +71,7 @@ in {
         fade = false;
       };
 
-    } // displayManager.gdm;
+    };
   };
 
 }
