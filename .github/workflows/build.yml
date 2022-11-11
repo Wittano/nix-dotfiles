@@ -16,7 +16,7 @@ jobs:
       - name: "Install Cachix"
         uses: cachix/cachix-action@v11
         with:
-          name: wittano-cache
+          name: wittano
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: "Check nix configurations"
         run: nix flake check
