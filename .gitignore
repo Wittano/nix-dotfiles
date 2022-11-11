@@ -155,3 +155,4 @@ venv/
 config/tint2/*.backup.*
 
 result
+.idea
