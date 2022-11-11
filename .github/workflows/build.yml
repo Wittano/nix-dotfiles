@@ -3,7 +3,7 @@ run-name: Build WittanoOS - NixOS edition
 on: [push]
 jobs:
   build:
-    strategy_matrix:
+    strategy:
       matrix:
         profile: [pc, pc-dev, virt, virt-dev]
     runs-on: ubuntu-latest
