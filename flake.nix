@@ -18,13 +18,8 @@
     };
   };
 
-  outputs = { self,
-              nixpkgs,
-              home-manager,
-              nixpkgs-unstable,
-              wittano-dotfiles,
-              system-staff,
-              ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
+    , system-staff, ... }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
       inherit (lib.my.mapper) mapDirToAttrs;
@@ -36,6 +31,17 @@
           inherit system;
 
           config.allowUnfree = true;
+          settings = {
+            substituters = [
+              "https://wittano.cachix.org"
+              "https://nix-community.cachix.org"
+              "https://cache.nixos.org/"
+            ];
+            trusted-public-keys = [
+              "wittano.cachix.org-1:fCQ8OZR/eyQc5ic1Ra6PIDQc0cox7bjS+S89DVnojgA="
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            ];
+          };
         };
 
       pkgs = mkPkgs nixpkgs;
@@ -54,18 +60,17 @@
     in {
       inherit lib;
 
-      nixosConfigurations =
-        let
-          inherit (lib.attrsets) mapAttrs' nameValuePair;
+      nixosConfigurations = let
+        inherit (lib.attrsets) mapAttrs' nameValuePair;
 
-          hosts = builtins.readDir ./hosts;
-          devHosts = mapAttrs' (n: v:
-            let
-              devName = "${n}-dev";
-            in
-              nameValuePair (devName) (mkHost { name = devName; isDevMode = true; } )) hosts;
-          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; } ) hosts;
-        in
-          normalHosts // devHosts;
+        hosts = builtins.readDir ./hosts;
+        devHosts = mapAttrs' (n: v:
+          let devName = "${n}-dev";
+          in nameValuePair (devName) (mkHost {
+            name = devName;
+            isDevMode = true;
+          })) hosts;
+        normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+      in normalHosts // devHosts;
     };
 }
