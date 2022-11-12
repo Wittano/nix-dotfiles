@@ -2,8 +2,6 @@
 
   imports = [ ./hardware.nix ];
 
-  i18n.defaultLocale = "en_US.utf8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.utf8";
     LC_IDENTIFICATION = "pl_PL.utf8";
