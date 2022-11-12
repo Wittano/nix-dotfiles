@@ -70,7 +70,14 @@
             name = devName;
             isDevMode = true;
           })) hosts;
-        normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+        normalHosts = builtins.mapAttrs (n: v:
+          if n == "vw" then
+            mkHost {
+              name = n;
+              username = "virt";
+            }
+          else
+            mkHost { name = n; }) hosts;
       in normalHosts // devHosts;
     };
 }

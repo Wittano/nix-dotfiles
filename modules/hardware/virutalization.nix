@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, username, ... }:
 with lib;
 let cfg = config.modules.hardware.virtualization;
 in {
@@ -23,7 +23,7 @@ in {
       libvirtd.enable = true;
     };
 
-    users.users.wittano.extraGroups =
+    users.users."${username}".extraGroups =
       [ (mkIf cfg.enableDocker "docker") "libvirtd" "vboxusers" ];
 
     environment.systemPackages = with pkgs; [ virt-manager vagrant ansible ];

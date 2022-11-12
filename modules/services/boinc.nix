@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -9,7 +9,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    users.users.wittano.extraGroups = [ "boinc" ];
+    users.users."${username}".extraGroups = [ "boinc" ];
 
     services.boinc = {
       enable = true;

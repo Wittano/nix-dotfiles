@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, lib, home-manager, ... }: {
+{ config, pkgs, unstable, lib, home-manager, username, ... }: {
 
   # Nix configuration
   nix = {
@@ -16,11 +16,24 @@
     '';
   };
 
-  # Time settings
   time.timeZone = "Europe/Warsaw";
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  # Locale
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+
+    extraLocaleSettings = {
+      LC_ADDRESS = "pl_PL.utf8";
+      LC_IDENTIFICATION = "pl_PL.utf8";
+      LC_MEASUREMENT = "pl_PL.utf8";
+      LC_MONETARY = "pl_PL.utf8";
+      LC_NAME = "pl_PL.utf8";
+      LC_NUMERIC = "pl_PL.utf8";
+      LC_PAPER = "pl_PL.utf8";
+      LC_TELEPHONE = "pl_PL.utf8";
+      LC_TIME = "pl_PL.utf8";
+    };
+  };
 
   console = {
     font = "Lat2-Terminus16";
@@ -35,14 +48,12 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop ];
-    variables =
-      let
-        projectConfigDir = "/home/wittano/projects/config";
-      in {
-        EDITOR = "vim";
-        DOTFILES = "${projectConfigDir}/dotfiles";
-        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
-      };
+    variables = let projectConfigDir = "/home/wittano/projects/config";
+    in {
+      EDITOR = "vim";
+      DOTFILES = "${projectConfigDir}/dotfiles";
+      NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+    };
 
     shells = with pkgs; [ bash ];
   };
@@ -63,7 +74,7 @@
   };
 
   #User settings
-  users.users.wittano = {
+  users.users."${username}" = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
@@ -76,7 +87,7 @@
   };
 
   # Internal modules
-  modules = { 
+  modules = {
     themes = {
       enable = true;
       dracula.enable = true;
