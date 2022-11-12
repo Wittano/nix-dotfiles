@@ -93,10 +93,6 @@
       };
     };
     editors.emacs.enable = true;
-    hardware = {
-      sound.enable = true;
-      grub.enable = true;
-    };
     shell.fish = {
       enable = true;
       default = true;

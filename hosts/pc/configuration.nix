@@ -20,6 +20,8 @@
       };
     };
     hardware = {
+      sound.enable = true;
+      grub.enable = true;
       wacom.enable = true;
       virtualization.enable = true;
       nvidia.enable = true;
