@@ -26,8 +26,6 @@
     xkbVariant = "";
   };
 
-  console.keyMap = "pl2";
-
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
