@@ -58,7 +58,7 @@
   ];
 
   home-manager.users.virt.services.gpg-agent = {
-    enable = cfg.useGpg;
+    enable = true;
     pinentryFlavor = "gtk2";
   };
 
