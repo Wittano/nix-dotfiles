@@ -1,5 +1,8 @@
 { config, lib, pkgs, systemStaff, ... }:
 
+# TODO Rewritten cron scheduler to systemd timers
+# TODO Added flake updater schedule task
+
 let
   inherit (lib) mkEnableOption mkIf;
 
