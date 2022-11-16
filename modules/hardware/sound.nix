@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption mkDefault mkOption types;
 
   cfg = config.modules.hardware.sound;
 in {
@@ -9,6 +9,14 @@ in {
       enable = mkEnableOption ''
         Enable sound
       '';
+      driver = mkOption {
+        type = types.str;
+        default = "pulseaudio";
+        example = "pipewire";
+        description = ''
+          Select sound driver
+        '';
+      };
     };
   };
 
@@ -16,8 +24,16 @@ in {
     sound.enable = true;
 
     hardware.pulseaudio = rec {
-      enable = true;
+      enable = cfg.driver == "pulseaudio";
       support32Bit = enable;
+    };
+
+    services.pipewire = let pipewireEnable = cfg.driver == "pipewire";
+    in {
+      enable = pipewireEnable;
+      alsa.enable = pipewireEnable;
+      alsa.support32Bit = pipewireEnable;
+      pulse.enable = pipewireEnable;
     };
   };
 }

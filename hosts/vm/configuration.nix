@@ -1,18 +1,6 @@
-{ config, pkgs, isDevMode ? false, ... }: {
+{ config, pkgs, isDevMode ? false, username ? "virt", ... }: {
 
   imports = [ ./hardware.nix ];
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pl_PL.utf8";
-    LC_IDENTIFICATION = "pl_PL.utf8";
-    LC_MEASUREMENT = "pl_PL.utf8";
-    LC_MONETARY = "pl_PL.utf8";
-    LC_NAME = "pl_PL.utf8";
-    LC_NUMERIC = "pl_PL.utf8";
-    LC_PAPER = "pl_PL.utf8";
-    LC_TELEPHONE = "pl_PL.utf8";
-    LC_TIME = "pl_PL.utf8";
-  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -26,47 +14,28 @@
     xkbVariant = "";
   };
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
-  users.users.virt = {
+  users.users."${username}" = {
     isNormalUser = true;
     description = "virt";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    ];
+    packages = with pkgs; [ firefox ];
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    vscode
-    direnv
-    git
-  ];
+  environment.systemPackages = with pkgs; [ vim vscode direnv git ];
 
-  home-manager.users.virt.services.gpg-agent = {
+  home-manager.users."${username}".services.gpg-agent = {
     enable = true;
     pinentryFlavor = "gtk2";
   };
 
-  modules = let
-    onlyEnableWithDevMode = {
-      enableDevMode = isDevMode;
-      enable = true;
+  modules = {
+    hardware.sound = {
+        enable = true;
+        driver = "pipewire";
     };
-  in {
-    services = {
-      ssh.enable = true;
-    };
+    services.ssh.enable = true;
   };
 
 }
