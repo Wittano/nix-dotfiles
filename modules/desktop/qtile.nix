@@ -58,6 +58,7 @@ in {
         };
 
         windowManager.qtile.enable = true;
+        displayManager.gdm.enable = true;
       };
 
       picom = {
@@ -65,7 +66,7 @@ in {
         fade = false;
       };
 
-    } // displayManager.gdm;
+    };
   };
 
 }
