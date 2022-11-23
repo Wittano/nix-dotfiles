@@ -27,12 +27,9 @@
   };
 
   modules = {
-    hardware.sound = {
-        enable = true;
-        driver = "pipewire";
-    };
+    hardware.sound.enable = true;
     services.ssh.enable = true;
-    desktop.gnome.enable = true;
+    desktop.openbox.enable = true;
   };
 
 }
