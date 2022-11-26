@@ -27,7 +27,6 @@
   };
 
   modules = {
-    hardware.sound.enable = true;
     services.ssh.enable = true;
     desktop.openbox.enable = true;
   };

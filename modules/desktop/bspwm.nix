@@ -3,7 +3,6 @@ with lib;
 with lib.my;
 let 
   cfg = config.modules.desktop.bspwm;
-  displayManager = pkgs.callPackage ./display-manager.nix {};
 in {
 
   options.modules.desktop.bspwm = {
@@ -64,6 +63,7 @@ in {
         };
 
         windowManager.bspwm.enable = true;
+        displayManager.gdm.enable = true;
       };
 
       picom = {
@@ -71,7 +71,7 @@ in {
         fade = false;
       };
 
-    } // displayManager.gdm;
+    };
   };
 
 }

@@ -3,7 +3,6 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-  displayManager = pkgs.callPackage ./display-manager.nix { };
 in {
 
   options.modules.desktop.openbox = {

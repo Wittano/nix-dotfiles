@@ -1,9 +1,8 @@
-{ config, pkgs, lib, dotfiles, unstable, ... }:
+{ config, pkgs, lib, dotfiles, unstable, username ? "wittano", ... }:
 with lib;
 with lib.my;
 let 
   cfg = config.modules.desktop.qtile;
-  displayManager = pkgs.callPackage ./display-manager.nix {};
 in {
 
   options.modules.desktop.qtile = {
@@ -15,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano = {
+    home-manager.users."${username}" = {
       home = {
         packages = with pkgs; [
           notify-osd-customizable
