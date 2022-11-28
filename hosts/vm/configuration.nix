@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, username ? "virt", ... }: {
+{ config, pkgs, isDevMode ? false, username ? "wittano", ... }: {
 
   imports = [ ./hardware.nix ];
 

@@ -1,8 +1,9 @@
-{ config, pkgs, lib, dotfiles, ... }:
+{ config, pkgs, lib, dotfiles, home-manager, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
+  nitrogenConfig = import ./apps/nitrogen.nix { inherit pkgs dotfiles home-manager; };
 in {
 
   options.modules.desktop.openbox = {
@@ -13,7 +14,8 @@ in {
     '';
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [ nitrogenConfig
+  {
     home-manager.users.wittano = {
       home = {
         packages = with pkgs; [
@@ -56,21 +58,19 @@ in {
           enable = true;
           time = 15;
           enableNotifier = true;
-          notifier =
-            ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+          notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
         };
 
         windowManager.openbox.enable = true;
         displayManager.defaultSession = "none+openbox";
-	displayManager.gdm.enable = true;
+	      displayManager.gdm.enable = true;
       };
 
       picom = {
         enable = true;
         fade = false;
       };
-
     };
-  };
+  }]);
 
 }
