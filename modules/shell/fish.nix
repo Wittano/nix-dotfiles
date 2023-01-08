@@ -22,23 +22,26 @@ in {
 
     home-manager.users.wittano.programs.fish = {
       enable = true;
-      shellAliases = let
-        host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
-        rebuild = name:
-          "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
-      in { # TODO Replace classic usages command by nix absolute path
-        boinc = "sudo boincmgr -d /var/lib/boinc";
-        ra = "ranger";
-        xc = "xprop | grep _OB_APP_CLASS";
-        yta = ''
-          youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
-        re = rebuild host;
-        dev = rebuild "${host}-dev";
-        vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
-        neofetch = "nix-shell -p neofetch --run 'neofetch'";
-      };
+      shellAliases =
+        let
+          host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
+          rebuild = name:
+            "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
+        in
+        {
+          # TODO Replace classic usages command by nix absolute path
+          boinc = "sudo boincmgr -d /var/lib/boinc";
+          ra = "ranger";
+          xc = "xprop | grep _OB_APP_CLASS";
+          yta = ''
+            youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
+          re = rebuild host;
+          dev = rebuild "${host}-dev";
+          vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
+          neofetch = "nix-shell -p neofetch --run 'neofetch'";
+        };
 
-        # TODO Added more plugins installed by default
+      # TODO Added more plugins installed by default
       plugins = [{
         name = "dracula-theme";
         src = pkgs.fetchFromGitHub {

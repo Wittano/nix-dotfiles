@@ -4,36 +4,38 @@
 
   home-manager.users.wittano = ./../../home/pc;
 
-  modules = let
-    onlyEnableWithDevMode = {
-      enableDevMode = isDevMode;
-      enable = true;
-    };
-  in {
-    desktop = {
-      openbox = onlyEnableWithDevMode;
-      qtile = onlyEnableWithDevMode;
-      apps = {
-        rofi = onlyEnableWithDevMode;
-        terminator = onlyEnableWithDevMode;
-        tmux = onlyEnableWithDevMode;
+  modules =
+    let
+      onlyEnableWithDevMode = {
+        enableDevMode = isDevMode;
+        enable = true;
+      };
+    in
+    {
+      desktop = {
+        openbox = onlyEnableWithDevMode;
+        qtile = onlyEnableWithDevMode;
+        apps = {
+          rofi = onlyEnableWithDevMode;
+          terminator = onlyEnableWithDevMode;
+          tmux = onlyEnableWithDevMode;
+        };
+      };
+      hardware = {
+        sound.enable = true;
+        grub.enable = true;
+        wacom.enable = true;
+        virtualization.enable = true;
+        nvidia.enable = true;
+      };
+      services = {
+        boinc.enable = true;
+        ssh.enable = true;
+        syncthing.enable = true;
+        redshift.enable = true;
+        cron.enable = true;
+        prometheus.enable = true;
       };
     };
-    hardware = {
-      sound.enable = true;
-      grub.enable = true;
-      wacom.enable = true;
-      virtualization.enable = true;
-      nvidia.enable = true;
-    };
-    services = {
-      boinc.enable = true;
-      ssh.enable = true;
-      syncthing.enable = true;
-      redshift.enable = true;
-      cron.enable = true;
-      prometheus.enable = true;
-    };
-  };
 
 }

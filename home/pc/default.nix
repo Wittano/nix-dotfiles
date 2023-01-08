@@ -27,7 +27,8 @@ let
     # Dev
     vscode
   ];
-in {
+in
+{
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";

@@ -4,7 +4,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.openbox;
   nitrogenConfig = import ./apps/nitrogen.nix { inherit pkgs lib dotfiles home-manager cfg; };
-in {
+in
+{
 
   options.modules.desktop.openbox = {
     enable = mkEnableOption "Enable Openbox desktop";
@@ -14,63 +15,69 @@ in {
     '';
   };
 
-  config = mkIf cfg.enable (mkMerge [ nitrogenConfig
-  {
-    home-manager.users.wittano = {
-      home = {
-        packages = with pkgs; [
-          openbox-menu
-          lxmenu-data
-          obconf
-          tint2
-          volumeicon
-          gsimplecal
-          notify-osd-customizable
+  config = mkIf cfg.enable (mkMerge [
+    nitrogenConfig
+    {
+      home-manager.users.wittano = {
+        home = {
+          packages = with pkgs; [
+            openbox-menu
+            lxmenu-data
+            obconf
+            tint2
+            volumeicon
+            gsimplecal
+            notify-osd-customizable
 
-          # Utils
-          arandr
-          lxappearance
-          nitrogen
-        ];
+            # Utils
+            arandr
+            lxappearance
+            nitrogen
+          ];
 
-        activation = let
-          customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
-        in {
-          linkMutableOpenboxConfig = customeActivation ".config/openbox";
-          linkMutableTint2Config = customeActivation ".config/tint2";
+          activation =
+            let
+              customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
+            in
+            {
+              linkMutableOpenboxConfig = customeActivation ".config/openbox";
+              linkMutableTint2Config = customeActivation ".config/tint2";
+            };
         };
+
+        xdg.configFile =
+          let
+            configDir = dotfiles.".config";
+          in
+          mkIf (cfg.enableDevMode == false) {
+            openbox.source = configDir.openbox.source;
+            tint2.source = configDir.tint2.source;
+          };
+
       };
 
-      xdg.configFile = let
-        configDir = dotfiles.".config";
-      in mkIf (cfg.enableDevMode == false) {
-        openbox.source = configDir.openbox.source;
-        tint2.source = configDir.tint2.source;
-      };
-
-    };
-
-    services = {
-      xserver = {
-        enable = true;
-
-        xautolock = {
+      services = {
+        xserver = {
           enable = true;
-          time = 15;
-          enableNotifier = true;
-          notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+
+          xautolock = {
+            enable = true;
+            time = 15;
+            enableNotifier = true;
+            notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+          };
+
+          windowManager.openbox.enable = true;
+          displayManager.defaultSession = "none+openbox";
+          displayManager.gdm.enable = true;
         };
 
-        windowManager.openbox.enable = true;
-        displayManager.defaultSession = "none+openbox";
-	      displayManager.gdm.enable = true;
+        picom = {
+          enable = true;
+          fade = false;
+        };
       };
-
-      picom = {
-        enable = true;
-        fade = false;
-      };
-    };
-  }]);
+    }
+  ]);
 
 }

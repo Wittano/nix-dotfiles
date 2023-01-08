@@ -48,14 +48,14 @@
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 
   # Fonts
-  fonts.fonts = with pkgs; [ 
-    powerline-fonts 
-    font-awesome_5 
-    source-code-pro 
-    hanazono 
-    noto-fonts 
-    noto-fonts-extra 
-    noto-fonts-emoji 
+  fonts.fonts = with pkgs; [
+    powerline-fonts
+    font-awesome_5
+    source-code-pro
+    hanazono
+    noto-fonts
+    noto-fonts-extra
+    noto-fonts-emoji
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji-blob-bin
@@ -64,12 +64,13 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop ];
-    variables = let projectConfigDir = "/home/wittano/projects/config";
-    in {
-      EDITOR = "vim";
-      DOTFILES = "${projectConfigDir}/dotfiles";
-      NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
-    };
+    variables =
+      let projectConfigDir = "/home/wittano/projects/config";
+      in {
+        EDITOR = "vim";
+        DOTFILES = "${projectConfigDir}/dotfiles";
+        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+      };
 
     shells = with pkgs; [ bash ];
   };
