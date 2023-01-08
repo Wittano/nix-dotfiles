@@ -4,21 +4,18 @@ let
   programs = with pkgs; [
     # Communicators
     signal-desktop
-    discord
     spotify
 
     # Utils
     flameshot
-    youtube-dl
 
     # Organizations
-    unstable.joplin-desktop
+    obsidian
 
     # Web browser
     vivaldi
 
     # Apps
-    rhythmbox
     thunderbird
     gnome.nautilus
     gnome.file-roller

@@ -23,6 +23,7 @@ in {
     home-manager.users.wittano.programs.fish = {
       enable = true;
       shellAliases = let
+        host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
         rebuild = name:
           "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
       in { # TODO Replace classic usages command by nix absolute path
@@ -31,8 +32,8 @@ in {
         xc = "xprop | grep _OB_APP_CLASS";
         yta = ''
           youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
-        re = rebuild hostName; # FIXME Add replace removing "-dev" suffix
-        dev = rebuild "${hostName}-dev";
+        re = rebuild host;
+        dev = rebuild "${host}-dev";
         vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
         neofetch = "nix-shell -p neofetch --run 'neofetch'";
       };

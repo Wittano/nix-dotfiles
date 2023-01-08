@@ -42,8 +42,24 @@
 
   services.xserver.layout = "pl";
 
+  # Flatpak
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+
   # Fonts
-  fonts.fonts = with pkgs; [ powerline-fonts font-awesome_5 source-code-pro ];
+  fonts.fonts = with pkgs; [ 
+    powerline-fonts 
+    font-awesome_5 
+    source-code-pro 
+    hanazono 
+    noto-fonts 
+    noto-fonts-extra 
+    noto-fonts-emoji 
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    noto-fonts-emoji-blob-bin
+  ];
 
   # Global packages
   environment = {
@@ -116,7 +132,7 @@
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };
-    stateVersion = "21.11";
+    stateVersion = "22.11";
   };
 
 }

@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-  nitrogenConfig = import ./apps/nitrogen.nix { inherit pkgs dotfiles home-manager; };
+  nitrogenConfig = import ./apps/nitrogen.nix { inherit pkgs lib dotfiles home-manager cfg; };
 in {
 
   options.modules.desktop.openbox = {

@@ -1,6 +1,16 @@
-{ pkgs, home-manager, dotfiles, ... }: {
+{ pkgs, lib, home-manager, dotfiles, cfg, ... }: 
+with lib;
+with lib.my;
+{
     home-manager.users.wittano = {
-        home.packages = with pkgs; [ nitrogen ];
-        xdg.configFile.nitrogen.source = dotfiles.".config".nitrogen.source;
+        home = {
+            packages = with pkgs; [ nitrogen ];
+
+            activation = let
+            customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
+            in {
+                linkMutableNitrogen = customeActivation ".config/nitrogen";
+            };
+        };
     };
 }
