@@ -17,11 +17,11 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-label/ROOT";
+      device = "/dev/vda2";
       fsType = "ext4";
     };
     "/boot/efi" = {
-      device = "/dev/disk/by-label/BOOT";
+      device = "/dev/vda1";
       fsType = "vfat";
     };
     # This mounting works only for KVM virtualization.
