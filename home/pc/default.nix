@@ -32,7 +32,6 @@ in
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";
-    stateVersion = "21.11";
     packages = programs;
   };
 }

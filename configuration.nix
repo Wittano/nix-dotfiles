@@ -101,6 +101,7 @@
     extraSpecialArgs = { inherit pkgs unstable lib; };
     useUserPackages = true;
     backupFileExtension = "backup";
+    users.wittano.home.stateVersion = "22.11";
   };
 
   # Internal modules
