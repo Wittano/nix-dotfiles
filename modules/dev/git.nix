@@ -9,17 +9,13 @@ in {
         default = true;
         description = "Enable git";
       };
-
-      useGpg = mkEnableOption ''
-        Enable GnuPG to signing commits
-      '';
     };
   };
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       services.gpg-agent = {
-        enable = cfg.useGpg;
+        enable = true;
         pinentryFlavor = "gtk2";
       };
 
@@ -36,7 +32,7 @@ in {
           };
         };
 
-        gpg.enable = cfg.useGpg;
+        gpg.enable = true;
 
         fish = mkIf config.modules.shell.fish.enable {
           shellAbbrs = {

@@ -101,7 +101,7 @@
     extraSpecialArgs = { inherit pkgs unstable lib; };
     useUserPackages = true;
     backupFileExtension = "backup";
-    users.wittano.home.stateVersion = "22.11";
+    users.wittano.home.stateVersion = "22.05";
   };
 
   # Internal modules
@@ -111,17 +111,8 @@
       dracula.enable = true;
     };
     dev = {
-      git = {
-        enable = true;
-        useGpg = true;
-      };
-      cpp.enable = true;
-      python = {
-        enable = true;
-        usePycharm = true;
-      };
+      git.enable = true;
     };
-    editors.emacs.enable = true;
     shell.fish = {
       enable = true;
       default = true;

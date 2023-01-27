@@ -28,7 +28,9 @@ in {
       support32Bit = enable;
     };
 
-    services.pipewire = let pipewireEnable = cfg.driver == "pipewire";
+    services.pipewire =
+    let
+      pipewireEnable = cfg.driver == "pipewire";
     in {
       enable = pipewireEnable;
       alsa.enable = pipewireEnable;

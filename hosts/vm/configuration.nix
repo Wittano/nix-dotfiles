@@ -21,11 +21,6 @@
 
   environment.systemPackages = with pkgs; [ vim vscode direnv git ];
 
-  home-manager.users."${username}".services.gpg-agent = {
-    enable = true;
-    pinentryFlavor = "gtk2";
-  };
-
   modules = {
     services.ssh.enable = true;
     desktop.openbox.enable = true;
