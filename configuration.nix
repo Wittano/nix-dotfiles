@@ -2,14 +2,16 @@
 
   # Nix configuration
   nix = {
-    maxJobs = 4;
+    settings = {
+      max-jobs = 4;
+      cores = 4;
+      auto-optimise-store = true;
+    };
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    autoOptimiseStore = true;
-    buildCores = 4;
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -121,10 +123,7 @@
 
   # System
   system = {
-    autoUpgrade = {
-      enable = true;
-      channel = "https://nixos.org/channels/nixos-unstable";
-    };
+    autoUpgrade.enable = true;
     stateVersion = "22.11";
   };
 
