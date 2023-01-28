@@ -47,7 +47,8 @@
   # Flatpak
   services.flatpak.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
+   [ pkgs.xdg-desktop-portal-gtk ];
 
   # Fonts
   fonts.fonts = with pkgs; [
