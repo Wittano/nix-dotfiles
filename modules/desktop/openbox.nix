@@ -3,7 +3,13 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-  nitrogenConfig = import ./apps/nitrogen.nix { inherit pkgs lib dotfiles home-manager cfg; };
+
+  subModuleConfig = name:
+    apps.getSubModuleConfig cfg name;
+
+  nitrogenConfig = subModuleConfig "nitrogen";
+  kittyConfig = subModuleConfig "kitty";
+  rofiConfig = subModuleConfig "rofi";
 in
 {
 
@@ -17,11 +23,14 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     nitrogenConfig
+    kittyConfig
+    rofiConfig
     {
       home-manager.users.wittano = {
         home = {
           packages = with pkgs; [
             openbox-menu
+            vivaldi
             lxmenu-data
             obconf
             tint2
@@ -32,12 +41,16 @@ in
             # Utils
             arandr
             lxappearance
-            nitrogen
+            ulauncher
           ];
 
           activation =
             let
-              customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
+              customeActivation = path:
+                link.createMutableLinkActivation {
+                  internalPath = path;
+                  isDevMode = cfg.enableDevMode;
+                };
             in
             {
               linkMutableOpenboxConfig = customeActivation ".config/openbox";
@@ -69,7 +82,7 @@ in
 
           windowManager.openbox.enable = true;
           displayManager.defaultSession = "none+openbox";
-          displayManager.gdm.enable = true;
+          displayManager.lightdm.enable = true;
         };
 
         picom = {

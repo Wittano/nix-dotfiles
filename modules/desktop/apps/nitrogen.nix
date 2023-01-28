@@ -8,11 +8,20 @@ with lib.my;
 
       activation =
         let
-          customeActivation = path: link.createMutableLinkActivation { internalPath = path; isDevMode = cfg.enableDevMode; };
+          customeActivation = path:
+            link.createMutableLinkActivation {
+              internalPath = path;
+              isDevMode = cfg.enableDevMode;
+            };
         in
         {
           linkMutableNitrogen = customeActivation ".config/nitrogen";
+          linkMutableWallapapers = customeActivation "Pictures/Wallpapers";
         };
+    };
+
+    xdg.configFile = mkIf (cfg.enableDevMode == false) {
+      nitrogen.source = dotfiles.".config".nitrogen.source;
     };
   };
 }

@@ -16,7 +16,6 @@
         openbox = onlyEnableWithDevMode;
         qtile = onlyEnableWithDevMode;
         apps = {
-          rofi = onlyEnableWithDevMode;
           terminator = onlyEnableWithDevMode;
           tmux = onlyEnableWithDevMode;
         };
