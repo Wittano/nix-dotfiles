@@ -16,7 +16,6 @@ with lib.my;
         in
         {
           linkMutableNitrogen = customeActivation ".config/nitrogen";
-          linkMutableWallapapers = customeActivation "Pictures/Wallpapers";
         };
     };
 
