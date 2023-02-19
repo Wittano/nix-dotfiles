@@ -62,6 +62,8 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji-blob-bin
+    nerdfonts
+    jetbrains-mono
   ];
 
   # Global packages
