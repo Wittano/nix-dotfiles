@@ -25,7 +25,7 @@ let
     evince
 
     # Dev
-    vscode
+    vscodium
   ];
 in
 {

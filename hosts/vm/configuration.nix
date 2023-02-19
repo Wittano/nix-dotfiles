@@ -16,10 +16,10 @@
     isNormalUser = true;
     description = "virt";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ firefox ];
+    packages = with pkgs; [ firefox vscode ];
   };
 
-  environment.systemPackages = with pkgs; [ vim vscode direnv git ];
+  environment.systemPackages = with pkgs; [ vim direnv git ];
 
   modules = {
     services.ssh.enable = true;
