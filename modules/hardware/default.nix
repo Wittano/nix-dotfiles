@@ -10,6 +10,7 @@
     ./nvidia.nix
     ./sound.nix
     ./virutalization.nix
+    ./bluetooth.nix
   ];
 
   config = {

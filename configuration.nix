@@ -18,6 +18,8 @@
     '';
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   time.timeZone = "Europe/Warsaw";
 
   # Locale

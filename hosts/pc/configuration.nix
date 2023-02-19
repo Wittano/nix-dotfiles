@@ -26,6 +26,7 @@
         wacom.enable = true;
         virtualization.enable = true;
         nvidia.enable = true;
+        bluetooth.enable = true;
       };
       services = {
         boinc.enable = true;
