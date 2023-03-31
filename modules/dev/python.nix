@@ -7,10 +7,6 @@ in {
       enable = mkEnableOption ''
         Enable Java development enviroment
       '';
-
-      usePycharm = mkEnableOption ''
-        Enable Pycharm as default IDE
-      '';
     };
   };
 
@@ -20,7 +16,7 @@ in {
         virtualenv
         pipenv
         unstable.python3Full
-        (mkIf cfg.usePycharm jetbrains.pycharm-community)
+        jetbrains.pycharm-community
       ];
       file.".ideavimrc".text = ''
         set rnu nu
