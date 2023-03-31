@@ -19,10 +19,9 @@
         };
       };
       dev = {
-        python = {
-          enable = true;
-          usePycharm = true;
-        };
+        python.enable = true;
+        go.enable = true;
+        cpp.enable = true;
       };
       hardware = {
         sound.enable = true;
