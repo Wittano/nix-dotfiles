@@ -1,5 +1,6 @@
-{ config, lib, pkgs, home-manager, hostName, username, ... }:
+{ config, lib, pkgs, home-manager, hostName, username, dotfiles, ... }:
 with lib;
+with lib.my;
 let cfg = config.modules.shell.fish;
 in {
 
@@ -7,6 +8,10 @@ in {
     modules.shell.fish = {
       enable = mkEnableOption ''
         Enable fish shell
+      '';
+
+      enableDevMode = mkEnableOption ''
+        Enable fish shell in dev mode
       '';
 
       default = mkEnableOption ''
@@ -20,37 +25,45 @@ in {
 
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
-    home-manager.users.wittano.programs.fish = {
-      enable = true;
-      shellAliases =
+    home-manager.users.wittano = {
+      home.activation =
         let
-          host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
-          rebuild = name:
-            "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
+          customeActivation = path:
+            link.createMutableLinkActivation {
+              internalPath = path;
+              isDevMode = cfg.enableDevMode;
+            };
         in
         {
-          # TODO Replace classic usages command by nix absolute path
-          boinc = "sudo boincmgr -d /var/lib/boinc";
-          ra = "ranger";
-          xc = "xprop | grep _OB_APP_CLASS";
-          yta = ''
-            youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
-          re = rebuild host;
-          dev = rebuild "${host}-dev";
-          vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
-          neofetch = "nix-shell -p neofetch --run 'neofetch'";
+          linkMutableOmfConfig = customeActivation ".config/omf";
         };
 
-      # TODO Added more plugins installed by default
-      plugins = [{
-        name = "dracula-theme";
-        src = pkgs.fetchFromGitHub {
-          owner = "dracula";
-          repo = "fish";
-          rev = "28db361b55bb49dbfd7a679ebec9140be8c2d593";
-          sha256 = "07kz44ln75n4r04wyks1838nhmhr7jqmsc1rh7am7glq9ja9inmx";
-        };
-      }];
+      xdg.configFile = mkIf (cfg.enableDevMode == false) {
+        omf.source = dotfiles.".config".omf.source;
+      };
+      programs.fish = {
+        enable = true;
+        loginShellInit = ''
+          set -U fish_user_paths $HOME/.local/bin $fish_user_paths
+        '';
+        shellAliases =
+          let
+            host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
+            rebuild = name:
+              "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
+          in
+          {
+            # TODO Replace classic usages command by nix absolute path
+            ra = "ranger";
+            xc = "xprop | grep _OB_APP_CLASS";
+            yta = ''
+              youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
+            re = rebuild host;
+            dev = rebuild "${host}-dev";
+            vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
+            neofetch = "nix-shell -p neofetch --run 'neofetch'";
+          };
+      };
     };
   };
 }

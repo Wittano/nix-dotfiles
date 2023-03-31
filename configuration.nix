@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, lib, home-manager, username, ... }: {
+{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false, ... }: {
 
   # Nix configuration
   nix = {
@@ -121,6 +121,7 @@
     };
     shell.fish = {
       enable = true;
+      enableDevMode = isDevMode;
       default = true;
     };
   };
