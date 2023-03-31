@@ -2,12 +2,6 @@
 with pkgs;
 with lib;
 let
-  draculaGTK = fetchFromGitHub {
-    owner = "dracula";
-    repo = "gtk";
-    rev = "18bb561588866e71ed2ef5176c2e4797c58f2655";
-    sha256 = "sha256-Rhq0c9cbKaQkLqUt2kjyE2S1imPF+W0vyU/giOXLeMQ=";
-  };
   draculaOpenbox = fetchFromGitHub {
     owner = "dracula";
     repo = "openbox";
@@ -18,7 +12,8 @@ let
     url = "https://github.com/dracula/gtk/files/5214870/Dracula.zip";
     sha256 = "sha256-rcSKlgI3bxdh4INdebijKElqbmAfTwO+oEt6M2D1ls0=";
   };
-in {
+in
+{
   options = {
     modules.themes.dracula = {
       enable = mkEnableOption ''
@@ -28,9 +23,10 @@ in {
   };
 
   config = {
+    environment.systemPackages = with pkgs; [ dracula-theme ];
+
     home-manager.users.wittano = {
       home.file = {
-        ".themes/dracula-gtk".source = draculaGTK;
         ".themes/Dracula-withoutBorder".source = builtins.toPath "${draculaOpenbox}/Dracula-withoutBorder";
         ".icons/dracula".source = draculaIcon;
       };
