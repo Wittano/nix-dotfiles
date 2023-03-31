@@ -2,7 +2,7 @@
 with lib;
 let cfg = config.modules.themes;
 in {
-  imports = [ ./dracula.nix ];
+  imports = [ ./dracula.nix ./gruvbox.nix ];
 
   options = {
     modules.themes = {

@@ -114,7 +114,7 @@
   modules = {
     themes = {
       enable = true;
-      dracula.enable = true;
+      gruvbox.enable = true;
     };
     dev = {
       git.enable = true;
