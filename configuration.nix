@@ -50,7 +50,7 @@
   services.flatpak.enable = true;
   xdg.portal.enable = true;
   xdg.portal.extraPortals = lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
-   [ pkgs.xdg-desktop-portal-gtk ];
+    [ pkgs.xdg-desktop-portal-gtk ];
 
   # Fonts
   fonts.fonts = with pkgs; [
@@ -69,7 +69,7 @@
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop ];
+    systemPackages = with pkgs; [ vim htop direnv ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
       in {
