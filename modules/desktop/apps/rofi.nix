@@ -23,7 +23,7 @@ in {
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      rofi.source = builtins.toPath "${catpuccinTheme}/basic/.config/rofi";
+      rofi.source = dotfiles.".config".rofi.source;
     };
   };
 }

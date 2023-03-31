@@ -13,11 +13,15 @@
     in
     {
       desktop = {
-        openbox = onlyEnableWithDevMode;
         qtile = onlyEnableWithDevMode;
         apps = {
-          terminator = onlyEnableWithDevMode;
           tmux = onlyEnableWithDevMode;
+        };
+      };
+      dev = {
+        python = {
+          enable = true;
+          usePycharm = true;
         };
       };
       hardware = {
@@ -33,7 +37,6 @@
         ssh.enable = true;
         syncthing.enable = true;
         redshift.enable = true;
-        cron.enable = true;
         prometheus.enable = true;
       };
     };

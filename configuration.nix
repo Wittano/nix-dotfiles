@@ -54,8 +54,6 @@
 
   # Fonts
   fonts.fonts = with pkgs; [
-    powerline-fonts
-    font-awesome_5
     source-code-pro
     hanazono
     noto-fonts
@@ -64,8 +62,9 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji-blob-bin
-    nerdfonts
     jetbrains-mono
+    nerdfonts
+    hackgen-nf-font
   ];
 
   # Global packages
