@@ -1,8 +1,7 @@
-{ config, pkgs, unstable, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 with lib;
 let
   cfg = config.modules.dev.go;
-  goVersion = "20";
 in
 {
   options = {
@@ -11,12 +10,10 @@ in
         Enable goland as user package
       '';
     };
-
-    config = mkIf cfg.enable {
-      home-manager.users.wittano.home.packages = with pkgs;
-        [ unstable.go ]
-        ++ (if cfg.useGoland then [ jetbrains.goland gnumake gcc ] else [ ]);
-    };
-
   };
+
+  config = mkIf cfg.enable {
+    home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.goland ];
+  };
+
 }
