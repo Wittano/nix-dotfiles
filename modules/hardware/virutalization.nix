@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, username, ... }:
+{ config, pkgs, lib, modulesPath, username, systemStaff, ... }:
 with lib;
 let cfg = config.modules.hardware.virtualization;
 in {
@@ -13,23 +13,78 @@ in {
       enableDocker = mkEnableOption ''
         Enable Docker
       '';
+
+      enableWindowsVM = mkEnableOption ''
+        Enable Windows Gaming VM
+      '';
+
+      enableVagrant = mkEnableOption ''
+        Enable Vagrant tool for virtualization
+      '';
     };
   };
 
   config = mkIf cfg.enable {
     virtualisation = {
       docker.enable = cfg.enableDocker;
-      virtualbox.host.enable = true;
-      libvirtd.enable = true;
+      virtualbox.host.enable = cfg.enableVagrant;
+      libvirtd = {
+        enable = true;
+        onBoot = "ignore";
+        onShutdown = "shutdown";
+        qemu = {
+          ovmf.enable = true;
+          runAsRoot = true;
+        };
+      };
     };
 
     users.users."${username}".extraGroups =
-      [ (mkIf cfg.enableDocker "docker") "libvirtd" "vboxusers" ];
+      [
+        (mkIf cfg.enableDocker "docker")
+        (mkIf cfg.enableVagrant "vboxusers")
+        "libvirtd"
+      ];
 
-    environment.systemPackages = with pkgs; [ virt-manager vagrant ansible ];
+    environment.systemPackages = with pkgs; [ virt-manager dconf libguestfs ]
+      ++ (if cfg.enableVagrant then [ vagrant ansible ] else [ ]);
 
-    services.nfs.server.enable = true;
+    systemd.services.libvirtd = mkIf cfg.enableWindowsVM {
+      path =
+        let
+          env = pkgs.buildEnv {
+            name = "qemu-hook-env";
+            paths = with pkgs; [
+              bash
+              libvirt
+              kmod
+              systemd
+              ripgrep
+              sd
+            ];
+          };
+        in
+        [ env ];
 
-    boot.kernelModules = [ "kvm-intel" ];
+      preStart =
+        ''
+          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
+          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
+          mkdir -p /var/lib/libvirt/vbios
+      
+          ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
+          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
+          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+          ln -sf ${systemStaff.vms.win10."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
+        '';
+    };
+
+    systemd.services.pcscd.enable = !cfg.enableWindowsVM;
+    systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
+
+    boot = {
+      kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+      kernelModules = [ "kvm-intel" "vifo-pci" ];
+    };
   };
 }

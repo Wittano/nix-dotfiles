@@ -27,7 +27,10 @@
         sound.enable = true;
         grub.enable = true;
         wacom.enable = true;
-        virtualization.enable = true;
+        virtualization = {
+          enable = true;
+          enableWindowsVM = true;
+        };
         nvidia.enable = true;
         bluetooth.enable = true;
       };
