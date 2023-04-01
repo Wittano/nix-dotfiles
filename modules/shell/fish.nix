@@ -36,11 +36,14 @@ in {
         in
         {
           linkMutableOmfConfig = customeActivation ".config/omf";
+          linkMutableExternalAliasesConfig = customeActivation ".config/fish/conf.d";
         };
 
       xdg.configFile = mkIf (cfg.enableDevMode == false) {
         omf.source = dotfiles.".config".omf.source;
+        "fish/conf.d".source = dotfiles.".config".fish."conf.d".source;
       };
+
       programs.fish = {
         enable = true;
         loginShellInit = ''
