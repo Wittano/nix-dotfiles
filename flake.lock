@@ -64,11 +64,11 @@
     "system-staff": {
       "flake": false,
       "locked": {
-        "lastModified": 1680305329,
-        "narHash": "sha256-xZ6cevoA6GfOb4N27/xPflVN93z0GkqwM+BT1+cYe8o=",
+        "lastModified": 1680377096,
+        "narHash": "sha256-MlF8ylv1GLeiBdUrD1EVx8Xf/9jXsb+3yvrGVmXIu48=",
         "owner": "Wittano",
         "repo": "system-staff",
-        "rev": "c78bdcd2672dd631c4d8c973422b83d4b049f70a",
+        "rev": "bf047367d31f1e25ed2f077359d056f37131f6ab",
         "type": "github"
       },
       "original": {
