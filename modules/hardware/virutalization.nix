@@ -70,11 +70,18 @@ in {
         ''
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
+          mkdir -p /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin
+          mkdir -p /var/lib/libvirt/hooks/qemu.d/macOS/release/end
           mkdir -p /var/lib/libvirt/vbios
       
           ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
+
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+
+          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin/start.sh
+          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/release/end/stop.sh
+
           ln -sf ${systemStaff.vms.win10."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
         '';
     };
