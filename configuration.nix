@@ -94,6 +94,9 @@
     };
 
     extraModulePackages = [ ];
+
+    # TODO Add nixos-blur-plymouth theme https://git.gurkan.in/gurkan/nixos-blur-plymouth
+    plymouth.enable = true;
   };
 
   #User settings
