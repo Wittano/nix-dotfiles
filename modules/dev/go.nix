@@ -13,7 +13,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.goland ];
+    home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.goland gnumake ];
   };
 
 }
