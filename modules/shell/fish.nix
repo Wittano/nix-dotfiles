@@ -46,6 +46,9 @@ in {
 
       programs.fish = {
         enable = true;
+        interactiveShellInit = ''
+          direnv hook fish | source
+        '';
         loginShellInit = ''
           set -U fish_user_paths $HOME/.local/bin $fish_user_paths
         '';
