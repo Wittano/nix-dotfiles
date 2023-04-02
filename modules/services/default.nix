@@ -7,5 +7,6 @@
       ./redshift.nix
       ./cron.nix
       ./prometheus.nix
+      ./backup.nix
     ];
 }

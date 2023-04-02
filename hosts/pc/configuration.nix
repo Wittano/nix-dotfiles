@@ -36,6 +36,7 @@
       };
       services = {
         boinc.enable = true;
+        backup.enable = true;
         ssh.enable = true;
         syncthing.enable = true;
         redshift.enable = true;
