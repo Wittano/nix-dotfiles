@@ -4,6 +4,24 @@
 
   home-manager.users.wittano = ./../../home/pc;
 
+  services.xserver.xrandrHeads = [
+    {
+      primary = true;
+      output = "DVI-D-0";
+      monitorConfig = ''
+        Option "PreferredMode" "1920x1080"
+      '';
+    }
+    {
+      primary = false;
+      output = "HDMI-0";
+      monitorConfig = ''
+        Option "PreferredMode" "1920x1080"
+        Option "RightOf" "DVI-D-0"
+      '';
+    }
+  ];
+
   modules =
     let
       onlyEnableWithDevMode = {
