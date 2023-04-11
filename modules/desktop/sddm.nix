@@ -19,7 +19,11 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    environment.systemPackages = [ ownPackages."${cfg.theme}" pkgs.libsForQt5.plasma-framework ];
+    environment.systemPackages = with pkgs.libsForQt5; [
+      ownPackages."${cfg.theme}"
+      plasma-framework
+      plasma-workspace
+    ];
 
     services.xserver.displayManager.sddm = {
       enable = cfg.enable;
