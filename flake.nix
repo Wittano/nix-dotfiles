@@ -16,6 +16,9 @@
       url = "github:Wittano/system-staff";
       flake = false;
     };
+    wittano-repo = {
+      url = "github:Wittano/nix-repo";
+    };
   };
 
   outputs =
@@ -25,6 +28,7 @@
     , nixpkgs-unstable
     , wittano-dotfiles
     , system-staff
+    , wittano-repo
     , ...
     }@inputs:
     let
@@ -62,6 +66,7 @@
         hm = home-manager.lib.hm;
         my = import ./lib {
           inherit lib pkgs system home-manager unstable dotfiles systemStaff;
+          wittanoRepo = wittano-repo;
         };
       });
     in

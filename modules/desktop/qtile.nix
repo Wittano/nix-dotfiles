@@ -1,7 +1,7 @@
-{ config, pkgs, lib, dotfiles, unstable, username ? "wittano", ... }:
+{ config, pkgs, lib, dotfiles, unstable, username ? "wittano", ownPackages, ... }:
 with lib;
 with lib.my;
-let 
+let
   cfg = config.modules.desktop.qtile;
   subModuleConfig = name:
     apps.getSubModuleConfig cfg name;
@@ -9,7 +9,8 @@ let
   nitrogenConfig = subModuleConfig "nitrogen";
   kittyConfig = subModuleConfig "kitty";
   rofiConfig = subModuleConfig "rofi";
-in {
+in
+{
 
   options.modules.desktop.qtile = {
     enable = mkEnableOption "Enable Qtile desktop";
@@ -36,23 +37,28 @@ in {
             nitrogen
           ];
 
-          activation = let
-            customeActivation = path:
-              link.createMutableLinkActivation {
-                internalPath = path;
-                isDevMode = cfg.enableDevMode;
-              };
-          in {
-            linkMutableQtileConfig = customeActivation ".config/qtile";
-          };
+          activation =
+            let
+              customeActivation = path:
+                link.createMutableLinkActivation {
+                  internalPath = path;
+                  isDevMode = cfg.enableDevMode;
+                };
+            in
+            {
+              linkMutableQtileConfig = customeActivation ".config/qtile";
+            };
         };
 
-        xdg.configFile = let configDir = dotfiles.".config";
-        in mkIf (cfg.enableDevMode == false) {
-          qtile.source = configDir.qtile.source;
-        };
+        xdg.configFile =
+          let configDir = dotfiles.".config";
+          in mkIf (cfg.enableDevMode == false) {
+            qtile.source = configDir.qtile.source;
+          };
 
       };
+
+      environment.systemPackages = with ownPackages; [ dexy ];
 
       services = {
         xserver = {
@@ -67,7 +73,14 @@ in {
           };
 
           windowManager.qtile.enable = true;
-          displayManager.lightdm.enable = true;
+          displayManager = {
+            defaultSession = "none+qtile";
+            sddm = {
+              enable = true;
+              theme = "dexy";
+              autoNumlock = true;
+            };
+          };
         };
 
         picom = {

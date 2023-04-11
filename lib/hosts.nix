@@ -1,4 +1,4 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, wittanoRepo, ... }:
 with lib; {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
     nixosSystem rec {
@@ -7,6 +7,7 @@ with lib; {
       specialArgs = {
         inherit pkgs unstable lib dotfiles isDevMode systemStaff username;
         hostName = name;
+        ownPackages = wittanoRepo.packages.x86_64-linux;
       };
 
       modules = let hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
