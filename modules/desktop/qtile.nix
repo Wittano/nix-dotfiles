@@ -32,9 +32,7 @@ in
             notify-desktop
 
             # Utils
-            arandr
             lxappearance
-            nitrogen
           ];
 
           activation =
@@ -58,8 +56,6 @@ in
 
       };
 
-      environment.systemPackages = [ ownPackages.dexy pkgs.libsForQt5.plasma-framework ];
-
       services = {
         xserver = {
           enable = true;
@@ -73,15 +69,7 @@ in
           };
 
           windowManager.qtile.enable = true;
-          displayManager = {
-            defaultSession = "none+qtile";
-            # TODO Export sddm config to separated module
-            sddm = {
-              enable = true;
-              theme = "dexy";
-              autoNumlock = true;
-            };
-          };
+          displayManager.defaultSession = "none+qtile";
         };
 
         picom = {
