@@ -58,7 +58,7 @@ in
 
       };
 
-      environment.systemPackages = with ownPackages; [ dexy ];
+      environment.systemPackages = [ ownPackages.dexy pkgs.libsForQt5.plasma-framework ];
 
       services = {
         xserver = {
@@ -75,6 +75,7 @@ in
           windowManager.qtile.enable = true;
           displayManager = {
             defaultSession = "none+qtile";
+            # TODO Export sddm config to separated module
             sddm = {
               enable = true;
               theme = "dexy";
