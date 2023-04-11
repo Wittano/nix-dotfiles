@@ -7,7 +7,7 @@ in
 {
 
   options.modules.desktop.sddm = {
-    enable = mkEnableOption "Enable  desktop";
+    enable = mkEnableOption "Enable SDDM as display manager";
     theme = mkOption {
       type = types.str;
       default = "dexy";
