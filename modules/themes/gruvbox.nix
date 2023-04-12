@@ -11,8 +11,6 @@ with lib;
   };
 
   config = {
-    environment.systemPackages = with pkgs; [ gruvbox-dark-gtk gruvbox-dark-icons-gtk ];
-
     home-manager.users.wittano = {
       gtk = {
         enable = true;
