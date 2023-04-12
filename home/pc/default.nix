@@ -15,6 +15,7 @@ let
     gnome.eog
     spotify
     evince
+    pcmanfm
 
     # Dev
     vscodium
