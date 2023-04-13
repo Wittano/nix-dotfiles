@@ -22,6 +22,7 @@ let
   ];
 in
 {
+  # TODO Add automatically download NixOS dotfiles and other related projects
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";

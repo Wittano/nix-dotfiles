@@ -8,7 +8,7 @@ in {
   options = {
     modules.services.prometheus = {
       enable = mkEnableOption ''
-        Enable cron scheduler
+        Enable prometheus service
       '';
     };
   };

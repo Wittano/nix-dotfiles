@@ -53,6 +53,7 @@ let
     fi
   '';
 in {
+  # TODO Create activation function, 
   createMutableLinkActivation = { internalPath, isDevMode ? false }:
     let
       src = "$DOTFILES/${internalPath}";

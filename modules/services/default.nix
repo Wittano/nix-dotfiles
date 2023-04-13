@@ -5,7 +5,6 @@
       ./syncthing.nix
       ./ssh.nix
       ./redshift.nix
-      ./cron.nix
       ./prometheus.nix
       ./backup.nix
     ];

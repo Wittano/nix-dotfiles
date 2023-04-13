@@ -1,3 +1,4 @@
+# TODO Rename "pc" profile
 { config, pkgs, isDevMode ? false, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
@@ -24,17 +25,15 @@
 
   modules =
     let
-      onlyEnableWithDevMode = {
+      enableWithDevMode = {
         enableDevMode = isDevMode;
         enable = true;
       };
     in
     {
       desktop = {
-        qtile = onlyEnableWithDevMode;
-        apps = {
-          tmux = onlyEnableWithDevMode;
-        };
+        qtile = enableWithDevMode;
+        apps.tmux = enableWithDevMode;
       };
       dev = {
         python.enable = true;

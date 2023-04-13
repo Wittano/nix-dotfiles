@@ -13,6 +13,7 @@ in {
     '';
   };
 
+  #FIXME Moved configuration file to /etc/bspwm directory
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home = {

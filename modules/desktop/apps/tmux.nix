@@ -3,6 +3,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.tmux;
 in {
+  # TODO Replace NixOS module by extension attribute 
   options.modules.desktop.apps.tmux = {
     enable = mkEnableOption "Enable tmux";
 

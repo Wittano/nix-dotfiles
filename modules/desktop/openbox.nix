@@ -73,6 +73,7 @@ in
         xserver = {
           enable = true;
 
+          # TODO Export xautolock service to separate file
           xautolock = {
             enable = true;
             time = 15;
@@ -85,6 +86,7 @@ in
           displayManager.lightdm.enable = true;
         };
 
+        # TODO Export picom configuration to separate service
         picom = {
           enable = true;
           fade = false;

@@ -66,6 +66,7 @@ in {
         in
         [ env ];
 
+      # TODO Add script to halt boinc service
       preStart =
         ''
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin

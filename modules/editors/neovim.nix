@@ -12,6 +12,7 @@ in {
     };
   };
 
+  # TODO Create full neovim configuration 
   config = mkIf cfg.enable {
     home-manager.users.wittano.programs = {
       neovim = {

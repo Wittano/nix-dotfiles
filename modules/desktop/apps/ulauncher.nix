@@ -3,6 +3,8 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.ulauncher;
 in {
+
+  # TODO Replace NixOS module by extension attribute 
   options.modules.desktop.apps.ulauncher = {
     enable = mkEnableOption "Enable ulauncher";
   };

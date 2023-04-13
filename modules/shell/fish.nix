@@ -62,8 +62,8 @@ in {
             # TODO Replace classic usages command by nix absolute path
             ra = "ranger";
             xc = "xprop | grep _OB_APP_CLASS";
-            yta = ''
-              youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg''; # FIXME Add condition on exisitng youtube-dl package
+            # FIXME Add condition on exisitng youtube-dl package
+            yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
             re = rebuild host;
             dev = rebuild "${host}-dev";
             vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";

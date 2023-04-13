@@ -3,6 +3,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.apps.alacritty;
 in {
+  # TODO Replace NixOS module by extension attribute 
   options = {
     modules.desktop.apps.alacritty = {
       enable = mkEnableOption ''
