@@ -4,12 +4,12 @@ with lib.my;
 let
   cfg = config.modules.desktop.openbox;
 
-  subModuleConfig = name:
-    apps.getSubModuleConfig cfg name;
+  importApp = name:
+    apps.importApp cfg name;
 
-  nitrogenConfig = subModuleConfig "nitrogen";
-  kittyConfig = subModuleConfig "kitty";
-  rofiConfig = subModuleConfig "rofi";
+  nitrogenConfig = importApp "nitrogen";
+  kittyConfig = importApp "kitty";
+  rofiConfig = importApp "rofi";
 in
 {
 

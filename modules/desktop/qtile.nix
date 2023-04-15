@@ -3,13 +3,13 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.qtile;
-  subModuleConfig = name:
-    apps.getSubModuleConfig cfg name;
+  importApp = name:
+    apps.importApp cfg name;
 
-  nitrogenConfig = subModuleConfig "nitrogen";
-  kittyConfig = subModuleConfig "kitty";
-  rofiConfig = subModuleConfig "rofi";
-  tmuxConfig = subModuleConfig "tmux";
+  nitrogenConfig = importApp "nitrogen";
+  kittyConfig = importApp "kitty";
+  rofiConfig = importApp "rofi";
+  tmuxConfig = importApp "tmux";
 in
 {
 
