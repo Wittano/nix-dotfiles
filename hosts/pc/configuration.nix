@@ -34,7 +34,6 @@
     {
       desktop = {
         qtile = enableWithDevMode;
-        apps.tmux = enableWithDevMode;
       };
       dev = {
         python.enable = true;
