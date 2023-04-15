@@ -11,6 +11,7 @@ let
   kittyConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
   xautolockConfig = importApp "xautolock";
+  picomConfig = importApp "picom";
 in
 {
 
@@ -26,6 +27,7 @@ in
     nitrogenConfig
     kittyConfig
     xautolockConfig
+    picomConfig
     rofiConfig
     {
       home-manager.users.wittano = {
@@ -71,20 +73,12 @@ in
 
       };
 
-      services = {
-        xserver = {
-          enable = true;
+      services.xserver = {
+        enable = true;
 
-          windowManager.openbox.enable = true;
-          displayManager.defaultSession = "none+openbox";
-          displayManager.lightdm.enable = true;
-        };
-
-        # TODO Export picom configuration to separate service
-        picom = {
-          enable = true;
-          fade = false;
-        };
+        windowManager.openbox.enable = true;
+        displayManager.defaultSession = "none+openbox";
+        displayManager.lightdm.enable = true;
       };
     }
   ]);

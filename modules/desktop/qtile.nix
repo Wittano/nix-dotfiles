@@ -11,6 +11,7 @@ let
   rofiConfig = importApp "rofi";
   tmuxConfig = importApp "tmux";
   xautolockConfig = importApp "xautolock";
+  picomConfig = importApp "picom";
 in
 {
 
@@ -24,6 +25,7 @@ in
 
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
+    picomConfig
     kittyConfig
     tmuxConfig
     xautolockConfig
@@ -60,19 +62,11 @@ in
 
       };
 
-      services = {
-        xserver = {
-          enable = true;
+      services.xserver = {
+        enable = true;
 
-          windowManager.qtile.enable = true;
-          displayManager.defaultSession = "none+qtile";
-        };
-
-        picom = {
-          enable = true;
-          fade = false;
-        };
-
+        windowManager.qtile.enable = true;
+        displayManager.defaultSession = "none+qtile";
       };
     }
   ]);
