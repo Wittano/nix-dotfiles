@@ -120,7 +120,6 @@
   modules = {
     desktop.sddm.enable = true;
     themes = {
-      enable = true;
       gruvbox.enable = true;
     };
     dev = {

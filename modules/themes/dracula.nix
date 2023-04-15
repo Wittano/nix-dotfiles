@@ -2,6 +2,7 @@
 with pkgs;
 with lib;
 let
+  cfg = config.modules.themes.dracula;
   draculaOpenbox = fetchFromGitHub {
     owner = "dracula";
     repo = "openbox";
@@ -22,7 +23,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf (cfg.enable) {
     environment.systemPackages = with pkgs; [ dracula-theme ];
 
     home-manager.users.wittano = {
