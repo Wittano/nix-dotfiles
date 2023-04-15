@@ -23,6 +23,8 @@
     }
   ];
 
+  programs.droidcam.enable = true;
+
   modules =
     let
       enableWithDevMode = {
