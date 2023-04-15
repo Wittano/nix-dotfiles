@@ -33,13 +33,18 @@ in
     {
       home-manager.users."${username}" = {
         home = {
-          packages = with pkgs; [
-            notify-osd-customizable
-            notify-desktop
+          packages =
+            let
+              switchOff = pkgs.callPackage ./utils/switch-off.nix { };
+            in
+            with pkgs; [
+              notify-osd-customizable
+              notify-desktop
 
-            # Utils
-            lxappearance
-          ];
+              # Utils
+              lxappearance
+              switchOff
+            ];
 
           activation =
             let
