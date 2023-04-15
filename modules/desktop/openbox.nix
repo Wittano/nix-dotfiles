@@ -10,6 +10,7 @@ let
   nitrogenConfig = importApp "nitrogen";
   kittyConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
+  xautolockConfig = importApp "xautolock";
 in
 {
 
@@ -24,6 +25,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     nitrogenConfig
     kittyConfig
+    xautolockConfig
     rofiConfig
     {
       home-manager.users.wittano = {
@@ -72,14 +74,6 @@ in
       services = {
         xserver = {
           enable = true;
-
-          # TODO Export xautolock service to separate file
-          xautolock = {
-            enable = true;
-            time = 15;
-            enableNotifier = true;
-            notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
-          };
 
           windowManager.openbox.enable = true;
           displayManager.defaultSession = "none+openbox";

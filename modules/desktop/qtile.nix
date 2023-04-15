@@ -10,6 +10,7 @@ let
   kittyConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
   tmuxConfig = importApp "tmux";
+  xautolockConfig = importApp "xautolock";
 in
 {
 
@@ -25,6 +26,7 @@ in
     rofiConfig
     kittyConfig
     tmuxConfig
+    xautolockConfig
     nitrogenConfig
     {
       home-manager.users."${username}" = {
@@ -61,14 +63,6 @@ in
       services = {
         xserver = {
           enable = true;
-
-          xautolock = {
-            enable = true;
-            time = 15;
-            enableNotifier = true;
-            notifier =
-              ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
-          };
 
           windowManager.qtile.enable = true;
           displayManager.defaultSession = "none+qtile";
