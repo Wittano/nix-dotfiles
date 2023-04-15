@@ -68,6 +68,19 @@ in {
 
       # TODO Add script to halt boinc service
       preStart =
+        let
+          stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
+            #!/usr/bin/env bash
+
+            systemctl stop display-manager.service
+            systemctl stop boinc.service
+          '';
+          startBoincScript = pkgs.writeScript "start-boinc.sh" ''
+            #!/usr/bin/env bash
+
+            systemctl start boinc.service
+          '';
+        in
         ''
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
@@ -82,6 +95,12 @@ in {
 
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin/start.sh
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/release/end/stop.sh
+
+          ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin/boinc.sh
+          ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/macOS/release/end/boinc.sh
+
+          ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
+          ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
 
           ln -sf ${systemStaff.vms.win10."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
         '';
