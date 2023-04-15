@@ -1,4 +1,3 @@
-# TODO Rename "pc" profile
 { config, pkgs, isDevMode ? false, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];

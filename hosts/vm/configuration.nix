@@ -1,4 +1,3 @@
-# TODO Rename "vm" profile
 { config, pkgs, isDevMode ? false, username ? "wittano", ... }: {
 
   imports = [ ./hardware.nix ];

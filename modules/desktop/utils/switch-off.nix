@@ -1,0 +1,1 @@
+# TODO Wrap switch-off script to nix package
