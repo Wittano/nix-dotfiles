@@ -25,11 +25,22 @@ in
   config = {
     environment.systemPackages = with pkgs; [ dracula-theme ];
 
-    # TODO Add GTK configuration for Dracula theme
     home-manager.users.wittano = {
       home.file = {
         ".themes/Dracula-withoutBorder".source = builtins.toPath "${draculaOpenbox}/Dracula-withoutBorder";
         ".icons/dracula".source = draculaIcon;
+      };
+
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Dracula";
+          package = pkgs.dracula-theme;
+        };
+        iconTheme = {
+          name = "Dracula";
+          package = pkgs.pkgs.dracula-theme;
+        };
       };
     };
   };
