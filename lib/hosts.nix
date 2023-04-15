@@ -1,5 +1,6 @@
 { lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, wittanoRepo, ... }:
-with lib; {
+with lib;
+with lib.my; {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
     nixosSystem rec {
       inherit system;
@@ -10,13 +11,13 @@ with lib; {
         ownPackages = wittanoRepo.packages.x86_64-linux;
       };
 
-      modules = let hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
-      in [
-        ./../modules
-        ./../configuration.nix
-        ./../hosts/${hostName}/configuration.nix
+      modules =
+        let hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+        in [
+          ./../configuration.nix
+          ./../hosts/${hostName}/configuration.nix
 
-        home-manager.nixosModules.home-manager
-      ];
+          home-manager.nixosModules.home-manager
+        ] ++ (imports.importModulesPath ./../modules);
     };
 }
