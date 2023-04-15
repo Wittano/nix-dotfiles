@@ -40,7 +40,7 @@ in
         };
         iconTheme = {
           name = "Dracula";
-          package = pkgs.pkgs.dracula-theme;
+          package = pkgs.dracula-theme;
         };
       };
     };
