@@ -21,22 +21,36 @@ in
       configDir = "${homeDir}/.config/syncthing";
       user = "wittano";
       folders = {
-        "${homeDir}/Music" = {
-          id = "epc3d-xkkkk";
-          label = "Music";
-          devices = [ "phone" ];
-        };
-
         "${homeDir}/.keepass" = {
           id = "xm73k-khame";
           label = "Passwords";
-          devices = [ "phone" ];
+          devices = [ "Phone" ];
+        };
+
+        "${homeDir}/Documents/notes" = {
+          id = "cmk22-zz4qu";
+          label = "Notes";
+          devices = [ "Phone" ];
+        };
+
+        "${homeDir}/Sync" = {
+          id = "default";
+          label = "Sync folder";
+          devices = [ "Phone" ];
+        };
+
+        "/mnt/windows" = {
+          id = "bkono-cnxed";
+          label = "Windows VM";
+          devices = [ "Windows VM" ];
         };
       };
       devices = {
-        phone = {
-          # TODO Export sensitive data to secret manager
+        Phone = {
           id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
+        };
+        "Windows VM" = {
+          id = "AWPKKY3-4HT6T7P-4M5H6TA-C4Y4NZ4-WBXJWYJ-AVDIW5C-3OSNO5B-FMZCSAD";
         };
       };
       extraOptions = { gui.theme = "dark"; };
