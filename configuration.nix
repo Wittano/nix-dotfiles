@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false, ... }: {
+{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false, ownPackages, ... }: {
 
   # Nix configuration
   nix = {
@@ -95,8 +95,11 @@
 
     extraModulePackages = [ ];
 
-    # TODO Add nixos-blur-plymouth theme https://git.gurkan.in/gurkan/nixos-blur-plymouth
-    plymouth.enable = true;
+    plymouth = {
+      enable = true;
+      themePackages = with ownPackages; [ nixos-blur ];
+      theme = "nixos-blur";
+    };
   };
 
   #User settings

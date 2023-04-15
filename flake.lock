@@ -128,11 +128,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1681224563,
-        "narHash": "sha256-TI/+22meKZSBKh+7rUsplpbgOqqQ2hQTSackDLlkl6E=",
+        "lastModified": 1681527056,
+        "narHash": "sha256-jSkEPVy3CILjFxnXASlVztjR5d2FbFeW+YXba+Is+tY=",
         "owner": "Wittano",
         "repo": "nix-repo",
-        "rev": "58eb9934c2e6df1333523be10b255f78b38a114b",
+        "rev": "5191ea638cf6b46593ba3dd317cd2e13fcd0b4b7",
         "type": "github"
       },
       "original": {
