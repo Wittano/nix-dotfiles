@@ -9,6 +9,7 @@ let
   nitrogenConfig = subModuleConfig "nitrogen";
   kittyConfig = subModuleConfig "kitty";
   rofiConfig = subModuleConfig "rofi";
+  tmuxConfig = subModuleConfig "tmux";
 in
 {
 
@@ -23,6 +24,7 @@ in
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
     kittyConfig
+    tmuxConfig
     nitrogenConfig
     {
       home-manager.users."${username}" = {
