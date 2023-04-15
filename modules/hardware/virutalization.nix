@@ -66,7 +66,6 @@ in {
         in
         [ env ];
 
-      # TODO Add script to halt boinc service
       preStart =
         let
           stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
