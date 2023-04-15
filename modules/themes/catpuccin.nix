@@ -1,5 +1,9 @@
-# TODO Add catpuccin theme
-{ ... }: {
+{ config, lib, ... }:
+with lib;
+let
+  cfg = config.modules.themes.catppuccin;
+in
+{
   options = {
     modules.themes.catppuccin = {
       enable = mkEnableOption ''
