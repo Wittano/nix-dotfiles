@@ -59,10 +59,8 @@ in {
               "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
           in
           {
-            # TODO Replace classic usages command by nix absolute path
             ra = "ranger";
-            xc = "xprop | grep _OB_APP_CLASS";
-            # FIXME Add condition on exisitng youtube-dl package
+            xc = "xprop | grep CLASS";
             yta = ''youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
             re = rebuild host;
             dev = rebuild "${host}-dev";
