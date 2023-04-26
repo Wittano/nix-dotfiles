@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 with pkgs;
 with lib;
+let cfg = config.modules.themes.gruvbox;
+in
 {
   options = {
     modules.themes.gruvbox = {
@@ -10,7 +12,7 @@ with lib;
     };
   };
 
-  config = {
+  config = mkIf (cfg.enable) {
     home-manager.users.wittano = {
       gtk = {
         enable = true;
