@@ -13,6 +13,7 @@ in {
     };
   };
 
+  # TODO Setup prometheus configuration. Add missing metrics e.g. systemd units metric
   config = mkIf cfg.enable {
     networking.firewall.interfaces.eno1.allowedTCPPorts = [ 9090 9100 ];
 

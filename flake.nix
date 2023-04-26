@@ -42,6 +42,7 @@
           inherit system;
 
           config.allowUnfree = true;
+          # TODO Add cachix repository for wittano-repo
           settings = {
             substituters = [
               "https://wittano.cachix.org"
