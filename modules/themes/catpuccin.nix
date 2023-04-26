@@ -20,7 +20,7 @@ in
         package = pkgs.catppuccin-gtk;
       };
       iconTheme = {
-        name = "oomox-Catppuccin-Mocha";
+        name = "Catppuccin-Mocha-Alt";
         package = ownPackages.catppuccin-icon-theme;
       };
     };
