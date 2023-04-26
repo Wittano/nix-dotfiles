@@ -120,7 +120,7 @@
   modules = {
     desktop.sddm.enable = true;
     themes = {
-      gruvbox.enable = true;
+      catppuccin.enable = true;
     };
     dev = {
       git.enable = true;

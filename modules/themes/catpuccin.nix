@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ownPackages, ... }:
 with lib;
 let
   cfg = config.modules.themes.catppuccin;
@@ -16,12 +16,12 @@ in
     home-manager.users.wittano.gtk = {
       enable = true;
       theme = {
-        name = "catppuccin";
+        name = "Catppuccin-Purple-Dark";
         package = pkgs.catppuccin-gtk;
       };
       iconTheme = {
-        name = "catppuccin";
-        package = pkgs.catppuccin-gtk;
+        name = "oomox-Catppuccin-Mocha";
+        package = ownPackages.catppuccin-icon-theme;
       };
     };
   };
