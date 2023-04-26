@@ -110,11 +110,11 @@
     "wittano-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1681525279,
-        "narHash": "sha256-pJPAOtV95YKbFoWeFPOegGG/kolQoOJc8JzvpTgaelU=",
+        "lastModified": 1682535289,
+        "narHash": "sha256-UVajpLY0iDtRq2Dd3U+xBsHOuXqL+6fcAzWpRZh11Fw=",
         "owner": "Wittano",
         "repo": "dotfiles",
-        "rev": "71707ffb3a25204616cd7e6df9a8d85b2847977c",
+        "rev": "185e0fb3995c7f1274b4a68f28eb13e0130f559a",
         "type": "github"
       },
       "original": {
