@@ -46,8 +46,28 @@ in {
         "libvirtd"
       ];
 
+    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [
+      {
+        name = "windows";
+        manage = "window";
+        start = "sudo virsh start win10";
+      }
+    ];
+
+    security.sudo.extraRules = mkIf cfg.enableWindowsVM [
+      {
+        users = [ "${username}" ];
+        commands = [
+          {
+            command = "${pkgs.libvirt}/bin/virsh start win10";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+
     environment.systemPackages = with pkgs; [ virt-manager dconf libguestfs ]
-      ++ (if cfg.enableVagrant then [ vagrant ansible ] else [ ]);
+      ++ (if cfg.enableVagrant then [ vagrant ] else [ ]);
 
     systemd.services.libvirtd = mkIf cfg.enableWindowsVM {
       path =
@@ -80,23 +100,15 @@ in {
             systemctl start boinc.service
           '';
         in
-        ''
+        mkIf (cfg.enableWindowsVM) ''
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/macOS/release/end
           mkdir -p /var/lib/libvirt/vbios
       
           ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
 
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
           ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
-
-          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin/start.sh
-          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/macOS/release/end/stop.sh
-
-          ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/macOS/prepare/begin/boinc.sh
-          ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/macOS/release/end/boinc.sh
 
           ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
           ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
