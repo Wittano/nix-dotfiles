@@ -52,6 +52,10 @@
   xdg.portal.extraPortals = lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
     [ pkgs.xdg-desktop-portal-gtk ];
 
+  systemd.user.extraConfig = ''
+    DefaultEnvironment="PATH=/run/current-system/sw/bin"
+  '';
+
   # Fonts
   fonts.fonts = with pkgs; [
     source-code-pro

@@ -15,6 +15,7 @@ let
     gnome.eog
     spotify
     evince
+    gotktrix
     pcmanfm
 
     # Dev
@@ -26,9 +27,5 @@ in
     username = "wittano";
     homeDirectory = "/home/wittano";
     packages = programs;
-    activation.fixOpenLinksFromFlatpakApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${pkgs.systemd}/bin/systemctl --user import-environment PATH
-      ${pkgs.systemd}/bin/systemctl --user restart xdg-desktop-portal.service
-    '';
   };
 }
