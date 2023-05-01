@@ -6,7 +6,7 @@ let
     flameshot
 
     # Web browser
-    vivaldi
+    unstable.vivaldi
 
     # Apps
     thunderbird

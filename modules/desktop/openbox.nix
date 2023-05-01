@@ -34,7 +34,6 @@ in
         home = {
           packages = with pkgs; [
             openbox-menu
-            vivaldi
             lxmenu-data
             obconf
             tint2
