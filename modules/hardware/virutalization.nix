@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, username, systemStaff, ... }:
+{ config, pkgs, lib, modulesPath, username, systemStaff, unstable, ... }:
 with lib;
 let cfg = config.modules.hardware.virtualization;
 in {
@@ -33,6 +33,7 @@ in {
         onBoot = "ignore";
         onShutdown = "shutdown";
         qemu = {
+          package = unstable.qemu;
           ovmf.enable = true;
           runAsRoot = true;
         };
