@@ -122,7 +122,10 @@
 
   # Internal modules
   modules = {
-    desktop.sddm.enable = true;
+    desktop.sddm = {
+      enable = true;
+      theme = "sugar-candy";
+    };
     themes = {
       catppuccin.enable = true;
     };
