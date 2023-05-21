@@ -19,6 +19,9 @@
     wittano-repo = {
       url = "github:Wittano/nix-repo";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+    };
   };
 
   outputs =
@@ -29,6 +32,7 @@
     , wittano-dotfiles
     , system-staff
     , wittano-repo
+    , emacs-overlay
     , ...
     }@inputs:
     let
@@ -42,6 +46,9 @@
           inherit system;
 
           config.allowUnfree = true;
+
+          nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
+
           # TODO Add cachix repository for wittano-repo
           settings = {
             substituters = [

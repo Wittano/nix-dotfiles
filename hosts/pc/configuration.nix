@@ -35,6 +35,11 @@
       desktop = {
         qtile = enableWithDevMode;
       };
+      editors.emacs = {
+        enable = true;
+        enableDevMode = isDevMode;
+        version = "doom";
+      };
       dev = {
         python.enable = true;
         go.enable = true;
