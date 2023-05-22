@@ -17,12 +17,12 @@ let
     evince
     gotktrix
     pcmanfm
+    discord
 
     # Dev
     vscodium
   ];
-in
-{
+in {
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";
