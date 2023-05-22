@@ -32,7 +32,10 @@
   in {
     desktop.qtile = enableWithDevMode;
     editors.emacs = enableWithDevMode // { version = "doom"; };
-    dev.python.enable = true;
+    dev = {
+      python.enable = true;
+      go.enable = true;
+    };
     hardware = {
       sound.enable = true;
       grub.enable = true;
