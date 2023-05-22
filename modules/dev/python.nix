@@ -5,7 +5,7 @@ in {
   options = {
     modules.dev.python = {
       enable = mkEnableOption ''
-        Enable Java development enviroment
+        Enable Python development enviroment
       '';
     };
   };
