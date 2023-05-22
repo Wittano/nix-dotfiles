@@ -1,12 +1,13 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, dotfiles, ... }:
 let
   inherit (lib) mkEnableOption mkOption mkIf types;
 
   cfg = config.modules.editors.emacs;
-  customeActivation = path: lib.my.link.createMutableLinkActivation {
-    internalPath = path;
-    isDevMode = cfg.enableDevMode;
-  };
+  customeActivation = path:
+    lib.my.link.createMutableLinkActivation {
+      internalPath = path;
+      isDevMode = cfg.enableDevMode;
+    };
   downloadDoomEmacsScript = ''
     if [ ! -e $HOME/.emacs.d/bin/doom ]; then
       ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
@@ -37,16 +38,23 @@ in {
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home = {
-        packages = mkIf (cfg.version == "doom") (with pkgs; [
-          git
-          ripgrep
-          coreutils
-        ]);
+        packages =
+          mkIf (cfg.version == "doom") (with pkgs; [ git ripgrep coreutils ]);
 
         activation = {
-          linkMutableDoomEmacsConfiguration = mkIf (cfg.version == "doom") (customeActivation ".doom.d");
-          downloadDoomEmacs = mkIf (cfg.version == "doom") (lib.hm.dag.entryAfter [ "writeBoundery" ] downloadDoomEmacsScript);
+          linkMutableDoomEmacsConfiguration =
+            mkIf (cfg.version == "doom") (customeActivation ".doom.d");
+          downloadDoomEmacs = mkIf (cfg.version == "doom")
+            (lib.hm.dag.entryAfter [ "writeBoundery" ] downloadDoomEmacsScript);
         };
+
+        file.".doom.d" =
+          mkIf (cfg.enableDevMode == false && cfg.version == "doom") {
+            source = dotfiles.".doom.d".source;
+            onChange = ''
+              ${pkgs.systemd}/bin/systemctl --user restart emacs.service
+            '';
+          };
       };
 
       programs.emacs.enable = true;
