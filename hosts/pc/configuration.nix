@@ -24,46 +24,33 @@
 
   programs.droidcam.enable = true;
 
-  modules =
-    let
-      enableWithDevMode = {
-        enableDevMode = isDevMode;
-        enable = true;
-      };
-    in
-    {
-      desktop = {
-        qtile = enableWithDevMode;
-      };
-      editors.emacs = {
-        enable = true;
-        enableDevMode = isDevMode;
-        version = "doom";
-      };
-      dev = {
-        python.enable = true;
-        go.enable = true;
-        cpp.enable = true;
-      };
-      hardware = {
-        sound.enable = true;
-        grub.enable = true;
-        wacom.enable = true;
-        virtualization = {
-          enable = true;
-          enableWindowsVM = true;
-        };
-        nvidia.enable = true;
-        bluetooth.enable = true;
-      };
-      services = {
-        boinc.enable = true;
-        backup.enable = true;
-        ssh.enable = true;
-        syncthing.enable = true;
-        redshift.enable = true;
-        prometheus.enable = true;
-      };
+  modules = let
+    enableWithDevMode = {
+      enable = true;
+      enableDevMode = isDevMode;
     };
+  in {
+    desktop.qtile = enableWithDevMode;
+    editors.emacs = enableWithDevMode // { version = "doom"; };
+    hardware = {
+      sound.enable = true;
+      grub.enable = true;
+      wacom.enable = true;
+      virtualization = {
+        enable = true;
+        enableWindowsVM = true;
+      };
+      nvidia.enable = true;
+      bluetooth.enable = true;
+    };
+    services = {
+      boinc.enable = true;
+      backup.enable = true;
+      ssh.enable = true;
+      syncthing.enable = true;
+      redshift.enable = true;
+      prometheus.enable = true;
+    };
+  };
 
 }
