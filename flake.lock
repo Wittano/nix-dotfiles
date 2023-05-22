@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1684659907,
-        "narHash": "sha256-hZX6kxht02lgrPfzm/t4bRjToZS/M9NGkPrbRWqAydY=",
+        "lastModified": 1684752521,
+        "narHash": "sha256-cNxiwdZzcc99VZCj8/fz8TX/bvu5RYy0LV41bJOumzE=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "fd44d0d55374c24bf92aa59b4131a5cada358bb6",
+        "rev": "37d3fd88e6e7c7dd3b5b659cf3cf18f0d81a55c9",
         "type": "github"
       },
       "original": {
@@ -74,11 +74,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1684570954,
-        "narHash": "sha256-FX5y4Sm87RWwfu9PI71XFvuRpZLowh00FQpIJ1WfXqE=",
+        "lastModified": 1684662198,
+        "narHash": "sha256-lmGDGuFONWSoGBKDDhU/6fOhhmFoZQ8rPf+kS7/e/Gs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3005f20ce0aaa58169cdee57c8aa12e5f1b6e1b3",
+        "rev": "50a183182d7ae39133555414d48d5d609a28a57d",
         "type": "github"
       },
       "original": {
@@ -161,11 +161,11 @@
     "wittano-dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1682535289,
-        "narHash": "sha256-UVajpLY0iDtRq2Dd3U+xBsHOuXqL+6fcAzWpRZh11Fw=",
+        "lastModified": 1684764285,
+        "narHash": "sha256-xXRp+NLdP6os1IEub8nGoHQn19uUDs0yobZhjDN+rIo=",
         "owner": "Wittano",
         "repo": "dotfiles",
-        "rev": "185e0fb3995c7f1274b4a68f28eb13e0130f559a",
+        "rev": "6f01b5d7f9af86ed3a0cade4cbf64737ad44814b",
         "type": "github"
       },
       "original": {

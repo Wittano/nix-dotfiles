@@ -16,25 +16,12 @@
       url = "github:Wittano/system-staff";
       flake = false;
     };
-    wittano-repo = {
-      url = "github:Wittano/nix-repo";
-    };
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-    };
+    wittano-repo = { url = "github:Wittano/nix-repo"; };
+    emacs-overlay = { url = "github:nix-community/emacs-overlay"; };
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , nixpkgs-unstable
-    , wittano-dotfiles
-    , system-staff
-    , wittano-repo
-    , emacs-overlay
-    , ...
-    }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
+    , system-staff, wittano-repo, emacs-overlay, ... }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
       inherit (lib.my.mapper) mapDirToAttrs;
@@ -77,25 +64,20 @@
           wittanoRepo = wittano-repo;
         };
       });
-    in
-    {
+    in {
       inherit lib;
 
-      nixosConfigurations =
-        let
-          inherit (lib.attrsets) mapAttrs' nameValuePair;
+      nixosConfigurations = let
+        inherit (lib.attrsets) mapAttrs' nameValuePair;
 
-          hosts = builtins.readDir ./hosts;
-          devHosts = mapAttrs'
-            (n: v:
-              let devName = "${n}-dev";
-              in nameValuePair (devName) (mkHost {
-                name = devName;
-                isDevMode = true;
-              }))
-            hosts;
-          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
-        in
-        normalHosts // devHosts;
+        hosts = builtins.readDir ./hosts;
+        devHosts = mapAttrs' (n: v:
+          let devName = "${n}-dev";
+          in nameValuePair (devName) (mkHost {
+            name = devName;
+            isDevMode = true;
+          })) hosts;
+        normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+      in normalHosts // devHosts;
     };
 }
