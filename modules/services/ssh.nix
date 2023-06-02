@@ -16,7 +16,7 @@ in {
     services.openssh = {
       enable = true;
       startWhenNeeded = true;
-      settings.RermitRootLogin = "no";
+      settings.PermitRootLogin = "no";
     };
   };
 }
