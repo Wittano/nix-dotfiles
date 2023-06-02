@@ -2,10 +2,10 @@
   description = "Wittano NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wittano-dotfiles = {
@@ -16,8 +16,14 @@
       url = "github:Wittano/system-staff";
       flake = false;
     };
-    wittano-repo = { url = "github:Wittano/nix-repo"; };
-    emacs-overlay = { url = "github:nix-community/emacs-overlay"; };
+    wittano-repo = {
+      url = "github:Wittano/nix-repo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
@@ -65,8 +71,6 @@
         };
       });
     in {
-      inherit lib;
-
       nixosConfigurations = let
         inherit (lib.attrsets) mapAttrs' nameValuePair;
 

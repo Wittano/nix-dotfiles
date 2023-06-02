@@ -1,4 +1,5 @@
-{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false, ownPackages, ... }: {
+{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false
+, ownPackages, ... }: {
 
   # Nix configuration
   nix = {
@@ -49,7 +50,8 @@
   # Flatpak
   services.flatpak.enable = true;
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
+  xdg.portal.extraPortals =
+    lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
     [ pkgs.xdg-desktop-portal-gtk ];
 
   systemd.user.extraConfig = ''
@@ -75,13 +77,12 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop direnv ];
-    variables =
-      let projectConfigDir = "/home/wittano/projects/config";
-      in {
-        EDITOR = "vim";
-        DOTFILES = "${projectConfigDir}/dotfiles";
-        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
-      };
+    variables = let projectConfigDir = "/home/wittano/projects/config";
+    in {
+      EDITOR = "vim";
+      DOTFILES = "${projectConfigDir}/dotfiles";
+      NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+    };
 
     shells = with pkgs; [ bash ];
   };
@@ -118,7 +119,7 @@
     extraSpecialArgs = { inherit pkgs unstable lib; };
     useUserPackages = true;
     backupFileExtension = "backup";
-    users.wittano.home.stateVersion = "22.11";
+    users.wittano.home.stateVersion = "23.05";
   };
 
   # Internal modules
@@ -127,12 +128,8 @@
       enable = true;
       theme = "sugar-candy";
     };
-    themes = {
-      catppuccin.enable = true;
-    };
-    dev = {
-      git.enable = true;
-    };
+    themes.catppuccin.enable = true;
+    dev.git.enable = true;
     shell.fish = {
       enable = true;
       enableDevMode = isDevMode;
@@ -143,7 +140,7 @@
   # System
   system = {
     autoUpgrade.enable = true;
-    stateVersion = "22.11";
+    stateVersion = "23.05";
   };
 
 }
