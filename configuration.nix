@@ -94,6 +94,8 @@
       kernelModules = [ ];
     };
 
+    tmp.useTmpfs = true;
+
     loader.efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi";
