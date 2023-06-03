@@ -11,16 +11,26 @@ let
     # Apps
     thunderbird
     gnome.file-roller
-    keepassxc
     gnome.eog
     spotify
     evince
-    gotktrix
     pcmanfm
+    obsidian
+    # TODO Create Soundux as nix deviration package
+
+    # Security
+    bitwarden
+    keepassxc
+
+    # Communicator
+    telegram-desktop
+    signal-desktop
     discord
+    gotktrix
 
     # Dev
     vscodium
+    figma-linux
   ];
 in {
   home = {
