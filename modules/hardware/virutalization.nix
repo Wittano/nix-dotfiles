@@ -40,82 +40,71 @@ in {
       };
     };
 
-    users.users."${username}".extraGroups =
-      [
-        (mkIf cfg.enableDocker "docker")
-        (mkIf cfg.enableVagrant "vboxusers")
-        "libvirtd"
-      ];
-
-    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [
-      {
-        name = "windows";
-        manage = "window";
-        start = "sudo virsh start win10";
-      }
+    users.users."${username}".extraGroups = [
+      (mkIf cfg.enableDocker "docker")
+      (mkIf cfg.enableVagrant "vboxusers")
+      "libvirtd"
     ];
 
-    security.sudo.extraRules = mkIf cfg.enableWindowsVM [
-      {
-        users = [ "${username}" ];
-        commands = [
-          {
-            command = "${pkgs.libvirt}/bin/virsh start win10";
-            options = [ "NOPASSWD" ];
-          }
-        ];
-      }
-    ];
+    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
+      name = "windows";
+      manage = "window";
+      start = "sudo virsh start win10";
+    }];
 
-    environment.systemPackages = with pkgs; [ virt-manager dconf libguestfs ]
+    security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
+      users = [ "${username}" ];
+      commands = [{
+        command = "${pkgs.libvirt}/bin/virsh start win10";
+        options = [ "NOPASSWD" ];
+      }];
+    }];
+
+    environment.systemPackages = with pkgs;
+      [ virt-manager dconf libguestfs ]
       ++ (if cfg.enableVagrant then [ vagrant ] else [ ]);
 
     systemd.services.libvirtd = mkIf cfg.enableWindowsVM {
-      path =
-        let
-          env = pkgs.buildEnv {
-            name = "qemu-hook-env";
-            paths = with pkgs; [
-              bash
-              libvirt
-              kmod
-              systemd
-              ripgrep
-              sd
-            ];
-          };
-        in
-        [ env ];
+      path = let
+        env = pkgs.buildEnv {
+          name = "qemu-hook-env";
+          paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
+        };
+      in [ env ];
 
-      preStart =
-        let
-          stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
-            #!/usr/bin/env bash
+      preStart = let
+        stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
+          #!/usr/bin/env bash
 
-            systemctl stop display-manager.service
-            systemctl stop boinc.service
-          '';
-          startBoincScript = pkgs.writeScript "start-boinc.sh" ''
-            #!/usr/bin/env bash
-
-            systemctl start boinc.service
-          '';
-        in
-        mkIf (cfg.enableWindowsVM) ''
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
-          mkdir -p /var/lib/libvirt/vbios
-      
-          ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
-
-          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
-          ln -sf ${systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
-
-          ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
-          ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
-
-          ln -sf ${systemStaff.vms.win10."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
+          systemctl stop display-manager.service
+          systemctl stop boinc.service
         '';
+        startBoincScript = pkgs.writeScript "start-boinc.sh" ''
+          #!/usr/bin/env bash
+
+          systemctl start boinc.service
+        '';
+      in mkIf (cfg.enableWindowsVM) ''
+        mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
+        mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
+        mkdir -p /var/lib/libvirt/vbios
+
+        ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
+
+        ln -sf ${
+          systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source
+        } /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
+        ln -sf ${
+          systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source
+        } /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+
+        ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
+        ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
+
+        ln -sf ${
+          systemStaff.vms.win10."vibios.rom".source
+        } /var/lib/libvirt/vbios/vibios.rom
+      '';
     };
 
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
