@@ -20,6 +20,10 @@
       url = "github:Wittano/nix-repo";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    file-mover = {
+      url = "github:Wittano/file-mover";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +31,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
-    , system-staff, wittano-repo, emacs-overlay, ... }@inputs:
+    , system-staff, wittano-repo, emacs-overlay, file-mover, ... }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
       inherit (lib.my.mapper) mapDirToAttrs;
@@ -68,6 +72,7 @@
         my = import ./lib {
           inherit lib pkgs system home-manager unstable dotfiles systemStaff;
           wittanoRepo = wittano-repo;
+          fileMover = file-mover;
         };
       });
     in {

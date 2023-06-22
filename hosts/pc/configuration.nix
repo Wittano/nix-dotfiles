@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, ... }: {
+{ config, pkgs, isDevMode ? false, username ? "wittano", ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
@@ -23,6 +23,20 @@
   ];
 
   programs.droidcam.enable = true;
+
+  services.file-mover = {
+    enable = true;
+    configPath = builtins.toFile "config.toml" ''
+      [Downloads]
+      src = [ "/home/wittano/Downloads/*.pdf", "/home/wittano/Downloads/*.docx" ]
+      dest = "/home/wittano/Documents"
+
+      [Archive]
+      src = [ "/home/wittano/Downloads/*.zip", "/home/wittano/Downloads/*.tar*" ]
+      dest = "/home/wittano/Downloads/archive"
+    '';
+    user = "${username}";
+  };
 
   modules = let
     enableWithDevMode = {

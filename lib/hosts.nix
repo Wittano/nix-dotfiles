@@ -1,4 +1,4 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, wittanoRepo, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, wittanoRepo, fileMover, ... }:
 with lib;
 with lib.my; {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
@@ -17,6 +17,7 @@ with lib.my; {
           ./../configuration.nix
           ./../hosts/${hostName}/configuration.nix
 
+          fileMover.nixosModules."file-mover"
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };
