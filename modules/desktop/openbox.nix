@@ -4,16 +4,14 @@ with lib.my;
 let
   cfg = config.modules.desktop.openbox;
 
-  importApp = name:
-    apps.importApp cfg name;
+  importApp = name: apps.importApp cfg name;
 
   nitrogenConfig = importApp "nitrogen";
-  kittyConfig = importApp "kitty";
+  terminalConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
   xautolockConfig = importApp "xautolock";
   picomConfig = importApp "picom";
-in
-{
+in {
 
   options.modules.desktop.openbox = {
     enable = mkEnableOption "Enable Openbox desktop";
@@ -25,7 +23,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     nitrogenConfig
-    kittyConfig
+    terminalConfig
     xautolockConfig
     picomConfig
     rofiConfig
@@ -47,28 +45,23 @@ in
             ulauncher
           ];
 
-          activation =
-            let
-              customeActivation = path:
-                link.createMutableLinkActivation {
-                  internalPath = path;
-                  isDevMode = cfg.enableDevMode;
-                };
-            in
-            {
-              linkMutableOpenboxConfig = customeActivation ".config/openbox";
-              linkMutableTint2Config = customeActivation ".config/tint2";
-            };
+          activation = let
+            customeActivation = path:
+              link.createMutableLinkActivation {
+                internalPath = path;
+                isDevMode = cfg.enableDevMode;
+              };
+          in {
+            linkMutableOpenboxConfig = customeActivation ".config/openbox";
+            linkMutableTint2Config = customeActivation ".config/tint2";
+          };
         };
 
-        xdg.configFile =
-          let
-            configDir = dotfiles.".config";
-          in
-          mkIf (cfg.enableDevMode == false) {
-            openbox.source = configDir.openbox.source;
-            tint2.source = configDir.tint2.source;
-          };
+        xdg.configFile = let configDir = dotfiles.".config";
+        in mkIf (cfg.enableDevMode == false) {
+          openbox.source = configDir.openbox.source;
+          tint2.source = configDir.tint2.source;
+        };
 
       };
 
@@ -77,7 +70,6 @@ in
 
         windowManager.openbox.enable = true;
         displayManager.defaultSession = "none+openbox";
-        displayManager.lightdm.enable = true;
       };
     }
   ]);

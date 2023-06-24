@@ -44,10 +44,11 @@
       enableDevMode = isDevMode;
     };
   in {
-    desktop.qtile = enableWithDevMode;
+    desktop.openbox = enableWithDevMode;
     editors.emacs = enableWithDevMode // { version = "doom"; };
     dev = {
       python.enable = true;
+      jvm.enable = true;
       go.enable = true;
     };
     hardware = {
