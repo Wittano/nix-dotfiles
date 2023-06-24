@@ -1,4 +1,4 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, wittanoRepo, fileMover, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, inputs, ... }:
 with lib;
 with lib.my; {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
@@ -6,9 +6,9 @@ with lib.my; {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode systemStaff username;
+        inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs;
         hostName = name;
-        ownPackages = wittanoRepo.packages.x86_64-linux;
+        ownPackages = inputs.wittano-repo.packages.x86_64-linux;
       };
 
       modules =
@@ -17,7 +17,7 @@ with lib.my; {
           ./../configuration.nix
           ./../hosts/${hostName}/configuration.nix
 
-          fileMover.nixosModules."file-mover"
+          inputs.file-mover.nixosModules."file-mover"
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };

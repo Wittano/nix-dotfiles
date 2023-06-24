@@ -30,8 +30,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, wittano-dotfiles
-    , system-staff, wittano-repo, emacs-overlay, file-mover, ... }@inputs:
+  outputs =
+    { self
+    , nixpkgs
+    , home-manager
+    , nixpkgs-unstable
+    , wittano-dotfiles
+    , system-staff
+    , ...
+    }@inputs:
     let
       inherit (lib.my.hosts) mkHost;
       inherit (lib.my.mapper) mapDirToAttrs;
@@ -44,7 +51,6 @@
 
           config.allowUnfree = true;
 
-          nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
 
           # TODO Add cachix repository for wittano-repo
           settings = {
@@ -70,23 +76,26 @@
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
         my = import ./lib {
-          inherit lib pkgs system home-manager unstable dotfiles systemStaff;
-          wittanoRepo = wittano-repo;
-          fileMover = file-mover;
+          inherit lib pkgs system home-manager unstable dotfiles systemStaff inputs;
         };
       });
-    in {
-      nixosConfigurations = let
-        inherit (lib.attrsets) mapAttrs' nameValuePair;
+    in
+    {
+      nixosConfigurations =
+        let
+          inherit (lib.attrsets) mapAttrs' nameValuePair;
 
-        hosts = builtins.readDir ./hosts;
-        devHosts = mapAttrs' (n: v:
-          let devName = "${n}-dev";
-          in nameValuePair (devName) (mkHost {
-            name = devName;
-            isDevMode = true;
-          })) hosts;
-        normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
-      in normalHosts // devHosts;
+          hosts = builtins.readDir ./hosts;
+          devHosts = mapAttrs'
+            (n: v:
+              let devName = "${n}-dev";
+              in nameValuePair (devName) (mkHost {
+                name = devName;
+                isDevMode = true;
+              }))
+            hosts;
+          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+        in
+        normalHosts // devHosts;
     };
 }
