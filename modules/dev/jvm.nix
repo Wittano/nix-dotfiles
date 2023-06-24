@@ -2,12 +2,12 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.modules.dev.java;
+  cfg = config.modules.dev.jvm;
 in {
   options = {
-    modules.dev.java = {
+    modules.dev.jvm = {
       enable = mkEnableOption ''
-        Enable Java development enviroment
+        Enable JVM development enviroment
       '';
     };
   };
@@ -17,7 +17,7 @@ in {
       packages = with pkgs; [ jetbrains.idea-community ];
       file.".ideavimrc".text = ''
         set rnu nu
-      ''; 
+      '';
     };
   };
 }
