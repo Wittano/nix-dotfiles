@@ -37,11 +37,11 @@ in {
             gsimplecal
             notify-osd-customizable
             picom-jonaburg
+            plank
 
             # Utils
             arandr
             lxappearance
-            ulauncher
           ];
 
           activation = let
