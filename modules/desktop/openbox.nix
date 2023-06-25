@@ -10,7 +10,6 @@ let
   terminalConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
   xautolockConfig = importApp "xautolock";
-  picomConfig = importApp "picom";
 in {
 
   options.modules.desktop.openbox = {
@@ -25,7 +24,6 @@ in {
     nitrogenConfig
     terminalConfig
     xautolockConfig
-    picomConfig
     rofiConfig
     {
       home-manager.users.wittano = {
@@ -38,6 +36,7 @@ in {
             volumeicon
             gsimplecal
             notify-osd-customizable
+            picom-jonaburg
 
             # Utils
             arandr
@@ -54,6 +53,7 @@ in {
           in {
             linkMutableOpenboxConfig = customeActivation ".config/openbox";
             linkMutableTint2Config = customeActivation ".config/tint2";
+            linkMutablePicomConfig = customeActivation ".config/picom";
           };
         };
 
@@ -61,6 +61,7 @@ in {
         in mkIf (cfg.enableDevMode == false) {
           openbox.source = configDir.openbox.source;
           tint2.source = configDir.tint2.source;
+          picom.source = configDir.picom.source;
         };
 
       };
