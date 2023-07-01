@@ -111,6 +111,7 @@ in {
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
     boot = {
+      kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
       kernelModules = [ "kvm-intel" "vifo-pci" ];
     };
