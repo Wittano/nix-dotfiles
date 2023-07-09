@@ -1,9 +1,9 @@
 { config, pkgs, lib, home-manager, unstable, ... }:
 with lib;
-let cfg = config.modules.dev.python;
+let cfg = config.modules.dev.pycharm;
 in {
   options = {
-    modules.dev.python = {
+    modules.dev.pycharm = {
       enable = mkEnableOption ''
         Enable Python development enviroment
       '';

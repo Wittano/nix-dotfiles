@@ -47,24 +47,25 @@
     desktop.openbox = enableWithDevMode;
     editors.emacs = enableWithDevMode // { version = "doom"; };
     dev = {
-      python.enable = true;
+      pycharm.enable = true;
       jvm.enable = true;
-      go.enable = true;
+      goland.enable = true;
+      clion.enable = true;
     };
     hardware = {
       sound.enable = true;
       grub.enable = true;
       wacom.enable = true;
-      virtualization = {
-        enable = true;
-        enableWindowsVM = true;
-      };
+      virtualization.enable = true;
       nvidia.enable = true;
       bluetooth.enable = true;
     };
     services = {
       boinc.enable = true;
-      backup.enable = true;
+      backup = {
+        enable = true;
+        backupDir = "/mnt/backup/wittano.nixos";
+      };
       ssh.enable = true;
       syncthing.enable = true;
       redshift.enable = true;

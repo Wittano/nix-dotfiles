@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 with lib;
-let cfg = config.modules.dev.cpp;
+let cfg = config.modules.dev.clion;
 in {
   options = {
-    modules.dev.cpp = {
+    modules.dev.clion = {
       enable = mkEnableOption ''
         Enable cpp development enviroment
       '';

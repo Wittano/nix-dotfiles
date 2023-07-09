@@ -1,9 +1,9 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
-let cfg = config.modules.dev.go;
+let cfg = config.modules.dev.goland;
 in {
   options = {
-    modules.dev.go = {
+    modules.dev.goland = {
       enable = mkEnableOption ''
         Enable goland as user package
       '';
