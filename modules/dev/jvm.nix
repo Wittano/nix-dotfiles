@@ -14,7 +14,7 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.wittano.home = {
-      packages = with pkgs; [ jetbrains.idea-ultimate ];
+      packages = with pkgs; [ jetbrains.idea-ultimate jdk ];
       file.".ideavimrc".text = ''
         set rnu nu
       '';

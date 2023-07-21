@@ -15,8 +15,8 @@ in {
       packages = with pkgs; [
         virtualenv
         pipenv
-        unstable.python3Full
-        jetbrains.pycharm-community
+        python311
+        jetbrains.pycharm-professional
       ];
       file.".ideavimrc".text = ''
         set rnu nu
