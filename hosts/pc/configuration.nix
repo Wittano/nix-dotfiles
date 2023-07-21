@@ -44,8 +44,8 @@
       enableDevMode = isDevMode;
     };
   in {
-    desktop.openbox = enableWithDevMode;
-    editors.emacs = enableWithDevMode // { version = "doom"; };
+    desktop.qtile = enableWithDevMode;
+    editors.neovim = enableWithDevMode;
     dev = {
       pycharm.enable = true;
       jvm.enable = true;

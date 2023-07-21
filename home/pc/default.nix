@@ -14,7 +14,7 @@ let
     gnome.eog
     spotify
     evince
-    pcmanfm
+    cinnamon.nemo
     obsidian
     # TODO Create Soundux as nix deviration package
 
