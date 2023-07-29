@@ -48,7 +48,6 @@
     editors.neovim = enableWithDevMode;
     dev = {
       pycharm.enable = true;
-      jvm.enable = true;
       goland.enable = true;
       clion.enable = true;
     };
