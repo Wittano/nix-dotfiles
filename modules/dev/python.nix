@@ -15,7 +15,7 @@ in {
       packages = with pkgs; [
         virtualenv
         pipenv
-        python311
+        python311Full
         jetbrains.pycharm-professional
       ];
       file.".ideavimrc".text = ''
