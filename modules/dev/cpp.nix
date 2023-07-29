@@ -16,6 +16,10 @@ in {
       gcc_multi
       gnumake
       glibc
+
+      # Rust
+      rustup
+
       jetbrains.clion
     ];
   };
