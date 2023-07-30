@@ -20,8 +20,8 @@
       url = "github:Wittano/nix-repo";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    file-mover = {
-      url = "github:Wittano/file-mover";
+    filebot = {
+      url = "github:Wittano/filebot";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     emacs-overlay = {

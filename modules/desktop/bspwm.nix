@@ -3,6 +3,14 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.bspwm;
+  importApp = name:
+    apps.importApp cfg name;
+
+  nitrogenConfig = importApp "nitrogen";
+  alacrittyConfig = importApp "alacritty";
+  rofiConfig = importApp "rofi";
+  tmuxConfig = importApp "tmux";
+  picomConfig = importApp "picom";
 in
 {
 
@@ -14,53 +22,63 @@ in
     '';
   };
 
-  config = mkIf cfg.enable {
-    home-manager.users.wittano = {
-      home = {
-        packages = with pkgs; [
-          polybar
-          gsimplecal
-          notify-osd-customizable
-          notify-desktop
-          picom-jonaburg
-          wmname
+  config = mkIf cfg.enable (mkMerge [
+    rofiConfig
+    picomConfig
+    alacrittyConfig
+    tmuxConfig
+    nitrogenConfig
+    {
+      home-manager.users.wittano = {
+        home = {
+          packages = with pkgs; [
+            polybar
+            gsimplecal
+            notify-osd-customizable
+            notify-desktop
+            wmname
+            rofi
 
-          # Utils
-          lxappearance
-          nitrogen
-        ];
+            # Utils
+            lxappearance
+            nitrogen
 
-        activation =
-          let
-            customeActivation = path:
-              link.createMutableLinkActivation {
-                internalPath = path;
-                isDevMode = cfg.enableDevMode;
-              };
-          in
-          {
-            linkMutableBspwmConfig = customeActivation ".config/bspwm";
-            linkMutableSxhkdConfig = customeActivation ".config/sxhkd";
-            linkMutablePolybarConfig = customeActivation ".config/polybar";
+            font-awesome
+            font-awesome_5
+            siji
+          ];
+
+          activation =
+            let
+              customeActivation = path:
+                link.createMutableLinkActivation {
+                  internalPath = path;
+                  isDevMode = cfg.enableDevMode;
+                };
+            in
+            {
+              linkMutableBspwmConfig = customeActivation ".config/bspwm";
+              linkMutableSxhkdConfig = customeActivation ".config/sxhkd";
+              linkMutablePolybarConfig = customeActivation ".config/polybar";
+            };
+        };
+
+        xdg.configFile =
+          let configDir = dotfiles.".config";
+          in mkIf (cfg.enableDevMode == false) {
+            bspwm.source = configDir.bspwm.source;
+            sxhkd.source = configDir.sxhkd.source;
+            polybar.source = configDir.polybar.source;
           };
       };
 
-      xdg.configFile =
-        let configDir = dotfiles.".config";
-        in mkIf (cfg.enableDevMode == false) {
-          bspwm.source = configDir.bspwm.source;
-          sxhkd.source = configDir.sxhkd.source;
-          polybar.source = configDir.polybar.source;
+      services = {
+        xserver = {
+          enable = true;
+          windowManager.bspwm.enable = true;
         };
-
-    };
-
-    services = {
-      xserver = {
-        enable = true;
-        windowManager.bspwm.enable = true;
       };
-    };
-  };
+    }
+  ]);
 
 }

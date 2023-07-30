@@ -17,7 +17,7 @@ with lib.my; {
           ./../configuration.nix
           ./../hosts/${hostName}/configuration.nix
 
-          inputs.file-mover.nixosModules."file-mover"
+          inputs.filebot.nixosModules."filebot"
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };
