@@ -36,14 +36,5 @@ in
         '';
       };
     };
-
-    systemd.user.services.gradle = {
-      description = ''
-        Gradle - tools to buliding JVM application. Adaptable, fast automation for all
-      '';
-      wantedBy = [ "multi-user.target" ];
-      script = "${pkgs.gradle}/bin/gradle --foreground";
-      postStop = "${pkgs.gradle}/bin/gradle --stop";
-    };
   };
 }
