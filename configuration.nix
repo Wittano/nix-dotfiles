@@ -1,5 +1,13 @@
-{ config, pkgs, unstable, lib, home-manager, username, isDevMode ? false
-, ownPackages, ... }: {
+{ config
+, pkgs
+, unstable
+, lib
+, home-manager
+, username
+, isDevMode ? false
+, ownPackages
+, ...
+}: {
 
   # Nix configuration
   nix = {
@@ -7,6 +15,17 @@
       max-jobs = 4;
       cores = 4;
       auto-optimise-store = true;
+      substituters = [
+        "https://wittano-nix-repo.cachix.org"
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org/"
+        "https://hyprland.cachix.org"
+      ];
+      trusted-public-keys = [
+        "wittano-nix-repo.cachix.org-1:SqjGwMsbzVQOXhbS90DXFC7AoGH99dzPy8zixK3cyt0="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      ];
     };
     gc = {
       automatic = true;
@@ -19,7 +38,10 @@
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowBroken = false;
+    allowUnfree = true;
+  };
 
   time.timeZone = "Europe/Warsaw";
 
@@ -52,7 +74,7 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals =
     lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
-    [ pkgs.xdg-desktop-portal-gtk ];
+      [ pkgs.xdg-desktop-portal-gtk ];
 
   systemd.user.extraConfig = ''
     DefaultEnvironment="PATH=/run/current-system/sw/bin"
@@ -77,12 +99,13 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop direnv bash papirus-icon-theme ];
-    variables = let projectConfigDir = "/home/wittano/projects/config";
-    in {
-      EDITOR = "vim";
-      DOTFILES = "${projectConfigDir}/dotfiles";
-      NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
-    };
+    variables =
+      let projectConfigDir = "/home/wittano/projects/config";
+      in {
+        EDITOR = "vim";
+        DOTFILES = "${projectConfigDir}/dotfiles";
+        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+      };
 
     shells = with pkgs; [ bash ];
   };
