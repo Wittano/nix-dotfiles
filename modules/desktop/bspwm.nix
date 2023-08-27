@@ -11,6 +11,7 @@ let
   rofiConfig = importApp "rofi";
   tmuxConfig = importApp "tmux";
   picomConfig = importApp "picom";
+  switchOffScript = pkgs.callPackage ./utils/switch-off.nix { };
 in
 {
 
@@ -46,6 +47,7 @@ in
             font-awesome
             font-awesome_5
             siji
+            switchOffScript
           ];
 
           activation =

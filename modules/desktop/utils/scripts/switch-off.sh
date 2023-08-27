@@ -12,7 +12,9 @@ case $CHOICE in
   ;;
 "$LOGOUT")
   QTILE=$(pgrep qtile)
+  BSPWM=$(pgrep bspwm)
   kill -9 "$QTILE"
+  kill -9 "$BSPWM"
   ;;
 "$REBOOT")
   reboot
