@@ -1,11 +1,11 @@
 { config, lib, pkgs, home-manger, ... }:
 with lib;
-let cfg = config.modules.dev.csharp;
+let cfg = config.modules.dev.dotnet;
 in {
   options = {
-    modules.dev.csharp = {
+    modules.dev.dotnet = {
       enable = mkEnableOption ''
-        Enable C# development enviroment
+        Enable .NET development enviroment
       '';
     };
   };
@@ -15,6 +15,7 @@ in {
 
     home-manager.users.wittano.home.packages = with pkgs; [
       dotnet-sdk
+      mono
       jetbrains.rider
     ];
   };
