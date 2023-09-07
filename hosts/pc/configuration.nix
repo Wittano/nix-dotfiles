@@ -30,7 +30,10 @@
       enableDevMode = isDevMode;
     };
   in {
-    desktop.bspwm = enableWithDevMode;
+    desktop = {
+      bspwm = enableWithDevMode;
+      gaming.enable = true;
+    };
     editors.neovim = enableWithDevMode;
     dev = {
       pycharm.enable = true;

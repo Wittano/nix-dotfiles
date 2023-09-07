@@ -14,7 +14,7 @@ in {
   config = mkIf cfg.enable {
     home-manager.users.wittano.home.packages = with pkgs; [
       steam
-      steam-run-native
+      steam-run
       lutris
       xdelta
       xterm

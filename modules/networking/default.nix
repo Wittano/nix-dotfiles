@@ -1,1 +1,4 @@
-{ config, pkgs, ... }: { networking.hostName = "nixos"; }
+{ config, pkgs, ... }: { 
+  # TODO Add wifi drivers
+  networking.hostName = "nixos"; 
+  }
