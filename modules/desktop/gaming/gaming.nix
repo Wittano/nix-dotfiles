@@ -1,8 +1,9 @@
 { config, pkgs, home-manager, lib, ... }:
 with lib;
 let
- cfg = config.modules.desktop.gaming;
-in {
+  cfg = config.modules.desktop.gaming;
+in
+{
   options = {
     modules.desktop.gaming = {
       enable = mkEnableOption ''
@@ -19,6 +20,9 @@ in {
       xdelta
       xterm
       gnome.zenity
+
+      # Games
+      minecraft
     ];
 
     networking.extraHosts = ''
@@ -31,6 +35,13 @@ in {
       0.0.0.0 cdp.cloud.unity3d.com
       0.0.0.0 remote-config-proxy-prd.uca.cloud.unity3d.com
     '';
+
+    fileSystems = {
+      "/mnt/gaming" = {
+        device = "/dev/disk/by-label/GAMING";
+        fsType = "ext4";
+      };
+    };
   };
-  
+
 }
