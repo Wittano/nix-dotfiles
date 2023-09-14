@@ -11,7 +11,6 @@ let
   rofiConfig = importApp "rofi";
   tmuxConfig = importApp "tmux";
   xautolockConfig = importApp "xautolock";
-  picomConfig = importApp "picom";
 in
 {
 
@@ -25,7 +24,6 @@ in
 
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
-    picomConfig
     alacrittyConfig
     tmuxConfig
     xautolockConfig

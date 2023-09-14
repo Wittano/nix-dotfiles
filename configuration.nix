@@ -94,6 +94,7 @@
     nerdfonts
     hackgen-nf-font
     emacs-all-the-icons-fonts
+    oranchelo-icon-theme
   ];
 
   # Global packages

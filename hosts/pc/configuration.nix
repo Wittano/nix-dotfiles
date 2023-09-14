@@ -31,7 +31,7 @@
     };
   in {
     desktop = {
-      bspwm = enableWithDevMode;
+      qtile = enableWithDevMode;
       gaming.enable = true;
     };
     editors.neovim = enableWithDevMode;
