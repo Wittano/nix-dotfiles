@@ -153,6 +153,7 @@
       enable = true;
       theme = "sugar-candy";
     };
+    utility.enable = true;
     themes.catppuccin.enable = true;
     dev.git.enable = true;
     shell.fish = {
