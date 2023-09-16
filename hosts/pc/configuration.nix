@@ -30,10 +30,7 @@
       enableDevMode = isDevMode;
     };
   in {
-    desktop = {
-      qtile = enableWithDevMode;
-      gaming.enable = true;
-    };
+    desktop.qtile = enableWithDevMode;;
     editors.neovim = enableWithDevMode;
     dev = {
       pycharm.enable = true;
