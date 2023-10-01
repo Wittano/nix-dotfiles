@@ -35,7 +35,7 @@
     dev = {
       pycharm.enable = true;
       goland.enable = true;
-      dotnet.enable = true;
+      jvm.enable = true;
       clion.enable = true;
     };
     hardware = {
