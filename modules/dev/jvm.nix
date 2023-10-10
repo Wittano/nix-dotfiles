@@ -3,6 +3,7 @@ let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.dev.jvm;
+  # TODO Export patcherDir to separated program
   patcherDir = pkgs.writeScriptBin "patcherDir" ''
     #/usr/bin/env bash
 
