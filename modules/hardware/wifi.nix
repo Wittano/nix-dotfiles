@@ -20,9 +20,11 @@ in
   config = mkIf cfg.enable {
     networking.networkmanager.enable = true;
 
-    boot.extraModulePackages = mkIf (cfg.enableTpLink && !kernel.kernelAtLeast "5.18") [ pkgs.linuxKernel.packages."${kernelVersionPackage}".rtl8192eu ];
-    boot.extraModprobeConfig = mkIf cfg.enableTpLink ''
-      blacklist rtl8xxxu
-    '';
+    boot = mkIf cfg.enableTpLink {
+      extraModulePackages = mkIf (!kernel.kernelAtLeast "5.18") [ pkgs.linuxKernel.packages."${kernelVersionPackage}".rtl8192eu ];
+      extraModprobeConfig = ''
+        blacklist rtl8xxxu
+      '';
+    };
   };
 }
