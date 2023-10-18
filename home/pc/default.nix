@@ -16,7 +16,7 @@ let
     evince
     cinnamon.nemo
     obsidian
-    # TODO Create Soundux as nix deviration package
+    soundux
 
     # Security
     bitwarden

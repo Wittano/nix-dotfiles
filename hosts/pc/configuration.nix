@@ -33,7 +33,6 @@
     desktop.qtile = enableWithDevMode;
     editors.neovim = enableWithDevMode;
     dev = {
-      pycharm.enable = true;
       goland.enable = true;
       clion.enable = true;
     };
