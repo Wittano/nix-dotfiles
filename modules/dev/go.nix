@@ -11,7 +11,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.goland go ];
+    home-manager.users.wittano = {
+      home.packages = with pkgs; [ jetbrains.goland go ];
+      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
+        pgo = "cd $HOME/projects/own/go";
+      };
+    };
   };
 
 }

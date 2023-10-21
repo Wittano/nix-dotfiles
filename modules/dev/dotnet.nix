@@ -13,10 +13,16 @@ in {
   config = mkIf cfg.enable {
     environment.variables.DOTNET_CLI_TELEMETRY_OPTOUT = "0";
 
-    home-manager.users.wittano.home.packages = with pkgs; [
-      dotnet-sdk
-      mono
-      jetbrains.rider
-    ];
+    home-manager.users.wittano = {
+      home.packages = with pkgs; [
+        dotnet-sdk
+        mono
+        jetbrains.rider
+      ];
+
+      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
+        pdotnet = "cd $HOME/projects/own/dotnet";
+      };
+    };
   };
 }

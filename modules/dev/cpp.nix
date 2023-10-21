@@ -11,16 +11,23 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [
-      cmake
-      gcc_multi
-      gnumake
-      glibc
+    home-manager.users.wittano = {
+      home.packages = with pkgs; [
+        cmake
+        gcc_multi
+        gnumake
+        glibc
 
-      # Rust
-      rustup
+        # Rust
+        rustup
 
-      jetbrains.clion
-    ];
+        jetbrains.clion
+      ];
+
+      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
+        pc = "cd $HOME/projects/own/cpp";
+        prust = "cd $HOME/projects/own/rust";
+      };
+    };
   };
 }

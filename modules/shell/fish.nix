@@ -28,17 +28,19 @@ in {
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
     home-manager.users.wittano = {
-      home.activation = let
-        customeActivation = path:
-          link.createMutableLinkActivation {
-            internalPath = path;
-            isDevMode = cfg.enableDevMode;
-          };
-      in {
-        linkMutableOmfConfig = customeActivation ".config/omf";
-        linkMutableExternalAliasesConfig =
-          customeActivation ".config/fish/conf.d";
-      };
+      home.activation =
+        let
+          customeActivation = path:
+            link.createMutableLinkActivation {
+              internalPath = path;
+              isDevMode = cfg.enableDevMode;
+            };
+        in
+        {
+          linkMutableOmfConfig = customeActivation ".config/omf";
+          linkMutableExternalAliasesConfig =
+            customeActivation ".config/fish/conf.d";
+        };
 
       xdg.configFile = mkIf (cfg.enableDevMode == false) {
         omf.source = dotfiles.".config".omf.source;
@@ -53,20 +55,29 @@ in {
         loginShellInit = ''
           set -U fish_user_paths $HOME/.local/bin $fish_user_paths
         '';
-        shellAliases = let
-          host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
-          rebuild = name:
-            "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
-        in {
-          ra = "ranger";
-          xc = "xprop | grep CLASS";
-          yta = ''
-            youtube-dl -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
-          re = rebuild host;
-          dev = rebuild "${host}-dev";
-          vm = "bash $HOME/projects/config/system/scripts/select-vagrant-vm.sh";
-          neofetch = "nix-shell -p neofetch --run 'neofetch'";
-        };
+        shellAliases =
+          let
+            host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
+            rebuild = name:
+              "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name}";
+          in
+          {
+            xc = "xprop | grep CLASS";
+            yta = ''nix run nixpkgs#youtube-dl -- -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
+            re = rebuild host;
+            dev = rebuild "${host}-dev";
+
+            # Programs
+            neofetch = "nix run nixpkgs#neofetch";
+            btop = "nix run nixpkgs#btop";
+            onefetch = "nix run nixpkgs#onefetch";
+            py = "nix run nixpkgs#python3";
+
+            # Projects
+            pnix = "cd $NIX_DOTFILES";
+            prepo = "cd $HOME/projects/config/nix-repo";
+            pdot = "cd $DOTFILES";
+          };
       };
     };
   };

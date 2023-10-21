@@ -11,16 +11,22 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home = {
-      packages = with pkgs; [
-        virtualenv
-        pipenv
-        python311Full
-        jetbrains.pycharm-professional
-      ];
-      file.".ideavimrc".text = ''
-        set rnu nu
-      '';
+    home-manager.users.wittano = {
+      home = {
+        packages = with pkgs; [
+          virtualenv
+          pipenv
+          python311Full
+          jetbrains.pycharm-professional
+        ];
+        file.".ideavimrc".text = ''
+          set rnu nu
+        '';
+      };
+
+      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
+        ppython = "cd $HOME/projects/own/python";
+      };
     };
   };
 }
