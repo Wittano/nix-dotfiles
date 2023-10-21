@@ -17,6 +17,7 @@ let
     cinnamon.nemo
     obsidian
     soundux
+    freetube
 
     # Security
     bitwarden
@@ -26,7 +27,6 @@ let
     telegram-desktop
     signal-desktop
     discord
-    gotktrix
 
     # Dev
     vscodium
