@@ -154,7 +154,10 @@
       enable = true;
       theme = "sugar-candy";
     };
-    utility.enable = true;
+    utils = {
+      enable = true;
+      enableGlobalUtils = true;
+    };
     themes.catppuccin.enable = true;
     dev.git.enable = true;
     shell.fish = {
