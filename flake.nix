@@ -50,6 +50,10 @@
           inherit system;
 
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "electron-24.8.6"
+            "electron-22.3.27"
+          ];
         };
 
       pkgs = mkPkgs nixpkgs;
