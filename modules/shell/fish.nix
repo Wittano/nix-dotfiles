@@ -72,6 +72,7 @@ in {
             btop = "nix run nixpkgs#btop";
             onefetch = "nix run nixpkgs#onefetch";
             py = "nix run nixpkgs#python3";
+            tor = "nix run nixpkgs#tor-browser-bundle-bin";
 
             # Projects
             pnix = "cd $NIX_DOTFILES";
