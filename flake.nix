@@ -4,10 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     wittano-dotfiles = {
       url = "github:Wittano/dotfiles";
       flake = false;
@@ -16,18 +13,9 @@
       url = "github:Wittano/system-staff";
       flake = false;
     };
-    wittano-repo = {
-      url = "github:Wittano/nix-repo";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    filebot = {
-      url = "github:Wittano/filebot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    wittano-repo.url = "github:Wittano/nix-repo";
+    filebot.url = "github:Wittano/filebot";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
   outputs =
@@ -37,6 +25,7 @@
     , nixpkgs-unstable
     , wittano-dotfiles
     , system-staff
+    , emacs-overlay
     , ...
     }@inputs:
     let
@@ -48,6 +37,8 @@
       mkPkgs = p:
         import p {
           inherit system;
+
+          overlays = [ emacs-overlay.overlay ];
 
           config.allowUnfree = true;
           config.permittedInsecurePackages = [
