@@ -24,7 +24,7 @@ in
         "${homeDir}/.keepass" = {
           id = "xm73k-khame";
           label = "Passwords";
-          devices = [ "Phone" ];
+          devices = [ "Phone" "Server - TrueNAS" ];
         };
 
         "${homeDir}/Documents/notes" = {
@@ -36,21 +36,15 @@ in
         "${homeDir}/Sync" = {
           id = "default";
           label = "Sync folder";
-          devices = [ "Phone" ];
-        };
-
-        "/mnt/windows" = {
-          id = "bkono-cnxed";
-          label = "Windows VM";
-          devices = [ "Windows VM" ];
+          devices = [ "Phone" "Server - TrueNAS" ];
         };
       };
       devices = {
         Phone = {
           id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
         };
-        "Windows VM" = {
-          id = "AWPKKY3-4HT6T7P-4M5H6TA-C4Y4NZ4-WBXJWYJ-AVDIW5C-3OSNO5B-FMZCSAD";
+        "Server - TrueNAS" = {
+          id = "CIMVMQO-7RLKQAL-BXRS6Z3-XXFPRLB-PYHZUR3-KKH5HGX-PFWLY6S-C3KLEQ6";
         };
       };
       extraOptions = { gui.theme = "dark"; };
