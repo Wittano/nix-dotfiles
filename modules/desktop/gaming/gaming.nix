@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, ... }:
+{ config, pkgs, home-manager, lib, unstable, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
@@ -8,6 +8,9 @@ in
     modules.desktop.gaming = {
       enable = mkEnableOption ''
         Enable games tools
+      '';
+      enableAdditionalDisk = mkEnableOption ''
+        Add special disk to configuration      
       '';
     };
   };
@@ -36,7 +39,7 @@ in
       0.0.0.0 remote-config-proxy-prd.uca.cloud.unity3d.com
     '';
 
-    fileSystems = {
+    fileSystems = mkIf (cfg.enableAdditionalDisk) {
       "/mnt/gaming" = {
         device = "/dev/disk/by-label/GAMING";
         fsType = "ext4";

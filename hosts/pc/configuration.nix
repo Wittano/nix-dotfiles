@@ -31,6 +31,7 @@
     };
   in {
     desktop.qtile = enableWithDevMode;
+    desktop.gaming.enable = true;
     editors.neovim = enableWithDevMode;
     dev = {
       goland.enable = true;
