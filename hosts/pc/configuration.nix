@@ -24,41 +24,45 @@
 
   programs.droidcam.enable = true;
 
-  modules = let
-    enableWithDevMode = {
-      enable = true;
-      enableDevMode = isDevMode;
-    };
-  in {
-    desktop.qtile = enableWithDevMode;
-    desktop.gaming.enable = true;
-    editors.neovim = enableWithDevMode;
-    dev = {
-      goland.enable = true;
-      clion.enable = true;
-    };
-    hardware = {
-      sound.enable = true;
-      grub.enable = true;
-      wacom.enable = true;
-      virtualization = {
+  modules =
+    let
+      enableWithDevMode = {
         enable = true;
-        enableDocker = true;
+        enableDevMode = isDevMode;
       };
-      nvidia.enable = true;
-      bluetooth.enable = true;
-    };
-    services = {
-      boinc.enable = true;
-      backup = {
-        enable = true;
-        backupDir = "/mnt/backup/wittano.nixos";
+    in
+    {
+      desktop = {
+        qtile = enableWithDevMode;
+        gaming.enable = true;
       };
-      ssh.enable = true;
-      syncthing.enable = true;
-      redshift.enable = true;
-      prometheus.enable = true;
+      editors.neovim = enableWithDevMode;
+      dev = {
+        goland.enable = true;
+        clion.enable = true;
+      };
+      hardware = {
+        sound.enable = true;
+        grub.enable = true;
+        wacom.enable = true;
+        virtualization = {
+          enable = true;
+          enableDocker = true;
+        };
+        nvidia.enable = true;
+        bluetooth.enable = true;
+      };
+      services = {
+        boinc.enable = true;
+        backup = {
+          enable = true;
+          backupDir = "/mnt/backup/wittano.nixos";
+        };
+        ssh.enable = true;
+        syncthing.enable = true;
+        redshift.enable = true;
+        prometheus.enable = true;
+      };
     };
-  };
 
 }

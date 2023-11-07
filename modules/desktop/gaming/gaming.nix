@@ -17,17 +17,27 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano.home.packages = with pkgs; [
-      steam
-      steam-run
+      # Lutris
       lutris
       xdelta
       xterm
       gnome.zenity
 
+      # Wine
+      bottles
+
+      # FSH
+      steam-run
+
       # Games
       minecraft
     ];
 
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
+
+    programs.steam.enable = true;
+
+    # For Genshin Impact
     networking.extraHosts = ''
       0.0.0.0 log-upload-os.mihoyo.com
       0.0.0.0 overseauspider.yuanshen.com
