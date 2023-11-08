@@ -7,7 +7,7 @@ let
   importApp = name: apps.importApp cfg name;
 
   nitrogenConfig = importApp "nitrogen";
-  terminalConfig = importApp "kitty";
+  terminalConfig = importApp "alacritty";
   rofiConfig = importApp "rofi";
   xautolockConfig = importApp "xautolock";
 in {
@@ -69,7 +69,6 @@ in {
         enable = true;
 
         windowManager.openbox.enable = true;
-        displayManager.defaultSession = "none+openbox";
       };
     }
   ]);

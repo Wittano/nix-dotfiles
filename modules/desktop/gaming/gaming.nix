@@ -28,9 +28,6 @@ in
 
       # FSH
       steam-run
-
-      # Games
-      minecraft
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;

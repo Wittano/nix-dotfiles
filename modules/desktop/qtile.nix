@@ -69,7 +69,6 @@ in
         enable = true;
 
         windowManager.qtile.enable = true;
-        displayManager.defaultSession = "none+qtile";
       };
     }
   ]);
