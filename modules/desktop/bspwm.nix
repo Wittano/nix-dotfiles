@@ -11,6 +11,7 @@ let
   rofiConfig = importApp "rofi";
   tmuxConfig = importApp "tmux";
   picomConfig = importApp "picom";
+  gtkConfig = importApp "gtk";
   switchOffScript = pkgs.callPackage ./utils/switch-off.nix { };
 in
 {
@@ -26,6 +27,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     rofiConfig
     picomConfig
+    gtkConfig
     alacrittyConfig
     tmuxConfig
     nitrogenConfig
@@ -39,9 +41,6 @@ in
             notify-desktop
             wmname
             rofi
-
-            # Utils
-            lxappearance
 
             font-awesome
             font-awesome_5

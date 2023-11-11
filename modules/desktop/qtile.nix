@@ -11,6 +11,7 @@ let
   rofiConfig = importApp "rofi";
   picomConfig = importApp "picom";
   tmuxConfig = importApp "tmux";
+  gtkConfig = importApp "gtk";
 in
 {
 
@@ -27,6 +28,7 @@ in
     alacrittyConfig
     tmuxConfig
     picomConfig
+    gtkConfig
     nitrogenConfig
     {
       home-manager.users."${username}" = {
@@ -40,7 +42,6 @@ in
               notify-desktop
 
               # Utils
-              lxappearance
               switchOff
             ];
 

@@ -97,7 +97,7 @@
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop direnv bash papirus-icon-theme ];
+    systemPackages = with pkgs; [ vim htop direnv bash ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
       in {

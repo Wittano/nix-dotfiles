@@ -9,6 +9,7 @@ let
   nitrogenConfig = importApp "nitrogen";
   terminalConfig = importApp "alacritty";
   rofiConfig = importApp "rofi";
+  gtkConfig = importApp "gtk";
   xautolockConfig = importApp "xautolock";
 in {
 
@@ -24,6 +25,7 @@ in {
     nitrogenConfig
     terminalConfig
     xautolockConfig
+    gtkConfig
     rofiConfig
     {
       home-manager.users.wittano = {
@@ -40,7 +42,6 @@ in {
 
             # Utils
             arandr
-            lxappearance
           ];
 
           activation = let

@@ -1,4 +1,4 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, inputs, ... }:
+{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, inputs, ownPackages, ... }:
 with lib;
 with lib.my; {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
@@ -6,9 +6,8 @@ with lib.my; {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs;
+        inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs ownPackages;
         hostName = name;
-        ownPackages = inputs.wittano-repo.packages.x86_64-linux;
       };
 
       modules =
