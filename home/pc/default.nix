@@ -14,8 +14,7 @@ let
     gnome.eog
     spotify
     evince
-    # TODO Find better file explorer
-    cinnamon.nemo
+    xfce.thunar
     obsidian
     soundux
     freetube
