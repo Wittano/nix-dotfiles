@@ -14,6 +14,7 @@ let
     gnome.eog
     spotify
     evince
+    # TODO Find better file explorer
     cinnamon.nemo
     obsidian
     soundux
@@ -26,7 +27,7 @@ let
     # Communicator
     telegram-desktop
     signal-desktop
-    discord
+    unstable.discord
 
     # Dev
     vscodium

@@ -9,8 +9,8 @@ let
   nitrogenConfig = importApp "nitrogen";
   alacrittyConfig = importApp "alacritty";
   rofiConfig = importApp "rofi";
+  picomConfig = importApp "picom";
   tmuxConfig = importApp "tmux";
-  xautolockConfig = importApp "xautolock";
 in
 {
 
@@ -26,7 +26,7 @@ in
     rofiConfig
     alacrittyConfig
     tmuxConfig
-    xautolockConfig
+    picomConfig
     nitrogenConfig
     {
       home-manager.users."${username}" = {

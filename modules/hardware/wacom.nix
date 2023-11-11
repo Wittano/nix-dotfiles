@@ -25,6 +25,7 @@ in {
     };
   };
 
+  # TODO Add udev rules to auto assinge tablet to primary monitor
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = cfg.enable;
 

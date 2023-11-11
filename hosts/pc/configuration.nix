@@ -35,10 +35,12 @@
       desktop = {
         qtile = enableWithDevMode;
         gaming.enable = true;
+        gaming.enableAdditionalDisk = true;
       };
       editors.neovim = enableWithDevMode;
       dev = {
         goland.enable = true;
+        pycharm.enable = true;
         clion.enable = true;
       };
       hardware = {

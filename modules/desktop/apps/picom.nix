@@ -25,7 +25,7 @@ with lib.my;
 
     systemd.user.services.picom = {
       Unit = {
-        description = ''
+        Description = ''
           A lightweight compositor for X11 (previously a compton fork)
         '';
         After = "graphical-session.target";

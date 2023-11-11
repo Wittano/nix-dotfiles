@@ -42,7 +42,6 @@ in
 
             # Utils
             lxappearance
-            nitrogen
 
             font-awesome
             font-awesome_5
