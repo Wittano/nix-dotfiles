@@ -52,6 +52,10 @@ in
         fsType = "ext4";
       };
     };
+
+    home-manager.users.wittano.programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
+      fixSteamSystemTray = "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+    };
   };
 
 }
