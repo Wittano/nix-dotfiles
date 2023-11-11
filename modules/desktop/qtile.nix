@@ -12,6 +12,7 @@ let
   picomConfig = importApp "picom";
   tmuxConfig = importApp "tmux";
   gtkConfig = importApp "gtk";
+  dunstConfig = importApp "dunst";
 in
 {
 
@@ -28,6 +29,7 @@ in
     alacrittyConfig
     tmuxConfig
     picomConfig
+    dunstConfig
     gtkConfig
     nitrogenConfig
     {
@@ -38,9 +40,6 @@ in
               switchOff = pkgs.callPackage ./utils/switch-off.nix { };
             in
             with pkgs; [
-              notify-osd-customizable
-              notify-desktop
-
               # Utils
               switchOff
             ];
