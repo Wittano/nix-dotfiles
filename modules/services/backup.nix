@@ -28,7 +28,6 @@ in
         Type = "oneshot";
         User = username;
       };
-      path = [ "${pkgs.bzip2}" ];
       startAt = "*-*-* *:00:00";
       wantedBy = [ "multi-user.target" ];
       preStart = ''
@@ -57,7 +56,7 @@ in
 
         ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir}
 
-        ${pkgs.gnutar}/bin/tar -cjf $archive_backup ${cfg.backupDir} && remove_oldest_backup || remove_failed_backup
+        ${pkgs.gnutar}/bin/tar -c --use-compress-program=${pkgs.pigz}/bin/pigz -f $archive_backup ${cfg.backupDir} && remove_oldest_backup || remove_failed_backup
       '';
     };
   };
