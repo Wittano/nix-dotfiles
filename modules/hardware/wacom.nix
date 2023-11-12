@@ -1,31 +1,23 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
-with builtins;
 let
   cfg = config.modules.hardware.wacom;
 
-  wacomScript = toFile "wacom-multi-monitor.sh" ''
-    #!/usr/share/env bash
-
-    if [ -z `which xsetwacom` ]; then
-        echo "Wacom driver isn't installed!"
-        exit -1;
-    fi
-
-    tablet=`xsetwacom list devices | awk '{print $9}'`
+  wacomScript = pkgs.writeScript "wacom-multi-monitor.sh" ''
+    tablet=`${pkgs.xf86_input_wacom}/bin/xsetwacom list devices | ${pkgs.gawk}/bin/awk '{print $9}'`
 
     for i in $tablet; do
-        xsetwacom --set "$i" MapToOutput HEAD-0
+        ${pkgs.xf86_input_wacom}/bin/xsetwacom --set "$i" MapToOutput HEAD-0
     done
   '';
-in {
+in
+{
   options = {
     modules.hardware.wacom = {
       enable = mkEnableOption "Enable support for wacom graphic tablet";
     };
   };
 
-  # TODO Add udev rules to auto assinge tablet to primary monitor
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = cfg.enable;
 
