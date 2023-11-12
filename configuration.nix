@@ -132,6 +132,8 @@
     };
   };
 
+  hardware.trackpoint.emulateWheel = true;
+
   #User settings
   users.users."${username}" = {
     isNormalUser = true;

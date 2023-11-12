@@ -4,26 +4,6 @@
 
   home-manager.users.wittano = ./../../home/pc;
 
-  services.xserver.xrandrHeads = [
-    {
-      primary = true;
-      output = "DVI-D-0";
-      monitorConfig = ''
-        Option "PreferredMode" "1920x1080"
-      '';
-    }
-    {
-      primary = false;
-      output = "HDMI-0";
-      monitorConfig = ''
-        Option "PreferredMode" "1920x1080"
-        Option "RightOf" "DVI-D-0"
-      '';
-    }
-  ];
-
-  programs.droidcam.enable = true;
-
   modules =
     let
       enableWithDevMode = {
@@ -34,32 +14,23 @@
     {
       desktop = {
         qtile = enableWithDevMode;
-        gaming.enable = true;
-        gaming.enableAdditionalDisk = true;
       };
       editors.neovim = enableWithDevMode;
       dev = {
         goland.enable = true;
-        pycharm.enable = true;
         clion.enable = true;
       };
       hardware = {
         sound.enable = true;
         grub.enable = true;
-        wacom.enable = true;
-        wifi = {
-          enable = true;
-          enableTpLink = true;
-        };
+        wifi.enable = true;
         virtualization = {
           enable = true;
           enableDocker = true;
         };
         nvidia.enable = true;
-        bluetooth.enable = true;
       };
       services = {
-        boinc.enable = true;
         backup = {
           enable = true;
           backupDir = "/mnt/backup/wittano.nixos";

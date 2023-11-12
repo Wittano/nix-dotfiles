@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ownPackages, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with builtins;
 let
@@ -7,7 +7,7 @@ let
   kernelVersionPackage =
     if (kernel.version == pkgs.linuxPackages_5_15.kernel.version)
     then "linux_5_15"
-    else "linux_6_1"; # This driver is working for kernel 5.18 and lower! 01.10.2023
+    else "linux_6_1"; # This driver is working only for kernel 5.18 and lower! 12.11.2023
 in
 {
   options = {
@@ -17,7 +17,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     networking.networkmanager.enable = true;
 
     boot = mkIf cfg.enableTpLink {
