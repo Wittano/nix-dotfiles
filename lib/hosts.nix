@@ -8,6 +8,9 @@ with lib.my; {
       specialArgs = {
         inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs ownPackages;
         hostName = name;
+        agenix = inputs.agenix;
+        # TODO Set option for other keys for diffrent hosts
+        secretsFile = ./../secrets/syncthing.age;
       };
 
       modules =
@@ -17,6 +20,7 @@ with lib.my; {
           ./../hosts/${hostName}/configuration.nix
 
           inputs.filebot.nixosModules."filebot"
+          inputs.agenix.nixosModules.default
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };

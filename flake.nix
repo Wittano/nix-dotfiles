@@ -16,6 +16,7 @@
     wittano-repo.url = "github:Wittano/nix-repo";
     filebot.url = "github:Wittano/filebot";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
