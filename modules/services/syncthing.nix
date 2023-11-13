@@ -15,7 +15,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && builtins.pathExists config.age.secrets.syncthing.path) {
     services.syncthing = {
       enable = true;
       systemService = true;
