@@ -12,7 +12,7 @@ let
     thunderbird
     gnome.file-roller
     gnome.eog
-    spotify
+    # spotify
     evince
     xfce.thunar
     obsidian
@@ -26,7 +26,7 @@ let
     # Communicator
     telegram-desktop
     signal-desktop
-    unstable.discord
+    discord
 
     # Dev
     vscodium

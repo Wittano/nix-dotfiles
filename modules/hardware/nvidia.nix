@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -14,6 +14,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    home-manager.users.wittano.home.packages = with pkgs; [ nvtop ];
+
     services.xserver.videoDrivers =
       mkIf config.services.xserver.enable [ "nvidia" ];
 
