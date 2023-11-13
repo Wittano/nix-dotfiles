@@ -48,25 +48,33 @@ in
           exit 0
         fi
 
-        remove_oldest_backup() {
-          oldest_backup=$(${pkgs.findutils}/bin/find /mnt/backup -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -1 | ${pkgs.coreutils}/bin/cut -d' ' -f2-)
-          if [ -n "$oldest_backup" ]; then
-            ${pkgs.coreutils}/bin/rm $oldest_backup
-          else
-            ${pkgs.coreutils}/bin/echo "The oldest backup wasn't found"
-          fi        
+        create_archive() {
+          ${pkgs.gnutar}/bin/tar -c --use-compress-program=${pkgs.pigz}/bin/pigz -f $archive_backup ${cfg.backupDir}
+        }
+
+        close_app() {
+          ${pkgs.coreutils}/bin/echo "Backup for '$today' wasn't created!"
+          exit -1
         }
 
         remove_failed_backup() {
           ${pkgs.coreutils}/bin/echo "Failed to create backup. Check if you have space enough on disk"
-          if [ -f $archive_backup ]; then
-            ${pkgs.coreutils}/bin/rm $archive_backup
+
+          oldest_backup=$(${pkgs.findutils}/bin/find /mnt/backup -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -1 | ${pkgs.coreutils}/bin/cut -d' ' -f2-)
+          oldest_backup_name=$(${pkgs.coreutils}/bin/basename $oldest_backup)
+
+          if [[ -n "$oldest_backup" && "$oldest_backup_name" != "wittano.backup-$today.tar"]]; then
+            ${pkgs.coreutils}/bin/rm $oldest_backup
+          else
+            ${pkgs.coreutils}/bin/echo "The oldest backup wasn't found"
           fi
+
+          create_archive || close_app
         }
 
         ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir}
 
-        ${pkgs.gnutar}/bin/tar -c --use-compress-program=${pkgs.pigz}/bin/pigz -f $archive_backup ${cfg.backupDir} && remove_oldest_backup || remove_failed_backup
+        create_archive || remove_failed_backup
       '';
     };
   };
