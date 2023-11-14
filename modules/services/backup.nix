@@ -63,7 +63,7 @@ in
           oldest_backup=$(${pkgs.findutils}/bin/find /mnt/backup -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -1 | ${pkgs.coreutils}/bin/cut -d' ' -f2-)
           oldest_backup_name=$(${pkgs.coreutils}/bin/basename $oldest_backup)
 
-          if [[ -n "$oldest_backup" && "$oldest_backup_name" != "wittano.backup-$today.tar"]]; then
+          if [[ -n "$oldest_backup" && "$oldest_backup_name" != "wittano.backup-$today.tar" ]]; then
             ${pkgs.coreutils}/bin/rm $oldest_backup
           else
             ${pkgs.coreutils}/bin/echo "The oldest backup wasn't found"
