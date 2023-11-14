@@ -20,7 +20,31 @@ with lib.my;
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      nitrogen.source = dotfiles.".config".nitrogen.source;
+      "nitrogen/bg-save.cfg".source = builtins.toFile "bg-save.cfg" ''
+        [xin_1]
+        file=${dotfiles.Pictures.Wallpapers."asdfasdfa.jpeg".source}
+        mode=0
+        bgcolor=#000000
+
+        [xin_0]
+        file=${dotfiles.Pictures.Wallpapers."scenery.png".source}
+        mode=0
+        bgcolor=#000000
+      '';
+      "nitrogen/nitrogen.cfg".source = builtins.toFile "nitrogen.cfg" ''
+        [geometry]
+        posx=286
+        posy=112
+        sizex=1172
+        sizey=818
+
+        [nitrogen]
+        view=icon
+        recurse=true
+        sort=alpha
+        icon_caps=false
+        dirs=${dotfiles.Pictures.Wallpapers.source};
+      '';
     };
   };
 }
