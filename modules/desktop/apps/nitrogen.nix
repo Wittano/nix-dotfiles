@@ -20,7 +20,7 @@ with lib.my;
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      "nitrogen/bg-save.cfg".source = builtins.toFile "bg-save.cfg" ''
+      "nitrogen/bg-saved.cfg".source = builtins.toFile "bg-save.cfg" ''
         [xin_1]
         file=${dotfiles.Pictures.Wallpapers."asdfasdfa.jpeg".source}
         mode=0
