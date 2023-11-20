@@ -147,7 +147,10 @@
     backupFileExtension = "backup";
     users.wittano = {
       home.stateVersion = "23.05";
-      services.home-manager.autoUpgrade.enable = true;
+      services.home-manager.autoUpgrade = {
+        enable = true;
+        frequency = "daily";
+      };
     };
   };
 
