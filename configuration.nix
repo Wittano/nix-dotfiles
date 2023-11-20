@@ -145,7 +145,10 @@
     extraSpecialArgs = { inherit pkgs unstable lib; };
     useUserPackages = true;
     backupFileExtension = "backup";
-    users.wittano.home.stateVersion = "23.05";
+    users.wittano = {
+      home.stateVersion = "23.05";
+      services.home-manager.autoUpgrade.enable = true;
+    };
   };
 
   # Internal modules
@@ -169,7 +172,10 @@
 
   # System
   system = {
-    autoUpgrade.enable = true;
+    autoUpgrade = {
+      enable = true;
+      flake = "github:wittano/nix-dotfiles";
+    };
     stateVersion = "23.05";
   };
 
