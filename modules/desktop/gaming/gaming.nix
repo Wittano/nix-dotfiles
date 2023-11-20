@@ -25,6 +25,7 @@ in
 
       # Wine
       bottles
+      wineWowPackages.full
 
       # FSH
       steam-run
