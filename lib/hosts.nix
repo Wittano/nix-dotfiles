@@ -21,6 +21,7 @@ with lib.my; {
 
           inputs.filebot.nixosModules."filebot"
           inputs.agenix.nixosModules.default
+          inputs.nixvim.nixosModules.nixvim
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };

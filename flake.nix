@@ -17,6 +17,10 @@
     filebot.url = "github:Wittano/filebot";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     agenix.url = "github:ryantm/agenix";
+    nixvim = {
+      url = "github:nix-community/nixvim?ref=nixos-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

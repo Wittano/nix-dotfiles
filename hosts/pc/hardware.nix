@@ -15,6 +15,5 @@
   };
   swapDevices = [{
     device = "/dev/disk/by-label/SWAP";
-    size = 4 * 1024;
   }];
 }

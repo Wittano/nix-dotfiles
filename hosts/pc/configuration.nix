@@ -37,7 +37,7 @@
         gaming.enable = true;
         gaming.enableAdditionalDisk = true;
       };
-      editors.neovim = enableWithDevMode;
+      editors.neovim.enable = true;
       dev = {
         goland.enable = true;
         pycharm.enable = true;
