@@ -81,7 +81,11 @@ in
           };
           servers = {
             rnix-lsp.enable = true;
-            rust-analyzer.enable = true;
+            rust-analyzer = {
+              enable = true;
+              installRustc = true;
+              installCargo = true;
+            };
             tsserver.enable = true;
             yamlls.enable = true;
             pylsp = {
