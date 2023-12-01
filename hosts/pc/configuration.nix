@@ -49,10 +49,6 @@
         sound.enable = true;
         grub.enable = true;
         wacom.enable = true;
-        wifi = {
-          enable = true;
-          enableTpLink = true;
-        };
         virtualization = {
           enable = true;
           enableDocker = true;

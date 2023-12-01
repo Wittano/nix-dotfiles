@@ -17,8 +17,12 @@ in
     };
   };
 
-  config = {
-    networking.networkmanager.enable = true;
+  config = mkIf cfg.enable {
+    # TODO Fix problem with blocking playing spotify tracks
+    networking = {
+      networkmanager.enable = true;
+      wireless.enable = true;
+    };
 
     boot = mkIf cfg.enableTpLink {
       extraModulePackages = mkIf (!kernel.kernelAtLeast "5.18") [ pkgs.linuxKernel.packages."${kernelVersionPackage}".rtl8192eu ];

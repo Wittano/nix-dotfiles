@@ -12,7 +12,7 @@ let
     thunderbird
     gnome.file-roller
     gnome.eog
-    #spotify
+    spotify
     evince
     xfce.thunar
     obsidian
@@ -29,7 +29,6 @@ let
     discord
 
     # Dev
-    vscodium
     figma-linux
   ];
 in

@@ -69,21 +69,6 @@
 
   services.xserver.layout = "pl";
 
-  # Flatpak
-  services.flatpak.enable = true;
-  xdg.portal = {
-    enable = true;
-    extraPortals =
-      lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
-        [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
-
-
-  systemd.user.extraConfig = ''
-    DefaultEnvironment="PATH=/run/current-system/sw/bin"
-  '';
-
   # Fonts
   fonts.packages = with pkgs; [
     source-code-pro
@@ -152,7 +137,7 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     users.wittano = {
-      home.stateVersion = "23.05";
+      home.stateVersion = "23.11";
       services.home-manager.autoUpgrade = {
         enable = true;
         frequency = "daily";
