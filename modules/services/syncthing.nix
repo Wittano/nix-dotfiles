@@ -16,17 +16,14 @@ in
   };
 
   config = mkIf (cfg.enable && builtins.pathExists config.age.secrets.syncthing.path) {
-    services.syncthing = rec {
+    services.syncthing = {
       enable = true;
       systemService = true;
-      dataDir = "${homeDir}/.cache/syncthing";
       configDir = "${homeDir}/.config/syncthing";
       user = "wittano";
-      settings = {
-        folders = encryptedConfig.folders;
-        devices = encryptedConfig.devices;
-        extraOptions.gui.theme = "dark";
-      };
+      folders = encryptedConfig.folders;
+      devices = encryptedConfig.devices;
+      extraOptions = { gui.theme = "dark"; };
     };
   };
 }

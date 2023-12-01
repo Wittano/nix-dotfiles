@@ -2,9 +2,9 @@
   description = "Wittano NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     wittano-dotfiles = {
       url = "github:Wittano/dotfiles";
       flake = false;
@@ -18,7 +18,7 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     agenix.url = "github:ryantm/agenix";
     nixvim = {
-      url = "github:nix-community/nixvim?ref=nixos-23.11";
+      url = "github:nix-community/nixvim?ref=nixos-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -75,8 +75,7 @@
           devHosts = mapAttrs'
             (n: v:
               let devName = "${n}-dev";
-              in
-              nameValuePair (devName) (mkHost {
+              in nameValuePair (devName) (mkHost {
                 name = devName;
                 isDevMode = true;
               }))

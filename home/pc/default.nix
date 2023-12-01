@@ -12,7 +12,7 @@ let
     thunderbird
     gnome.file-roller
     gnome.eog
-    #spotify
+    # spotify
     evince
     xfce.thunar
     obsidian
@@ -32,8 +32,7 @@ let
     vscodium
     figma-linux
   ];
-in
-{
+in {
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";
