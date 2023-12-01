@@ -1,7 +1,8 @@
 { config, pkgs, lib, modulesPath, username, systemStaff, unstable, ... }:
 with lib;
 let cfg = config.modules.hardware.virtualization;
-in {
+in
+{
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   options = {
@@ -60,8 +61,10 @@ in {
       }];
     }];
 
+    programs.virt-manager.enable = true;
+
     environment.systemPackages = with pkgs;
-      [ virt-manager dconf libguestfs ]
+      [ libguestfs ]
       ++ (if cfg.enableVagrant then [ vagrant ] else [ ]);
 
     systemd.services.libvirtd = mkIf cfg.enableWindowsVM {

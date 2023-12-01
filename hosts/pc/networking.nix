@@ -15,6 +15,8 @@
     firewall = {
       enable = true;
       allowPing = false;
+      allowedTCPPorts = [ 57621 ];
+      allowedUDPPorts = [ 5353 ];
     };
   };
 

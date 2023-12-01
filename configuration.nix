@@ -71,22 +71,26 @@
 
   # Flatpak
   services.flatpak.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals =
-    lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
-      [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+    extraPortals =
+      lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
+        [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
+
 
   systemd.user.extraConfig = ''
     DefaultEnvironment="PATH=/run/current-system/sw/bin"
   '';
 
   # Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     source-code-pro
     hanazono
     noto-fonts
     noto-fonts-extra
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji-blob-bin
@@ -100,7 +104,8 @@
     systemPackages = with pkgs; [ vim htop direnv bash ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
-      in {
+      in
+      {
         EDITOR = "vim";
         DOTFILES = "${projectConfigDir}/dotfiles";
         NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
@@ -111,6 +116,7 @@
 
   # Linux Kernel settings
   boot = {
+    supportedFilesystems = [ "ntfs" ];
     initrd = {
       availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
       kernelModules = [ ];
@@ -179,7 +185,7 @@
       enable = true;
       flake = "github:wittano/nix-dotfiles";
     };
-    stateVersion = "23.05";
+    stateVersion = "23.11";
   };
 
 }
