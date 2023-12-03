@@ -30,6 +30,7 @@ let
 
     # Dev
     figma-linux
+    vscodium
   ];
 in
 {
