@@ -20,7 +20,6 @@ in
   config = mkIf cfg.enable {
     # TODO Fix problem with blocking playing spotify tracks
     networking = {
-      networkmanager.enable = true;
       wireless.enable = true;
     };
 

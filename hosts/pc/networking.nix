@@ -3,7 +3,7 @@
   boot.initrd.systemd.network.wait-online.enable = false;
 
   networking = {
-    useDHCP = false;
+    useDHCP = true;
 
     interfaces.eno1 = {
       useDHCP = false;
