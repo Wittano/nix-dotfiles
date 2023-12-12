@@ -57,9 +57,7 @@ in
           exit -1
         }
 
-        remove_failed_backup() {
-          ${pkgs.coreutils}/bin/echo "Failed to create backup. Check if you have space enough on disk"
-
+        remove_oldest_backup() {
           oldest_backup=$(${pkgs.findutils}/bin/find /mnt/backup -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -1 | ${pkgs.coreutils}/bin/cut -d' ' -f2-)
           oldest_backup_name=$(${pkgs.coreutils}/bin/basename $oldest_backup)
 
@@ -68,11 +66,25 @@ in
           else
             ${pkgs.coreutils}/bin/echo "The oldest backup wasn't found"
           fi
+        }
 
+        remove_failed_backup() {
+          ${pkgs.coreutils}/bin/echo "Failed to create backup. Check if you have space enough on disk"
+
+          remove_oldest_backup
+         
           create_archive || close_app
         }
 
-        ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir}
+        resync() {
+          remove_oldest_backup
+
+          ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir}
+
+          create_archive || remove_failed_backup
+        }
+
+        ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir} || resync
 
         create_archive || remove_failed_backup
       '';
