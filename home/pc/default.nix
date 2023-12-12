@@ -18,6 +18,7 @@ let
     obsidian
     soundux
     freetube
+    onlyoffice-bin
 
     # Security
     bitwarden
