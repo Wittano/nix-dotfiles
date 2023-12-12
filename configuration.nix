@@ -104,7 +104,6 @@
     supportedFilesystems = [ "ntfs" ];
     initrd = {
       availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-      kernelModules = [ ];
     };
 
     tmp.useTmpfs = true;
@@ -113,8 +112,6 @@
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi";
     };
-
-    extraModulePackages = [ ];
 
     plymouth = {
       enable = true;
