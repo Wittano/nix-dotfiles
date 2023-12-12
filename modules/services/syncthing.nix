@@ -16,9 +16,6 @@ in
   };
 
   config = mkIf (cfg.enable && builtins.pathExists config.age.secrets.syncthing.path) {
-    home-manager.users.wittano.programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-      syncDep = "re; re";
-    };
     services.syncthing = rec {
       enable = true;
       systemService = true;
