@@ -45,11 +45,12 @@
 
           overlays = [ emacs-overlay.overlay ];
 
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "electron-24.8.6"
-            "electron-22.3.27"
-          ];
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              "electron-25.9.0"
+            ];
+          };
         };
 
       pkgs = mkPkgs nixpkgs;
