@@ -110,7 +110,6 @@ in
 
         nvim-cmp = {
           enable = true;
-          snippet.expand = "snippy";
           sources = [
             { name = "nvim_lsp"; }
             { name = "path"; }
