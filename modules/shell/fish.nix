@@ -59,9 +59,7 @@ in
         shellAliases =
           let
             host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
-            rebuild = name: ''
-              sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} --impure
-            '';
+            rebuild = name: "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} --impure";
           in
           {
             xc = "xprop | grep CLASS";
