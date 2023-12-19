@@ -66,6 +66,7 @@
         syncthing.enable = true;
         redshift.enable = true;
         prometheus.enable = true;
+        filebot.enable = true;
       };
     };
 
