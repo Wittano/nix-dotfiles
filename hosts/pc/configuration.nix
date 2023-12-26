@@ -24,13 +24,7 @@
 
   programs.droidcam.enable = true;
 
-  # No JAVA/JVM technologies
-  assertions = [
-    {
-      assertion = !config.modules.dev.jvm.enable;
-      message = "Java/JVM technologies doesn't allow in this profile";
-    }
-  ];
+  # TODO Add filebot service 
 
   modules =
     let
@@ -49,6 +43,7 @@
       dev = {
         goland.enable = true;
         pycharm.enable = true;
+        clion.enable = true;
       };
       hardware = {
         sound.enable = true;
