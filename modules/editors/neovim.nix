@@ -179,6 +179,8 @@ in
           };
         };
 
+        tmux-navigator.enable = true;
+
         lightline = {
           enable = true;
           colorscheme = "catppuccin";
@@ -201,6 +203,24 @@ in
           };
         };
       };
+      keymaps = [
+        {
+          action = "<cmd> TmuxNavifateLeft<CR>";
+          key = "<C-h>";
+        }
+        {
+          action = "<cmd> TmuxNavifateRight<CR>";
+          key = "<C-l>";
+        }
+        {
+          action = "<cmd> TmuxNavifateDown<CR>";
+          key = "<C-j>";
+        }
+        {
+          action = "<cmd> TmuxNavifateUp<CR>";
+          key = "<C-k>";
+        }
+      ];
     };
   };
 }
