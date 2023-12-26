@@ -86,7 +86,7 @@
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop direnv bash ];
+    systemPackages = with pkgs; [ vim htop direnv bash polkit_gnome ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
       in
@@ -169,5 +169,7 @@
     };
     stateVersion = "23.11";
   };
+
+  security.polkit.enable = true;
 
 }

@@ -9,8 +9,6 @@ let
 in
 {
   config = {
-    environment.systemPackages = with pkgs; [ polkit_gnome ];
-
     services.udisks2 = {
       enable = true;
       mountOnMedia = true;
