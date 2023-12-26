@@ -24,8 +24,6 @@
 
   programs.droidcam.enable = true;
 
-  # TODO Add filebot service 
-
   modules =
     let
       enableWithDevMode = {
@@ -43,7 +41,6 @@
       dev = {
         goland.enable = true;
         pycharm.enable = true;
-        clion.enable = true;
       };
       hardware = {
         sound.enable = true;

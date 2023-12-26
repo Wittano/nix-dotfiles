@@ -17,9 +17,9 @@ in
     programs.nixvim = {
       enable = true;
 
-      globals = {
-        mapleader = " ";
-      };
+      extraPlugins = with pkgs.vimPlugins; [ vim-wakatime ];
+
+      globals.mapleader = " ";
 
       options = {
         number = true;
@@ -50,13 +50,6 @@ in
         };
 
       plugins = {
-        packer = {
-          enable = true;
-          plugins = [
-            "wakatime/vim-wakatime"
-          ];
-        };
-
         undotree = {
           autoOpenDiff = true;
           focusOnToggle = true;
@@ -114,9 +107,10 @@ in
             { name = "nvim_lsp"; }
             { name = "path"; }
             { name = "snippy"; }
-            { name = "cmdline"; }
+            { name = "spell"; }
             { name = "buffer"; }
           ];
+          snippet.expand = "luasnip";
           mappingPresets = [ "insert" ];
           mapping = {
             "<C-b>" = "cmp.mapping.scroll_docs(-4)";
@@ -124,20 +118,65 @@ in
             "<C-Space>" = "cmp.mapping.complete()";
             "<C-e>" = "cmp.mapping.abort()";
             "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<Tab>" = ''
+              cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_next_item()
+                elseif snippy.can_expand_or_advance() then
+                  snippy.expand_or_advance()
+                elseif has_words_before() then
+                  cmp.complete()
+                else
+                  fallback()
+                end
+              end, {"i", "s"})
+            '';
+            "<S-Tab>" = ''
+              function(fallback)
+                if not cmp.select_prev_item() then
+                  if vim.bo.buftype ~= 'prompt' and has_words_before() then
+                    cmp.complete()
+                  else
+                    fallback()
+                  end
+                end
+              end
+            '';
           };
         };
 
+        luasnip.enable = true;
         cmp-nvim-lua.enable = true;
         cmp-nvim-lsp.enable = true;
         cmp-path.enable = true;
         cmp-snippy.enable = true;
-        cmp-cmdline.enable = true;
         cmp-buffer.enable = true;
+        cmp-spell.enable = true;
         cmp-vim-lsp.enable = true;
 
         lsp-format = {
           enable = true;
           lspServersToEnable = "all";
+        };
+
+        barbar = {
+          enable = true;
+          autoHide = true;
+          insertAtEnd = true;
+          keymaps = {
+            close = "<leader>bd";
+            goTo1 = "<leader>b1";
+            goTo2 = "<leader>b2";
+            goTo3 = "<leader>b3";
+            goTo4 = "<leader>b4";
+            goTo5 = "<leader>b5";
+            goTo6 = "<leader>b6";
+            goTo7 = "<leader>b7";
+            goTo8 = "<leader>b8";
+            goTo9 = "<leader>b9";
+            next = "<leader>bj";
+            previous = "<leader>bk";
+          };
         };
 
         lightline = {
@@ -157,6 +196,7 @@ in
             "<leader>ff" = "find_files";
             "<leader>fg" = "git_files";
             "<leader>gg" = "live_grep";
+            "<leader>bf" = "buffers";
             "<C-p>" = "lsp_definitions";
           };
         };
