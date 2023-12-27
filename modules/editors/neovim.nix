@@ -14,10 +14,21 @@ in
   };
 
   config = mkIf cfg.enable {
+    home-manager.users.wittano.home.packages = with pkgs; [ ripgrep ];
+
     programs.nixvim = {
       enable = true;
+      enableMan = true;
 
-      extraPlugins = with pkgs.vimPlugins; [ vim-wakatime ];
+      extraPlugins = with pkgs.vimPlugins; [
+        vim-wakatime
+        nvim-autopairs
+      ];
+
+      extraConfigLua = ''
+        -- nvim-autopairs
+        require("nvim-autopairs").setup {}
+      '';
 
       globals.mapleader = " ";
 
@@ -56,6 +67,24 @@ in
           enable = true;
         };
 
+        dap = {
+          enable = true;
+          extensions = {
+            dap-go.enable = true;
+            dap-python = {
+              enable = true;
+              adapterPythonPath = "${pkgs.python3}/bin/python";
+            };
+            dap-ui = {
+              enable = true;
+              mappings = {
+                toggle = "<leader>dd";
+              };
+            };
+            dap-virtual-text.enable = true;
+          };
+        };
+
         lsp = {
           enable = true;
           capabilities = "require('cmp_nvim_lsp').default_capabilities()";
@@ -70,10 +99,11 @@ in
               gd = "definition";
               gi = "implementation";
               gt = "type_definition";
+              R = "rename";
             };
           };
           servers = {
-            rnix-lsp.enable = true;
+            nixd.enable = true;
             rust-analyzer = {
               enable = true;
               installRustc = true;
@@ -94,10 +124,22 @@ in
             };
             html.enable = true;
             gopls.enable = true;
+            cmake.enable = true;
+            gdscript.enable = true;
             eslint.enable = true;
             cssls.enable = true;
             clangd.enable = true;
             bashls.enable = true;
+            jsonls.enable = true;
+            tailwindcss.enable = true;
+            taplo.enable = true;
+            terraformls.enable = true;
+
+            # TODO Enable LSP server, when will be added to stable version of nixvim (26.12.2023)
+
+            #graphql.enable = true;
+            #dockerls.enable = true;
+            #ansiblels.enable = true;
           };
         };
 
@@ -118,30 +160,6 @@ in
             "<C-Space>" = "cmp.mapping.complete()";
             "<C-e>" = "cmp.mapping.abort()";
             "<CR>" = "cmp.mapping.confirm({ select = true })";
-            "<Tab>" = ''
-              cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif snippy.can_expand_or_advance() then
-                  snippy.expand_or_advance()
-                elseif has_words_before() then
-                  cmp.complete()
-                else
-                  fallback()
-                end
-              end, {"i", "s"})
-            '';
-            "<S-Tab>" = ''
-              function(fallback)
-                if not cmp.select_prev_item() then
-                  if vim.bo.buftype ~= 'prompt' and has_words_before() then
-                    cmp.complete()
-                  else
-                    fallback()
-                  end
-                end
-              end
-            '';
           };
         };
 
@@ -202,8 +220,12 @@ in
             "<C-p>" = "lsp_definitions";
           };
         };
+
+        endwise.enable = true;
+        gitblame.enable = true;
       };
       keymaps = [
+        # TmuxNavigate
         {
           action = "<cmd> TmuxNavifateLeft<CR>";
           key = "<C-h>";
@@ -219,6 +241,11 @@ in
         {
           action = "<cmd> TmuxNavifateUp<CR>";
           key = "<C-k>";
+        }
+        # Undotree
+        {
+          action = "<cmd> UndotreeToggle<CR>";
+          key = "U";
         }
       ];
     };
