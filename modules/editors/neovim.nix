@@ -104,7 +104,7 @@ in
             };
           };
           servers = {
-            nixd.enable = true;
+            rnix-lsp.enable = true;
             rust-analyzer = {
               enable = true;
               installRustc = true;
