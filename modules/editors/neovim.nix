@@ -22,7 +22,6 @@ in
 
       extraPlugins = with pkgs.vimPlugins; [
         vim-wakatime
-        nvim-autopairs
         vimsence
       ];
 
@@ -213,6 +212,10 @@ in
 
         telescope = {
           enable = true;
+          extensions.file_browser = {
+            enable = true;
+            hidden = true;
+          };
           keymaps = {
             "<leader>ff" = "find_files";
             "<leader>fg" = "git_files";
@@ -224,8 +227,46 @@ in
 
         endwise.enable = true;
         gitblame.enable = true;
+
+        nvim-autopairs = {
+          enable = true;
+          disableInReplaceMode = true;
+        };
       };
       keymaps = [
+        # Custom
+        {
+          action = ''
+            function()
+              local currectFile = vim.fn.expand("%:p")
+              local directory = vim.fn.expand('%:p:h')
+              local newFileName = vim.fn.input("Enter new file name: ")
+              local newFilePath = directory .. '/' .. newFileName
+
+              if string.match(newFilePath, "/") then
+                vim.fn.mkdir(vim.fs.dirname(newFilePath), 'p')
+              end
+
+              vim.cmd('edit ' .. newFilePath)
+            end
+          '';
+          key = "<leader>fc";
+          lua = true;
+        }
+        {
+          action = ''
+            function()
+              local newDirectoryName = vim.fn.input("Enter new directory name: ")
+              local currentDirectory = vim.fn.expand('%:p:h')
+              local newDirectoryPath = currentDirectory .. '/' .. newDirectoryName
+
+              vim.fn.mkdir(newDirectoryPath, 'p')
+              print("Created new directory: " .. newDirectoryPath)
+            end
+          '';
+          key = "<leader>fd";
+          lua = true;
+        }
         # TmuxNavigate
         {
           action = "<cmd> TmuxNavifateLeft<CR>";
