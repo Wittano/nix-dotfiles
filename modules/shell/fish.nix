@@ -74,6 +74,7 @@ in
             mpv = "nix run nixpkgs#mpv --";
             py = "nix run nixpkgs#python3";
             tor = "nix run nixpkgs#tor-browser-bundle-bin";
+            ra = "nix run nixpkgs#ranger";
 
             # Projects
             pnix = "cd $NIX_DOTFILES";

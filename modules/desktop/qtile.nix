@@ -13,6 +13,7 @@ let
   tmuxConfig = importApp "tmux";
   gtkConfig = importApp "gtk";
   dunstConfig = importApp "dunst";
+  rangerConfig = importApp "ranger";
 in
 {
 
@@ -26,6 +27,7 @@ in
 
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
+    rangerConfig
     alacrittyConfig
     tmuxConfig
     picomConfig
