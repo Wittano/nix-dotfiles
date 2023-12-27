@@ -10,9 +10,9 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ jetbrains.goland go golangci-lint ];
+      home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland go golangci-lint ]);
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pgo = "cd $HOME/projects/own/go";
       };

@@ -10,9 +10,9 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [
+      home.packages = mkIf cfg.enable (with pkgs; [
         cmake
         gcc_multi
         gnumake
@@ -22,7 +22,7 @@ in {
         rustup
 
         jetbrains.clion
-      ];
+      ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pc = "cd $HOME/projects/own/cpp";

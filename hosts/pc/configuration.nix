@@ -38,10 +38,6 @@
         gaming.enableAdditionalDisk = true;
       };
       editors.neovim.enable = true;
-      dev = {
-        goland.enable = true;
-        pycharm.enable = true;
-      };
       hardware = {
         sound.enable = true;
         grub.enable = true;
