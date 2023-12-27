@@ -38,6 +38,7 @@
         gaming.enableAdditionalDisk = true;
       };
       editors.neovim.enable = true;
+      dev.jvm.enable = true;
       hardware = {
         sound.enable = true;
         grub.enable = true;
