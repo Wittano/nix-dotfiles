@@ -23,6 +23,7 @@ in
       extraPlugins = with pkgs.vimPlugins; [
         vim-wakatime
         nvim-autopairs
+        vimsence
       ];
 
       extraConfigLua = ''
