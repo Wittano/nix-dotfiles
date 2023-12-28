@@ -1,6 +1,9 @@
 { srcOnly, vimUtils, lib, fetchFromGitHub, ... }:
 let
-  templateDir = srcOnly { src = ./templates; }; in
+  templateDir = srcOnly {
+    pname = "template-dir";
+    src = ./templates;
+  }; in
 {
   luaConfig = ''
     require('template').setup({
