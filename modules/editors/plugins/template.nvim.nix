@@ -1,11 +1,6 @@
 { srcOnly, vimUtils, lib, fetchFromGitHub, ... }:
 let
-  inherit (lib.attrsets) mapAttrsToList;
-
-  templateDir = srcOnly {
-    name = "templateDir";
-    src = ./templates;
-  }; in
+  templateDir = srcOnly { src = ./templates; }; in
 {
   luaConfig = ''
     require('template').setup({
