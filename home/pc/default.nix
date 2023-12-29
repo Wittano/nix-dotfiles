@@ -10,12 +10,9 @@ let
 
     # Apps
     thunderbird
-    gnome.file-roller
     gnome.eog
     spotify
     evince
-    xfce.thunar
-    obsidian
     soundux
     freetube
     onlyoffice-bin
@@ -28,10 +25,6 @@ let
     telegram-desktop
     signal-desktop
     discord
-
-    # Dev
-    figma-linux
-    vscodium
   ];
 in
 {

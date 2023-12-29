@@ -13,7 +13,7 @@ in
 
   config = {
     home-manager.users.wittano = {
-      home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland go golangci-lint ]);
+      home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pgo = "cd $HOME/projects/own/go";
         tempgo = "${pkgs.nixFlakes}/bin/nix flake init --template github:Wittano/nix-template#go";
