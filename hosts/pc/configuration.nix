@@ -38,15 +38,15 @@
         gaming.enableAdditionalDisk = true;
       };
       editors.neovim.enable = true;
-      dev.jvm.enable = true;
+      dev = {
+        jvm.enable = true;
+        goland.enable = true;
+      };
       hardware = {
         sound.enable = true;
         grub.enable = true;
         wacom.enable = true;
-        virtualization = {
-          enable = true;
-          enableDocker = true;
-        };
+        virtualization.enable = true;
         nvidia.enable = true;
         bluetooth.enable = true;
       };

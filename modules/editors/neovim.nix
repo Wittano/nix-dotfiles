@@ -78,17 +78,16 @@ in
           dap = {
             enable = true;
             extensions = {
-              dap-go.enable = true;
+              # FIXME Compiling debug version required enable FORTIFY_SOURCE in cgo
+              dap-go = mkIf (false) {
+                enable = false;
+                delve.path = "${pkgs.delve}/bin/dlv";
+              };
               dap-python = {
                 enable = true;
                 adapterPythonPath = "${pkgs.python3}/bin/python";
               };
-              dap-ui = {
-                enable = true;
-                mappings = {
-                  toggle = "<leader>dd";
-                };
-              };
+              dap-ui.enable = true;
               dap-virtual-text.enable = true;
             };
           };
@@ -130,6 +129,7 @@ in
                   black.enabled = true;
                 };
               };
+              lua-ls.enable = true;
               html.enable = true;
               gopls.enable = true;
               cmake.enable = true;
@@ -241,10 +241,10 @@ in
             disableInReplaceMode = true;
           };
         };
+
         keymaps = [
           # Custom
           {
-            # TODO Add generate template for new files
             action = ''
               function()
                 local currectFile = vim.fn.expand("%:p")
@@ -298,6 +298,20 @@ in
           {
             action = "<cmd> UndotreeToggle<CR>";
             key = "U";
+          }
+          # DAP
+          {
+            action = ''function() require("dapui").toggle() end'';
+            lua = true;
+            key = "<F9>";
+          }
+          {
+            action = ''<cmd> DapToggleBreakpoint<CR>'';
+            key = "<F8>";
+          }
+          {
+            action = "<cmd> DapContinue<CR>";
+            key = "<F10>";
           }
         ];
       };
