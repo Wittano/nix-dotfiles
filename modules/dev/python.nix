@@ -22,6 +22,7 @@ in
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         ppython = "cd $HOME/projects/own/python";
+        temppy = "${pkgs.nixFlakes}/bin/nix flake init --template github:nix-community/poetry2nix";
       };
     };
   };
