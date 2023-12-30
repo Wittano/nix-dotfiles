@@ -18,24 +18,24 @@ in
 
     programs.nixvim =
       let
-        templateNvimPlugin = pkgs.callPackage ./plugins/template.nvim.nix { };
+        plugins = builtins.map (x: pkgs.callPackage (./plugins + "/${x}.nix") { }) [ "template.nvim" "nvim-comment" ];
+        pkgPlugins = (builtins.map (x: x.plugin) plugins);
+        luaConfigs = builtins.concatStringsSep "\n\n" (builtins.map (x: x.luaConfig) plugins);
       in
       {
         enable = true;
         enableMan = true;
 
         extraPlugins = with pkgs.vimPlugins; [
-          templateNvimPlugin.plugin
           vim-wakatime
           vimsence
-        ];
+        ] ++ pkgPlugins;
 
         extraConfigLua = ''
           -- nvim-autopairs
-          require("nvim-autopairs").setup {}
+          require("nvim-autopairs").setup()
 
-          -- template.nvim
-          ${templateNvimPlugin.luaConfig}
+          ${luaConfigs}
         '';
 
         globals.mapleader = " ";
