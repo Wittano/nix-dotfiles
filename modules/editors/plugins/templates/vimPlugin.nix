@@ -1,6 +1,6 @@
-{ vimUtils, lib, fetchFromGitHub, ... }: {
+{ vimUtils, lib, fetchFromGitHub, vimPlugins, ... }: {
   luaConfig = ''
-    require('{{_file_name_}').setup()
+    require('{{_file_name_}}').setup()
   '';
 
   plugin = vimUtils.buildVimPlugin {
@@ -14,4 +14,6 @@
     };
     meta.homepage = "https://github.com/";
   };
+
+  deps = with vimPlugins; [ ];
 }

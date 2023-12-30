@@ -15,4 +15,6 @@
     };
     meta.homepage = "https://github.com/terrortylor/nvim-comment";
   };
+
+  deps = [ ];
 }

@@ -18,9 +18,18 @@ in
 
     programs.nixvim =
       let
-        plugins = builtins.map (x: pkgs.callPackage (./plugins + "/${x}.nix") { }) [ "template.nvim" "nvim-comment" ];
-        pkgPlugins = (builtins.map (x: x.plugin) plugins);
-        luaConfigs = builtins.concatStringsSep "\n\n" (builtins.map (x: x.luaConfig) plugins);
+        pluginBuilds = builtins.map (x: pkgs.callPackage (./plugins + "/${x}.nix") { })
+          [
+            "template.nvim"
+            "nvim-comment"
+            "gopher.nvim"
+          ];
+        plugins =
+          let
+            deps = lib.lists.flatten (builtins.map (x: x.deps) pluginBuilds);
+          in
+          (builtins.map (x: x.plugin) pluginBuilds) ++ deps;
+        luaConfigs = builtins.concatStringsSep "\n\n" (builtins.map (x: x.luaConfig) pluginBuilds);
       in
       {
         enable = true;
@@ -29,7 +38,7 @@ in
         extraPlugins = with pkgs.vimPlugins; [
           vim-wakatime
           vimsence
-        ] ++ pkgPlugins;
+        ] ++ plugins;
 
         extraConfigLua = ''
           -- nvim-autopairs

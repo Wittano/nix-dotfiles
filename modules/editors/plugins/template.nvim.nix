@@ -26,4 +26,6 @@ let
     };
     meta.homepage = "https://github.com/nvimdev/template.nvim";
   };
+
+  deps = [ ];
 }
