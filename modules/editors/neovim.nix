@@ -258,7 +258,7 @@ in
               function()
                 local currectFile = vim.fn.expand("%:p")
                 local directory = vim.fn.expand('%:p:h')
-                local newFileName = vim.fn.input("Enter new file name: ")
+                local newFileName = vim.fn.input("Enter new file name: ", "", "dir")
                 local newFilePath = directory .. '/' .. newFileName
 
                 if string.match(newFilePath, "/") then
@@ -275,7 +275,7 @@ in
           {
             action = ''
               function()
-                local newDirectoryName = vim.fn.input("Enter new directory name: ")
+                local newDirectoryName = vim.fn.input("Enter new directory name: ", "", "dir")
                 local currentDirectory = vim.fn.expand('%:p:h')
                 local newDirectoryPath = currentDirectory .. '/' .. newDirectoryName
 
