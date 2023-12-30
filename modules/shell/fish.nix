@@ -80,6 +80,10 @@ in
             pnix = "cd $NIX_DOTFILES";
             prepo = "cd $HOME/projects/config/nix-repo";
             pdot = "cd $DOTFILES";
+
+            # Nix
+            nfu = "nix flake update";
+            repl = "nix repl -f '<nixpkgs>'";
           };
       };
     };
