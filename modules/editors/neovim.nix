@@ -88,8 +88,8 @@ in
             enable = true;
             extensions = {
               # FIXME Compiling debug version required enable FORTIFY_SOURCE in cgo
-              dap-go = mkIf (false) {
-                enable = false;
+              dap-go = {
+                enable = true;
                 delve.path = "${pkgs.delve}/bin/dlv";
               };
               dap-python = {
