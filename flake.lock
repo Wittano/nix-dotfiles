@@ -576,11 +576,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1703871803,
-        "narHash": "sha256-OhQ2g+by08TAS6uWxBvOi23aQ9N9cf9Vb1JGNVvE+TA=",
+        "lastModified": 1704070389,
+        "narHash": "sha256-tbbJfFQMlEDemmHAm9d1THYA2yH0V50EghxXS1oX/Zs=",
         "owner": "Wittano",
         "repo": "nix-repo",
-        "rev": "af29722557bb53ed1eea2c2839127a52f1fa82e3",
+        "rev": "772f8b68ce1e31ecea70012506343bb45c245d1d",
         "type": "github"
       },
       "original": {

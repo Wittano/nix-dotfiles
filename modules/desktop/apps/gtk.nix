@@ -1,4 +1,4 @@
-{ pkgs, home-manager, lib, cfg, ... }:
+{ pkgs, home-manager, lib, cfg, ownPackages, ... }:
 with lib;
 with lib.my;
 let
@@ -10,7 +10,7 @@ in
 {
   home-manager.users.wittano = {
     home = {
-      packages = with pkgs; [ lxappearance libsForQt5.breeze-qt5 colloidIconTheme ];
+      packages = with pkgs; [ lxappearance colloidIconTheme ownPackages.bibata-cursor-theme ];
       activation.linkMutableKittyConfig =
         link.createMutableLinkActivation {
           internalPath = ".config/gtk-3.0/settings.ini";
@@ -24,7 +24,7 @@ in
         gtk-icon-theme-name=Colloid-dark
         gtk-theme-name=Catppuccin-Frappe-Standard-Blue-Dark
         gtk-font-name=JetBrains Mono NL 12
-        gtk-cursor-theme-name=Breeze_Snow
+        gtk-cursor-theme-name=Bibata-Modern-Ice
         gtk-cursor-theme-size=0
         gtk-toolbar-style=GTK_TOOLBAR_BOTH_HORIZ
         gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
