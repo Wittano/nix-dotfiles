@@ -39,6 +39,9 @@ with lib.my;
 
         bind -n M-H previous-window
         bind -n M-L next-window
+
+        bind p split-window -h
+        bind o split-window -v
       '';
     };
   };
