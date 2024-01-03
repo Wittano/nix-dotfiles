@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, unstable, ... }:
+{ config, pkgs, home-manager, lib, unstable, aagl, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
@@ -12,10 +12,21 @@ in
       enableAdditionalDisk = mkEnableOption ''
         Add special disk to configuration      
       '';
+      enableMihoyoGames = mkEnableOption ''
+        Install Genshin Impact and Honkai Railway
+      '';
     };
   };
 
   config = mkIf cfg.enable {
+    nix.settings = mkIf cfg.enableMihoyoGames aagl.nixConfig;
+
+    # Genshin Impact
+    programs.anime-game-launcher.enable = cfg.enableMihoyoGames;
+
+    # Honkai Railway
+    programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
+
     home-manager.users.wittano.home.packages = with pkgs; [
       # Lutris
       lutris

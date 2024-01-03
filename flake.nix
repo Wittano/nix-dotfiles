@@ -15,6 +15,7 @@
     };
     wittano-repo.url = "github:Wittano/nix-repo";
     filebot.url = "github:Wittano/filebot";
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     agenix.url = "github:ryantm/agenix";
     nixvim = {

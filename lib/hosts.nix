@@ -9,19 +9,22 @@ with lib.my; {
         inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs ownPackages;
         hostName = name;
         agenix = inputs.agenix;
+        aagl = inputs.aagl;
         # TODO Set option for other keys for diffrent hosts
         secretsFile = ./../secrets/syncthing.age;
       };
 
       modules =
         let hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
-        in [
+        in
+        [
           ./../configuration.nix
           ./../hosts/${hostName}/configuration.nix
 
           inputs.filebot.nixosModules."filebot"
           inputs.agenix.nixosModules.default
           inputs.nixvim.nixosModules.nixvim
+          inputs.aagl.nixosModules.default
           home-manager.nixosModules.home-manager
         ] ++ (imports.importModulesPath ./../modules);
     };

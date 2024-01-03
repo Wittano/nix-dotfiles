@@ -34,8 +34,11 @@
     {
       desktop = {
         qtile = enableWithDevMode;
-        gaming.enable = true;
-        gaming.enableAdditionalDisk = true;
+        gaming = {
+          enable = true;
+          enableAdditionalDisk = true;
+          enableMihoyoGames = true;
+        };
       };
       editors.neovim.enable = true;
       dev = {
