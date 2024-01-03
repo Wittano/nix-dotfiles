@@ -13,11 +13,6 @@
       modules =
         let
           hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
-          defaultModule = { modulesPath, ... }: {
-            imports = [
-              (modulesPath + "/profiles/minimal.nix")
-            ];
-          };
         in
         [
           ./../configuration.nix
@@ -28,7 +23,6 @@
           inputs.nixvim.nixosModules.nixvim
           inputs.aagl.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
-          defaultModule
         ] ++ (imports.importModulesPath ./../modules);
     };
 }
