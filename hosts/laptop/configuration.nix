@@ -15,7 +15,7 @@
       desktop = {
         qtile = enableWithDevMode;
       };
-      editors.neovim = enableWithDevMode;
+      editors.neovim.enable = true;
       dev = {
         goland.enable = true;
         clion.enable = true;

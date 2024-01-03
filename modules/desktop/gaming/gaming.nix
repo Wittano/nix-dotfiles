@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, unstable, aagl, ... }:
+{ config, pkgs, home-manager, lib, unstable, inputs, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
@@ -19,7 +19,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    nix.settings = mkIf cfg.enableMihoyoGames aagl.nixConfig;
+    nix.settings = mkIf cfg.enableMihoyoGames inputs.aagl.nixConfig;
 
     # Genshin Impact
     programs.anime-game-launcher.enable = cfg.enableMihoyoGames;

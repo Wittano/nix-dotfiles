@@ -28,40 +28,15 @@
     { self
     , nixpkgs
     , home-manager
-    , nixpkgs-unstable
-    , wittano-dotfiles
-    , system-staff
-    , emacs-overlay
     , ...
     }@inputs:
     let
-      inherit (lib.my.hosts) mkHost;
-      inherit (lib.my.mapper) mapDirToAttrs;
-
       system = "x86_64-linux";
-
-      mkPkgs = p:
-        import p {
-          inherit system;
-
-          overlays = [ emacs-overlay.overlay ];
-
-          config = {
-            allowUnfree = true;
-          };
-        };
-
-      pkgs = mkPkgs nixpkgs;
-      unstable = mkPkgs nixpkgs-unstable;
-
-      dotfiles = mapDirToAttrs wittano-dotfiles;
-
-      systemStaff = mapDirToAttrs system-staff;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
         my = import ./lib {
-          inherit lib pkgs system home-manager unstable dotfiles systemStaff inputs;
+          inherit lib system inputs;
         };
       });
     in
@@ -69,6 +44,7 @@
       nixosConfigurations =
         let
           inherit (lib.attrsets) mapAttrs' nameValuePair;
+          inherit (lib.my.hosts) mkHost;
 
           hosts = builtins.readDir ./hosts;
           devHosts = mapAttrs'

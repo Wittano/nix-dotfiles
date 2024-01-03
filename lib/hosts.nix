@@ -1,21 +1,23 @@
-{ lib, system, home-manager, unstable, pkgs, dotfiles, systemStaff, inputs, ownPackages, ... }:
-with lib;
-with lib.my; {
+{ lib, system, pkgs, unstable, dotfiles, systemStaff, ownPackages, inputs, imports, ... }: {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
-    nixosSystem rec {
+    inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
         inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs ownPackages;
         hostName = name;
-        agenix = inputs.agenix;
-        aagl = inputs.aagl;
         # TODO Set option for other keys for diffrent hosts
         secretsFile = ./../secrets/syncthing.age;
       };
 
       modules =
-        let hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+        let
+          hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+          defaultModule = { modulesPath, ... }: {
+            imports = [
+              (modulesPath + "/profiles/minimal.nix")
+            ];
+          };
         in
         [
           ./../configuration.nix
@@ -25,7 +27,8 @@ with lib.my; {
           inputs.agenix.nixosModules.default
           inputs.nixvim.nixosModules.nixvim
           inputs.aagl.nixosModules.default
-          home-manager.nixosModules.home-manager
+          inputs.home-manager.nixosModules.home-manager
+          defaultModule
         ] ++ (imports.importModulesPath ./../modules);
     };
 }
