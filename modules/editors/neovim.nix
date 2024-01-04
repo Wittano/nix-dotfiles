@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, dotfiles, ... }:
+{ config, pkgs, lib, home-manager, dotfiles, inputs, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -18,6 +18,8 @@ in
 
     programs.nixvim =
       let
+        nixvimLib = inputs.nixvim.lib.x86_64-linux;
+
         pluginBuilds = builtins.map (x: pkgs.callPackage (./plugins + "/${x}.nix") { })
           [
             "template.nvim"
@@ -90,6 +92,20 @@ in
               # FIXME Compiling debug version required enable FORTIFY_SOURCE in cgo
               dap-go = {
                 enable = true;
+                dapConfigurations = [{
+                  name = "Debug with Arguments from DEBUG_ARGS env";
+                  request = "launch";
+                  type = "go";
+                  program = "\${file}";
+                  args = nixvimLib.helpers.mkRaw ''
+                    function()
+                      return coroutine.create(function(dap_run_co)
+                        local args = vim.split(os.getenv("DEBUG_ARGS") or "", " ")
+                        coroutine.resume(dap_run_co, args)
+                      end)
+                    end
+                  '';
+                }];
                 delve.path = "${pkgs.delve}/bin/dlv";
               };
               dap-python = {
@@ -284,6 +300,10 @@ in
 
         keymaps = [
           # Custom
+          {
+            action = "<cmd> Explore<CR>";
+            key = "<leader>fe";
+          }
           {
             action = ''
               function()

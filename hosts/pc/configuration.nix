@@ -41,10 +41,7 @@
         };
       };
       editors.neovim.enable = true;
-      dev = {
-        jvm.enable = true;
-        goland.enable = true;
-      };
+      dev.goland.enable = true;
       hardware = {
         sound.enable = true;
         grub.enable = true;
