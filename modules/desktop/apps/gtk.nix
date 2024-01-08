@@ -11,7 +11,7 @@ in
   home-manager.users.wittano = {
     home = {
       packages = with pkgs; [ lxappearance colloidIconTheme ownPackages.bibata-cursor-theme ];
-      activation.linkMutableKittyConfig =
+      activation.linkMutableGtkConfig =
         link.createMutableLinkActivation {
           internalPath = ".config/gtk-3.0/settings.ini";
           isDevMode = cfg.enableDevMode;

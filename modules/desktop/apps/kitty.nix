@@ -2,18 +2,20 @@
 with lib;
 with lib.my;
 {
-    home-manager.users.wittano = {
-      home = {
-        packages = with pkgs; [ kitty ];
-        activation.linkMutableKittyConfig =
-          link.createMutableLinkActivation {
-            internalPath = ".config/kitty";
-            isDevMode = cfg.enableDevMode;
-          };
-      };
-
-      xdg.configFile = mkIf (cfg.enableDevMode == false) {
-        "kitty".source = dotfiles.".config".kitty.source;
-      };
+  home-manager.users.wittano = {
+    home = {
+      packages = with pkgs; [ kitty ];
+      activation.linkMutableKittyConfig =
+        link.createMutableLinkActivation {
+          internalPath = ".config/kitty";
+          isDevMode = cfg.enableDevMode;
+        };
     };
+
+    programs.fish.shellAliases.ssh = "kitty +kitten ssh";
+
+    xdg.configFile = mkIf (cfg.enableDevMode == false) {
+      "kitty".source = dotfiles.".config".kitty.source;
+    };
+  };
 }
