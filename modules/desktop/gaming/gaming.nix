@@ -29,7 +29,7 @@ in
 
     home-manager.users.wittano.home.packages =
       let
-        jre = pkgs.jre17_minimal;
+        jre = pkgs.jre;
         envLibPath = lib.makeLibraryPath (with pkgs;[
           curl
           libpulseaudio
@@ -45,7 +45,7 @@ in
             --chdir /tmp \
             "''${gappsWrapperArgs[@]}"
         '';
-        fixedMinecraft = pkgs.minecraft.overrideAttrs { postFixup = postFixupScript; };
+        fixedMinecraft = unstable.minecraft.overrideAttrs { postFixup = postFixupScript; };
       in
       with pkgs; [
         # Lutris
