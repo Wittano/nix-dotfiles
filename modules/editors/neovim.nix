@@ -389,6 +389,15 @@ in
             action = "<cmd> DapContinue<CR>";
             key = "<F10>";
           }
+          # Golang
+          {
+            action = "<cmd> GoIfErr<CR>";
+            key = "<A-e>";
+          }
+          {
+            action = "<cmd> GoImpl<CR>";
+            key = "<A-i>";
+          }
         ];
       };
   };
