@@ -40,6 +40,7 @@
           enableMihoyoGames = true;
         };
       };
+      dev.jvm.enable = true;
       editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
