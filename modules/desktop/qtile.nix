@@ -7,7 +7,7 @@ let
     apps.importApp cfg name;
 
   nitrogenConfig = importApp "nitrogen";
-  alacrittyConfig = importApp "alacritty";
+  kittyConfig = importApp "kitty";
   rofiConfig = importApp "rofi";
   picomConfig = importApp "picom";
   tmuxConfig = importApp "tmux";
@@ -28,7 +28,7 @@ in
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
     rangerConfig
-    alacrittyConfig
+    kittyConfig
     tmuxConfig
     picomConfig
     dunstConfig
@@ -61,7 +61,8 @@ in
 
         xdg.configFile =
           let configDir = dotfiles.".config";
-          in mkIf (cfg.enableDevMode == false) {
+          in
+          mkIf (cfg.enableDevMode == false) {
             qtile.source = configDir.qtile.source;
           };
 
