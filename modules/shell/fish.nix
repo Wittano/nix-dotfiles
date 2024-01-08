@@ -59,7 +59,11 @@ in
         shellAliases =
           let
             host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
-            rebuild = name: "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} --impure";
+            rebuild = name:
+              let impureFlag =
+                if config.modules.services.syncthing.enable
+                then "--impure" else "";
+              in "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
           in
           {
             xc = "xprop | grep CLASS";
