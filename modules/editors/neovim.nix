@@ -66,20 +66,37 @@ in
           incsearch = true;
         };
 
-        colorschemes.catppuccin =
-          let
-            theme = "macchiato";
-          in
-          {
-            enable = true;
-            background = {
-              dark = theme;
-              light = theme;
+        colorschemes = {
+          catppuccin =
+            let
+              theme = "macchiato";
+            in
+            {
+              enable = true;
+              terminalColors = true;
+              background = {
+                dark = theme;
+                light = theme;
+              };
+              styles = {
+                comments = [ "italic" ];
+                functions = [ "italic" ];
+              };
+              flavour = theme;
+              integrations = {
+                native_lsp.enabled = true;
+                telescope.enabled = true;
+                dap = {
+                  enable_ui = true;
+                  enabled = true;
+                };
+              };
             };
-            flavour = theme;
-          };
+        };
 
         plugins = {
+          treesitter.enable = true;
+
           undotree = {
             autoOpenDiff = true;
             focusOnToggle = true;
@@ -89,7 +106,6 @@ in
           dap = {
             enable = true;
             extensions = {
-              # FIXME Compiling debug version required enable FORTIFY_SOURCE in cgo
               dap-go = {
                 enable = true;
                 dapConfigurations = [{
