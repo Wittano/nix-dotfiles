@@ -18,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ jetbrains.idea-ultimate graalvm-ce ] ++ (if cfg.enableAndroid then [ andorid-studio ] else [ ]);
+      home.packages = with pkgs; [ jetbrains.idea-ultimate ] ++ (if cfg.enableAndroid then [ andorid-studio ] else [ ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pjvm = "cd $HOME/projects/own/jvm";
