@@ -8,6 +8,7 @@ let
 
   nitrogenConfig = importApp "nitrogen";
   kittyConfig = importApp "kitty";
+  alacrittyConfig = importApp "alacritty";
   rofiConfig = importApp "rofi";
   picomConfig = importApp "picom";
   tmuxConfig = importApp "tmux";
@@ -27,6 +28,7 @@ in
 
   config = mkIf (cfg.enable) (mkMerge [
     rofiConfig
+    alacrittyConfig
     rangerConfig
     kittyConfig
     tmuxConfig

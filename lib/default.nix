@@ -28,5 +28,5 @@ in
 
   hosts = import ./hosts.nix { inherit lib system pkgs unstable dotfiles systemStaff inputs ownPackages imports; };
   link = import ./link.nix { inherit lib; };
-  apps = import ./apps.nix { inherit lib home-manager pkgs dotfiles ownPackages; };
+  apps = import ./apps.nix { inherit lib home-manager pkgs dotfiles ownPackages unstable; };
 }
