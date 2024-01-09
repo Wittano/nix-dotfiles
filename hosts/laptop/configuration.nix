@@ -35,10 +35,8 @@
           enable = true;
           backupDir = "/mnt/backup/wittano.nixos";
         };
-        ssh.enable = true;
         syncthing.enable = true;
         redshift.enable = true;
-        prometheus.enable = true;
       };
     };
 
