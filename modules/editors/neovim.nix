@@ -42,7 +42,7 @@ in
           vimsence
         ] ++ plugins;
 
-        extraConfigLua = ''
+        extraConfigLua = /*lua*/ ''
           -- nvim-autopairs
           require("nvim-autopairs").setup()
 
@@ -113,7 +113,7 @@ in
                   request = "launch";
                   type = "go";
                   program = "\${file}";
-                  args = nixvimLib.helpers.mkRaw ''
+                  args = nixvimLib.helpers.mkRaw /*lua*/ ''
                     function()
                       return coroutine.create(function(dap_run_co)
                         local args = vim.split(os.getenv("DEBUG_ARGS") or "", " ")
@@ -135,7 +135,7 @@ in
 
           lsp = {
             enable = true;
-            capabilities = "require('cmp_nvim_lsp').default_capabilities()";
+            capabilities = /*lua*/ "require('cmp_nvim_lsp').default_capabilities()";
             keymaps = {
               diagnostic = {
                 "<leader>j" = "goto_next";
@@ -174,7 +174,7 @@ in
               html.enable = true;
               gopls = {
                 enable = true;
-                onAttach.function = ''
+                onAttach.function = /*lua*/ ''
                   vim.api.nvim_create_autocmd("BufWritePre", {
                     pattern = "*.go",
                     callback = function()
@@ -321,7 +321,7 @@ in
             key = "<leader>fe";
           }
           {
-            action = ''
+            action = /*lua*/ ''
               function()
                 local currectFile = vim.fn.expand("%:p")
                 local directory = vim.fn.expand('%:p:h')
@@ -340,7 +340,7 @@ in
             lua = true;
           }
           {
-            action = ''
+            action = /*lua*/ ''
               function()
                 local newDirectoryName = vim.fn.input("Enter new directory name: ", "", "dir")
                 local currentDirectory = vim.fn.expand('%:p:h')
