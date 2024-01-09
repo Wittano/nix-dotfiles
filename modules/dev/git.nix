@@ -1,7 +1,8 @@
 { config, pkgs, home-manager, lib, ... }:
 with lib;
 let cfg = config.modules.dev.git;
-in {
+in
+{
   options = {
     modules.dev.git = {
       enable = mkOption {
@@ -37,7 +38,7 @@ in {
         fish = mkIf config.modules.shell.fish.enable {
           shellAbbrs = {
             gst = "git status";
-            gc = "git commit";
+            gc = "git commit -v";
             "gc!" = "git commit --amend";
             gaa = "git add .";
             ggpush = "git push";
