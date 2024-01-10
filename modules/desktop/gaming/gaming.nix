@@ -28,25 +28,6 @@ in
     programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
 
     home-manager.users.wittano.home.packages =
-      let
-        jre = pkgs.jre;
-        envLibPath = lib.makeLibraryPath (with pkgs;[
-          curl
-          libpulseaudio
-          systemd
-          libglvnd
-        ]);
-        postFixupScript = ''
-          # Do not create `GPUCache` in current directory
-          makeWrapper $out/opt/minecraft-launcher/minecraft-launcher $out/bin/minecraft-launcher \
-            --prefix LD_LIBRARY_PATH : ${envLibPath} \
-            --prefix PATH : ${lib.makeBinPath [ jre ]} \
-            --set JAVA_HOME ${lib.getBin jre} \
-            --chdir /tmp \
-            "''${gappsWrapperArgs[@]}"
-        '';
-        fixedMinecraft = unstable.minecraft.overrideAttrs { postFixup = postFixupScript; };
-      in
       with pkgs; [
         # Lutris
         lutris
@@ -62,7 +43,7 @@ in
         steam-run
 
         # Minecraft
-        fixedMinecraft
+        prismlauncher
       ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
