@@ -84,6 +84,8 @@ in
             pnix = "cd $NIX_DOTFILES";
             prepo = "cd $HOME/projects/config/nix-repo";
             pdot = "cd $DOTFILES";
+            plab = "cd $HOME/projects/config/home-lab";
+            ptemp = "cd $HOME/projects/config/nix-templates";
 
             # Nix
             nfu = "nix flake update";
