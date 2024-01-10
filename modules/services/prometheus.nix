@@ -1,10 +1,11 @@
-{ config, lib, pkgs, systemStaff, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.services.prometheus;
-in {
+in
+{
   options = {
     modules.services.prometheus = {
       enable = mkEnableOption ''
@@ -24,7 +25,7 @@ in {
       scrapeConfigs = [
         {
           job_name = "node";
-          static_configs = [ { targets = [ "localhost:9100" ]; } ];
+          static_configs = [{ targets = [ "localhost:9100" ]; }];
         }
       ];
 

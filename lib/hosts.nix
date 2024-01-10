@@ -1,10 +1,10 @@
-{ lib, system, pkgs, unstable, dotfiles, systemStaff, ownPackages, inputs, imports, ... }: {
+{ lib, system, pkgs, unstable, dotfiles, ownPackages, inputs, imports, ... }: {
   mkHost = { name, isDevMode ? false, username ? "wittano" }:
     inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode systemStaff username inputs ownPackages;
+        inherit pkgs unstable lib dotfiles isDevMode username inputs ownPackages;
         hostName = name;
         # TODO Set option for other keys for diffrent hosts
         secretsFile = ./../secrets/syncthing.age;

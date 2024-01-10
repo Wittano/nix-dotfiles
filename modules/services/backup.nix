@@ -1,8 +1,35 @@
-{ config, pkgs, lib, username, systemStaff, ... }:
+{ config, pkgs, lib, username, ... }:
 let
   inherit (lib) mkEnableOption types mkIf mkOption;
 
   cfg = config.modules.services.backup;
+
+  excludedList = builtins.toFile "exclude.txt" ''
+    VirtualBox*
+    Games/***
+    .ansible
+    *cache*
+    .dotnet
+    .m2
+    *pnpm*
+    .gradle
+    .java
+    .jdks
+    .npm
+    .vagrant.d
+    .nuget
+    .local/share/Steam/***
+    .local/share/virtualenvs
+    .local/share/JetBrains/Toolbox/apps/*
+    .local/share/Trash
+    **/*/node_modules
+    **/*/venv
+    **/*/CMakeFiles
+    **/*/.idea
+    .steam
+    go/**/*
+    git
+  '';
 in
 {
   options = {
@@ -79,12 +106,12 @@ in
         resync() {
           remove_oldest_backup
 
-          ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir}
+          ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.backupDir}
 
           create_archive || remove_failed_backup
         }
 
-        ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${systemStaff.scripts.backup."exclude.txt".source}" "$HOME" ${cfg.backupDir} || resync
+        ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.backupDir} || resync
 
         create_archive || remove_failed_backup
       '';

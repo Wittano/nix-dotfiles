@@ -1,6 +1,9 @@
 { config, pkgs, lib, modulesPath, username, systemStaff, unstable, ... }:
 with lib;
-let cfg = config.modules.hardware.virtualization;
+with lib.my;
+let
+  cfg = config.modules.hardware.virtualization;
+  virutalizationDir = mapper.mapDirToAttrs ./virtualization;
 in
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -96,20 +99,16 @@ in
           mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
           mkdir -p /var/lib/libvirt/vbios
 
-          ln -sf ${systemStaff.vms.win10.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
+          ln -sf ${virutalizationDir.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
 
-          ln -sf ${
-            systemStaff.vms.win10.hooks."qemu.d".win10.prepare.begin."start.sh".source
-          } /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
-          ln -sf ${
-            systemStaff.vms.win10.hooks."qemu.d".win10.release.end."revert.sh".source
-          } /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+          ln -sf ${virutalizationDir.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
+          ln -sf ${virutalizationDir.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
 
           ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
           ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
 
           ln -sf ${
-            systemStaff.vms.win10."vibios.rom".source
+            virutalizationDir."vibios.rom".source
           } /var/lib/libvirt/vbios/vibios.rom
         '';
     };
@@ -118,7 +117,7 @@ in
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
     home-manager.users.wittano.programs.fish.shellAliases = mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
-      vm = "bash ${systemStaff.scripts."select-vagrant-vm.sh".source}";
+      vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
     };
 
     boot = {

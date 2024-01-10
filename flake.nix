@@ -9,10 +9,6 @@
       url = "github:Wittano/dotfiles";
       flake = false;
     };
-    system-staff = {
-      url = "github:Wittano/system-staff";
-      flake = false;
-    };
     wittano-repo.url = "github:Wittano/nix-repo";
     filebot.url = "github:Wittano/filebot";
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
