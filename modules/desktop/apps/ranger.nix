@@ -14,5 +14,6 @@ with lib.my;
       '';
     };
 
+    programs.fish.shellAliases.ra = "ranger";
   };
 }

@@ -67,7 +67,6 @@ in
           in
           {
             xc = "xprop | grep CLASS";
-            yta = ''nix run nixpkgs#youtube-dl -- -x --audio-format mp3 -o "%(title)s.%(ext)s" --prefer-ffmpeg'';
             re = rebuild host;
             dev = rebuild "${host}-dev";
 
@@ -78,7 +77,6 @@ in
             mpv = "nix run nixpkgs#mpv --";
             py = "nix run nixpkgs#python3";
             tor = "nix run nixpkgs#tor-browser-bundle-bin";
-            ra = "nix run nixpkgs#ranger";
 
             # Projects
             pnix = "cd $NIX_DOTFILES";

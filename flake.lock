@@ -511,25 +511,8 @@
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
-        "system-staff": "system-staff",
         "wittano-dotfiles": "wittano-dotfiles",
         "wittano-repo": "wittano-repo"
-      }
-    },
-    "system-staff": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1703687755,
-        "narHash": "sha256-7XSHShShA7oMYIqLMgsPQDXylzmZzEmJpbK3PyqbYW0=",
-        "owner": "Wittano",
-        "repo": "system-staff",
-        "rev": "e2ddb0402e8e989d068ff0d224a4c1f25abde320",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Wittano",
-        "repo": "system-staff",
-        "type": "github"
       }
     },
     "systems": {
