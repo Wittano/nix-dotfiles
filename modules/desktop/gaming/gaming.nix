@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, unstable, inputs, ... }:
+{ config, pkgs, home-manager, lib, inputs, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
@@ -42,25 +42,15 @@ in
         # FSH
         steam-run
 
-        # Minecraft
+        # Games
         prismlauncher
+        xivlauncher
+        widelands
       ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
     programs.steam.enable = true;
-
-    # For Genshin Impact
-    networking.extraHosts = ''
-      0.0.0.0 log-upload-os.mihoyo.com
-      0.0.0.0 overseauspider.yuanshen.com
-      0.0.0.0 uspider.yuanshen.com
-      0.0.0.0 prd-lender.cdp.internal.unity3d.com
-      0.0.0.0 thind-prd-knob.data.ie.unity3d.com
-      0.0.0.0 thind-gke-usc.prd.data.corp.unity3d.com
-      0.0.0.0 cdp.cloud.unity3d.com
-      0.0.0.0 remote-config-proxy-prd.uca.cloud.unity3d.com
-    '';
 
     fileSystems = mkIf (cfg.enableAdditionalDisk) {
       "/mnt/gaming" = {
@@ -69,9 +59,23 @@ in
       };
     };
 
-    home-manager.users.wittano.programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-      fixSteamSystemTray = "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
-    };
+    home-manager.users.wittano.programs.fish.shellAliases =
+      let
+        fixAge2SyncScript = pkgs.writeScriptBin "fixAge2Sync.sh" /*bash*/ ''
+          cd /mnt/gaming/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
+
+          if [ ! -e "vc_redist.x64.exe" ]; then
+              ${pkgs.wget}/bin/wget "https://aka.ms/vs/16/release/vc_redist.x64.exe"
+          fi
+
+          sudo ${pkgs.cabextract}/bin/cabextract vc_redist.x64.exe
+          sudo ${pkgs.cabextract}/bin/cabextract a10
+        '';
+      in
+      {
+        fixSteamSystemTray = "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+        fixAge2Sync = "${pkgs.bash}/bin/bash ${fixAge2SyncScript}";
+      };
   };
 
 }
