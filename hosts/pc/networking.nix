@@ -1,6 +1,12 @@
-{ ... }: {
+{ config, ... }: {
+  assertions = [
+    {
+      assertion = !config.networking.networkmanager.enable;
+      message = "NetworkManager cannot be enable, causes problem with spotify interent connection";
+    }
+  ];
+
   networking = {
-    useDHCP = true;
 
     interfaces.eno1 = {
       useDHCP = false;
