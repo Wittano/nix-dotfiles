@@ -1,8 +1,7 @@
 { config, pkgs, home-manager, lib, ... }:
 with lib;
 let cfg = config.modules.dev.git;
-in
-{
+in {
   options = {
     modules.dev.git = {
       enable = mkOption {

@@ -1,27 +1,14 @@
 { pkgs, lib, cfg, dotfiles, ... }:
 with lib;
-with lib.my;
-{
+with lib.my; {
   home-manager.users.wittano = {
-    home = {
-      activation =
-        let
-          customeActivation = path:
-            link.createMutableLinkActivation {
-              internalPath = path;
-              isDevMode = cfg.enableDevMode;
-            };
-        in
-        {
-          linkMutablePicomConfig = customeActivation ".config/picom";
-        };
-    };
+    home.activation.linkMutablePicomConfig =
+      link.createMutableLinkActivation cfg ".config/picom";
 
-    xdg.configFile =
-      let configDir = dotfiles.".config";
-      in mkIf (cfg.enableDevMode == false) {
-        picom.source = configDir.picom.source;
-      };
+    xdg.configFile = let configDir = dotfiles.".config";
+    in mkIf (cfg.enableDevMode == false) {
+      picom.source = configDir.picom.source;
+    };
 
     systemd.user.services.picom = {
       Unit = {
@@ -36,9 +23,7 @@ with lib.my;
         '';
         Restart = "on-failure";
       };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
   };
 }

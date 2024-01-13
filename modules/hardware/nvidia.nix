@@ -3,8 +3,7 @@ let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.hardware.nvidia;
-in
-{
+in {
   options = {
     modules.hardware.nvidia = {
       enable = mkEnableOption ''

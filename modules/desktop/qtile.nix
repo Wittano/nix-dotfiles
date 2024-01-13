@@ -1,22 +1,10 @@
-{ config, pkgs, lib, dotfiles, unstable, username ? "wittano", ownPackages, ... }:
+{ config, pkgs, lib, dotfiles, unstable, ownPackages, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.qtile;
-  importApp = name:
-    apps.importApp cfg name;
-
-  nitrogenConfig = importApp "nitrogen";
-  terminalConfig = importApp "kitty";
-  rofiConfig = importApp "rofi";
-  picomConfig = importApp "picom";
-  tmuxConfig = importApp "tmux";
-  gtkConfig = importApp "gtk";
-  dunstConfig = importApp "dunst";
-  rangerConfig = importApp "ranger";
-in
-{
-
+  desktopApps = apps.desktopApps config cfg;
+in {
   options.modules.desktop.qtile = {
     enable = mkEnableOption "Enable Qtile desktop";
     enableDevMode = mkEnableOption ''
@@ -25,47 +13,24 @@ in
     '';
   };
 
-  config = mkIf (cfg.enable) (mkMerge [
-    rofiConfig
-    rangerConfig
-    terminalConfig
-    tmuxConfig
-    picomConfig
-    dunstConfig
-    gtkConfig
-    nitrogenConfig
+  config = mkIf (cfg.enable) (mkMerge (with desktopApps; [
+    nitrogen
+    gtk
+    dunst
+    ranger
+    picom
+    tmux
+    kitty
+    rofi
+    switchOff
     {
-      home-manager.users."${username}" = {
-        home = {
-          packages =
-            let
-              switchOff = pkgs.callPackage ./utils/switch-off.nix { };
-            in
-            with pkgs; [
-              # Utils
-              switchOff
-            ];
+      home-manager.users.wittano = {
+        home.activation.linkMutableQtileConfig =
+          link.createMutableLinkActivation cfg ".config/qtile";
 
-          activation =
-            let
-              customeActivation = path:
-                link.createMutableLinkActivation {
-                  internalPath = path;
-                  isDevMode = cfg.enableDevMode;
-                };
-            in
-            {
-              linkMutableQtileConfig = customeActivation ".config/qtile";
-            };
+        xdg.configFile = mkIf (cfg.enableDevMode == false) {
+          qtile.source = dotfiles.".config".qtile.source;
         };
-
-        xdg.configFile =
-          let configDir = dotfiles.".config";
-          in
-          mkIf (cfg.enableDevMode == false) {
-            qtile.source = configDir.qtile.source;
-          };
-
       };
 
       services.xserver = {
@@ -74,6 +39,6 @@ in
         windowManager.qtile.enable = true;
       };
     }
-  ]);
+  ]));
 
 }

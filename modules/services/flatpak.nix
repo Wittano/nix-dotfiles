@@ -1,10 +1,9 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.services.flatpak;
-in
-{
+in {
   options = {
     modules.services.flatpak = { enable = mkEnableOption "Enable flatpak"; };
   };
@@ -15,10 +14,9 @@ in
       enable = true;
       extraPortals =
         lib.mkIf (config.services.xserver.desktopManager.gnome.enable == false)
-          [ pkgs.xdg-desktop-portal-gtk ];
+        [ pkgs.xdg-desktop-portal-gtk ];
       config.common.default = "*";
     };
-
 
     systemd.user.extraConfig = ''
       DefaultEnvironment="PATH=/run/current-system/sw/bin"

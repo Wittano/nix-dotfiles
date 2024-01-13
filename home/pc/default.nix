@@ -26,8 +26,7 @@ let
     signal-desktop
     discord
   ];
-in
-{
+in {
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";

@@ -6,8 +6,7 @@ let
   unmountUSBScript = pkgs.writeScriptBin "unmount.sh" ''
     ${pkgs.udisks2}/bin/udisksctl unmount -b "/dev/$2"
   '';
-in
-{
+in {
   config = {
     services.udisks2 = {
       enable = true;

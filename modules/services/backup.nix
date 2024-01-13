@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (lib) mkEnableOption types mkIf mkOption;
 
@@ -30,8 +30,7 @@ let
     go/**/*
     git
   '';
-in
-{
+in {
   options = {
     modules.services.backup = {
       enable = mkEnableOption "Enable Backup service";
@@ -54,16 +53,16 @@ in
     };
     systemd.services.backup = {
       description = ''
-        Backup service for ${username} home directory
+        Backup service for wittano home directory
       '';
       serviceConfig = {
         Type = "oneshot";
-        User = username;
+        User = "wittano";
       };
       wantedBy = [ "multi-user.target" ];
       preStart = ''
         mkdir -p ${cfg.backupDir}
-        chown ${username}:users ${cfg.backupDir}
+        chown wittano:users ${cfg.backupDir}
       '';
       script = ''
         today=$(${pkgs.coreutils}/bin/date -I)

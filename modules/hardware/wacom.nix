@@ -10,8 +10,7 @@ let
         ${pkgs.xf86_input_wacom}/bin/xsetwacom --set "$i" MapToOutput HEAD-0
     done
   '';
-in
-{
+in {
   options = {
     modules.hardware.wacom = {
       enable = mkEnableOption "Enable support for wacom graphic tablet";

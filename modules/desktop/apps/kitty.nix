@@ -1,15 +1,11 @@
 { pkgs, home-manager, lib, dotfiles, cfg, ... }:
 with lib;
-with lib.my;
-{
+with lib.my; {
   home-manager.users.wittano = {
     home = {
       packages = with pkgs; [ kitty ];
       activation.linkMutableKittyConfig =
-        link.createMutableLinkActivation {
-          internalPath = ".config/kitty";
-          isDevMode = cfg.enableDevMode;
-        };
+        link.createMutableLinkActivation cfg ".config/kitty";
     };
 
     programs.fish.shellAliases.ssh = "kitty +kitten ssh";

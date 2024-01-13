@@ -1,7 +1,6 @@
 { cfg, pkgs, lib, home-manager, dotfiles, ... }:
 with lib;
-with lib.my;
-{
+with lib.my; {
   home-manager.users.wittano.programs = {
     fzf = {
       enable = true;
@@ -24,7 +23,13 @@ with lib.my;
       enable = true;
       mouse = true;
       newSession = false;
-      plugins = with pkgs.tmuxPlugins; [ tmux-fzf catppuccin sensible vim-tmux-navigator yank ];
+      plugins = with pkgs.tmuxPlugins; [
+        tmux-fzf
+        catppuccin
+        sensible
+        vim-tmux-navigator
+        yank
+      ];
       shell = "${pkgs.fish}/bin/fish";
       resizeAmount = 3;
       prefix = "C-Space";

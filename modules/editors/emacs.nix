@@ -1,20 +1,16 @@
 { config, pkgs, lib, home-manager, dotfiles, inputs, ... }:
+with lib;
+with lib.my;
 let
   inherit (lib) mkEnableOption mkOption mkIf types;
 
   cfg = config.modules.editors.emacs;
-  customeActivation = path:
-    lib.my.link.createMutableLinkActivation {
-      internalPath = path;
-      isDevMode = cfg.enableDevMode;
-    };
   downloadDoomEmacsScript = ''
     if [ ! -e $HOME/.emacs.d/bin/doom ]; then
       ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
     fi
   '';
-in
-{
+in {
   options = {
     modules.editors.emacs = {
       enable = mkEnableOption ''
@@ -45,8 +41,8 @@ in
           mkIf (cfg.version == "doom") (with pkgs; [ git ripgrep coreutils ]);
 
         activation = {
-          linkMutableDoomEmacsConfiguration =
-            mkIf (cfg.version == "doom") (customeActivation ".doom.d");
+          linkMutableDoomEmacsConfiguration = mkIf (cfg.version == "doom")
+            (link.createMutableLinkActivation cfg ".doom.d");
           downloadDoomEmacs = mkIf (cfg.version == "doom")
             (lib.hm.dag.entryAfter [ "writeBoundery" ] downloadDoomEmacsScript);
         };

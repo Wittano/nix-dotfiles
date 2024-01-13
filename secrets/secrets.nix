@@ -1,6 +1,4 @@
 let
-  key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZNdd31cwPZMn4MAdPavH13whw4sDlRBn+hgHs+ACmBrtWHUoG7bNc6x7PgLlA3w6ln9yMyHzNDw7S0/yrsZmqb2dJkLPW50bsJampxZVLS6iPudVfjYRGDI+awOa1sqiXvQCZf6rR7NBXZnG2YaP2iuqppZiz7S5BjZV2uSUfAliST0gUUGrG7nv0DUXzT/bgtfxGSlf9UiFaq/Cu39nNrftwFccTJ/PyB4nlH/n5LPPi+ZBCsljO7p4FaLdLKmuVJVQBvg+IJcVtEBr9sUPtsOT2f/8MEUU91uZ0W+3ml2TWK/mogpaGH0Ym3nnUl7BsVdL1490GJRN4kOYhArznytVYqh7c44LKnaIFITEcuLbYlR5TyQHrmMQVZjyBv05MV7Taq/Onbv1O/95pmcRd/2J3lCUGkgTjqBIaKO9FV35++pt5jAfLAY8qtOMbozkLCTzPnfGZLzXAsibKfI6KwETU2E1spI0bJ08sXXxqBtnGGE8nRBZ3NfqySmwqg/8= wittano@nixos";
-in
-{
-  "syncthing.age".publicKeys = [ key ];
-}
+  key =
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZNdd31cwPZMn4MAdPavH13whw4sDlRBn+hgHs+ACmBrtWHUoG7bNc6x7PgLlA3w6ln9yMyHzNDw7S0/yrsZmqb2dJkLPW50bsJampxZVLS6iPudVfjYRGDI+awOa1sqiXvQCZf6rR7NBXZnG2YaP2iuqppZiz7S5BjZV2uSUfAliST0gUUGrG7nv0DUXzT/bgtfxGSlf9UiFaq/Cu39nNrftwFccTJ/PyB4nlH/n5LPPi+ZBCsljO7p4FaLdLKmuVJVQBvg+IJcVtEBr9sUPtsOT2f/8MEUU91uZ0W+3ml2TWK/mogpaGH0Ym3nnUl7BsVdL1490GJRN4kOYhArznytVYqh7c44LKnaIFITEcuLbYlR5TyQHrmMQVZjyBv05MV7Taq/Onbv1O/95pmcRd/2J3lCUGkgTjqBIaKO9FV35++pt5jAfLAY8qtOMbozkLCTzPnfGZLzXAsibKfI6KwETU2E1spI0bJ08sXXxqBtnGGE8nRBZ3NfqySmwqg/8= wittano@nixos";
+in { "syncthing.age".publicKeys = [ key ]; }

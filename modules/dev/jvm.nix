@@ -1,10 +1,9 @@
-{ config, pkgs, lib, home-manager, username, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.dev.jvm;
-in
-{
+in {
   options = {
     modules.dev.jvm = {
       enable = mkEnableOption ''
@@ -18,7 +17,9 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ jetbrains.idea-ultimate ] ++ (if cfg.enableAndroid then [ andorid-studio ] else [ ]);
+      home.packages = with pkgs;
+        [ jetbrains.idea-ultimate ]
+        ++ (if cfg.enableAndroid then [ andorid-studio ] else [ ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pjvm = "cd $HOME/projects/own/jvm";

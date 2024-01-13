@@ -1,28 +1,25 @@
 { lib, system, pkgs, unstable, dotfiles, ownPackages, inputs, imports, ... }: {
-  mkHost = { name, isDevMode ? false, username ? "wittano" }:
+  mkHost = { name, isDevMode ? false }:
     inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode username inputs ownPackages;
-        hostName = name;
+        inherit pkgs unstable lib dotfiles isDevMode inputs ownPackages;
+        hostname = name;
         # TODO Set option for other keys for diffrent hosts
         secretsFile = ./../secrets/syncthing.age;
       };
 
-      modules =
-        let
-          hostName = builtins.replaceStrings [ "-dev" ] [ "" ] name;
-        in
-        [
-          ./../configuration.nix
-          ./../hosts/${hostName}/configuration.nix
+      modules = let hostname = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+      in [
+        ./../configuration.nix
+        ./../hosts/${hostname}/configuration.nix
 
-          inputs.filebot.nixosModules."filebot"
-          inputs.agenix.nixosModules.default
-          inputs.nixvim.nixosModules.nixvim
-          inputs.aagl.nixosModules.default
-          inputs.home-manager.nixosModules.home-manager
-        ] ++ (imports.importModulesPath ./../modules);
+        inputs.filebot.nixosModules."filebot"
+        inputs.agenix.nixosModules.default
+        inputs.nixvim.nixosModules.nixvim
+        inputs.aagl.nixosModules.default
+        inputs.home-manager.nixosModules.home-manager
+      ] ++ (imports.importModulesPath ./../modules);
     };
 }

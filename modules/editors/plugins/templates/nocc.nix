@@ -1,14 +1,13 @@
-{ stdenvNoCC }: stdenvNoCC.mkDerivation {
+{ stdenvNoCC }:
+stdenvNoCC.mkDerivation {
   name = "{{_file_name_}}";
   src = ./.;
 
   buildInputs = [ ];
 
-  buildPhase = ''
-  '';
+  buildPhase = "";
 
-  installPhase = ''
-  '';
+  installPhase = "";
 
   meta = with lib; {
     homepage = "https://github.com/Wittano/{{_file_name_}}";

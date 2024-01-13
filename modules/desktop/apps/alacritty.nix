@@ -9,8 +9,7 @@ let
     sha256 = "sha256-bpHznCqkNMbauDQjh98qj2+r1V8mXQIVmvKTldLcln0=";
   });
   colorTheme = theme: (catppuccinTheme."catppuccin-${theme}.toml".source);
-in
-{
+in {
   fonts.packages = with pkgs; [ jetbrains-mono ];
 
   home-manager.users.wittano.programs.alacritty = {
@@ -60,7 +59,7 @@ in
           mouse = "Middle";
         }];
       };
-      selection."semantic_escape_chars" = ",|`|:\"' (){}[]<>";
+      selection."semantic_escape_chars" = '',|`|:"' (){}[]<>'';
     };
   };
 }

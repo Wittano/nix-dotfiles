@@ -52,14 +52,21 @@ let
       unlink ${dest} || echo "Warning: File the path: ${dest}, cannot be removed"
     fi
   '';
-in {
-  createMutableLinkActivation = { internalPath, isDevMode ? false }:
+in
+{
+  createMutableLinkActivation = cfg: path:
     let
-      src = "$DOTFILES/${internalPath}";
-      dest = "$HOME/${internalPath}";
-      activationScript = if isDevMode then createMutableLink src dest else removeMutableLink dest;
+      src = "$DOTFILES/${path}";
+      dest = "$HOME/${path}";
+      isDevMode = cfg ? enableDevMode && cfg.enableDevMode;
+      activationScript =
+        if isDevMode then
+          createMutableLink src dest
+        else
+          removeMutableLink dest;
     in
-      if isDevMode
-      then lib.hm.dag.entryAfter [ "writeBoundary" ] activationScript
-      else lib.hm.dag.entryBefore [ "checkFilesChanged" ] activationScript;
+    if isDevMode then
+      lib.hm.dag.entryAfter [ "writeBoundary" ] activationScript
+    else
+      lib.hm.dag.entryBefore [ "checkFilesChanged" ] activationScript;
 }

@@ -1,10 +1,8 @@
 { config, pkgs, lib, ownPackages, ... }:
 with lib;
 with lib.my;
-let
-  cfg = config.modules.desktop.sddm;
-in
-{
+let cfg = config.modules.desktop.sddm;
+in {
 
   options.modules.desktop.sddm = {
     enable = mkEnableOption "Enable SDDM as display manager";

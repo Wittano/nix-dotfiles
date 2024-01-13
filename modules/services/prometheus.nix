@@ -4,8 +4,7 @@ let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.services.prometheus;
-in
-{
+in {
   options = {
     modules.services.prometheus = {
       enable = mkEnableOption ''
@@ -22,12 +21,10 @@ in
       enable = true;
       port = 9090;
 
-      scrapeConfigs = [
-        {
-          job_name = "node";
-          static_configs = [{ targets = [ "localhost:9100" ]; }];
-        }
-      ];
+      scrapeConfigs = [{
+        job_name = "node";
+        static_configs = [{ targets = [ "localhost:9100" ]; }];
+      }];
 
       exporters = {
         node = {

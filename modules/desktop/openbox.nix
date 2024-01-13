@@ -3,14 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-
-  importApp = name: apps.importApp cfg name;
-
-  nitrogenConfig = importApp "nitrogen";
-  terminalConfig = importApp "alacritty";
-  rofiConfig = importApp "rofi";
-  gtkConfig = importApp "gtk";
-  xautolockConfig = importApp "xautolock";
+  desktopApps = apps.desktopApps config cfg;
 in {
 
   options.modules.desktop.openbox = {
@@ -21,12 +14,13 @@ in {
     '';
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    nitrogenConfig
-    terminalConfig
-    xautolockConfig
-    gtkConfig
-    rofiConfig
+  config = mkIf cfg.enable (mkMerge (with desktopApps; [
+    nitrogen
+    alacritty
+    rofi
+    gtk
+    xautolock
+    dunst
     {
       home-manager.users.wittano = {
         home = {
@@ -37,23 +31,16 @@ in {
             tint2
             volumeicon
             gsimplecal
-            notify-osd-customizable
-            picom-jonaburg
 
             # Utils
             arandr
           ];
 
-          activation = let
-            customeActivation = path:
-              link.createMutableLinkActivation {
-                internalPath = path;
-                isDevMode = cfg.enableDevMode;
-              };
-          in {
-            linkMutableOpenboxConfig = customeActivation ".config/openbox";
-            linkMutableTint2Config = customeActivation ".config/tint2";
-            linkMutablePicomConfig = customeActivation ".config/picom";
+          activation = {
+            linkMutableOpenboxConfig =
+              link.createMutableLinkActivation cfg ".config/openbox";
+            linkMutableTint2Config =
+              link.createMutableLinkActivation cfg ".config/tint2";
           };
         };
 
@@ -61,7 +48,6 @@ in {
         in mkIf (cfg.enableDevMode == false) {
           openbox.source = configDir.openbox.source;
           tint2.source = configDir.tint2.source;
-          picom.source = configDir.picom.source;
         };
 
       };
@@ -72,6 +58,6 @@ in {
         windowManager.openbox.enable = true;
       };
     }
-  ]);
+  ]));
 
 }

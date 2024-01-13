@@ -1,9 +1,7 @@
 { config, pkgs, home-manager, lib, inputs, ... }:
 with lib;
-let
-  cfg = config.modules.desktop.gaming;
-in
-{
+let cfg = config.modules.desktop.gaming;
+in {
   options = {
     modules.desktop.gaming = {
       enable = mkEnableOption ''
@@ -27,25 +25,24 @@ in
     # Honkai Railway
     programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
 
-    home-manager.users.wittano.home.packages =
-      with pkgs; [
-        # Lutris
-        lutris
-        xdelta
-        xterm
-        gnome.zenity
+    home-manager.users.wittano.home.packages = with pkgs; [
+      # Lutris
+      lutris
+      xdelta
+      xterm
+      gnome.zenity
 
-        # Wine
-        bottles
-        wineWowPackages.full
+      # Wine
+      bottles
+      wineWowPackages.full
 
-        # FSH
-        steam-run
+      # FSH
+      steam-run
 
-        # Games
-        prismlauncher
-        xivlauncher
-      ];
+      # Games
+      prismlauncher
+      xivlauncher
+    ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
@@ -58,9 +55,9 @@ in
       };
     };
 
-    home-manager.users.wittano.programs.fish.shellAliases =
-      let
-        fixAge2SyncScript = pkgs.writeScriptBin "fixAge2Sync.sh" /*bash*/ ''
+    home-manager.users.wittano.programs.fish.shellAliases = let
+      fixAge2SyncScript = pkgs.writeScriptBin "fixAge2Sync.sh" # bash
+        ''
           cd /mnt/gaming/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
 
           if [ ! -e "vc_redist.x64.exe" ]; then
@@ -70,11 +67,11 @@ in
           sudo ${pkgs.cabextract}/bin/cabextract vc_redist.x64.exe
           sudo ${pkgs.cabextract}/bin/cabextract a10
         '';
-      in
-      {
-        fixSteamSystemTray = "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
-        fixAge2Sync = "${pkgs.bash}/bin/bash ${fixAge2SyncScript}";
-      };
+    in {
+      fixSteamSystemTray =
+        "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+      fixAge2Sync = "${pkgs.bash}/bin/bash ${fixAge2SyncScript}";
+    };
   };
 
 }

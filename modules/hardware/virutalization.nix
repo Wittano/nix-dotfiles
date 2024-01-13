@@ -1,11 +1,10 @@
-{ config, pkgs, lib, modulesPath, username, systemStaff, unstable, ... }:
+{ config, pkgs, lib, modulesPath, systemStaff, unstable, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.hardware.virtualization;
   virutalizationDir = mapper.mapDirToAttrs ./virtualization;
-in
-{
+in {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   options = {
@@ -44,7 +43,7 @@ in
       };
     };
 
-    users.users."${username}".extraGroups = [
+    users.users.wittano.extraGroups = [
       (mkIf cfg.enableDocker "docker")
       (mkIf cfg.enableVagrant "vboxusers")
       "libvirtd"
@@ -57,7 +56,7 @@ in
     }];
 
     security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
-      users = [ "${username}" ];
+      users = [ "wittano" ];
       commands = [{
         command = "${pkgs.libvirt}/bin/virsh start win10";
         options = [ "NOPASSWD" ];
@@ -67,58 +66,58 @@ in
     programs.virt-manager.enable = true;
 
     environment.systemPackages = with pkgs;
-      [ libguestfs ]
-      ++ (if cfg.enableVagrant then [ vagrant ] else [ ]);
+      [ libguestfs ] ++ (if cfg.enableVagrant then [ vagrant ] else [ ]);
 
     systemd.services.libvirtd = mkIf cfg.enableWindowsVM {
-      path =
-        let
-          env = pkgs.buildEnv {
-            name = "qemu-hook-env";
-            paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
-          };
-        in
-        [ env ];
+      path = let
+        env = pkgs.buildEnv {
+          name = "qemu-hook-env";
+          paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
+        };
+      in [ env ];
 
-      preStart =
-        let
-          stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
-            #!/usr/bin/env bash
+      preStart = let
+        stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
+          #!/usr/bin/env bash
 
-            systemctl stop display-manager.service
-            systemctl stop boinc.service
-          '';
-          startBoincScript = pkgs.writeScript "start-boinc.sh" ''
-            #!/usr/bin/env bash
-
-            systemctl start boinc.service
-          '';
-        in
-        mkIf (cfg.enableWindowsVM) ''
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
-          mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
-          mkdir -p /var/lib/libvirt/vbios
-
-          ln -sf ${virutalizationDir.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
-
-          ln -sf ${virutalizationDir.hooks."qemu.d".win10.prepare.begin."start.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
-          ln -sf ${virutalizationDir.hooks."qemu.d".win10.release.end."revert.sh".source} /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
-
-          ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
-          ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
-
-          ln -sf ${
-            virutalizationDir."vibios.rom".source
-          } /var/lib/libvirt/vbios/vibios.rom
+          systemctl stop display-manager.service
+          systemctl stop boinc.service
         '';
+        startBoincScript = pkgs.writeScript "start-boinc.sh" ''
+          #!/usr/bin/env bash
+
+          systemctl start boinc.service
+        '';
+      in mkIf (cfg.enableWindowsVM) ''
+        mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin
+        mkdir -p /var/lib/libvirt/hooks/qemu.d/win10/release/end
+        mkdir -p /var/lib/libvirt/vbios
+
+        ln -sf ${virutalizationDir.hooks.qemu.source} /var/lib/libvirt/hooks/qemu
+
+        ln -sf ${
+          virutalizationDir.hooks."qemu.d".win10.prepare.begin."start.sh".source
+        } /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/start.sh
+        ln -sf ${
+          virutalizationDir.hooks."qemu.d".win10.release.end."revert.sh".source
+        } /var/lib/libvirt/hooks/qemu.d/win10/release/end/stop.sh
+
+        ln -sf ${stopBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/prepare/begin/boinc.sh
+        ln -sf ${startBoincScript} /var/lib/libvirt/hooks/qemu.d/win10/release/end/boinc.sh
+
+        ln -sf ${
+          virutalizationDir."vibios.rom".source
+        } /var/lib/libvirt/vbios/vibios.rom
+      '';
     };
 
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
-    home-manager.users.wittano.programs.fish.shellAliases = mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
-      vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
-    };
+    home-manager.users.wittano.programs.fish.shellAliases =
+      mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
+        vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
+      };
 
     boot = {
       kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;

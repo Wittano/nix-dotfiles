@@ -1,12 +1,4 @@
-{ config
-, pkgs
-, unstable
-, lib
-, home-manager
-, username
-, isDevMode ? false
-, ownPackages
-, ...
+{ config, pkgs, unstable, lib, home-manager, isDevMode ? false, ownPackages, ...
 }: {
 
   # Nix configuration
@@ -87,14 +79,12 @@
   # Global packages
   environment = {
     systemPackages = with pkgs; [ vim htop direnv bash polkit_gnome ];
-    variables =
-      let projectConfigDir = "/home/wittano/projects/config";
-      in
-      {
-        EDITOR = "vim";
-        DOTFILES = "${projectConfigDir}/dotfiles";
-        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
-      };
+    variables = let projectConfigDir = "/home/wittano/projects/config";
+    in {
+      EDITOR = "vim";
+      DOTFILES = "${projectConfigDir}/dotfiles";
+      NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+    };
 
     shells = with pkgs; [ bash ];
   };
@@ -123,7 +113,7 @@
   hardware.trackpoint.emulateWheel = true;
 
   #User settings
-  users.users."${username}" = {
+  users.users.wittano = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };

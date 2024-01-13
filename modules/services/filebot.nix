@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -6,13 +6,15 @@ let
 in
 {
   options = {
-    modules.services.filebot = { enable = mkEnableOption "Enable filebot service"; };
+    modules.services.filebot = {
+      enable = mkEnableOption "Enable filebot service";
+    };
   };
 
   config = {
     services.filebot = {
       enable = cfg.enable;
-      user = username;
+      user = "wittano";
       configPath = builtins.toFile "config.toml" ''
         [Pictures]
         src = [ "$HOME/Downloads/*.(gif|jpe?g|tiff?|png|webp|bmp)" ]

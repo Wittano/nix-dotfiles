@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, username ? "wittano", ... }: {
+{ config, pkgs, isDevMode ? false, ... }: {
 
   imports = [ ./hardware.nix ];
 
@@ -12,7 +12,7 @@
 
   security.rtkit.enable = true;
 
-  users.users."${username}" = {
+  users.users.wittano = {
     isNormalUser = true;
     description = "virt";
     extraGroups = [ "networkmanager" "wheel" ];

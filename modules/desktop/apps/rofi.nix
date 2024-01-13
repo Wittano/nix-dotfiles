@@ -14,12 +14,10 @@ in {
       packages = with pkgs; [ rofi ];
 
       activation.linkMutableRofiConfig =
-        link.createMutableLinkActivation {
-          internalPath = ".config/rofi";
-          isDevMode = cfg.enableDevMode;
-        };
+        link.createMutableLinkActivation cfg ".config/rofi";
 
-      file.".local/share/rofi/themes".source = builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
+      file.".local/share/rofi/themes".source =
+        builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {

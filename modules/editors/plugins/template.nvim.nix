@@ -4,8 +4,8 @@ let
     pname = "template-dir";
     version = "28-12-2023";
     src = ./templates;
-  }; in
-{
+  };
+in {
   luaConfig = ''
     require('template').setup({
       temp_dir = "${templateDir}",

@@ -13,14 +13,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    boot.loader = {
-
-      grub = {
-        efiSupport = true;
-        enable = true;
-        useOSProber = true;
-        device = "nodev";
-      };
+    boot.loader.grub = {
+      efiSupport = true;
+      enable = true;
+      useOSProber = true;
+      device = "nodev";
     };
   };
 }

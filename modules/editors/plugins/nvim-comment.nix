@@ -1,5 +1,4 @@
-{ srcOnly, vimUtils, lib, fetchFromGitHub, ... }:
-{
+{ srcOnly, vimUtils, lib, fetchFromGitHub, ... }: {
   luaConfig = ''
     require('nvim_comment').setup()
   '';

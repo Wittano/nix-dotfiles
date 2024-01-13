@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, hostName, username, dotfiles, ... }:
+{ config, lib, pkgs, home-manager, hostname, dotfiles, ... }:
 with lib;
 with lib.my;
 let cfg = config.modules.shell.fish;
@@ -22,26 +22,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users."${username}".shell = mkIf cfg.default pkgs.fish;
+    users.users.wittano.shell = mkIf cfg.default pkgs.fish;
 
     programs.fish.enable = cfg.enable;
 
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
     home-manager.users.wittano = {
-      home.activation =
-        let
-          customeActivation = path:
-            link.createMutableLinkActivation {
-              internalPath = path;
-              isDevMode = cfg.enableDevMode;
-            };
-        in
-        {
-          linkMutableOmfConfig = customeActivation ".config/omf";
-          linkMutableExternalAliasesConfig =
-            customeActivation ".config/fish/conf.d";
-        };
+      home.activation = {
+        linkMutableOmfConfig = link.createMutableLinkActivation cfg ".config/omf";
+        linkMutableExternalAliasesConfig = link.createMutableLinkActivation cfg ".config/fish/conf.d";
+      };
 
       xdg.configFile = mkIf (cfg.enableDevMode == false) {
         omf.source = dotfiles.".config".omf.source;
@@ -53,17 +44,18 @@ in
         interactiveShellInit = ''
           direnv hook fish | source
         '';
-        loginShellInit = ''
-          set -U fish_user_paths $HOME/.local/bin $fish_user_paths
-        '';
         shellAliases =
           let
-            host = builtins.replaceStrings [ "-dev" ] [ "" ] hostName;
+            host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
             rebuild = name:
-              let impureFlag =
-                if config.modules.services.syncthing.enable
-                then "--impure" else "";
-              in "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
+              let
+                impureFlag =
+                  if config.modules.services.syncthing.enable then
+                    "--impure"
+                  else
+                    "";
+              in
+              "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
           in
           {
             xc = "xprop | grep CLASS";

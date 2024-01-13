@@ -6,16 +6,16 @@ let
     schemeVariants = [ "all" ];
     colorVariants = [ "all" ];
   };
-in
-{
+in {
   home-manager.users.wittano = {
     home = {
-      packages = with pkgs; [ lxappearance colloidIconTheme ownPackages.bibata-cursor-theme ];
+      packages = with pkgs; [
+        lxappearance
+        colloidIconTheme
+        ownPackages.bibata-cursor-theme
+      ];
       activation.linkMutableGtkConfig =
-        link.createMutableLinkActivation {
-          internalPath = ".config/gtk-3.0/settings.ini";
-          isDevMode = cfg.enableDevMode;
-        };
+        link.createMutableLinkActivation cfg ".config/gtk-3.0/settings.ini";
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {

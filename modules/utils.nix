@@ -1,9 +1,7 @@
 { config, pkgs, lib, home-manager, ownPackages, ... }:
 with lib;
-let
-  cfg = config.modules.utils;
-in
-{
+let cfg = config.modules.utils;
+in {
   options = {
     modules.utils = {
       enable = mkEnableOption ''
@@ -18,6 +16,7 @@ in
   config = mkIf cfg.enable {
     home-manager.users.wittano.home.packages = mkIf (cfg.enable) ([ ]);
 
-    environment.systemPackages = mkIf (cfg.enableGlobalUtils) ([ ownPackages.patcherDir ]);
+    environment.systemPackages =
+      mkIf (cfg.enableGlobalUtils) ([ ownPackages.patcherDir ]);
   };
 }
