@@ -10,7 +10,8 @@ let
       ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
     fi
   '';
-in {
+in
+{
   options = {
     modules.editors.emacs = {
       enable = mkEnableOption ''
@@ -33,8 +34,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
-
     home-manager.users.wittano = {
       home = {
         packages =

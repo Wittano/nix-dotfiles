@@ -12,7 +12,6 @@
     wittano-repo.url = "github:Wittano/nix-repo";
     filebot.url = "github:Wittano/filebot";
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
     agenix.url = "github:ryantm/agenix";
     nixvim = {
       url = "github:nix-community/nixvim?ref=nixos-23.11";
@@ -28,19 +27,25 @@
         hm = home-manager.lib.hm;
         my = import ./lib { inherit lib system inputs; };
       });
-    in {
-      nixosConfigurations = let
-        inherit (lib.attrsets) mapAttrs' nameValuePair;
-        inherit (lib.my.hosts) mkHost;
+    in
+    {
+      nixosConfigurations =
+        let
+          inherit (lib.attrsets) mapAttrs' nameValuePair;
+          inherit (lib.my.hosts) mkHost;
 
-        hosts = builtins.readDir ./hosts;
-        devHosts = mapAttrs' (n: v:
-          let devName = "${n}-dev";
-          in nameValuePair (devName) (mkHost {
-            name = devName;
-            isDevMode = true;
-          })) hosts;
-        normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
-      in normalHosts // devHosts;
+          hosts = builtins.readDir ./hosts;
+          devHosts = mapAttrs'
+            (n: v:
+              let devName = "${n}-dev";
+              in
+              nameValuePair (devName) (mkHost {
+                name = devName;
+                isDevMode = true;
+              }))
+            hosts;
+          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+        in
+        normalHosts // devHosts;
     };
 }
