@@ -23,6 +23,11 @@ in
         [Archives]
         src = [ "$HOME/Downloads/*.(zip|tar*)" ]
         dest = "$HOME/Documents"
+
+        [Iso]
+        src = [ "$HOME/Downloads/*.iso" ]
+        moveToTrash = true
+        after = 1
       '';
     };
   };

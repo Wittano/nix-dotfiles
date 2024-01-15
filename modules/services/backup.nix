@@ -17,10 +17,18 @@ let
     .jdks
     .npm
     .vagrant.d
+    .rustup
     .nuget
+    .emacs.d
+    .paradoxlauncher
     .local/share/Steam/***
     .local/share/virtualenvs
-    .local/share/JetBrains/Toolbox/apps/*
+    .local/share/JetBrains
+    .local/share/*-launcher
+    .local/share/bottles
+    .local/share/PrismaLauncher
+    .local/share/openttd
+    .local/share/lutris
     .local/share/Trash
     **/*/node_modules
     **/*/venv
@@ -30,7 +38,8 @@ let
     go/**/*
     git
   '';
-in {
+in
+{
   options = {
     modules.services.backup = {
       enable = mkEnableOption "Enable Backup service";
