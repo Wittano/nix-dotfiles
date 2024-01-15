@@ -1,12 +1,14 @@
 { config, pkgs, lib, home-manager, ... }:
+with lib;
 let
-  inherit (lib) mkEnableOption mkIf;
-
   homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;
   encryptedConfig =
-    builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path);
-in {
+    if config.age.secrets ? syncthing then
+      builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path)
+    else { };
+in
+{
   options = {
     modules.services.syncthing = {
       enable = mkEnableOption ''
@@ -24,8 +26,8 @@ in {
         configDir = "${homeDir}/.config/syncthing";
         user = "wittano";
         settings = {
-          folders = encryptedConfig.folders;
-          devices = encryptedConfig.devices;
+          folders = attrsets.optionalAttrs (encryptedConfig ? folders) encryptedConfig.folders;
+          devices = attrsets.optionalAttrs (encryptedConfig ? devices) encryptedConfig.devices;
           extraOptions.gui.theme = "dark";
         };
       };
