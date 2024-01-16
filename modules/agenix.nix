@@ -12,6 +12,8 @@ let
   privateKeyNames = attrsets.mapAttrsToList (n: _: builtins.replaceStrings [ ".age" ] [ "" ] n) privateKeys;
   privateKeysPaths = attrsets.mapAttrsToList (n: _: "${storeKeys}/${n}") privateKeys;
 
+  secretAgeFiles = attrsets.filterAttrs (n: _: n != "secrets.nix") (builtins.readDir secretDir);
+
   ageFiles = attrsets.mapAttrs'
     (n: _:
       let
@@ -23,7 +25,7 @@ let
 
         value = secretDir + "/${ageFileName}.age";
       })
-    (builtins.readDir secretDir);
+    secretAgeFiles;
 
   secrets = attrsets.mapAttrs'
     (n: v: {
