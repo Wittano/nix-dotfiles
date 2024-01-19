@@ -1,7 +1,8 @@
 { config, pkgs, lib, home-manager, unstable, ... }:
 with lib;
 let cfg = config.modules.dev.pycharm;
-in {
+in
+{
   options = {
     modules.dev.pycharm = {
       enable = mkEnableOption ''
@@ -13,7 +14,7 @@ in {
   config = {
     home-manager.users.wittano = {
       home.packages = mkIf cfg.enable
-        (with pkgs; [ python3 pipenv poetry jetbrains.pycharm-professional ]);
+        (with pkgs; [ python3 pipenv poetry unstable.jetbrains.pycharm-professional ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         ppython = "cd $HOME/projects/own/python";

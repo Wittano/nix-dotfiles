@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 with lib;
 let cfg = config.modules.dev.clion;
-in {
+in
+{
   options = {
     modules.dev.clion = {
       enable = mkEnableOption ''
@@ -19,9 +20,9 @@ in {
         glibc
 
         # Rust
-        rustup
+        rustup # TODO Split rust and cpp configuration
 
-        jetbrains.clion
+        unstable.jetbrains.clion
       ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {

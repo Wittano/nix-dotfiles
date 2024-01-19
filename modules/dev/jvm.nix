@@ -1,9 +1,10 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, unstable, lib, home-manager, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.dev.jvm;
-in {
+in
+{
   options = {
     modules.dev.jvm = {
       enable = mkEnableOption ''
@@ -17,7 +18,7 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
-      home.packages = with pkgs;
+      home.packages = with unstable;
         [ jetbrains.idea-ultimate ]
         ++ (if cfg.enableAndroid then [ andorid-studio ] else [ ]);
 

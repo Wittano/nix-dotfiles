@@ -40,7 +40,10 @@
           enableMihoyoGames = true;
         };
       };
-      dev.jvm.enable = true;
+      dev = {
+        jvm.enable = true;
+        goland.enable = true;
+      };
       editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
