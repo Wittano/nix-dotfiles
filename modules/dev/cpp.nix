@@ -22,7 +22,7 @@ in
         # Rust
         rustup # TODO Split rust and cpp configuration
 
-        unstable.jetbrains.clion
+        jetbrains.clion
       ]);
 
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {

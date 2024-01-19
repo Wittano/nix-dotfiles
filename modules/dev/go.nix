@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 with lib;
 let cfg = config.modules.dev.goland;
 in
@@ -13,7 +13,7 @@ in
 
   config = {
     home-manager.users.wittano = {
-      home.packages = mkIf cfg.enable (with unstable; [ jetbrains.goland ]);
+      home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
       programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
         pgo = "cd $HOME/projects/own/go";
         tempgo =
