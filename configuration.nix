@@ -158,16 +158,11 @@
       enableDevMode = isDevMode;
       default = true;
     };
+    services.autoUpgrade.enable = true;
   };
 
   # System
-  system = {
-    autoUpgrade = {
-      enable = true;
-      flake = "github:wittano/nix-dotfiles";
-    };
-    stateVersion = "23.11";
-  };
+  system.stateVersion = "23.11";
 
   security.polkit.enable = true;
 

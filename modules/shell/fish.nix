@@ -49,11 +49,7 @@ in
             host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
             rebuild = name:
               let
-                impureFlag =
-                  if config.modules.services.syncthing.enable then
-                    "--impure"
-                  else
-                    "";
+                impureFlag = lib.optionalString config.modules.services.syncthing.enable "--impure";
               in
               "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
           in
