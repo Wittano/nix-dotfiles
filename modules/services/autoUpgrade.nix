@@ -5,7 +5,6 @@ let
   cfg = config.modules.services.autoUpgrade;
   workingDirectory = config.environment.variables.NIX_DOTFILES;
   impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
-  updateCommand = "";
 in
 {
   options = {
@@ -24,7 +23,7 @@ in
     ];
 
     # Default autoUpgrade service
-    system.autoUpgrade = {
+    system.autoUpgrade = mkIf (cfg.enableDefault) {
       enable = cfg.enableDefault;
       flake = "github:wittano/nix-dotfiles";
     };
@@ -43,8 +42,7 @@ in
       '';
     };
 
-    systemd.services.autoUpgrade = {
-      enable = cfg.enable;
+    systemd.services.autoUpgrade = mkIf (cfg.enable) {
       after = [ "network.target" ];
       description = "Update nix-dotfiles repo and sytem";
       path = with pkgs; [ git nixFlakes libnotify su nixos-rebuild ];
@@ -56,9 +54,15 @@ in
 
         nixos-rebuild switch --flake .#${hostname} ${impureFlag} || echo "Failed to upgrade system"
       '';
-      serviceConfig = {
-        Type = "idle";
-        WorkingDirectory = workingDirectory;
+      serviceConfig.WorkingDirectory = workingDirectory;
+    };
+
+    systemd.timers.autoUpgrade = mkIf (cfg.enable) rec {
+      description = "Update nix-dotfiles repo and sytem";
+      requiredBy = [ timerConfig.Unit ];
+      timerConfig = {
+        OnBootSec = "5min";
+        Unit = "autoUpgrade.service";
       };
     };
   };
