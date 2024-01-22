@@ -1,7 +1,16 @@
-{ config, lib, pkgs, ownPackages, ... }:
+{ config, lib, pkgs, ownPackages, home-manager, ... }:
 with lib;
-let cfg = config.modules.themes.catppuccin;
-in {
+with lib.my;
+let
+  cfg = config.modules.themes.catppuccin;
+  catppuccinQtTheme = mapper.mapDirToAttrs (pkgs.fetchFromGitHub {
+    repo = "qt5ct";
+    owner = "catppuccin";
+    rev = "89ee948e72386b816c7dad72099855fb0d46d41e";
+    sha256 = "sha256-t/uyK0X7qt6qxrScmkTU2TvcVJH97hSQuF0yyvSO/qQ=";
+  });
+in
+{
   options = {
     modules.themes.catppuccin = {
       enable = mkEnableOption ''
@@ -10,7 +19,14 @@ in {
     };
   };
 
+  # TODO update module with fetures:
+  # - update theme for other applications
+  # - update QT and GTK system theme
   config = mkIf (cfg.enable) {
+    home-manager.users.wittano.xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source = catppuccinQtTheme.themes."Catppuccin-Macchiato.conf".source;
+
+    environment.variables.QT_QPA_PLATFORMTHEME = "qt5ct";
+
     environment.systemPackages =
       [ pkgs.catppuccin-gtk ownPackages.catppuccin-icon-theme ];
   };
