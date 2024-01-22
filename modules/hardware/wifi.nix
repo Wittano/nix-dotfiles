@@ -9,7 +9,8 @@ let
       "linux_5_15"
     else
       "linux_6_1"; # This driver is working only for kernel 5.18 and lower! 12.11.2023
-in {
+in
+{
   options = {
     modules.hardware.wifi = {
       enable = mkEnableOption "Enable support for WiFi";
@@ -18,8 +19,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO Fix problem with blocking playing spotify tracks
-    networking = { wireless.enable = true; };
+    # TODO Fix problem with blocking playing spotify tracks by NetworkManager
+    networking.wireless.enable = true;
 
     boot = mkIf cfg.enableTpLink {
       extraModulePackages = mkIf (!kernel.kernelAtLeast "5.18")

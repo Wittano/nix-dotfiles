@@ -3,12 +3,11 @@ with lib;
 with lib.my;
 let
   storeKeys = "/home/wittano/.ssh";
-  sshDir =
-    if builtins.pathExists storeKeys
-    then builtins.readDir storeKeys
-    else { };
+  sshDir = lists.optionals
+    (builtins.pathExists storeKeys)
+    (builtins.readDir storeKeys);
 
-  privateKeys = attrsets.filterAttrs (n: _: (lib.strings.hasSuffix "age" n)) sshDir;
+  privateKeys = attrsets.filterAttrs (n: _: (strings.hasSuffix "age" n)) sshDir;
   privateKeyNames = attrsets.mapAttrsToList (n: _: builtins.replaceStrings [ ".age" ] [ "" ] n) privateKeys;
   privateKeysPaths = attrsets.mapAttrsToList (n: _: "${storeKeys}/${n}") privateKeys;
 

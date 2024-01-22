@@ -3,10 +3,9 @@ with lib;
 let
   homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;
-  encryptedConfig =
-    if config.age.secrets ? syncthing then
-      builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path)
-    else { };
+  encryptedConfig = attrsets.optionalAttrs
+    (config.age.secrets ? syncthing)
+    (builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path));
 in
 {
   options = {

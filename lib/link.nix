@@ -1,4 +1,5 @@
 { lib, ... }:
+with lib;
 let
   isWittanoUserChecker = ''
     if [ "$USER" != "wittano" ]; then
@@ -66,7 +67,7 @@ in
           removeMutableLink dest;
     in
     if isDevMode then
-      lib.hm.dag.entryAfter [ "writeBoundary" ] activationScript
+      hm.dag.entryAfter [ "writeBoundary" ] activationScript
     else
-      lib.hm.dag.entryBefore [ "checkFilesChanged" ] activationScript;
+      hm.dag.entryBefore [ "checkFilesChanged" ] activationScript;
 }
