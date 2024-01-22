@@ -11,7 +11,10 @@
     };
     wittano-repo.url = "github:Wittano/nix-repo";
     filebot.url = "github:Wittano/filebot";
-    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
+    aagl = {
+      url = "github:ezKEa/aagl-gtk-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     agenix.url = "github:ryantm/agenix";
     nixvim = {
       url = "github:nix-community/nixvim?ref=nixos-23.11";
