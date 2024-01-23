@@ -23,10 +23,6 @@ in
   # - update theme for other applications
   # - update QT and GTK system theme
   config = mkIf (cfg.enable) {
-    home-manager.users.wittano.xdg.configFile."qt5ct/colors/Catppuccin-Mocha.conf".source = catppuccinQtTheme.themes."Catppuccin-Macchiato.conf".source;
-
-    environment.variables.QT_QPA_PLATFORMTHEME = "qt5ct";
-
     environment.systemPackages =
       [ pkgs.catppuccin-gtk ownPackages.catppuccin-icon-theme ];
   };
