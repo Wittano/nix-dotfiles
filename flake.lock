@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705792719,
-        "narHash": "sha256-Li7xABgo9S8MtVAs0pqpmGJXZ+iEkKgRGZ1A7WrVl/M=",
+        "lastModified": 1706099209,
+        "narHash": "sha256-eg4irTtkkjNcqrB6sVmYoxOB0WdPo0a3mqoKjjBH99o=",
         "owner": "ezKEa",
         "repo": "aagl-gtk-on-nix",
-        "rev": "fc2c67ef64f5abd95d79e5b842eb4477cf061205",
+        "rev": "4aa68a34807599b830decaa6e76b3bccb9510b32",
         "type": "github"
       },
       "original": {

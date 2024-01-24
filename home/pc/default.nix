@@ -8,14 +8,18 @@ let
     # Web browser
     vivaldi
 
-    # Apps
+    # Utils 
     thunderbird
     gnome.eog
-    spotify
     evince
-    soundux
-    freetube
     onlyoffice-bin
+    soundux
+
+    # Apps
+    spotify
+    freetube
+    streamlink-twitch-gui-bin
+    mpv
 
     # Security
     bitwarden
@@ -26,7 +30,8 @@ let
     signal-desktop
     discord
   ];
-in {
+in
+{
   home = {
     username = "wittano";
     homeDirectory = "/home/wittano";
