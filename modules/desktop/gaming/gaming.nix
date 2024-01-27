@@ -18,8 +18,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    nix.settings = mkIf cfg.enableMihoyoGames inputs.aagl.nixConfig;
-
     # Genshin Impact
     programs.anime-game-launcher.enable = cfg.enableMihoyoGames;
 

@@ -17,7 +17,8 @@ let
   dotfiles = mapper.mapDirToAttrs inputs.wittano-dotfiles;
 
   home-manager = inputs.home-manager;
-in {
+in
+{
   inherit mapper imports;
 
   hosts = import ./hosts.nix {
@@ -27,4 +28,5 @@ in {
   apps = import ./apps.nix {
     inherit lib home-manager pkgs dotfiles ownPackages unstable;
   };
+  commands = import ./commands.nix { inherit pkgs lib home-manager; };
 }

@@ -1,6 +1,9 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
-let cfg = config.modules.dev.pycharm;
+with lib.my;
+let
+  cfg = config.modules.dev.pycharm;
+  ppythonCommand = commands.createProjectJumpCommand "$HOME/projects/own/python";
 in
 {
   options = {
@@ -11,16 +14,15 @@ in
     };
   };
 
-  config = {
-    home-manager.users.wittano = {
-      home.packages = mkIf cfg.enable
-        (with pkgs; [ python3 pipenv poetry jetbrains.pycharm-professional ]);
+  config = mkIf (cfg.enable) (mkMerge [
+    ppythonCommand
+    {
+      home-manager.users.wittano = {
+        home.packages = with pkgs; [ python3 pipenv poetry jetbrains.pycharm-professional ];
 
-      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-        ppython = "cd $HOME/projects/own/python";
-        temppy =
+        programs.fish.shellAliases.temppy =
           "${pkgs.nixFlakes}/bin/nix flake init --template github:nix-community/poetry2nix";
       };
-    };
-  };
+    }
+  ]);
 }

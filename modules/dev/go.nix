@@ -1,6 +1,9 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
-let cfg = config.modules.dev.goland;
+with lib.my;
+let
+  cfg = config.modules.dev.goland;
+  pgoCommand = commands.createProjectJumpCommand "$HOME/projects/own/go";
 in
 {
   options = {
@@ -11,15 +14,14 @@ in
     };
   };
 
-  config = {
-    home-manager.users.wittano = {
-      home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
-      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-        pgo = "cd $HOME/projects/own/go";
-        tempgo =
+  config = mkIf (cfg.enable) (mkMerge [
+    pgoCommand
+    {
+      home-manager.users.wittano = {
+        home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
+        programs.fish.shellAliases.tempgo =
           "${pkgs.nixFlakes}/bin/nix flake init --template github:Wittano/nix-template#go";
       };
-    };
-  };
-
+    }
+  ]);
 }

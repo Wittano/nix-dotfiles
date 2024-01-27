@@ -1,6 +1,9 @@
 { config, lib, pkgs, home-manger, ... }:
 with lib;
-let cfg = config.modules.dev.dotnet;
+with lib.my;
+let
+  cfg = config.modules.dev.dotnet;
+  pdotnetCommand = commands.createProjectJumpCommand "$HOME/projects/own/dotnet";
 in
 {
   options = {
@@ -11,15 +14,12 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.variables.DOTNET_CLI_TELEMETRY_OPTOUT = "0";
+  config = mkIf cfg.enable (mkMerge [
+    pdotnetCommand
+    {
+      environment.variables.DOTNET_CLI_TELEMETRY_OPTOUT = "0";
 
-    home-manager.users.wittano = {
-      home.packages = with pkgs; [ dotnet-sdk mono jetbrains.rider ];
-
-      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-        pdotnet = "cd $HOME/projects/own/dotnet";
-      };
-    };
-  };
+      home-manager.users.wittano.home.packages = with pkgs; [ dotnet-sdk mono jetbrains.rider ];
+    }
+  ]);
 }

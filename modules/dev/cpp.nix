@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 with lib;
-let cfg = config.modules.dev.clion;
+with lib.my;
+let
+  cfg = config.modules.dev.clion;
+  pRustCommand = commands.createProjectJumpCommand "$HOME/projects/own/rust";
+  pCppCommand = commands.createProjectJumpCommand "$HOME/projects/own/cpp";
 in
 {
   options = {
@@ -11,24 +15,18 @@ in
     };
   };
 
-  config = {
-    home-manager.users.wittano = {
-      home.packages = mkIf cfg.enable (with pkgs; [
-        cmake
-        gcc_multi
-        gnumake
-        glibc
+  config = mkIf cfg.enable (mkMerge [
+    pRustCommand
+    pCppCommand
+    {
+      home-manager.users.wittano = {
+        home.packages = (with pkgs; [
+          # Rust
+          rustup # TODO Split rust and cpp configuration
 
-        # Rust
-        rustup # TODO Split rust and cpp configuration
-
-        jetbrains.clion
-      ]);
-
-      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-        pc = "cd $HOME/projects/own/cpp";
-        prust = "cd $HOME/projects/own/rust";
+          jetbrains.clion
+        ]);
       };
-    };
-  };
+    }
+  ]);
 }

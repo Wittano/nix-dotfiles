@@ -1,8 +1,10 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
+with lib.my;
 let
   cfg = config.modules.dev.jvm;
   andoridStudio = lists.optionals cfg.enableAndroid [ andorid-studio ];
+  pjvmCommand = commands.createProjectJumpCommand "$HOME/projects/own/jvm";
 in
 {
   options = {
@@ -16,13 +18,11 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    home-manager.users.wittano = {
-      home.packages = with pkgs; [ jetbrains.idea-ultimate ] ++ andoridStudio;
-
-      programs.fish.shellAliases = mkIf (config.modules.shell.fish.enable) {
-        pjvm = "cd $HOME/projects/own/jvm";
-      };
-    };
-  };
+  config = mkIf cfg.enable
+    (mkMerge [
+      pjvmCommand
+      {
+        home-manager.users.wittano.home.packages = with pkgs; [ jetbrains.idea-ultimate ] ++ andoridStudio;
+      }
+    ]);
 }
