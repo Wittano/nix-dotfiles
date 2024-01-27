@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.dev.pycharm;
-  ppythonCommand = commands.createProjectJumpCommand "$HOME/projects/own/python";
+  ppythonCommand = commands.createProjectJumpCommand config "$HOME/projects/own/python";
 in
 {
   options = {

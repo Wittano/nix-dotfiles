@@ -39,6 +39,7 @@ in
         "fish/conf.d".source = dotfiles.".config".fish."conf.d".source;
       };
 
+      # TODO Replace OMF by plugins manage by NixOS
       programs.fish = {
         enable = true;
         interactiveShellInit = ''

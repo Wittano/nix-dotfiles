@@ -3,8 +3,8 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.dev.clion;
-  pRustCommand = commands.createProjectJumpCommand "$HOME/projects/own/rust";
-  pCppCommand = commands.createProjectJumpCommand "$HOME/projects/own/cpp";
+  pRustCommand = commands.createProjectJumpCommand config "$HOME/projects/own/rust";
+  pCppCommand = commands.createProjectJumpCommand config "$HOME/projects/own/cpp";
 in
 {
   options = {

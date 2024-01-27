@@ -4,7 +4,7 @@ with lib.my;
 let
   cfg = config.modules.dev.jvm;
   andoridStudio = lists.optionals cfg.enableAndroid [ andorid-studio ];
-  pjvmCommand = commands.createProjectJumpCommand "$HOME/projects/own/jvm";
+  pjvmCommand = commands.createProjectJumpCommand config "$HOME/projects/own/jvm";
 in
 {
   options = {

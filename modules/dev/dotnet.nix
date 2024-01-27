@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.dev.dotnet;
-  pdotnetCommand = commands.createProjectJumpCommand "$HOME/projects/own/dotnet";
+  pdotnetCommand = commands.createProjectJumpCommand config "$HOME/projects/own/dotnet";
 in
 {
   options = {

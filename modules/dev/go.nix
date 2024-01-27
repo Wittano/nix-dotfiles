@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.dev.goland;
-  pgoCommand = commands.createProjectJumpCommand "$HOME/projects/own/go";
+  pgoCommand = commands.createProjectJumpCommand config "$HOME/projects/own/go";
 in
 {
   options = {
