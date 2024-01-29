@@ -19,6 +19,9 @@ with lib.my; {
         spinner = "#ff87d7";
       };
     };
+
+    fish.shellAliases.tk = "tmux kill-session";
+
     tmux = {
       enable = true;
       mouse = true;
