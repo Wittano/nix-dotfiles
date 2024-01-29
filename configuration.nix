@@ -74,7 +74,7 @@
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop direnv bash polkit_gnome ];
+    systemPackages = with pkgs; [ vim htop direnv bash ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
       in
@@ -132,15 +132,10 @@
 
   # Internal modules
   modules = {
-    desktop.sddm = {
-      enable = true;
-      theme = "sugar-candy";
-    };
     utils = {
       enable = true;
       enableGlobalUtils = true;
     };
-    themes.catppuccin.enable = true;
     dev.git.enable = true;
     shell.fish = {
       enable = true;

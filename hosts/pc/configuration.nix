@@ -39,7 +39,12 @@
           enableAdditionalDisk = true;
           enableMihoyoGames = true;
         };
+        sddm = {
+          enable = true;
+          theme = "sugar-candy";
+        };
       };
+      themes.catppuccin.enable = true;
       dev = {
         jvm.enable = true;
         goland.enable = true;
@@ -65,6 +70,7 @@
         redshift.enable = true;
         prometheus.enable = true;
         filebot.enable = true;
+        polkit.enable = true;
       };
     };
 
