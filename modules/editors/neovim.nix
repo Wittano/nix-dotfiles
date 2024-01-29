@@ -14,7 +14,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [ ripgrep ];
+    home-manager.users.wittano = {
+      home.packages = with pkgs; [ ripgrep ];
+      programs.fish.functions.tvi.body = ''
+        tmux new-session -d "nvim"
+        tmux new-window
+        tmux attach-session
+      '';
+    };
 
     programs.nixvim =
       let
