@@ -32,15 +32,15 @@ in
       gnome.zenity
 
       # Wine
-      bottles
       wineWowPackages.full
 
       # FSH
       steam-run
 
       # Games
-      unstable.prismlauncher
-      unstable.xivlauncher
+      unstable.prismlauncher # Minecraft launcher
+      unstable.xivlauncher # FFXIV launcher
+      inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.osu-lazer-bin # osu!lazer
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;

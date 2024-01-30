@@ -7,12 +7,14 @@
       "https://wittano-nix-repo.cachix.org"
       "https://nix-community.cachix.org"
       "https://cache.nixos.org/"
+      "https://nix-gaming.cachix.org"
       "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI="
       "wittano-nix-repo.cachix.org-1:SqjGwMsbzVQOXhbS90DXFC7AoGH99dzPy8zixK3cyt0="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
@@ -31,6 +33,7 @@
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nix-gaming.url = "github:fufexan/nix-gaming";
     agenix.url = "github:ryantm/agenix";
     nixvim = {
       url = "github:nix-community/nixvim?ref=nixos-23.11";
