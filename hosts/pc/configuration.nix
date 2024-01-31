@@ -46,7 +46,10 @@
       };
       themes.catppuccin.enable = true;
       dev = {
-        jvm.enable = true;
+        jvm = {
+          enable = true;
+          enableAndroid = true;
+        };
         goland.enable = true;
       };
       editors.neovim.enable = true;
