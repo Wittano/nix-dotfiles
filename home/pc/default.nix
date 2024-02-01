@@ -17,9 +17,10 @@ let
 
     # Apps
     spotify
-    freetube
-    streamlink-twitch-gui-bin
+    freetube # Youtube desktop
+    streamlink-twitch-gui-bin # Twitch desktop
     mpv
+    joplin-desktop
 
     # Security
     bitwarden
