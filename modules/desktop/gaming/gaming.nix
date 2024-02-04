@@ -1,6 +1,8 @@
 { config, pkgs, home-manager, lib, inputs, unstable, ... }:
 with lib;
-let cfg = config.modules.desktop.gaming;
+let
+  cfg = config.modules.desktop.gaming;
+  osu = inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.osu-lazer-bin;
 in
 {
   options = {
@@ -40,7 +42,7 @@ in
       # Games
       unstable.prismlauncher # Minecraft launcher
       unstable.xivlauncher # FFXIV launcher
-      inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.osu-lazer-bin # osu!lazer
+      osu # osu!lazer
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;

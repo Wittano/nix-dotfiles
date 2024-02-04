@@ -1,9 +1,9 @@
 { config, pkgs, lib, home-manager, ... }:
+with lib;
 let
-  inherit (lib) mkEnableOption mkIf;
-
   cfg = config.modules.hardware.nvidia;
-in {
+in
+{
   options = {
     modules.hardware.nvidia = {
       enable = mkEnableOption ''
@@ -15,11 +15,7 @@ in {
   config = mkIf cfg.enable {
     home-manager.users.wittano.home.packages = with pkgs; [ nvtop ];
 
-    services.xserver.videoDrivers =
-      mkIf config.services.xserver.enable [ "nvidia" ];
-
-    services.boinc.extraEnvPackages = mkIf config.services.boinc.enable
-      (with pkgs; [ linuxPackages.nvidia_x11 ]);
+    services.xserver.videoDrivers = mkIf config.services.xserver.enable [ "nvidia" ];
 
     hardware = {
       opengl = {
@@ -30,7 +26,10 @@ in {
         extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
       };
 
-      nvidia.modesetting.enable = true;
+      nvidia = {
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        modesetting.enable = true;
+      };
     };
   };
 }
