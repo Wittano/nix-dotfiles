@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+CURRENT_DIR="$HOME/.config/bspwm"
+
+# BSPWM config
+MONITOR_COUNT=$(xrandr --query | awk '{if($2 == "connected"){print $1}}' | wc -l)
+
+if [ "$MONITOR_COUNT" -gt 1 ]; then
+  bspc monitor DVI-D-0 -d dev www sys
+  bspc monitor HDMI-0 -d chat www doc
+else
+  bspc monitor -d dev www sys
+fi
+
+bspc config border_width          2
+bspc config window_gap            20
+bspc config normal_border_color   "#212337"
+bspc config focused_border_color  "#86E1FC"
+
+bspc config split_ratio           0.52
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+
+# Startup
+wmname compiz &
+
+system=$(grep -E '^ID' /etc/os-release | cut -d '=' -f 2)
+
+if [ ! -e /tmp/bspwm.autostart.lock ]; then
+  bash "$CURRENT_DIR/autostart.$system.sh"
+
+  for m in $(bspc query -M --names); do
+      MONITOR=$m polybar wittano &
+  done
+fi
+
+bash "$CURRENT_DIR/rules.sh"

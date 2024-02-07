@@ -5,9 +5,8 @@ with lib.my; {
     home.activation.linkMutablePicomConfig =
       link.createMutableLinkActivation cfg ".config/picom";
 
-    xdg.configFile = let configDir = dotfiles.".config";
-    in mkIf (cfg.enableDevMode == false) {
-      picom.source = configDir.picom.source;
+    xdg.configFile = mkIf (cfg.enableDevMode == false) {
+      picom.source = dotfiles.picom.source;
     };
 
     systemd.user.services.picom = {

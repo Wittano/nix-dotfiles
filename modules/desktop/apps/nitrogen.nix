@@ -9,18 +9,18 @@ with lib.my; {
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      "nitrogen/bg-saved.cfg".source = builtins.toFile "bg-save.cfg" ''
+      "nitrogen/bg-saved.cfg".text = ''
         [xin_1]
-        file=${dotfiles.Pictures.Wallpapers."asdfasdfa.jpeg".source}
+        file=${dotfiles.wallpapers."asdfasdfa.jpeg".source}
         mode=0
         bgcolor=#000000
 
         [xin_0]
-        file=${dotfiles.Pictures.Wallpapers."scenery.png".source}
+        file=${dotfiles.wallpapers."scenery.png".source}
         mode=0
         bgcolor=#000000
       '';
-      "nitrogen/nitrogen.cfg".source = builtins.toFile "nitrogen.cfg" ''
+      "nitrogen/nitrogen.cfg".text = ''
         [geometry]
         posx=286
         posy=112
@@ -32,7 +32,7 @@ with lib.my; {
         recurse=true
         sort=alpha
         icon_caps=false
-        dirs=${dotfiles.Pictures.Wallpapers.source};
+        dirs=${dotfiles.wallpapers.source};
       '';
     };
   };

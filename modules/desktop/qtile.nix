@@ -4,7 +4,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.qtile;
   desktopApps = apps.desktopApps config cfg;
-in {
+in
+{
   options.modules.desktop.qtile = {
     enable = mkEnableOption "Enable Qtile desktop";
     enableDevMode = mkEnableOption ''
@@ -29,13 +30,12 @@ in {
           link.createMutableLinkActivation cfg ".config/qtile";
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
-          qtile.source = dotfiles.".config".qtile.source;
+          qtile.source = dotfiles.qtile.source;
         };
       };
 
       services.xserver = {
         enable = true;
-
         windowManager.qtile.enable = true;
       };
     }

@@ -8,7 +8,8 @@ let
     rev = "5350da41a11814f950c3354f090b90d4674a95ce";
     sha256 = "sha256-DNorfyl3C4RBclF2KDgwvQQwixpTwSRu7fIvihPN8JY=";
   };
-in {
+in
+{
   home-manager.users.wittano = {
     home = {
       packages = with pkgs; [ rofi ];
@@ -21,7 +22,7 @@ in {
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      rofi.source = dotfiles.".config".rofi.source;
+      rofi.source = dotfiles.rofi.source;
     };
   };
 }

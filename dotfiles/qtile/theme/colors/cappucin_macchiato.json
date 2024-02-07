@@ -1,0 +1,15 @@
+{
+  "background": "#24273a",
+  "brightness_background": "#363a4f",
+  "current_line": "#5b6078",
+  "selection": "#a5adcb",
+  "foreground": "#cad3f5",
+  "comment": "#b7bdf8",
+  "cyan": "#8be9fd",
+  "green": "#a6da95",
+  "orange": "#f5a97f",
+  "pink": "#f5bde6",
+  "purple": "#c6a0f6",
+  "red": "#ed8796",
+  "yellow": "#eed49f"
+}

@@ -156,3 +156,6 @@ config/tint2/*.backup.*
 
 result
 .idea
+
+__pycache__/
+venv/

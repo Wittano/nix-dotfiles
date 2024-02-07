@@ -14,7 +14,7 @@ let
   mapper = import ./mapper.nix { inherit lib; };
   imports = import ./imports.nix { inherit lib; };
 
-  dotfiles = mapper.mapDirToAttrs inputs.wittano-dotfiles;
+  dotfiles = mapper.mapDirToAttrs ./../dotfiles;
 
   home-manager = inputs.home-manager;
 in

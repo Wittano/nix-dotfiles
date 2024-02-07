@@ -6,7 +6,8 @@ let
     schemeVariants = [ "all" ];
     colorVariants = [ "all" ];
   };
-in {
+in
+{
   home-manager.users.wittano = {
     home = {
       packages = with pkgs; [
@@ -19,6 +20,18 @@ in {
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
+      "gtk-3.0/bookmarks".text = ''
+        file:///tmp Temporary
+        file:///home/wittano/Documents
+        file:///home/wittano/Music
+        file:///home/wittano/Pictures
+        file:///home/wittano/Videos
+        file:///home/wittano/Downloads
+        file:///mnt/backup Backup
+        file:///home/wittano/projects Projects
+        file:///home/wittano/.config User config
+        file:///mnt/raspberry Raspberry - shared folder
+      '';
       "gtk-3.0/settings.ini".source = builtins.toFile "settings.ini" ''
         [Settings]
         gtk-icon-theme-name=Colloid-dark

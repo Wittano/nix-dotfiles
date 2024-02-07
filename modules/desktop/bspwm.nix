@@ -4,7 +4,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.bspwm;
   desktopApps = apps.desktopApps config cfg;
-in {
+in
+{
 
   options.modules.desktop.bspwm = {
     enable = mkEnableOption "Enable BSPWM desktop";
@@ -44,19 +45,16 @@ in {
           };
         };
 
-        xdg.configFile = let configDir = dotfiles.".config";
-        in mkIf (cfg.enableDevMode == false) {
-          bspwm.source = configDir.bspwm.source;
-          sxhkd.source = configDir.sxhkd.source;
-          polybar.source = configDir.polybar.source;
+        xdg.configFile = mkIf (cfg.enableDevMode == false) {
+          bspwm.source = dotfiles.config.bspwm.source;
+          sxhkd.source = dotfiles.config.sxhkd.source;
+          polybar.source = dotfiles.config.polybar.source;
         };
       };
 
-      services = {
-        xserver = {
-          enable = true;
-          windowManager.bspwm.enable = true;
-        };
+      services.xserver = {
+        enable = true;
+        windowManager.bspwm.enable = true;
       };
     }
   ]));

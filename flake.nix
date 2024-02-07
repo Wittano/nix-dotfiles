@@ -23,12 +23,7 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
-    # TODO merge 2 repos
-    wittano-dotfiles = {
-      url = "github:Wittano/dotfiles";
-      flake = false;
-    };
-    wittano-repo.url = "github:Wittano/nix-repo";
+    wittano-repo.url = "github:Wittano/nix-repo"; # TODO merge repo
     filebot.url = "github:Wittano/filebot";
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";

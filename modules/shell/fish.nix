@@ -34,9 +34,10 @@ in
         linkMutableExternalAliasesConfig = link.createMutableLinkActivation cfg ".config/fish/conf.d";
       };
 
+      # TODO add fish old complition
       xdg.configFile = mkIf (cfg.enableDevMode == false) {
-        omf.source = dotfiles.".config".omf.source;
-        "fish/conf.d".source = dotfiles.".config".fish."conf.d".source;
+        omf.source = dotfiles.omf.source;
+        "fish/conf.d".source = dotfiles.fish."conf.d".source;
       };
 
       # TODO Replace OMF by plugins manage by NixOS

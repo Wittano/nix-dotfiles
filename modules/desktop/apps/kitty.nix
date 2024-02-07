@@ -11,7 +11,7 @@ with lib.my; {
     programs.fish.shellAliases.ssh = "kitty +kitten ssh";
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      "kitty".source = dotfiles.".config".kitty.source;
+      "kitty".source = dotfiles.kitty.source;
     };
   };
 }

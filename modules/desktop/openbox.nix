@@ -4,7 +4,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.openbox;
   desktopApps = apps.desktopApps config cfg;
-in {
+in
+{
 
   options.modules.desktop.openbox = {
     enable = mkEnableOption "Enable Openbox desktop";
@@ -28,7 +29,7 @@ in {
             openbox-menu
             lxmenu-data
             obconf
-            tint2
+            tint2 # TODO export tint2 to desktopApps
             volumeicon
             gsimplecal
 
@@ -44,17 +45,15 @@ in {
           };
         };
 
-        xdg.configFile = let configDir = dotfiles.".config";
-        in mkIf (cfg.enableDevMode == false) {
-          openbox.source = configDir.openbox.source;
-          tint2.source = configDir.tint2.source;
+        xdg.configFile = mkIf (cfg.enableDevMode == false) {
+          openbox.source = dotfiles.openbox.source;
+          tint2.source = dotfiles.tint2.source;
         };
 
       };
 
       services.xserver = {
         enable = true;
-
         windowManager.openbox.enable = true;
       };
     }
