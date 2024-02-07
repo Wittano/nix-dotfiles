@@ -11,12 +11,12 @@ with lib.my; {
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
       "nitrogen/bg-saved.cfg".text = ''
         [xin_1]
-        file=${dotfiles.wallpapers."asdfasdfa.jpeg".source}
+        file=${dotfiles.wallpapers."11.jpeg".source}
         mode=0
         bgcolor=#000000
 
         [xin_0]
-        file=${dotfiles.wallpapers."scenery.png".source}
+        file=${dotfiles.wallpapers."33.png".source}
         mode=0
         bgcolor=#000000
       '';
