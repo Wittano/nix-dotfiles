@@ -1,4 +1,4 @@
-{ pkgs, home-manager, lib, cfg, ownPackages, ... }:
+{ pkgs, home-manager, lib, cfg, privateRepo, ... }:
 with lib;
 with lib.my;
 let
@@ -13,7 +13,7 @@ in
       packages = with pkgs; [
         lxappearance
         colloidIconTheme
-        ownPackages.bibata-cursor-theme
+        privateRepo.bibata-cursor-theme
       ];
       activation.linkMutableGtkConfig =
         link.createMutableLinkActivation cfg ".config/gtk-3.0/settings.ini";

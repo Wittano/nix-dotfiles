@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ownPackages, ... }:
+{ config, pkgs, lib, home-manager, privateRepo, ... }:
 with lib;
 let cfg = config.modules.utils;
 in {
@@ -17,6 +17,6 @@ in {
     home-manager.users.wittano.home.packages = mkIf (cfg.enable) ([ ]);
 
     environment.systemPackages =
-      mkIf (cfg.enableGlobalUtils) ([ ownPackages.patcherDir ]);
+      mkIf (cfg.enableGlobalUtils) ([ privateRepo.patcherDir ]);
   };
 }

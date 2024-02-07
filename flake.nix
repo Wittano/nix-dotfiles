@@ -23,7 +23,6 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
-    wittano-repo.url = "github:Wittano/nix-repo"; # TODO merge repo
     filebot.url = "github:Wittano/filebot";
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix";
@@ -40,6 +39,7 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
+
       mkPkgs = p:
         import p {
           inherit system;
@@ -50,9 +50,11 @@
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
 
+      privateRepo = lib.my.pkgs.importPkgs ./pkgs;
+
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable; };
+        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
       });
     in
     {
@@ -82,6 +84,9 @@
           python311Packages.mypy
         ];
       };
+
+      packages.x86_64-linux = privateRepo;
+
       # TODO Add packages and pipeline from nix-repo 
       # TODO Add templates from nix-template
     };

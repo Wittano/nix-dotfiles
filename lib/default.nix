@@ -1,7 +1,5 @@
-{ lib, system, inputs, pkgs, unstable, ... }:
+{ lib, system, inputs, pkgs, unstable, privateRepo, ... }:
 let
-  ownPackages = inputs.wittano-repo.packages.x86_64-linux;
-
   mapper = import ./mapper.nix { inherit lib; };
   imports = import ./imports.nix { inherit lib; };
 
@@ -13,11 +11,12 @@ in
   inherit mapper imports;
 
   hosts = import ./hosts.nix {
-    inherit lib system pkgs unstable dotfiles inputs ownPackages imports;
+    inherit lib system pkgs unstable dotfiles inputs privateRepo imports;
   };
   link = import ./link.nix { inherit lib; };
   apps = import ./apps.nix {
-    inherit lib home-manager pkgs dotfiles ownPackages unstable;
+    inherit lib home-manager pkgs dotfiles privateRepo unstable;
   };
   commands = import ./commands.nix { inherit pkgs lib home-manager; };
+  pkgs = import ./pkgs.nix { inherit lib pkgs; };
 }

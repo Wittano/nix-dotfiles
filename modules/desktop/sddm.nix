@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ownPackages, ... }:
+{ config, pkgs, lib, privateRepo, ... }:
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.sddm;
@@ -18,7 +18,7 @@ in {
 
   config = mkIf (cfg.enable) {
     environment.systemPackages = with pkgs.libsForQt5; [
-      ownPackages."${cfg.theme}"
+      privateRepo."${cfg.theme}"
       plasma-framework
       plasma-workspace
     ];

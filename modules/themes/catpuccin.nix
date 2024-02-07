@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ownPackages, home-manager, ... }:
+{ config, lib, pkgs, privateRepo, home-manager, ... }:
 with lib;
 with lib.my;
 let
@@ -24,6 +24,6 @@ in
   # - update QT and GTK system theme
   config = mkIf (cfg.enable) {
     environment.systemPackages =
-      [ pkgs.catppuccin-gtk ownPackages.catppuccin-icon-theme ];
+      [ pkgs.catppuccin-gtk privateRepo.catppuccin-icon-theme ];
   };
 }

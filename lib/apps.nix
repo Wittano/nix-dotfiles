@@ -1,4 +1,4 @@
-{ lib, pkgs, dotfiles, home-manager, ownPackages, unstable, ... }: {
+{ lib, pkgs, dotfiles, home-manager, privateRepo, unstable, ... }: {
   desktopApps = config: cfg:
     let
       sourceDir = ./../modules/desktop/apps;
@@ -8,7 +8,7 @@
     in lib.attrsets.mapAttrs' (n: v: {
       name = builtins.replaceStrings [ ".nix" ] [ "" ] n;
       value = import "${sourceDir}/${n}" {
-        inherit cfg ownPackages pkgs dotfiles home-manager unstable config lib;
+        inherit cfg privateRepo pkgs dotfiles home-manager unstable config lib;
       };
     }) appFiles;
 }

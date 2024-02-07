@@ -1,10 +1,10 @@
-{ lib, system, pkgs, unstable, dotfiles, ownPackages, inputs, imports, ... }: {
+{ lib, system, pkgs, unstable, dotfiles, privateRepo, inputs, imports, ... }: {
   mkHost = { name, isDevMode ? false }:
     inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode inputs ownPackages;
+        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo;
         hostname = name;
         secretDir = ./../secrets;
       };

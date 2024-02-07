@@ -4,7 +4,7 @@
 , lib
 , home-manager
 , isDevMode ? false
-, ownPackages
+, privateRepo
 , ...
 }: {
 
@@ -103,7 +103,7 @@
 
     plymouth = {
       enable = true;
-      themePackages = with ownPackages; [ nixos-blur ];
+      themePackages = with privateRepo; [ nixos-blur ];
       theme = "nixos-blur";
     };
   };
