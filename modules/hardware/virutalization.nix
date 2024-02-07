@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, systemStaff, unstable, ... }:
+{ config, pkgs, lib, modulesPath, systemStaff, unstable, dotfiles, ... }:
 with lib;
 with lib.my;
 let
@@ -29,6 +29,14 @@ in
   };
 
   config = mkIf cfg.enable {
+
+    assertions = [
+      {
+        assertion = !(config.modules.desktop.gaming.enable && cfg.enableWindowsVM);
+        message = "You can't using gaming module and gaming VM";
+      }
+    ];
+
     virtualisation = {
       docker.enable = cfg.enableDocker;
       virtualbox.host.enable = cfg.enableVagrant;
@@ -118,13 +126,14 @@ in
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
-    home-manager.users.wittano.programs.fish.shellAliases =
-      mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
-        vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
-      };
+    home-manager.users.wittano = mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
+      xdg.configFile."fish/complitions/vm.fish".source = dotfiles.fish.completions."vm.fish".source;
+      programs.fish.shellAliases.vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
+    };
 
     boot = {
-      kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15; # TODO Check if linux kernel 6.X.X fixed problem with black screen after shutdown gaming VM
+      # Check if linux kernel 6.X.X fixed problem with black screen after shutdown gaming VM
+      kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
       kernelModules = [ "kvm-intel" "vifo-pci" ];
     };
