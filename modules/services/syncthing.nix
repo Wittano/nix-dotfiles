@@ -3,9 +3,12 @@ with lib;
 let
   homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;
-  encryptedConfig = attrsets.optionalAttrs
-    (config.age.secrets ? syncthing)
-    (builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path));
+  encryptedConfig =
+    if (config.age.secrets ? syncthing)
+    then
+      attrsets.optionalAttrs (builtins.pathExists config.age.secrets.syncthing.path)
+        (builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path))
+    else null;
 in
 {
   options = {
@@ -17,7 +20,7 @@ in
   };
 
   config =
-    mkIf (cfg.enable && builtins.pathExists config.age.secrets.syncthing.path) {
+    mkIf (cfg.enable && encryptedConfig != null) {
       services.syncthing = rec {
         enable = true;
         systemService = true;
