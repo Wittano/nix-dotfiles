@@ -17,11 +17,7 @@ in
   config = mkIf (cfg.enable) (mkMerge [
     pgoCommand
     {
-      home-manager.users.wittano = {
-        home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
-        programs.fish.shellAliases.tempgo =
-          "${pkgs.nixFlakes}/bin/nix flake init --template github:Wittano/nix-template#go";
-      };
+      home-manager.users.wittano.home.packages = mkIf cfg.enable (with pkgs; [ jetbrains.goland ]);
     }
   ]);
 }

@@ -56,6 +56,19 @@
         hm = home-manager.lib.hm;
         my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
       });
+
+      templatesDirs = builtins.attrNames
+        (lib.filterAttrs (n: v: v == "directory")
+          (builtins.readDir ./templates));
+
+      templates = lib.lists.forEach templatesDirs (name: {
+        inherit name;
+
+        value = {
+          path = ./templates/${name};
+          description = "Template for ${name}";
+        };
+      });
     in
     {
       nixosConfigurations =
@@ -87,7 +100,6 @@
 
       packages.x86_64-linux = privateRepo;
 
-      # TODO Add packages and pipeline from nix-repo 
-      # TODO Add templates from nix-template
+      templates = builtins.listToAttrs templates;
     };
 }

@@ -49,9 +49,15 @@ in
         shellAliases =
           let
             host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
+            templatesAliases = attrsets.mapAttrs'
+              (n: v: {
+                name = "t${fixedName}";
+                value = "${pkgs.nixFlakes}/bin/nix flake init --template github:Wittano/nix-dotfiles#${n}";
+              })
+              (builtins.readDir ./../../templates);
             rebuild = name:
               let
-                impureFlag = lib.optionalString config.modules.services.syncthing.enable "--impure";
+                impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
               in
               "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
           in
@@ -69,10 +75,7 @@ in
 
             # Projects
             pnix = "cd $NIX_DOTFILES";
-            prepo = "cd $HOME/projects/config/nix-repo";
-            pdot = "cd $DOTFILES";
             plab = "cd $HOME/projects/config/home-lab";
-            ptemp = "cd $HOME/projects/config/nix-templates";
 
             # Nix
             nfu = "nix flake update";

@@ -20,7 +20,7 @@ in
       home-manager.users.wittano = {
         home.packages = with pkgs; [ python3 pipenv poetry jetbrains.pycharm-professional ];
 
-        programs.fish.shellAliases.temppy =
+        programs.fish.shellAliases.tpy =
           "${pkgs.nixFlakes}/bin/nix flake init --template github:nix-community/poetry2nix";
       };
     }
