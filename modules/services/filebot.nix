@@ -15,6 +15,7 @@ in
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";
+      # TODO update config
       configPath = builtins.toFile "config.toml" ''
         [Pictures]
         src = [ "$HOME/Downloads/*.(gif|jpe?g|tiff?|png|webp|bmp)" ]

@@ -26,6 +26,7 @@ in
     home-manager.users.wittano = {
       home.packages = with pkgs; [ krita ];
 
+      # TODO Fix non-starting service to map table to right display
       systemd.user.services."setup-wacom" = mkIf ((builtins.length config.services.xserver.xrandrHeads) > 1) {
         Unit.Description = "Map wacom tablet to main display";
         Service = {
