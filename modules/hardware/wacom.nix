@@ -2,14 +2,13 @@
 with lib;
 let
   cfg = config.modules.hardware.wacom;
-  xsetwacom = "${pkgs.xf86_input_wacom}/bin/xsetwacom";
-  awk = "${pkgs.gawk}/bin/awk";
-  serviceScript = pkgs.writeShellScriptBin "setup-wacom" ''
+  dependecies = strings.makeBinPath (with pkgs;[ xf86_input_wacom gawk ]);
+  serviceScript = pkgs.writeScript "setup-wacom.sh" /*fish*/''
     #!/bin/bash
-    devices=$(${xsetwacom} list devices | ${awk} '{print $9}')
+    devices=$(xsetwacom list devices | awk '{print $9}')
 
     for d in $devices; do
-      ${xsetwacom} --set "$d" MapToOutput HEAD-0
+      xsetwacom --set "$d" MapToOutput HEAD-0
     done
   '';
 in
@@ -26,23 +25,27 @@ in
     home-manager.users.wittano = {
       home.packages = with pkgs; [ krita ];
 
-      # TODO Fix non-starting service to map table to right display
-      systemd.user.services."setup-wacom" = mkIf ((builtins.length config.services.xserver.xrandrHeads) > 1) {
-        Unit.Description = "Map wacom tablet to main display";
-        Service = {
-          Environment = "DISPLAY=:0";
-          Type = "simple";
-          ExecStart = "${serviceScript}/bin/setup-wacom";
+      systemd.user.services."setup-wacom" = {
+        Unit = {
+          Description = "Map tablet to primary display";
+          After = [ "graphical-session-pre.target" ];
+          PartOf = [ "graphical-session.target" ];
         };
-        Install.WantedBy = [ "graphical.target" ];
+
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.bash}/bin/bash ${serviceScript}";
+          Environment = [ ''DISPLAY=":0"'' "PATH=${dependecies}" ];
+        };
+
+        Install.WantedBy = [ "graphical-session.target" ];
       };
 
-      programs.fish.functions.fixWacom.body =
-        /*fish*/''
-        set -l devices (${xsetwacom} list devices | ${awk} '{print $9}')
+      programs.fish.functions.fixWacom.body = /*fish*/ ''
+        set -l devices (${pkgs.xf86_input_wacom}/bin/xsetwacom list devices | ${pkgs.gawk}/bin/awk '{print $9}')
 
         for d in $devices;
-          ${xsetwacom} --set "$d" MapToOutput HEAD-0
+          ${pkgs.xf86_input_wacom}/bin/xsetwacom --set "$d" MapToOutput HEAD-0
         end
       '';
     };
