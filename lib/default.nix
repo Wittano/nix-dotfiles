@@ -1,15 +1,6 @@
-{ lib, system, inputs, ... }:
+{ lib, system, inputs, pkgs, unstable, ... }:
 let
   ownPackages = inputs.wittano-repo.packages.x86_64-linux;
-  mkPkgs = p:
-    import p {
-      inherit system;
-
-      config.allowUnfree = true;
-    };
-
-  pkgs = mkPkgs inputs.nixpkgs;
-  unstable = mkPkgs inputs.nixpkgs-unstable;
 
   mapper = import ./mapper.nix { inherit lib; };
   imports = import ./imports.nix { inherit lib; };

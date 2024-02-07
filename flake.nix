@@ -40,10 +40,19 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
+      mkPkgs = p:
+        import p {
+          inherit system;
+
+          config.allowUnfree = true;
+        };
+
+      pkgs = mkPkgs inputs.nixpkgs;
+      unstable = mkPkgs inputs.nixpkgs-unstable;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs; };
+        my = import ./lib { inherit lib system inputs pkgs unstable; };
       });
     in
     {
@@ -65,5 +74,15 @@
           normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
         in
         normalHosts // devHosts;
+
+      devShells.${pkgs.system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          # For Qtile
+          python311Packages.qtile
+          python311Packages.mypy
+        ];
+      };
+      # TODO Add packages and pipeline from nix-repo 
+      # TODO Add templates from nix-template
     };
 }
