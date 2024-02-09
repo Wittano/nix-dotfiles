@@ -80,7 +80,7 @@
       in
       {
         EDITOR = "vim";
-        DOTFILES = "${projectConfigDir}/dotfiles";
+        DOTFILES = "${projectConfigDir}/nix-dotfiles/dotfiles";
         NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
       };
 
