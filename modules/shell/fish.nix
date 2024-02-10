@@ -1,7 +1,47 @@
 { config, lib, pkgs, home-manager, hostname, dotfiles, ... }:
 with lib;
 with lib.my;
-let cfg = config.modules.shell.fish;
+let
+  cfg = config.modules.shell.fish;
+  officialPlugins = builtins.map
+    (x: {
+      name = x;
+      src = pkgs.fishPlugins.${x};
+    }) [
+    "wakatime-fish"
+    "plugin-git"
+    "autopair"
+    "fzf-fish"
+    "bass"
+    "sponge"
+    "fzf"
+    "grc"
+    "z"
+    "humantime-fish"
+    "colored-man-pages"
+    "done"
+    "tide"
+  ];
+  customePlugins = [
+    {
+      name = "batman-theme";
+      src = pkgs.fetchFromGitHub {
+        owner = "oh-my-fish";
+        repo = "theme-batman";
+        rev = "2a76bd81f4805debd7f137cb98828bff34570562";
+        sha256 = "sha256-Ko4w9tMnIi17db174FzW44LgUdui/bUzPFEHEHv//t4=";
+      };
+    }
+    {
+      name = "dracula-theme";
+      src = pkgs.fetchFromGitHub {
+        owner = "dracula";
+        repo = "fish";
+        rev = "269cd7d76d5104fdc2721db7b8848f6224bdf554";
+        sha256 = "sha256-Hyq4EfSmWmxwCYhp3O8agr7VWFAflcUe8BUKh50fNfY=";
+      };
+    }
+  ];
 in
 {
 
@@ -29,19 +69,9 @@ in
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
     home-manager.users.wittano = {
-      home.activation = {
-        linkMutableOmfConfig = link.createMutableLinkActivation cfg ".config/omf";
-        linkMutableExternalAliasesConfig = link.createMutableLinkActivation cfg ".config/fish/conf.d";
-      };
-
-      xdg.configFile = mkIf (cfg.enableDevMode == false) {
-        omf.source = dotfiles.omf.source;
-        "fish/conf.d".source = dotfiles.fish."conf.d".source;
-      };
-
-      # TODO Replace OMF by plugins manage by NixOS
       programs.fish = {
         enable = true;
+        plugins = officialPlugins ++ customePlugins;
         interactiveShellInit = ''
           direnv hook fish | source
         '';
@@ -79,6 +109,15 @@ in
             nfu = "nix flake update";
             nfc = "nix flake check";
             repl = "nix repl -f '<nixpkgs>'";
+
+            # systemd
+            scs = "sudo systemctl status";
+            scst = "sudo systemctl stop";
+            scsta = "sudo systemctl start";
+            sce = "sudo systemctl enable --now";
+            scd = "sudo systemctl disable --now";
+            scr = "sudo systemctl restart";
+            sdb = "systemd-analyze blame";
           };
       };
     };
