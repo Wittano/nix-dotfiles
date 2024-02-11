@@ -2,7 +2,7 @@
   description = "Wittano NixOS configuration";
 
   nixConfig = {
-    extra-substituters = [
+    trusted-substituters = [
       "https://ezkea.cachix.org"
       "https://wittano-nix-repo.cachix.org"
       "https://nix-community.cachix.org"
