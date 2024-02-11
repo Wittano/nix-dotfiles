@@ -42,6 +42,7 @@ in
       {
         enable = true;
         enableMan = true;
+        viAlias = true;
 
         extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence ] ++ plugins;
 
