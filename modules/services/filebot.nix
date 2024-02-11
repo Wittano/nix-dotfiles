@@ -15,14 +15,13 @@ in
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";
-      # TODO update config
       configPath = builtins.toFile "config.toml" ''
         [Pictures]
         src = [ "$HOME/Downloads/*.(gif|jpe?g|tiff?|png|webp|bmp)" ]
         dest = "$HOME/Pictures"
 
-        [Archives]
-        src = [ "$HOME/Downloads/*.(zip|tar*)" ]
+        [ToDocument]
+        src = [ "$HOME/Downloads/*.(zip|tar*)", "$HOME/Downloads/*.pdf" ]
         dest = "$HOME/Documents"
 
         [Iso]
