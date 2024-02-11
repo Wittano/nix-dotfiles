@@ -12,7 +12,6 @@
           pname = "go-app";
           src = ./.;
 
-          # TODO Replace SHA256
           vendorSha256 = pkgs.lib.fakeSha256;
         };
         default = app;

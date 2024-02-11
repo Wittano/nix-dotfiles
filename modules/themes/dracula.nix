@@ -13,7 +13,8 @@ let
     url = "https://github.com/dracula/gtk/files/5214870/Dracula.zip";
     sha256 = "sha256-rcSKlgI3bxdh4INdebijKElqbmAfTwO+oEt6M2D1ls0=";
   };
-in {
+in
+{
   options = {
     modules.themes.dracula = {
       enable = mkEnableOption ''
@@ -26,7 +27,6 @@ in {
     environment.systemPackages = with pkgs; [ dracula-theme ];
 
     home-manager.users.wittano.home.file = {
-      # TODO Export Openbox dracula theme to nix package
       ".themes/Dracula-withoutBorder".source =
         builtins.toPath "${draculaOpenbox}/Dracula-withoutBorder";
 

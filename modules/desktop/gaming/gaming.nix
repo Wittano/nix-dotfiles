@@ -4,7 +4,6 @@ let
   cfg = config.modules.desktop.gaming;
   osu = inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.osu-lazer-bin;
 
-  # TODO Add autodetect compatdata directory for AoE2
   fixAge2Sync = pkgs.writeScriptBin "fixAge2Sync" /*bash*/
     ''
       #!/usr/bin/env bash
