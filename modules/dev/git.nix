@@ -1,7 +1,8 @@
 { config, pkgs, home-manager, lib, ... }:
 with lib;
 let cfg = config.modules.dev.git;
-in {
+in
+{
   options = {
     modules.dev.git = {
       enable = mkOption {
@@ -14,6 +15,7 @@ in {
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
+      home.packages = with pkgs; [ lazygit ];
       services.gpg-agent = {
         enable = true;
         pinentryFlavor = "gtk2";
