@@ -139,7 +139,6 @@
     dev.git.enable = true;
     shell.fish = {
       enable = true;
-      enableDevMode = isDevMode;
       default = true;
     };
     services.autoUpgrade.enable = true;

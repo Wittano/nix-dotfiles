@@ -51,10 +51,6 @@ in
         Enable fish shell
       '';
 
-      enableDevMode = mkEnableOption ''
-        Enable fish shell in dev mode
-      '';
-
       default = mkEnableOption ''
         Enable fish shell as default shell for main user
       '';
