@@ -23,14 +23,12 @@ in
     tmux
     dunst
     rofi
+    polybar
     switchOff
     {
-      fonts.packages = with pkgs; [ font-awesome font-awesome_5 siji ];
-
       home-manager.users.wittano = {
         home = {
           packages = with pkgs; [
-            polybar # TODO export polybar config to apps
             gsimplecal
             wmname
           ];
@@ -40,15 +38,12 @@ in
               link.createMutableLinkActivation cfg ".config/bspwm";
             linkMutableSxhkdConfig =
               link.createMutableLinkActivation cfg ".config/sxhkd";
-            linkMutablePolybarConfig =
-              link.createMutableLinkActivation cfg ".config/polybar";
           };
         };
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
           bspwm.source = dotfiles.config.bspwm.source;
           sxhkd.source = dotfiles.config.sxhkd.source;
-          polybar.source = dotfiles.config.polybar.source;
         };
       };
 

@@ -21,6 +21,7 @@ in
     rofi
     gtk
     xautolock
+    tint2
     dunst
     {
       home-manager.users.wittano = {
@@ -29,7 +30,6 @@ in
             openbox-menu
             lxmenu-data
             obconf
-            tint2 # TODO export tint2 to desktopApps
             volumeicon
             gsimplecal
 
@@ -37,17 +37,11 @@ in
             arandr
           ];
 
-          activation = {
-            linkMutableOpenboxConfig =
-              link.createMutableLinkActivation cfg ".config/openbox";
-            linkMutableTint2Config =
-              link.createMutableLinkActivation cfg ".config/tint2";
-          };
+          activation.linkMutableOpenboxConfig = link.createMutableLinkActivation cfg ".config/openbox";
         };
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
           openbox.source = dotfiles.openbox.source;
-          tint2.source = dotfiles.tint2.source;
         };
 
       };
