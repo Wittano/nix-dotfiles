@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, hostname, dotfiles, ... }:
+{ config, lib, pkgs, home-manager, hostname, dotfiles, templateDir, ... }:
 with lib;
 with lib.my;
 let
@@ -76,10 +76,10 @@ in
             host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
             templatesAliases = attrsets.mapAttrs'
               (n: v: {
-                name = "t${fixedName}";
-                value = "${pkgs.nixFlakes}/bin/nix flake init --template github:Wittano/nix-dotfiles#${n}";
+                name = "t${n}";
+                value = "${pkgs.nixFlakes}/bin/nix flake init --template $NIX_DOTFILES#${n}";
               })
-              (builtins.readDir ./../../templates);
+              (builtins.readDir templateDir);
             rebuild = name:
               let
                 impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
@@ -114,7 +114,7 @@ in
             scd = "sudo systemctl disable --now";
             scr = "sudo systemctl restart";
             sdb = "systemd-analyze blame";
-          };
+          } // templatesAliases;
       };
     };
   };

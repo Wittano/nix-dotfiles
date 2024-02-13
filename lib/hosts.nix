@@ -7,6 +7,7 @@
         inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo;
         hostname = name;
         secretDir = ./../secrets;
+        templateDir = ./../templates;
       };
 
       modules =
