@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, systemStaff, unstable, dotfiles, ... }:
+{ config, pkgs, lib, modulesPath, unstable, dotfiles, ... }:
 with lib;
 with lib.my;
 let
