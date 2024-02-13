@@ -24,7 +24,7 @@ in
       programs = rec {
         git = rec {
           enable = true;
-          userName = "Wittano";
+          userName = "Wittano Bonarotti";
           userEmail = "radoslaw.ratyna@gmail.com";
           extraConfig = {
             core.editor = "vim";
