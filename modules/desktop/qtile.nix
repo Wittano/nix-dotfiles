@@ -27,7 +27,7 @@ in
     {
       home-manager.users.wittano = {
         home.activation.linkMutableQtileConfig =
-          link.createMutableLinkActivation cfg ".config/qtile";
+          link.createMutableLinkActivation cfg "qtile";
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
           qtile.source = dotfiles.qtile.source;

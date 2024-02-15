@@ -16,7 +16,7 @@ in
         privateRepo.bibata-cursor-theme
       ];
       activation.linkMutableGtkConfig =
-        link.createMutableLinkActivation cfg ".config/gtk-3.0/settings.ini";
+        link.createMutableLinkActivation cfg "gtk-3.0/settings.ini";
     };
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {

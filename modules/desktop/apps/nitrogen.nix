@@ -2,11 +2,7 @@
 with lib;
 with lib.my; {
   home-manager.users.wittano = {
-    home = {
-      packages = with pkgs; [ nitrogen ];
-      activation.linkMutableNitrogen =
-        link.createMutableLinkActivation cfg ".config/nitrogen";
-    };
+    home.packages = with pkgs; [ nitrogen ];
 
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
       "nitrogen/bg-saved.cfg".text = ''

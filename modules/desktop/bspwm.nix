@@ -35,15 +35,15 @@ in
 
           activation = {
             linkMutableBspwmConfig =
-              link.createMutableLinkActivation cfg ".config/bspwm";
+              link.createMutableLinkActivation cfg "bspwm";
             linkMutableSxhkdConfig =
-              link.createMutableLinkActivation cfg ".config/sxhkd";
+              link.createMutableLinkActivation cfg "sxhkd";
           };
         };
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
-          bspwm.source = dotfiles.config.bspwm.source;
-          sxhkd.source = dotfiles.config.sxhkd.source;
+          bspwm.source = dotfiles.bspwm.source;
+          sxhkd.source = dotfiles.sxhkd.source;
         };
       };
 

@@ -15,7 +15,7 @@ in
       packages = with pkgs; [ rofi ];
 
       activation.linkMutableRofiConfig =
-        link.createMutableLinkActivation cfg ".config/rofi";
+        link.createMutableLinkActivation cfg "rofi";
 
       file.".local/share/rofi/themes".source =
         builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";

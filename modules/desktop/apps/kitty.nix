@@ -5,7 +5,7 @@ with lib.my; {
     home = {
       packages = with pkgs; [ kitty ];
       activation.linkMutableKittyConfig =
-        link.createMutableLinkActivation cfg ".config/kitty";
+        link.createMutableLinkActivation cfg "kitty";
     };
 
     programs.fish.shellAliases.ssh = "kitty +kitten ssh";

@@ -17,7 +17,7 @@ in
 
   config = mkIf cfg.enable (mkMerge (with desktopApps; [
     nitrogen
-    alacritty
+    kitty
     rofi
     gtk
     xautolock
@@ -37,7 +37,7 @@ in
             arandr
           ];
 
-          activation.linkMutableOpenboxConfig = link.createMutableLinkActivation cfg ".config/openbox";
+          activation.linkMutableOpenboxConfig = link.createMutableLinkActivation cfg "openbox";
         };
 
         xdg.configFile = mkIf (cfg.enableDevMode == false) {
