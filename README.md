@@ -10,7 +10,17 @@ Personal repositorium configuration, packages and Nix related staff. Repository 
     # Actually, repository support only Linux x86 architecture
     inputs.wittano-repo.packages.x86_64-linux.<pkg_name>
 ```
-List of packages you can find in [pkgs directory](./pkgs/README.md)
+List of packages you can find in [pkgs directory](./pkgs/README.md). Also, repository has own [cachix](https://app.cachix.org):
+```nix
+nixConfig = {
+    trusted-substituters = [
+        "https://wittano-nix-repo.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+        "wittano-nix-repo.cachix.org-1:SqjGwMsbzVQOXhbS90DXFC7AoGH99dzPy8zixK3cyt0="
+    ];
+};
+```  
 
 - Templates
 ```bash
