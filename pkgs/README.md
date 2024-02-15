@@ -23,3 +23,8 @@ List of available packages:
     - wings - [Wings - SDDM theme](https://github.com/L4ki/Wings-Plasma-Themes)
 - Utilities
     - patcherDir - special script to patching binaries(changing default glibc path) for selected directory
+- VIM plugins
+    - gopher-nvim  [gopher.nvim plugin](https://github.com/olexsmir/gopher.nvim)
+    - nvim-comment [nvim-comment plugin](https://github.com/terrortylor/nvim-comment)
+    - plenary-nvim [plenary-nvim plugin](https://github.com/nvim-lua/plenary.nvim)
+    - template-nvim [template.nvim plugin](https://github.com/nvimdev/template.nvim)
