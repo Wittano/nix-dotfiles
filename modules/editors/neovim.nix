@@ -1,7 +1,7 @@
-{ config, pkgs, lib, home-manager, dotfiles, inputs, ... }:
+{ config, pkgs, lib, home-manager, dotfiles, inputs, privateRepo, ... }:
+with lib;
+with lib.my;
 let
-  inherit (lib) mkEnableOption mkIf;
-
   cfg = config.modules.editors.neovim;
 in
 {
@@ -26,27 +26,23 @@ in
     programs.nixvim =
       let
         nixvimLib = inputs.nixvim.lib.x86_64-linux;
-
-        pluginBuilds =
-          builtins.map (x: pkgs.callPackage (./plugins + "/${x}.nix") { }) [
-            "template.nvim"
-            "nvim-comment"
-            "gopher.nvim"
-          ];
-        plugins =
-          let deps = lib.lists.flatten (builtins.map (x: x.deps) pluginBuilds);
-          in (builtins.map (x: x.plugin) pluginBuilds) ++ deps;
-        luaConfigs = builtins.concatStringsSep "\n\n"
-          (builtins.map (x: x.luaConfig) pluginBuilds);
+        plugins = builtins.map
+          (x: pkgs.callPackage ./plugins/${x} { inherit privateRepo; })
+          (builtins.attrNames
+            (attrsets.filterAttrs
+              (n: _: strings.hasSuffix ".nix" n)
+              (builtins.readDir ./plugins)));
+        customPlugins = lists.flatten (builtins.map (x: x.deps) plugins);
+        luaConfigs = builtins.concatStringsSep "\n\n" (builtins.map (x: x.luaConfig) plugins);
       in
       {
         enable = true;
         enableMan = true;
         viAlias = true;
 
-        extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence ] ++ plugins;
+        extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence ] ++ customPlugins;
 
-        extraConfigLua = # lua
+        extraConfigLua = /*lua*/
           ''
             -- nvim-autopairs
             require("nvim-autopairs").setup()

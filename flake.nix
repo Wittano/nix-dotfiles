@@ -95,6 +95,9 @@
           # For Qtile
           python311Packages.qtile
           python311Packages.mypy
+
+          # Nix
+          nixpkgs-fmt
         ];
       };
 

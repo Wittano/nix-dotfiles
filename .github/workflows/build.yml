@@ -5,8 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-        packages:
-          [
+        packages: [
             catppuccin-icon-theme,
             nixos-blur,
             dexy,
@@ -15,6 +14,10 @@ jobs:
             bibata-cursor-theme,
             colloid-cursors-theme,
             patcherDir,
+            gopher-nvim,
+            nvim-comment,
+            plenary-nvim,
+            template-nvim,
           ]
     runs-on: ubuntu-latest
     steps:
