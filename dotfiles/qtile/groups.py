@@ -2,7 +2,7 @@ import re
 from itertools import chain
 from typing import List, Tuple, Union
 
-from libqtile.config import Match, Group
+from libqtile.config import Group, Match
 
 _default_groups = [
     Group(name="1", label="\uebb4", layout="max"),
@@ -16,10 +16,7 @@ dev_group, www_group, sys_group, doc_group, chat_group = _default_groups
 
 
 class _WindowMatch:
-
-    def __init__(self,
-                 group: Union[str, int],
-                 match_rule: Match):
+    def __init__(self, group: Union[str, int], match_rule: Match):
         self.group = group
         self.match_rule = match_rule
 
@@ -41,7 +38,9 @@ games_staff: List[str] = [
     r"^([Mm]inecraft)(.+)",
     r"steam_app*",
     r"[Ss]team*",
-    r"[Mm]ono"
+    r"[Mm]ono",
+    r"[Mm]inecraft*",
+    r"[Pp]rism[lL]auncher",
 ]
 
 _web_browsers: List[str] = [
@@ -58,19 +57,12 @@ _dev_staff: List[str] = [
     "Code",
     "jetbrains-*",
     "code-oss",
-    r"(vsc)|(VSC)odium"
+    r"(vsc)|(VSC)odium",
 ]
 
-_terminals: List[str] = [
-    "kitty",
-    r"[tT]erminator"
-]
+_terminals: List[str] = ["kitty", r"[tT]erminator"]
 
-_science_staff: List[str] = [
-    "Boincmgr",
-    "Virt-manager",
-    "VirtualBox Manager"
-]
+_science_staff: List[str] = ["Boincmgr", "Virt-manager", "VirtualBox Manager"]
 
 _music_staff: List[str] = [
     "Qmmp",
@@ -79,17 +71,9 @@ _music_staff: List[str] = [
     "Rhythmbox",
 ]
 
-_chat_staff: List[str] = [
-    "discord",
-    r"[sS]ignal*"
-    "telegram-desktop"
-    "TelegramDesktop"
-]
+_chat_staff: List[str] = ["discord", r"[sS]ignal*" "telegram-desktop" "TelegramDesktop"]
 
-_doc_staff: List[str] = [
-    "obsidian",
-    "Evince"
-]
+_doc_staff: List[str] = ["obsidian", "Evince"]
 
 _matches: List[_WindowMatch] = [
     _WindowMatch(group="5", match_rule=Match(wm_class="discord")),
@@ -124,8 +108,12 @@ def _get_wm_name(wm_name: str) -> Union[str, re.Pattern]:
 
 
 def _map_wm_names(group: Group, wm_names_list: List[str]):
-    return map(lambda wm_name: _WindowMatch(group=group.name,
-                                            match_rule=Match(wm_class=_get_wm_name(wm_name))), wm_names_list)
+    return map(
+        lambda wm_name: _WindowMatch(
+            group=group.name, match_rule=Match(wm_class=_get_wm_name(wm_name))
+        ),
+        wm_names_list,
+    )
 
 
 def _get_windows_matches() -> List[_WindowMatch]:
@@ -142,10 +130,13 @@ def _get_windows_matches() -> List[_WindowMatch]:
         (sys_group, _science_staff),
         (doc_group, _music_staff),
         (doc_group, _doc_staff),
-        (chat_group, _chat_staff)
+        (chat_group, _chat_staff),
     ]
 
-    window_matches_list = map(lambda group_match: _map_wm_names(group_match[0], group_match[1]), _group_matches)
+    window_matches_list = map(
+        lambda group_match: _map_wm_names(group_match[0], group_match[1]),
+        _group_matches,
+    )
     flatten_group_matches: List[_WindowMatch] = list(chain(*window_matches_list))
 
     return _matches + flatten_group_matches
@@ -153,7 +144,10 @@ def _get_windows_matches() -> List[_WindowMatch]:
 
 def _get_matches_list(group_name: str) -> List[Match]:
     windows_matches_list: List[_WindowMatch] = _get_windows_matches()
-    filtered_windows_matches_list: filter[_WindowMatch] = filter(lambda window_match: window_match.group == group_name,
-                                                                 windows_matches_list)
+    filtered_windows_matches_list: filter[_WindowMatch] = filter(
+        lambda window_match: window_match.group == group_name, windows_matches_list
+    )
 
-    return list(map(lambda window_match: window_match.match_rule, filtered_windows_matches_list))
+    return list(
+        map(lambda window_match: window_match.match_rule, filtered_windows_matches_list)
+    )
