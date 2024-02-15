@@ -42,6 +42,7 @@ in
             gc = "git commit -v";
             "gc!" = "git commit --amend";
             gaa = "git add .";
+            ga = "git add";
             ggpush = "git push";
             ggpull = "git pull";
           };
