@@ -21,6 +21,7 @@ let
     streamlink-twitch-gui-bin # Twitch desktop
     mpv
     joplin-desktop
+    vscodium
 
     # Security
     bitwarden
