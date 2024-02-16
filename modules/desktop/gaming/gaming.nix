@@ -63,6 +63,7 @@ in
       unstable.prismlauncher # Minecraft launcher
       unstable.xivlauncher # FFXIV launcher
       osu # osu!lazer
+      airshipper # Veloren
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
