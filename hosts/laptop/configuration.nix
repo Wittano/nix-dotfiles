@@ -2,38 +2,41 @@
 
   imports = [ ./hardware.nix ./networking.nix ];
 
-  home-manager.users.wittano = ./../../home/pc;
-
-  modules = let
-    enableWithDevMode = {
-      enable = true;
-      enableDevMode = isDevMode;
-    };
-  in {
-    desktop = { qtile = enableWithDevMode; };
-    editors.neovim.enable = true;
-    dev = {
-      goland.enable = true;
-      clion.enable = true;
-    };
-    hardware = {
-      sound.enable = true;
-      grub.enable = true;
-      wifi.enable = true;
-      virtualization = {
+  modules =
+    let
+      enableWithDevMode = {
         enable = true;
-        enableDocker = true;
+        enableDevMode = isDevMode;
       };
-      nvidia.enable = true;
-    };
-    services = {
-      backup = {
-        enable = true;
-        backupDir = "/mnt/backup/wittano.nixos";
+    in
+    {
+      desktop = {
+        apps.enable = true;
+        qtile = enableWithDevMode;
       };
-      syncthing.enable = true;
-      redshift.enable = true;
+      editors.neovim.enable = true;
+      dev = {
+        goland.enable = true;
+        clion.enable = true;
+      };
+      hardware = {
+        sound.enable = true;
+        grub.enable = true;
+        wifi.enable = true;
+        virtualization = {
+          enable = true;
+          enableDocker = true;
+        };
+        nvidia.enable = true;
+      };
+      services = {
+        backup = {
+          enable = true;
+          backupDir = "/mnt/backup/wittano.nixos";
+        };
+        syncthing.enable = true;
+        redshift.enable = true;
+      };
     };
-  };
 
 }

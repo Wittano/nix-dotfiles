@@ -2,8 +2,6 @@
 
   imports = [ ./hardware.nix ./networking.nix ];
 
-  home-manager.users.wittano = ./../../home/pc;
-
   services.xserver.xrandrHeads = [
     {
       primary = true;
@@ -33,6 +31,7 @@
     in
     {
       desktop = {
+        apps.enable = true;
         qtile = enableWithDevMode;
         gaming = {
           enable = true;
