@@ -1,4 +1,4 @@
-{ config, pkgs, lib, dotfiles, unstable, privateRepo, ... }:
+{ config, pkgs, lib, dotfiles, privateRepo, ... }:
 with lib;
 with lib.my;
 let

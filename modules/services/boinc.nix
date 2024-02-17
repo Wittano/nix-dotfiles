@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
   cfg = config.modules.services.boinc;
