@@ -64,6 +64,7 @@ in
       unstable.xivlauncher # FFXIV launcher
       osu # osu!lazer
       airshipper # Veloren
+      mindustry # Mindustry
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
