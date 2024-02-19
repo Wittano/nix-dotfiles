@@ -74,7 +74,7 @@
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop direnv bash ];
+    systemPackages = with pkgs; [ vim htop bash ];
     variables =
       let projectConfigDir = "/home/wittano/projects/config";
       in
@@ -139,6 +139,7 @@
     dev.git.enable = true;
     shell.fish = {
       enable = true;
+      enableDirenv = true;
       default = true;
     };
     services.autoUpgrade.enable = true;

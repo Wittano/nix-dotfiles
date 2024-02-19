@@ -51,6 +51,10 @@ in
         Enable fish shell
       '';
 
+      enableDirenv = mkEnableOption ''
+        Enable direnv
+      '';
+
       default = mkEnableOption ''
         Enable fish shell as default shell for main user
       '';
@@ -64,11 +68,13 @@ in
 
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
+    environment.systemPackages = mkIf (cfg.enableDirenv) [ pkgs.direnv ];
+
     home-manager.users.wittano = {
       programs.fish = {
         enable = true;
         plugins = officialPlugins ++ customePlugins;
-        interactiveShellInit = ''
+        interactiveShellInit = mkIf (cfg.enableDirenv) ''
           direnv hook fish | source
         '';
         shellAliases =

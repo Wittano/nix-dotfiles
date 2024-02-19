@@ -19,7 +19,7 @@
     packages = with pkgs; [ firefox vscode ];
   };
 
-  environment.systemPackages = with pkgs; [ direnv git ];
+  environment.systemPackages = with pkgs; [ git ];
 
   modules = {
     services.ssh.enable = true;
