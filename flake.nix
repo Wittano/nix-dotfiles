@@ -28,7 +28,10 @@
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     agenix.url = "github:ryantm/agenix";
     nixvim = {
       url = "github:nix-community/nixvim?ref=nixos-23.11";
