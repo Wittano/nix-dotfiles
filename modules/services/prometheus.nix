@@ -4,7 +4,8 @@ let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.services.prometheus;
-in {
+in
+{
   options = {
     modules.services.prometheus = {
       enable = mkEnableOption ''
@@ -13,7 +14,6 @@ in {
     };
   };
 
-  # TODO Setup prometheus configuration. Add missing metrics e.g. systemd units metric
   config = mkIf cfg.enable {
     networking.firewall.interfaces.eno1.allowedTCPPorts = [ 9090 9100 ];
 
@@ -26,12 +26,10 @@ in {
         static_configs = [{ targets = [ "localhost:9100" ]; }];
       }];
 
-      exporters = {
-        node = {
-          enable = true;
-          enabledCollectors = [ "textfile" ];
-          port = 9100;
-        };
+      exporters.node = {
+        enable = true;
+        enabledCollectors = [ "textfile" "cgroups" "ksmd" "processes" "systemd" ];
+        port = 9100;
       };
 
     };
