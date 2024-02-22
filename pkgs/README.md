@@ -1,30 +1,16 @@
 # Packages
-List of programs, that you can use in your configuration has the following convenction: 
-```
-- <pkg_name> - <link_to_source_or_description>
-```
-- pkgs_name - name of package, that you use in Nix e.g. 
-```bash
-nix run github:Wittano/nix-dotfiles#patcherDir
-```
-- link_to_source_or_description - link to source or program description
-
 List of available packages:
-- GTK themes
-    - bibata-cursor-theme - [Bibata Cursor theme](https://github.com/ful1e5/Bibata_Cursor)
-    - colloid-cursors-theme - https://github.com/vinceliuice/Colloid-icon-theme
-- GTK icon themes
-    - catppuccin-icon-theme - [Catppuccin icon theme](https://github.com/ljmill/catppuccin-icons)
-- Plymouth themes
-    - nixos-blur - [Nixos-Blur - theme for Plymouth](https://git.gurkan.in/gurkan/nixos-blur-plymouth)
-- SDDM themes
-    - dexy - [Dexy - SDDM theme](https://github.com/L4ki/Dexy-Plasma-Themes)
-    - sugar-candy - [Sugar Candy - SDDM theme](https://framagit.org/MarianArlt/sddm-sugar-candy)
-    - wings - [Wings - SDDM theme](https://github.com/L4ki/Wings-Plasma-Themes)
-- Utilities
-    - patcherDir - special script to patching binaries(changing default glibc path) for selected directory
-- VIM plugins
-    - gopher-nvim  [gopher.nvim plugin](https://github.com/olexsmir/gopher.nvim)
-    - nvim-comment [nvim-comment plugin](https://github.com/terrortylor/nvim-comment)
-    - plenary-nvim [plenary-nvim plugin](https://github.com/nvim-lua/plenary.nvim)
-    - template-nvim [template.nvim plugin](https://github.com/nvimdev/template.nvim)
+| Name                                                               | Nix package name      | Description                                                                                                                                                                                                                                       |
+|--------------------------------------------------------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Bibata cursor theme](https://github.com/ful1e5/Bibata_Cursor)           | bibata-cursor-theme   | Open source, compact, and material designed cursor set.                                                                                                                                                                                           |
+| [Colloid GTK icons theme](https://github.com/vinceliuice/Colloid-icon-theme) | colloid-cursors-theme | Colloid icon theme for linux desktops                                                                                                                                                                                                             |
+| [Catppuccin GTK icons theme](https://github.com/ljmill/catppuccin-icons)     | catppuccin-icon-theme | Beautiful icons themed in Catppuccin                                                                                                                                                                                                              |
+| [Nixos-Blur](https://git.gurkan.in/gurkan/nixos-blur-plymouth)     | nixos-blur            | A nice theme for bootscreen :)                                                                                                                                                                                                                    |
+| [Dexy](https://github.com/L4ki/Dexy-Plasma-Themes)                 | dexy                  | Dexy Themes For Plasma Desktop                                                                                                                                                                                                                    |
+| [Sugar Candy](https://framagit.org/MarianArlt/sddm-sugar-candy)    | sugar-candy           | Sugar Candy is the sweetest login theme available for the SDDM display manager. It's so sweet it may cause you diabetes. Sugar Candy offers a straight forward user experience focusing on functionality while still offering vast customization. |
+| [Wings](https://github.com/L4ki/Wings-Plasma-Themes)               | wings                 | Wings Themes For Plasma Desktop                                                                                                                                                                                                                   |
+| [patcherDir](./utils/patcherDir/default.nix)                       | patcherDir            | Special script to patching binaries(changing default glibc path) for selected directory                                                                                                                                                           |
+| [gopher.nvim](https://github.com/olexsmir/gopher.nvim)             | gopher-nvim           | Neovim plugin for make golang development easiest
+| [nvim-comment](https://github.com/terrortylor/nvim-comment)        | nvim-comment           | A comment toggler for Neovim, written in Lua        |
+| [plenary-nvim](https://github.com/nvim-lua/plenary.nvim)           | plenary-nvim          | plenary: full; complete; entire; absolute; unqualified. All the lua functions I don't want to write twice.        |
+| [template.nvim](https://github.com/nvimdev/template.nvim)          | template-nvim         | Quickly insert templates into file        |
