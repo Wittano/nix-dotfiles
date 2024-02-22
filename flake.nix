@@ -74,6 +74,8 @@
       });
     in
     {
+      lib = lib.my;
+
       nixosConfigurations =
         let
           inherit (lib.attrsets) mapAttrs' nameValuePair;
