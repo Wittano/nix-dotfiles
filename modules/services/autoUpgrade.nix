@@ -1,6 +1,6 @@
 { pkgs, lib, config, home-manager, hostname, ... }:
 with lib;
-with builtins;
+with lib.my;
 let
   cfg = config.modules.services.autoUpgrade;
   workingDirectory = config.environment.variables.NIX_DOTFILES;

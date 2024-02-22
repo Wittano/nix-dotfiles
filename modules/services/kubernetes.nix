@@ -1,6 +1,6 @@
 { pkgs, lib, config, home-manager, ... }:
 with lib;
-with builtins;
+with lib.my;
 let
   cfg = config.modules.services.kubernetes;
   ipAddress = (head config.networking.interfaces.eno1.ipv4.addresses).address;

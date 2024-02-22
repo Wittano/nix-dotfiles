@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
-
+with lib;
+with lib.my;
 let
-  inherit (lib) mkEnableOption mkIf;
-
   cfg = config.modules.services.prometheus;
 in
 {

@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
+with lib.my;
 let
-  inherit (lib) mkIf mkEnableOption;
-
   cfg = config.modules.hardware.bluetooth;
 in {
   options = {

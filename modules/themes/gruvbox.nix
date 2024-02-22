@@ -1,6 +1,6 @@
-{ config, pkgs, ... }:
-with pkgs;
+{ config, lib, pkgs, ... }:
 with lib;
+with lib.my;
 let cfg = config.modules.themes.gruvbox;
 in {
   options = {

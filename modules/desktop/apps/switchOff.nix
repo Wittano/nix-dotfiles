@@ -1,4 +1,5 @@
 { pkgs, lib, config, ... }:
+# TODO Migarte to pkgs directory
 let
   kill = "${pkgs.toybox}/bin/kill";
   pgrep = "${pkgs.toybox}/bin/pgrep";

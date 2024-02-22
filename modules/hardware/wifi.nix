@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
-with builtins;
+with lib.my;
 let
   cfg = config.modules.hardware.wifi;
   kernel = config.boot.kernelPackages.kernel;

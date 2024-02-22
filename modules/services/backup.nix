@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
+with lib.my;
 let
-  inherit (lib) mkEnableOption types mkIf mkOption;
-
   cfg = config.modules.services.backup;
 
   excludedList = builtins.toFile "exclude.txt" ''

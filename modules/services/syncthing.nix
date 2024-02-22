@@ -1,5 +1,6 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
+with lib.my;
 let
   homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;

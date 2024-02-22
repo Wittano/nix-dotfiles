@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
+with lib.my;
 let
   cfg = config.modules.services.boinc;
   nvidiaDriverPackage = lists.optionals

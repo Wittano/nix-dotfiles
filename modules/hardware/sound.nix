@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
+with lib.my;
 let
-  inherit (lib) mkIf mkEnableOption mkDefault mkOption types;
-
   cfg = config.modules.hardware.sound;
 in {
   options = {

@@ -1,7 +1,6 @@
 { pkgs, lib, home-manager, dotfiles, cfg, ... }:
 with lib;
 with lib.my;
-with builtins;
 {
   fonts.packages = with pkgs; [ font-awesome font-awesome_5 siji ];
 

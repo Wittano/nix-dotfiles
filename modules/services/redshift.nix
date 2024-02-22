@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.modules.services.redshift;
-in {
+with lib.my;
+let
+  cfg = config.modules.services.redshift;
+in
+{
   options = {
     modules.services.redshift = {
       enable = mkEnableOption ''

@@ -19,6 +19,7 @@ in
         link.createMutableLinkActivation cfg "gtk-3.0/settings.ini";
     };
 
+    # TODO create mapper attrs to TOML file
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
       "gtk-3.0/bookmarks".text = ''
         file:///tmp Temporary

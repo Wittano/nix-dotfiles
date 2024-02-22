@@ -1,15 +1,15 @@
-{ config, pkgs, ... }:
-with pkgs;
+{ config, lib, pkgs, ... }:
 with lib;
+with lib.my;
 let
   cfg = config.modules.themes.dracula;
-  draculaOpenbox = fetchFromGitHub {
+  draculaOpenbox = pkgs.fetchFromGitHub {
     owner = "dracula";
     repo = "openbox";
     rev = "b3222509bb291dc62d201a66a1547a7aac0040b3";
     sha256 = "sha256-GZ6/ThHBP3TZshDPHdsNjQEpqowt4eqva0MI/mzELRg=";
   };
-  draculaIcon = fetchzip {
+  draculaIcon = pkgs.fetchzip {
     url = "https://github.com/dracula/gtk/files/5214870/Dracula.zip";
     sha256 = "sha256-rcSKlgI3bxdh4INdebijKElqbmAfTwO+oEt6M2D1ls0=";
   };

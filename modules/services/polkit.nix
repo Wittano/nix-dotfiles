@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 with lib;
-with builtins;
+with lib.my;
 let
   cfg = config.modules.services.polkit;
 in

@@ -2,8 +2,6 @@
 with lib;
 with lib.my;
 let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-
   cfg = config.modules.editors.emacs;
   downloadDoomEmacsScript = ''
     if [ ! -e $HOME/.emacs.d/bin/doom ]; then
@@ -43,7 +41,7 @@ in
           linkMutableDoomEmacsConfiguration = mkIf (cfg.version == "doom")
             (link.createMutableLinkActivation cfg ".doom.d");
           downloadDoomEmacs = mkIf (cfg.version == "doom")
-            (lib.hm.dag.entryAfter [ "writeBoundery" ] downloadDoomEmacsScript);
+            (hm.dag.entryAfter [ "writeBoundery" ] downloadDoomEmacsScript);
         };
 
         file.".doom.d" =

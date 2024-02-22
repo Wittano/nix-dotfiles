@@ -1,5 +1,6 @@
 { config, pkgs, lib, home-manager, ... }:
 with lib;
+with lib.my;
 let
   cfg = config.modules.hardware.nvidia;
 in

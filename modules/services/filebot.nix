@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
+with lib.my;
 let
-  inherit (lib) mkEnableOption mkIf;
-
   cfg = config.modules.services.filebot;
 in
 {

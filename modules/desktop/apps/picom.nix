@@ -1,6 +1,7 @@
 { pkgs, lib, cfg, ... }:
 with lib;
-with lib.my; {
+with lib.my;
+{
   services.picom = {
     enable = true;
     package = pkgs.picom-allusive;
