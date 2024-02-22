@@ -1,6 +1,6 @@
 { lib, system, inputs, pkgs, unstable, privateRepo, ... }:
 let
-  mapper = import ./mapper.nix { inherit lib; };
+  mapper = import ./mapper.nix { inherit lib pkgs; };
   imports = import ./imports.nix { inherit lib; };
 
   dotfiles = mapper.mapDirToAttrs ./../dotfiles;
