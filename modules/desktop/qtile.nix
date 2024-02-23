@@ -23,7 +23,6 @@ in
     tmux
     kitty
     rofi
-    switchOff
     {
       home-manager.users.wittano = {
         home.activation.linkMutableQtileConfig =

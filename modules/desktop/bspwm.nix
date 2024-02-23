@@ -24,7 +24,6 @@ in
     dunst
     rofi
     polybar
-    switchOff
     {
       home-manager.users.wittano = {
         home = {

@@ -1,4 +1,4 @@
-{ cfg, pkgs, lib, home-manager, dotfiles, ... }:
+{ cfg, pkgs, lib, home-manager, dotfiles, privateRepo, ... }:
 with lib;
 with lib.my;
 let
@@ -12,7 +12,7 @@ in
 {
   home-manager.users.wittano = {
     home = {
-      packages = with pkgs; [ rofi ];
+      packages = with pkgs; [ rofi privateRepo.rofiSwitchOff ];
 
       activation.linkMutableRofiConfig =
         link.createMutableLinkActivation cfg "rofi";
