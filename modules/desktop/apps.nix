@@ -1,4 +1,4 @@
-{ pkgs, lib, config, home-manager, ... }:
+{ pkgs, lib, config, unstable, home-manager, ... }:
 with lib;
 with builtins;
 let
@@ -28,7 +28,7 @@ in
 
       # Apps
       spotify
-      freetube # Youtube desktop
+      unstable.freetube # Youtube desktop
       streamlink-twitch-gui-bin # Twitch desktop
       mpv
       joplin-desktop
