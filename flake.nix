@@ -24,14 +24,8 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     filebot.url = "github:Wittano/filebot";
-    aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
+    nix-gaming.url = "github:fufexan/nix-gaming";
     agenix.url = "github:ryantm/agenix";
     nixvim = {
       url = "github:nix-community/nixvim?ref=nixos-23.11";
