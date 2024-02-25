@@ -15,6 +15,7 @@ in
     home-manager.users.wittano.home.packages = with pkgs; [
       # Utils
       flameshot
+      kazam
 
       # Web browser
       vivaldi
