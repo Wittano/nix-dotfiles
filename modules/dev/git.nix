@@ -37,6 +37,7 @@ in
         gpg.enable = true;
 
         fish = mkIf config.modules.shell.fish.enable {
+          shellAliases.lg = "lazygit";
           shellAbbrs = {
             gst = "git status";
             gc = "git commit -v";
