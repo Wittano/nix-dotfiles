@@ -42,7 +42,7 @@ in
     # Honkai Railway
     programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
 
-    home-manager.users.wittano.home.packages = with pkgs; [
+    home-manager.users.wittano.home.packages = with unstable; [
       # Lutris
       lutris
       xdelta
@@ -60,8 +60,8 @@ in
       steam-run
 
       # Games
-      unstable.prismlauncher # Minecraft launcher
-      unstable.xivlauncher # FFXIV launcher
+      prismlauncher # Minecraft launcher
+      xivlauncher # FFXIV launcher
       osu # osu!lazer
       airshipper # Veloren
       mindustry # Mindustry
@@ -69,7 +69,10 @@ in
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      package = unstable.steam;
+    };
 
     fileSystems = mkIf (cfg.enableAdditionalDisk) {
       "/mnt/gaming" = {
