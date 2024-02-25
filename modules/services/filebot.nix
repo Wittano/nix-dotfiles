@@ -29,6 +29,10 @@ in
           moveToTrash = true;
           after = 1;
         };
+        Jars = {
+          src = [ "$HOME/Downloads/*.jar" ];
+          dest = "~/mc-mods";
+        };
       };
     };
   };
