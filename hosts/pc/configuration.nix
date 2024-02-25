@@ -45,7 +45,6 @@
       };
       themes.catppuccin.enable = true;
       dev = {
-        jvm.enable = true;
         clion.enable = true;
         pycharm.enable = true;
         goland.enable = true;
