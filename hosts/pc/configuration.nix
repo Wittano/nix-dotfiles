@@ -54,7 +54,6 @@
         sound.enable = true;
         grub.enable = true;
         wacom.enable = true;
-        virtualization.enable = true;
         nvidia.enable = true;
         bluetooth.enable = true;
       };
@@ -65,7 +64,6 @@
           backupDir = "/mnt/backup/wittano.nixos";
         };
         ssh.enable = true;
-        kubernetes.enable = true;
         syncthing.enable = true;
         redshift.enable = true;
         prometheus.enable = true;
