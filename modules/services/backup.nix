@@ -37,6 +37,11 @@ let
     .steam
     go/**/*
     git
+    .sbt
+    .osu
+    .xlore
+    .sikiko
+    .tor project
   '';
 in
 {
