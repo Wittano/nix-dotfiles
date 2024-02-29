@@ -9,12 +9,12 @@ with lib.my;
       "nitrogen/bg-saved.cfg".source = mapper.toCfg "bg-saved.cfg"
         {
           xin_1 = {
-            file = dotfiles.wallpapers."11.jpeg".source;
+            file = dotfiles.wallpapers."23.jpeg".source;
             mode = 0;
             bgcolor = " #000000";
           };
           xin_0 = {
-            file = dotfiles.wallpapers."33.png".source;
+            file = dotfiles.wallpapers."50.jpg".source;
             mode = 0;
             bgcolor = "#000000";
           };
