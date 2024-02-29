@@ -46,7 +46,6 @@
       themes.catppuccin.enable = true;
       dev = {
         clion.enable = true;
-        pycharm.enable = true;
         goland.enable = true;
       };
       editors.neovim.enable = true;
