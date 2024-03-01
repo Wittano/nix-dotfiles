@@ -26,6 +26,7 @@ in
       evince
       onlyoffice-bin
       soundux
+      figma-linux
 
       # Apps
       spotify
