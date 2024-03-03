@@ -16,7 +16,14 @@ in
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home.packages = with pkgs; [ ripgrep ];
-      programs.fish.functions.tvi.body = ''
+      xdg.configFile."fish/completions/tvi.fish".text = /*fish*/''
+        complete -c tvi -x -a "(__fish_complete_directories)"
+      '';
+      programs.fish.functions.tvi.body = /*fish*/ ''
+        if test -d $argv
+          cd $argv
+        end
+
         tmux new-session -d "nvim"
         tmux new-window
         tmux attach-session
