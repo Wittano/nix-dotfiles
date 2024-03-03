@@ -15,3 +15,5 @@ List of available packages:
 | [nvim-comment](https://github.com/terrortylor/nvim-comment)        | nvim-comment           | A comment toggler for Neovim, written in Lua        |
 | [plenary-nvim](https://github.com/nvim-lua/plenary.nvim)           | plenary-nvim          | plenary: full; complete; entire; absolute; unqualified. All the lua functions I don't want to write twice.        |
 | [template.nvim](https://github.com/nvimdev/template.nvim)          | template-nvim         | Quickly insert templates into file        |
+| [osu!lazer](https://github.com/ppy/osu) | osu-lazer | WARNING! This package is fork from [nix-gaming repository](https://github.com/fufexan/nix-gaming). I've done becauses I need more control over osu! updates. Currect update system(03.03.2024) in nix-gaming repository is unsatisifed me and updates nix-gaming repository often disallowed me to upgrade my system.     |
+| [osu-mime](https://github.com/fufexan/nix-gaming/blob/master/pkgs/osu-mime/default.nix) | osu-mime | WARNING! This package isn't original! I copy from [nix-gaming repository](https://github.com/fufexan/nix-gaming) for my fork osu!lazer package |

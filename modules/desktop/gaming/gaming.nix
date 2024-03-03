@@ -1,8 +1,8 @@
-{ config, pkgs, home-manager, lib, inputs, unstable, ... }:
+{ config, pkgs, home-manager, lib, privateRepo, unstable, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
-  osu = inputs.nix-gaming.packages.${pkgs.hostPlatform.system}.osu-lazer-bin;
+  osuLazer = privateRepo.osu-lazer;
 
   fixAge2Sync = pkgs.writeScriptBin "fixAge2Sync" /*bash*/
     ''
@@ -62,7 +62,7 @@ in
       # Games
       prismlauncher # Minecraft launcher
       xivlauncher # FFXIV launcher
-      osu # osu!lazer
+      osuLazer
       airshipper # Veloren
       mindustry # Mindustry
     ];

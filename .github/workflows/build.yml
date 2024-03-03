@@ -19,6 +19,8 @@ jobs:
             nvim-comment,
             plenary-nvim,
             template-nvim,
+            osu-lazer,
+            osu-mime
           ]
     runs-on: ubuntu-latest
     steps:
