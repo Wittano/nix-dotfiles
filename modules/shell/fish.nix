@@ -89,8 +89,9 @@ in
             rebuild = name:
               let
                 impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
+                profile = "${config.environment.variables.NIX_DOTFILES}#${name}";
               in
-              "sudo nixos-rebuild switch --flake ${config.environment.variables.NIX_DOTFILES}#${name} ${impureFlag}";
+              "sudo nixos-rebuild switch --flake ${profile} ${impureFlag}";
           in
           {
             xc = "xprop | grep CLASS";
