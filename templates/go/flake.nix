@@ -9,14 +9,11 @@
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      package.${system} = rec {
-        app = pkgs.buildGoModule {
-          pname = "go-app";
-          src = ./.;
+      package.${system}.default = pkgs.buildGoModule {
+        pname = "go-app";
+        src = ./.;
 
-          vendorSha256 = pkgs.lib.fakeSha256;
-        };
-        default = app;
+        vendorSha256 = pkgs.lib.fakeSha256;
       };
 
       devShells.${system}.default = pkgs.mkShell {
