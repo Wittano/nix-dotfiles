@@ -15,10 +15,7 @@
         qtile = enableWithDevMode;
       };
       editors.neovim.enable = true;
-      dev = {
-        goland.enable = true;
-        clion.enable = true;
-      };
+      dev.ide.list = [ "go" "cpp" ];
       hardware = {
         sound.enable = true;
         grub.enable = true;

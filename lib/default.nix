@@ -17,6 +17,5 @@ in
   apps = import ./apps.nix {
     inherit lib home-manager pkgs dotfiles privateRepo unstable;
   };
-  commands = import ./commands.nix { inherit pkgs lib home-manager; };
   pkgs = import ./pkgs.nix { inherit lib pkgs; };
 }

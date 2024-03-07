@@ -44,10 +44,7 @@
         };
       };
       themes.catppuccin.enable = true;
-      dev = {
-        clion.enable = true;
-        goland.enable = true;
-      };
+      dev.ide.list = [ "go" "cpp" ];
       editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
