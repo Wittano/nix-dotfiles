@@ -19,7 +19,6 @@ in
         link.createMutableLinkActivation cfg "gtk-3.0/settings.ini";
     };
 
-    # TODO create mapper attrs to TOML file
     xdg.configFile = mkIf (cfg.enableDevMode == false) {
       "gtk-3.0/bookmarks".text = ''
         file:///tmp Temporary
@@ -33,25 +32,26 @@ in
         file:///home/wittano/.config User config
         file:///mnt/raspberry Raspberry - shared folder
       '';
-      "gtk-3.0/settings.ini".source = builtins.toFile "settings.ini" ''
-        [Settings]
-        gtk-icon-theme-name=Colloid-dark
-        gtk-theme-name=Catppuccin-Frappe-Standard-Blue-Dark
-        gtk-font-name=JetBrains Mono NL 12
-        gtk-cursor-theme-name=Bibata-Modern-Ice
-        gtk-cursor-theme-size=0
-        gtk-toolbar-style=GTK_TOOLBAR_BOTH_HORIZ
-        gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-        gtk-button-images=1
-        gtk-menu-images=1
-        gtk-enable-event-sounds=1
-        gtk-enable-input-feedback-sounds=1
-        gtk-xft-antialias=1
-        gtk-xft-hinting=1
-        gtk-xft-hintstyle=hintslight
-        gtk-xft-rgba=rgb
-        gtk-modules=gail:atk-bridge
-      '';
+      "gtk-3.0/settings.ini".source = mapper.toTOML "settings.ini" {
+        Settings = {
+          "gtk-icon-theme-name" = "Colloid-dark";
+          "gtk-theme-name" = "Catppuccin-Frappe-Standard-Blue-Dark";
+          "gtk-font-name" = "JetBrains Mono NL 12";
+          "gtk-cursor-theme-name" = "Bibata-Modern-Ice";
+          "gtk-cursor-theme-size" = 0;
+          "gtk-toolbar-style" = "GTK_TOOLBAR_BOTH_HORIZ";
+          "gtk-toolbar-icon-size" = "GTK_ICON_SIZE_LARGE_TOOLBAR";
+          "gtk-button-images" = 1;
+          "gtk-menu-images" = 1;
+          "gtk-enable-event-sounds" = 1;
+          "gtk-enable-input-feedback-sounds" = 1;
+          "gtk-xft-antialias" = 1;
+          "gtk-xft-hinting" = 1;
+          "gtk-xft-hintstyle" = "hintslight";
+          "gtk-xft-rgba" = "rgb";
+          "gtk-modules" = "gail:atk-bridge";
+        };
+      };
     };
   };
 }
