@@ -1,6 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, home-manager, ... }:
 with lib;
-with builtins;
+with lib.my;
 let
   cfg = config.modules.hardware.docker;
 in
@@ -16,6 +16,9 @@ in
     users.users.wittano.extraGroups = [
       "docker"
     ];
+
+    home-manager.users.wittano.programs.fish.shellAliases.ds =
+      ''docker ps | cut -f 1 -d " " | tail -n +2 | xargs docker stop'';
   };
 }
 
