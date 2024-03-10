@@ -14,10 +14,6 @@ in
         Enable virutalization tools
       '';
 
-      enableDocker = mkEnableOption ''
-        Enable Docker
-      '';
-
       enableWindowsVM = mkEnableOption ''
         Enable Windows Gaming VM
       '';
@@ -38,7 +34,6 @@ in
     ];
 
     virtualisation = {
-      docker.enable = cfg.enableDocker;
       virtualbox.host.enable = cfg.enableVagrant;
       libvirtd = {
         enable = true;
@@ -53,7 +48,6 @@ in
     };
 
     users.users.wittano.extraGroups = [
-      (mkIf cfg.enableDocker "docker")
       (mkIf cfg.enableVagrant "vboxusers")
       "libvirtd"
     ];

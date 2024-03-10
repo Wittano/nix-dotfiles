@@ -44,7 +44,7 @@
         };
       };
       themes.catppuccin.enable = true;
-      dev.ide.list = [ "go" "cpp" ];
+      dev.ide.list = [ "go" ];
       editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
@@ -52,6 +52,7 @@
         wacom.enable = true;
         nvidia.enable = true;
         bluetooth.enable = true;
+        docker.enable = true;
       };
       services = {
         boinc.enable = true;

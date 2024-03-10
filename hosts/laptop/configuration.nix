@@ -20,10 +20,8 @@
         sound.enable = true;
         grub.enable = true;
         wifi.enable = true;
-        virtualization = {
-          enable = true;
-          enableDocker = true;
-        };
+        virtualization.enable = true;
+        docker.enable = true;
         nvidia.enable = true;
       };
       services = {
