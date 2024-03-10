@@ -1,6 +1,10 @@
 name: Build Wittano nix repository
 run-name: Build Wittano nix repository
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, reopened]
 jobs:
   build:
     strategy:
@@ -31,6 +35,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: "Install Cachix"
         uses: cachix/cachix-action@v12
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           name: wittano-nix-repo
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
