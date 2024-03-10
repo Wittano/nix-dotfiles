@@ -91,16 +91,45 @@
         in
         normalHosts // devHosts;
 
-      devShells.${pkgs.system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          # For Qtile
-          python311Packages.qtile
-          python311Packages.mypy
+      devShells.${pkgs.system}.default =
+        let
+          testGithubActions = pkgs.writeShellApplication
+            {
+              name = "testGithubActions";
+              runtimeInputs = with pkgs; [ coreutils docker act ];
+              text = ''
+                function stop_docker {
+                  CONTAINER_IDS=$(docker ps | tail -n +2)
+                  if [ -n "$CONTAINER_IDS" ]; then
+                    echo "Stopping and cleaning docker from act staff"
+                    echo "$CONTAINER_IDS" | cut -f 1 -d " " | tail -n +2 | xargs docker stop > /dev/null
+                    echo "$CONTAINER_IDS" | xargs docker rm > /dev/null
+                  fi
+                }
 
-          # Nix
-          nixpkgs-fmt
-        ];
-      };
+                trap stop_docker SIGINT
+
+                act --use-gitignore -q --rm -W "$NIX_DOTFILES/.github/workflows" -C "$NIX_DOTFILES"
+                stop_docker
+              '';
+            };
+        in
+        pkgs.mkShell {
+          buildInputs = with pkgs; [
+            # For Qtile
+            python311Packages.qtile
+            python311Packages.mypy
+
+            # Nix
+            nixpkgs-fmt
+
+            # Github actions
+            act
+
+            # Custom scripts
+            testGithubActions
+          ];
+        };
 
       packages.x86_64-linux = privateRepo;
 

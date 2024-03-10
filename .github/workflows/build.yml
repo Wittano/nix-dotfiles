@@ -28,18 +28,27 @@ jobs:
           ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: "Install Nix"
-        uses: cachix/install-nix-action@v22
+        uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: "Install Cachix"
-        uses: cachix/cachix-action@v12
+        uses: cachix/cachix-action@v14
         if: ${{ github.event_name != 'pull_request' }}
         with:
           name: wittano-nix-repo
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: "Check nix packages"
         run: nix flake check
+      - name: Get flake.nix diff 
+        id: flake-diff
+        run: |
+          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            echo "DIFF=$(git diff origin/main -- flake.lock)" >> $GITHUB_OUTPUT
+          else
+            echo "DIFF=$(git diff flake.lock)" >> $GITHUB_OUTPUT
+          fi
       - name: "Build packages"
+        if: ${{ steps.flake-diff.outputs.DIFF != '' }}
         run: "nix build .#packages.x86_64-linux.${{ matrix.packages }}"
