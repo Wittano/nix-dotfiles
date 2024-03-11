@@ -28,11 +28,11 @@
 }:
 let
   pname = "osu-lazer-bin";
-  version = "2024.302.1";
+  version = "2024.312.0";
 
   appimageBin = fetchurl {
     url = "https://github.com/ppy/osu/releases/download/${version}/osu.AppImage";
-    hash = "sha256-vYG3viY9GBtgaY8ThCSWss+zzjAyVa4fmrWrQdYcUow=";
+    hash = "sha256-kWNobQXGGS2TWvPkhfheqnlbijfnxfcP36ANUeN6bW0=";
   };
 
   extracted = appimageTools.extract {
