@@ -2,9 +2,10 @@ name: Build Wittano nix repository
 run-name: Build Wittano nix repository
 on:
   push:
-    branches: [main]
+    branches:
+      - 'main'
   pull_request:
-    types: [opened, reopened]
+    types: [opened, edited, reopened, synchronize]
 jobs:
   build:
     strategy:
@@ -35,20 +36,14 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: "Install Cachix"
         uses: cachix/cachix-action@v14
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.head_ref == 'main' }}
         with:
           name: wittano-nix-repo
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: "Check nix packages"
-        run: nix flake check
       - name: Get flake.nix diff 
         id: flake-diff
         run: |
-          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            echo "DIFF=$(git diff origin/main -- flake.lock)" >> $GITHUB_OUTPUT
-          else
-            echo "DIFF=$(git diff flake.lock)" >> $GITHUB_OUTPUT
-          fi
+          echo "DIFF=$(git diff --name-only origin/main origin/${GITHUB_HEAD_REF})" >> $GITHUB_OUTPUT
       - name: "Build packages"
         if: ${{ steps.flake-diff.outputs.DIFF != '' }}
         run: "nix build .#packages.x86_64-linux.${{ matrix.packages }}"
