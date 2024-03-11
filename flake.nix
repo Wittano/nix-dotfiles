@@ -99,6 +99,7 @@
 
           # Nix
           nixpkgs-fmt
+          act
         ];
       };
 
