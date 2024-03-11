@@ -6,6 +6,8 @@ on:
       - 'main'
   pull_request:
     types: [opened, edited, reopened, synchronize]
+permissions:
+  contents: read
 jobs:
   build:
     strategy:
@@ -41,9 +43,12 @@ jobs:
           name: wittano-nix-repo
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Get flake.nix diff 
+        uses: GrantBirki/git-diff-action@v2.4.1
         id: flake-diff
-        run: |
-          echo "DIFF=$(git diff --name-only origin/main origin/${GITHUB_HEAD_REF})" >> $GITHUB_OUTPUT
+        with:
+          base_branch: "main"
+          file_output_only: "true"
+          search_path: ./flake.nix
       - name: "Build packages"
-        if: ${{ steps.flake-diff.outputs.DIFF != '' }}
+        if: ${{ steps.flake-diff.outputs.diff != '' }}
         run: "nix build .#packages.x86_64-linux.${{ matrix.packages }}"
