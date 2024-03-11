@@ -36,9 +36,9 @@ jobs:
         uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Check flake.nix diff
+      - name: Check flake lock diff
         id: flake-diff
-        run: echo "raw-diff=$(git diff refs/heads/main -- flake.nix)" >> $GITHUB_OUTPUT
+        run: echo "raw-diff=$(git diff -- flake.lock)" >> $GITHUB_OUTPUT
       - name: "Install Cachix"
         uses: cachix/cachix-action@v14
         if: ${{ github.ref == 'refs/heads/main' && steps.flake-diff.outputs.raw-diff != '' }}
