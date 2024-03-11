@@ -36,19 +36,20 @@ jobs:
         uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: "Install Cachix"
-        uses: cachix/cachix-action@v14
-        if: ${{ github.head_ref == 'main' }}
-        with:
-          name: wittano-nix-repo
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Get flake.nix diff 
         uses: GrantBirki/git-diff-action@v2.4.1
         id: flake-diff
         with:
           base_branch: "origin/main"
           file_output_only: "true"
+          raw_diff_file_output: raw.txt
           search_path: flake.nix
+      - name: "Install Cachix"
+        uses: cachix/cachix-action@v14
+        if: ${{ github.ref_name == 'origin/main' && steps.flake-diff.outputs.raw-diff != '' }}
+        with:
+          name: wittano-nix-repo
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: "Build packages"
-        if: ${{ steps.flake-diff.outputs.diff != '' }}
+        if: ${{ steps.flake-diff.outputs.raw-diff != '' }}
         run: "nix build .#packages.x86_64-linux.${{ matrix.packages }}"
