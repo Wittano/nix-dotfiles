@@ -1,0 +1,17 @@
+run-name: Check flake repository
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+  push:
+    branches: [main]
+jobs:
+  build:
+    name: Build Nix targets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Nix flake inputs
+        uses: DeterminateSystems/flake-checker-action@v5
+        with:
+          send-statistics: false
+          fail-mode: true
