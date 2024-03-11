@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, ... }: {
+{ config, pkgs, isDevMode ? false, privateRepo, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
@@ -48,7 +48,10 @@
       editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
-        grub.enable = true;
+        grub = {
+          enable = true;
+          theme = privateRepo.honkai-railway;
+        };
         wacom.enable = true;
         nvidia.enable = true;
         bluetooth.enable = true;
