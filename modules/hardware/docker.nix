@@ -12,7 +12,13 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    virtualisation.docker.enable = true;
+    virtualisation.docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "daily";
+      };
+    };
     users.users.wittano.extraGroups = [
       "docker"
     ];
