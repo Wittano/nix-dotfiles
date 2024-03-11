@@ -44,8 +44,10 @@ jobs:
           DIFF=$(git diff HEAD~1 -- flake.lock)
           if [ -n $DIFF ]; then
             echo "raw-diff='1'" >> $GITHUB_OUTPUT
+            echo "test"
           else
             echo "raw-diff=''" >> $GITHUB_OUTPUT
+            echo "ne test"
           fi
       - name: "Install Cachix"
         uses: cachix/cachix-action@v14
