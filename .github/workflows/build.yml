@@ -36,14 +36,9 @@ jobs:
         uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Get flake.nix diff 
-        uses: GrantBirki/git-diff-action@v2.4.1
+      - name: Check flake.nix diff
         id: flake-diff
-        with:
-          base_branch: "origin/main"
-          file_output_only: "true"
-          raw_diff_file_output: raw.txt
-          search_path: flake.nix
+        run: echo "raw-diff=$(git diff origin/main -- flake.nix)" >> $GITHUB_OUTPUT
       - name: "Install Cachix"
         uses: cachix/cachix-action@v14
         if: ${{ github.base_ref == 'main' && steps.flake-diff.outputs.raw-diff != '' }}
