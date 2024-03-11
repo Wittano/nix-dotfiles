@@ -46,7 +46,7 @@ jobs:
           search_path: flake.nix
       - name: "Install Cachix"
         uses: cachix/cachix-action@v14
-        if: ${{ GITHUB_BASE_REF == 'main' && steps.flake-diff.outputs.raw-diff != '' }}
+        if: ${{ github.base_ref == 'main' && steps.flake-diff.outputs.raw-diff != '' }}
         with:
           name: wittano-nix-repo
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
