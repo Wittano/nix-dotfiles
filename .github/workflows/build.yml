@@ -46,9 +46,9 @@ jobs:
         uses: GrantBirki/git-diff-action@v2.4.1
         id: flake-diff
         with:
-          base_branch: "main"
+          base_branch: "origin/main"
           file_output_only: "true"
-          search_path: ./flake.nix
+          search_path: flake.nix
       - name: "Build packages"
         if: ${{ steps.flake-diff.outputs.diff != '' }}
         run: "nix build .#packages.x86_64-linux.${{ matrix.packages }}"
