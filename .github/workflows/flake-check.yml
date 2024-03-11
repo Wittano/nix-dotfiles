@@ -1,4 +1,4 @@
-run-name: Check flake repository
+name: Check flake repository
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
@@ -15,3 +15,7 @@ jobs:
         with:
           send-statistics: false
           fail-mode: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+      - name: Check repository
+        run: nix flake check
