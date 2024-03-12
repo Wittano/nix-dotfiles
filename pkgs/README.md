@@ -17,3 +17,4 @@ List of available packages:
 | [template.nvim](https://github.com/nvimdev/template.nvim)          | template-nvim         | Quickly insert templates into file        |
 | [osu!lazer](https://github.com/ppy/osu) | osu-lazer | WARNING! This package is fork from [nix-gaming repository](https://github.com/fufexan/nix-gaming). I've done becauses I need more control over osu! updates. Currect update system(03.03.2024) in nix-gaming repository is unsatisifed me and updates nix-gaming repository often disallowed me to upgrade my system.     |
 | [osu-mime](https://github.com/fufexan/nix-gaming/blob/master/pkgs/osu-mime/default.nix) | osu-mime | WARNING! This package isn't original! I copy from [nix-gaming repository](https://github.com/fufexan/nix-gaming) for my fork osu!lazer package |
+| [StarRailGrubThemes](https://github.com/voidlhf/StarRailGrubThemes) | honaki-railway | A pack of GRUB2 themes for Honkai: Star Rail |
