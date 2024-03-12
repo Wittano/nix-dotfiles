@@ -16,11 +16,6 @@
 
   dontWrapQtApps = true;
 
-  propagatedBuildInputs = [
-    plasma-framework
-    plasma-workspace
-  ];
-
   installPhase = ''
     mkdir -p $out/share/sddm/themes
     cp -r ./Wings\ SDDM\ Themes/Wings-SDDM $out/share/sddm/themes/wings

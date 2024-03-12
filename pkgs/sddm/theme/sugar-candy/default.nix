@@ -15,11 +15,6 @@
 
   dontWrapQtApps = true;
 
-  propagatedBuildInputs = [
-    plasma-framework
-    plasma-workspace
-  ];
-
   installPhase = ''
     mkdir -p $out/share/sddm/themes
     cp -r . $out/share/sddm/themes/sugar-candy

@@ -16,11 +16,6 @@
 
   dontWrapQtApps = true;
 
-  propagatedBuildInputs = [
-    plasma-framework
-    plasma-workspace
-  ];
-
   installPhase = ''
     mkdir -p $out/share/sddm/themes
     cp -r ./Dexy-Color-SDDM $out/share/sddm/themes/dexy
