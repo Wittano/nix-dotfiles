@@ -27,7 +27,8 @@ jobs:
             plenary-nvim,
             template-nvim,
             osu-lazer,
-            osu-mime
+            osu-mime,
+            honkai-railway
           ]
     runs-on: ubuntu-latest
     steps:
@@ -40,9 +41,18 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Check flake lock diff
         id: flake-diff
+        env:
+          pkgName: ${{ matrix.packages }}
         run: |
+          PKG_DIR=$(find ./pkgs -type d -iname $pkgName)
+          if [ -n "$PKG_DIR" ]; then
+            FILE_DIFF=$(git diff HEAD~1 -- $PKG_DIR)
+          else
+            FILE_DIFF=""
+          fi
+
           DIFF=$(git diff HEAD~1 -- flake.lock)
-          if [ -n "$DIFF" ]; then
+          if [ -n "$DIFF" ] || [ -n $FILE_DIFF ]; then
             echo "raw-diff=1" >> $GITHUB_OUTPUT
           fi
       - name: "Install Cachix"
