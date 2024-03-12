@@ -52,7 +52,7 @@ jobs:
           fi
 
           DIFF=$(git diff HEAD~1 -- flake.lock)
-          if [ -n "$DIFF" ] || [ -n $FILE_DIFF ]; then
+          if [ -n "$DIFF" ] || [ -n "$FILE_DIFF" ]; then
             echo "raw-diff=1" >> $GITHUB_OUTPUT
           fi
       - name: "Install Cachix"
