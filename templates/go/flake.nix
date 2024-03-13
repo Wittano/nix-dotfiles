@@ -19,12 +19,17 @@
       devShells.${system}.default = pkgs.mkShell {
         hardeningDisable = [ "all" ];
 
+        GOROOT = "${pkgs.go}/share/go";
         DEBUG_ARGS = "";
 
         buildInputs = with pkgs; [
+          # GO
           go
           gotools
           gnumake
+
+          # Github actions
+          act
         ];
       };
     };
