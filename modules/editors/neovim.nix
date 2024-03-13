@@ -160,7 +160,6 @@ in
               };
             };
             servers = {
-              rnix-lsp.enable = true;
               rust-analyzer = {
                 enable = true;
                 installRustc = true;
