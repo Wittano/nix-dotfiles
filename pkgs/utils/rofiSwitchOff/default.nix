@@ -4,7 +4,7 @@
 , writeShellApplication
 }: writeShellApplication {
   name = "switch-off";
-  runtimeInputs = [ rofi toybox systemd ];
+  runtimeInputs = [ rofi toybox ];
   text = ''
     SHUTDOWN="Shutdown"
     LOGOUT="Logout"
@@ -14,7 +14,7 @@
 
     case $CHOICE in
     "$SHUTDOWN")
-      poweroff
+      ${systemd}/bin/poweroff
       ;;
     "$LOGOUT")
       QTILE=$(pgrep qtile)
@@ -23,7 +23,7 @@
       kill -9 "$BSPWM"
       ;;
     "$REBOOT")
-      reboot
+      ${systemd}/bin/reboot
       ;;
     "*")
       exit 1
