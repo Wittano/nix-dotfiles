@@ -19,6 +19,10 @@ let
     '';
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
     "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+
+  fixedMindustry = pkgs.mindustry.override {
+    gradle = pkgs.gradle_7;
+  };
 in
 {
   options = {
@@ -64,7 +68,7 @@ in
       xivlauncher # FFXIV launcher
       osuLazer
       airshipper # Veloren
-      mindustry # Mindustry
+      fixedMindustry # Mindustry
     ];
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
