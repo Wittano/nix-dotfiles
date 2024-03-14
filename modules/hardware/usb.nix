@@ -1,12 +1,4 @@
-{ config, pkgs, ... }:
-let
-  mountUSBScript = pkgs.writeScriptBin "mount.sh" ''
-    ${pkgs.udisks2}/bin/udisksctl mount -b "/dev/$2"
-  '';
-  unmountUSBScript = pkgs.writeScriptBin "unmount.sh" ''
-    ${pkgs.udisks2}/bin/udisksctl unmount -b "/dev/$2"
-  '';
-in {
+{ config, pkgs, ... }: {
   config = {
     services.udisks2 = {
       enable = true;

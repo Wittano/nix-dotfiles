@@ -15,13 +15,15 @@
         let
           rpath = lib.strings.makeLibraryPath (with pkgs; [ xorg.libX11 glibc libglvnd fontconfig ]);
         in
-        pkgs.writeScriptBin "fixSkiko" /*bash*/ ''
-          #!/usr/bin/env bash
-
-          for f in $(find $HOME/.skiko -iname libskiko-linux-x64.so); do
-            ${pkgs.patchelf}/bin/patchelf --set-rpath "${rpath}" "$f" && echo "Patched $f"
-          done
-        '';
+        pkgs.writeShellApplication {
+          name = "fixSkiko";
+          runtimeInputs = with pkgs; [ patchelf ];
+          text = ''
+            for f in $(find $HOME/.skiko -iname libskiko-linux-x64.so); do
+              patchelf --set-rpath "${rpath}" "$f" && echo "Patched $f"
+            done
+          '';
+        };
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {

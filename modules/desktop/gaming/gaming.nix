@@ -4,19 +4,20 @@ let
   cfg = config.modules.desktop.gaming;
   osuLazer = privateRepo.osu-lazer;
 
-  fixAge2Sync = pkgs.writeScriptBin "fixAge2Sync" /*bash*/
-    ''
-      #!/usr/bin/env bash
-          
+  fixAge2Sync = pkgs.writeShellApplication {
+    name = "fixAge2Sync";
+    runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
+    text = ''
       cd /mnt/gaming/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
 
       if [ ! -e "vc_redist.x64.exe" ]; then
-          ${pkgs.wget}/bin/wget "https://aka.ms/vs/16/release/vc_redist.x64.exe"
+          wget "https://aka.ms/vs/16/release/vc_redist.x64.exe"
       fi
 
-      sudo ${pkgs.cabextract}/bin/cabextract vc_redist.x64.exe
-      sudo ${pkgs.cabextract}/bin/cabextract a10
+      sudo cabextract vc_redist.x64.exe
+      sudo cabextract a10
     '';
+  };
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
     "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
 

@@ -1,31 +1,33 @@
 { toybox
 , systemd
 , rofi
-, writeScriptBin
-}: writeScriptBin "switch-off" /*bash*/ ''
-  #!/usr/bin/env bash
+, writeShellApplication
+}: writeShellApplication {
+  name = "switch-off";
+  runtimeInputs = [ rofi toybox systemd ];
+  text = ''
+    SHUTDOWN="Shutdown"
+    LOGOUT="Logout"
+    REBOOT="Reboot"
 
-  SHUTDOWN="Shutdown"
-  LOGOUT="Logout"
-  REBOOT="Reboot"
+    CHOICE=$(printf "%s\n%s\n%s" $SHUTDOWN $LOGOUT $REBOOT | rofi -dmenu)
 
-  CHOICE=$(${toybox}/bin/printf "%s\n%s\n%s" $SHUTDOWN $LOGOUT $REBOOT | ${rofi}/bin/rofi -dmenu)
-
-  case $CHOICE in
-  "$SHUTDOWN")
-    ${systemd}/bin/poweroff
-    ;;
-  "$LOGOUT")
-    QTILE=$(${toybox}/bin/pgrep qtile)
-    BSPWM=$(${toybox}/bin/pgrep bspwm)
-    ${toybox}/bin/kill -9 "$QTILE"
-    ${toybox}/bin/kill -9 "$BSPWM"
-    ;;
-  "$REBOOT")
-    ${systemd}/bin/reboot
-    ;;
-  "*")
-    exit 1
-    ;;
-  esac
-''
+    case $CHOICE in
+    "$SHUTDOWN")
+      poweroff
+      ;;
+    "$LOGOUT")
+      QTILE=$(pgrep qtile)
+      BSPWM=$(pgrep bspwm)
+      kill -9 "$QTILE"
+      kill -9 "$BSPWM"
+      ;;
+    "$REBOOT")
+      reboot
+      ;;
+    "*")
+      exit 1
+      ;;
+    esac
+  '';
+}
