@@ -18,7 +18,7 @@
           ./../configuration.nix
           ./../hosts/${hostname}/configuration.nix
 
-          inputs.filebot.nixosModules."filebot"
+          inputs.filebot.nixosModules.default
           inputs.agenix.nixosModules.default
           inputs.nixvim.nixosModules.nixvim
           inputs.aagl.nixosModules.default
