@@ -45,6 +45,7 @@
       };
       themes.catppuccin.enable = true;
       dev.ide.list = [ "go" ];
+      editors.neovim.enable = true;
       hardware = {
         sound.enable = true;
         grub = {
