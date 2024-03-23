@@ -43,6 +43,7 @@ in
       # Communicator
       telegram-desktop
       signal-desktop
+      element-desktop # matrix communicator
       discord
     ];
   };
