@@ -1,6 +1,8 @@
 name: Build Wittano nix repository
 run-name: Build Wittano nix repository
 on:
+  repository_dispatch:
+    types: [create-pull-request]
   push:
     branches:
       - 'main'

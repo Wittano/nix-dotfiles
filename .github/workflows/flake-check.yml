@@ -1,5 +1,7 @@
 name: Check flake repository
 on:
+  repository_dispatch:
+    types: [create-pull-request]
   pull_request:
     types: [opened, edited, reopened, synchronize]
   push:
