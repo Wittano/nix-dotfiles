@@ -21,10 +21,10 @@ in
 
   config = mkIf cfg.enable {
     boot.loader.grub = {
+      splashImage = "${cfg.theme}/background.png";
       efiSupport = true;
       enable = true;
       theme = cfg.theme;
-      useOSProber = true;
       device = "nodev";
     };
   };
