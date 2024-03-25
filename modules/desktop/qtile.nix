@@ -18,7 +18,6 @@ in
     nitrogen
     gtk
     dunst
-    ranger
     picom
     tmux
     kitty

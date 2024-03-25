@@ -12,40 +12,46 @@ in
   };
 
   config = mkIf (cfg.enable) {
-    home-manager.users.wittano.home.packages = with pkgs; [
-      # Utils
-      flameshot
-      kazam
+    programs.file-roller.enable = true; # Archive explorer
 
-      # Web browser
-      vivaldi
+    home-manager.users.wittano = {
+      programs.fish.shellAliases.open = "xdg-open";
+      home.packages = with pkgs; [
+        # Utils
+        flameshot
+        kazam
 
-      # Utils 
-      thunderbird
-      gnome.eog
-      evince
-      onlyoffice-bin
-      soundux
-      figma-linux
+        # Web browser
+        vivaldi
 
-      # Apps
-      spotify
-      unstable.freetube # Youtube desktop
-      streamlink-twitch-gui-bin # Twitch desktop
-      mpv
-      joplin-desktop
-      vscodium
+        # Utils 
+        thunderbird # Mail
+        gnome.eog # Image viewer
+        evince # PDF viever
+        onlyoffice-bin # Office staff
+        soundux
+        figma-linux # Fi
+        cinnamon.nemo # File explorer
 
-      # Security
-      bitwarden
-      keepassxc
+        # Apps
+        spotify
+        unstable.freetube # Youtube desktop
+        streamlink-twitch-gui-bin # Twitch desktop
+        mpv
+        joplin-desktop
+        vscodium
 
-      # Communicator
-      telegram-desktop
-      signal-desktop
-      element-desktop # matrix communicator
-      discord
-    ];
+        # Security
+        bitwarden
+        keepassxc
+
+        # Communicator
+        telegram-desktop
+        signal-desktop
+        element-desktop # matrix communicator
+        discord
+      ];
+    };
   };
 }
 
