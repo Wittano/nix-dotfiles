@@ -13,6 +13,7 @@ in
 
   config = mkIf (cfg.enable) {
     programs.file-roller.enable = true; # Archive explorer
+    programs.evince.enable = true; # PDF viever
 
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";
@@ -27,7 +28,6 @@ in
         # Utils 
         thunderbird # Mail
         gnome.eog # Image viewer
-        evince # PDF viever
         onlyoffice-bin # Office staff
         soundux
         figma-linux # Fi

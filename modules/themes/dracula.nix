@@ -2,6 +2,7 @@
 with lib;
 with lib.my;
 let
+  # TODO Migrate theme to GTK app or Openbox configuration
   cfg = config.modules.themes.dracula;
   draculaOpenbox = pkgs.fetchFromGitHub {
     owner = "dracula";

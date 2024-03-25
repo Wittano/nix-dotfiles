@@ -43,7 +43,6 @@
           theme = "sugar-candy";
         };
       };
-      themes.catppuccin.enable = true;
       dev.ide.list = [ "go" ];
       editors.neovim.enable = true;
       hardware = {
