@@ -30,7 +30,7 @@ in
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
         soundux
-        figma-linux # Fi
+        figma-linux # Figma
         cinnamon.nemo # File explorer
 
         # Apps
