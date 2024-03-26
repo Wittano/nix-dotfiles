@@ -17,6 +17,7 @@ in
   config = mkIf (cfg.enable) (mkMerge (with desktopApps; [
     nitrogen
     gtk
+    qt
     dunst
     picom
     tmux

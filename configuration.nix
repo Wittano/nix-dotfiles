@@ -145,13 +145,6 @@
     services.autoUpgrade.enable = true;
   };
 
-  # QT
-  qt = {
-    enable = true;
-    platformTheme = "qt5ct";
-    style = "adwaita-dark";
-  };
-
   # System
   system.stateVersion = "23.11";
 
