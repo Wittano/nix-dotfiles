@@ -1,7 +1,9 @@
-{ pkgs, lib, home-manager, dotfiles, cfg, ... }:
+{ config, pkgs, lib, home-manager, dotfiles, cfg, ... }:
 with lib;
 with lib.my;
 {
+  modules.desktop.qtile.autostartPrograms = [ "nitrogen --restore" ];
+
   home-manager.users.wittano = {
     home.packages = with pkgs; [ nitrogen ];
 

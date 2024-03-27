@@ -4,6 +4,31 @@ with lib.my;
 let
   cfg = config.modules.desktop.qtile;
   desktopApps = apps.desktopApps config cfg;
+  programs = builtins.concatStringsSep "\n" (builtins.map (x: ''"${x}"'') cfg.autostartPrograms);
+  autostartScript = pkgs.writeShellScript "autostart.sh" ''
+    export DISPLAY=":0"
+    
+    log_dir=$HOME/.local/share/qtile
+
+    _log_app() {
+      exec_path=$(echo "$1" | awk '{ print $1 }')
+      app_name=$(basename "$exec_path")
+      time=$(date +"%D %T")
+
+      echo "[autostart] $time: Launch $app_name"
+      ${pkgs.bash}/bin/bash -c "$1" 2>"$log_dir/$app_name.log" || echo "[warning] $" &
+    }
+
+    declare -a programs
+
+    programs=(${programs})
+
+    IFS=""
+
+    for app in ''${programs[*]}; do
+      _log_app "$app"
+    done
+  '';
 in
 {
   options.modules.desktop.qtile = {
@@ -12,10 +37,16 @@ in
       Enable dev mode.
       Special mode, that every external configuration will be mutable
     '';
+    autostartPrograms = mkOption {
+      type = types.listOf types.str;
+      example = [ "${pkgs.hello}/bin/hello --special-args" ];
+      default = [ ];
+      description = "list of programs, that should start on QTILE startup";
+    };
   };
 
   config = mkIf (cfg.enable) (mkMerge (with desktopApps; [
-    nitrogen
+    feh
     gtk
     qt
     dunst
@@ -25,11 +56,11 @@ in
     rofi
     {
       home-manager.users.wittano = {
-        home.activation.linkMutableQtileConfig =
-          link.createMutableLinkActivation cfg "qtile";
+        home.activation.linkMutableQtileConfig = link.createMutableLinkActivation cfg "qtile";
 
-        xdg.configFile = mkIf (cfg.enableDevMode == false) {
-          qtile.source = dotfiles.qtile.source;
+        xdg.configFile = {
+          qtile.source = mkIf (cfg.enableDevMode == false) dotfiles.qtile.source;
+          "autostart.sh".source = autostartScript;
         };
       };
 
@@ -39,5 +70,4 @@ in
       };
     }
   ]));
-
 }

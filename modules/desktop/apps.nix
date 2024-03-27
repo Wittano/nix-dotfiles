@@ -3,6 +3,7 @@ with lib;
 with builtins;
 let
   cfg = config.modules.desktop.apps;
+  programsWithoutArgs = builtins.map (x: meta.getExe x) autostartPrograms;
 in
 {
   options = {
@@ -14,6 +15,15 @@ in
   config = mkIf (cfg.enable) {
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
+
+    modules.desktop.qtile.autostartPrograms = [
+      "vivaldi"
+      "telegram-desktop"
+      "discord"
+      "spotify"
+      "freetube"
+      "signal-desktop --use-tray-icon --no-sandbox"
+    ];
 
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";

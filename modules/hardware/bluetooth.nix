@@ -13,6 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    modules.desktop.qtile.autostartPrograms = [ "${pkgs.blueman}/bin/blueman-applet" ];
+
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
     hardware.enableAllFirmware = true;

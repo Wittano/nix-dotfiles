@@ -156,6 +156,9 @@
             # For Qtile
             python311Packages.qtile
             python311Packages.mypy
+            python311Packages.isort
+            isort
+            vscode-extensions.ms-python.vscode-pylance
 
             # Nix
             nixpkgs-fmt
