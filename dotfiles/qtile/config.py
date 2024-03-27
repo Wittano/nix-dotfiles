@@ -73,7 +73,13 @@ def autostart_hook():
 
 @hook.subscribe.client_new
 async def move_non_games_from_game_workspace(_: Window):
-    games_regex = [re.compile(x) for x in games_staff]
+    games_regex: List[re.Pattern] = []
+
+    for rex in games_regex:
+        try:
+            games_regex.append(re.compile(rex))
+        except re.error as err:
+            libqtile.log_utils.logger.error(f"Failed compile regex '{rex}', cause: {err}")
 
     windows: List[Window] = list(
         filter(lambda window: True not in [bool(x.search(window.get_wm_class()[0])) for x in games_regex],

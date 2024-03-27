@@ -2,6 +2,7 @@ import re
 from itertools import chain
 from typing import List, Tuple, Union
 
+from libqtile.log_utils import logger
 from libqtile.config import Group, Match
 
 _default_groups = [
@@ -23,24 +24,23 @@ class _WindowMatch:
 
 games_staff: List[str] = [
     "lutris",
-    "Paradox Launcher",
     "Shogun2",
     "openttd",
     "factorio",
     "Stardew Valley",
     "Castle Story",
+    "The Honkers Railway Launcher",
+    "PrismLauncher",
     r"War Thunder*",
-    r".x86_64$",
-    r".amd64$",
-    r".exe$",
-    r".x64$",
+    r".x86_64",
+    r".amd64",
+    r".exe",
+    r".x64",
     r"[Ll]inux$",
-    r"^([Mm]inecraft)(.+)",
     r"steam_app*",
     r"[Ss]team*",
     r"[Mm]ono",
     r"[Mm]inecraft*",
-    r"[Pp]rism[lL]auncher",
 ]
 
 _web_browsers: List[str] = [
@@ -67,23 +67,25 @@ _science_staff: List[str] = ["Boincmgr", "Virt-manager", "VirtualBox Manager"]
 _music_staff: List[str] = [
     "Qmmp",
     "player",
-    r"*Shortwave$",
     "Rhythmbox",
+    r"[sS]potify*",
 ]
 
-_chat_staff: List[str] = ["discord", r"[sS]ignal*" "telegram-desktop" "TelegramDesktop"]
+_chat_staff: List[str] = ["discord", r"[sS]ignal*", r"[eE]lement", "telegram-desktop"]
 
-_doc_staff: List[str] = ["obsidian", "Evince"]
+_doc_staff: List[str] = ["obsidian", "Evince", r"[eE]og", r"[jJ]oplin"]
 
 _matches: List[_WindowMatch] = [
-    _WindowMatch(group="5", match_rule=Match(wm_class="discord")),
     _WindowMatch(group="4", match_rule=Match(wm_class=re.compile(r"[tT]hunderbird"))),
-    _WindowMatch(group="3", match_rule=Match(wm_class="Org.gnome.Nautilus")),
-    _WindowMatch(group="1", match_rule=Match(wm_class="Postman")),
-    _WindowMatch(group="5", match_rule=Match(wm_class=re.compile("[sS]ignal*"))),
-    _WindowMatch(group="4", match_rule=Match(wm_class=re.compile("[sS]potify*"))),
-    _WindowMatch(group="5", match_rule=Match(wm_class=re.compile("telegram-desktop"))),
     _WindowMatch(group="4", match_rule=Match(wm_class=re.compile("[kK]rita*"))),
+
+    _WindowMatch(group="3", match_rule=Match(wm_class="Org.gnome.Nautilus")),
+    _WindowMatch(group="3", match_rule=Match(wm_class=r"[nN]emo")),
+    _WindowMatch(group="3", match_rule=Match(wm_class="FreeTube")),
+    _WindowMatch(group="3", match_rule=Match(wm_class="streamlink-twitch-gui")),
+    _WindowMatch(group="3", match_rule=Match(wm_class=r"(gl)|(mpv)")),
+
+    _WindowMatch(group="1", match_rule=Match(wm_class="Postman")),
 ]
 
 
@@ -103,7 +105,8 @@ def _get_wm_name(wm_name: str) -> Union[str, re.Pattern]:
     """
     try:
         return re.compile(wm_name)
-    except re.error:
+    except re.error as err:
+        logger.error(f"Failed compile regex '{wm_name}', cause: {err}")
         return wm_name
 
 
