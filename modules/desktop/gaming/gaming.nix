@@ -3,12 +3,13 @@ with lib;
 let
   cfg = config.modules.desktop.gaming;
   osuLazer = privateRepo.osu-lazer;
+  steamGamingDir = if cfg.enableAdditionalDisk then "/mnt/gaming" else "$HOME/.steam/steam";
 
   fixAge2Sync = pkgs.writeShellApplication {
     name = "fixAge2Sync";
     runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
     text = ''
-      cd /mnt/gaming/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
+      cd ${steamGamingDir}/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
 
       if [ ! -e "vc_redist.x64.exe" ]; then
           wget "https://aka.ms/vs/16/release/vc_redist.x64.exe"
@@ -47,30 +48,33 @@ in
     # Honkai Railway
     programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
 
-    home-manager.users.wittano.home.packages = with unstable; [
-      # Lutris
-      lutris
-      xdelta
-      xterm
-      gnome.zenity
+    home-manager.users.wittano = {
+      gtk.gtk3.bookmarks = mkIf (cfg.enableAdditionalDisk) [ "file://${steamGamingDir} Gaming" ];
+      home.packages = with unstable; [
+        # Lutris
+        lutris
+        xdelta
+        xterm
+        gnome.zenity
 
-      # Wine
-      wineWowPackages.full
+        # Wine
+        wineWowPackages.full
 
-      # fix scripts
-      fixSteamSystemTray
-      fixAge2Sync
+        # fix scripts
+        fixSteamSystemTray
+        fixAge2Sync
 
-      # FSH
-      steam-run
+        # FSH
+        steam-run
 
-      # Games
-      prismlauncher # Minecraft launcher
-      xivlauncher # FFXIV launcher
-      osuLazer
-      airshipper # Veloren
-      fixedMindustry # Mindustry
-    ];
+        # Games
+        prismlauncher # Minecraft launcher
+        xivlauncher # FFXIV launcher
+        osuLazer
+        airshipper # Veloren
+        fixedMindustry # Mindustry
+      ];
+    };
 
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
@@ -80,7 +84,7 @@ in
     };
 
     fileSystems = mkIf (cfg.enableAdditionalDisk) {
-      "/mnt/gaming" = {
+      "${steamGamingDir}" = {
         device = "/dev/disk/by-label/GAMING";
         fsType = "ext4";
       };

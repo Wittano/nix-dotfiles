@@ -1,10 +1,11 @@
-{ pkgs, home-manager, lib, cfg, privateRepo, ... }:
+{ config, pkgs, home-manager, lib, cfg, privateRepo, ... }:
 with lib;
 with lib.my;
 let
+  colloidSchemaVariant = "dracula";
   colloidIconTheme = pkgs.colloid-icon-theme.override {
-    schemeVariants = [ "all" ];
-    colorVariants = [ "all" ];
+    schemeVariants = [ colloidSchemaVariant ];
+    colorVariants = [ "default" ];
   };
   gtkSettings = {
     "gtk-toolbar-style" = "GTK_TOOLBAR_BOTH_HORIZ";
@@ -43,7 +44,7 @@ in
         package = pkgs.jetbrains-mono;
       };
       iconTheme = {
-        name = "Colloid-dark";
+        name = "Colloid-${colloidSchemaVariant}-dark";
         package = colloidIconTheme;
       };
       theme = {
@@ -59,10 +60,9 @@ in
           "file:///home/wittano/Pictures"
           "file:///home/wittano/Videos"
           "file:///home/wittano/Downloads"
-          "file:///mnt/backup Backup"
-          "file:///home/wittano/projects Projects"
-          "file:///home/wittano/.config User config"
-          "file:///mnt/raspberry Raspberry - shared folder"
+          "file:///home/wittano/projects/own Projects"
+          "file:///home/wittano/.config Config files"
+          "file://${config.environment.variables.NIX_DOTFILES} Nix dotfiles"
         ];
       };
       gtk4.extraConfig = gtkSettings;

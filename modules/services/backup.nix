@@ -60,6 +60,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    home-manager.users.wittano.gtk.gtk3.bookmarks = [ "file://${cfg.backupDir} Gaming" ];
+
     systemd.timers.backup.timerConfig = {
       OnCalendar = "*-*-* *:00:00";
       Unit = "backup.service";
