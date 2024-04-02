@@ -59,7 +59,7 @@ in
         home.activation.linkMutableQtileConfig = link.createMutableLinkActivation cfg "qtile";
 
         xdg.configFile = {
-          qtile.source = mkIf (cfg.enableDevMode == false) dotfiles.qtile.source;
+          qtile.source = dotfiles.qtile.source;
           "autostart.sh".source = autostartScript;
         };
       };
