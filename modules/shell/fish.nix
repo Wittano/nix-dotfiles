@@ -100,7 +100,6 @@ in
 
             # Programs
             neofetch = "nix run nixpkgs#neofetch";
-            btop = "nix run nixpkgs#btop";
             onefetch = "nix run nixpkgs#onefetch";
             py = "nix run nixpkgs#python3";
 
@@ -118,7 +117,6 @@ in
             scst = "sudo systemctl stop";
             scsta = "sudo systemctl start";
             sce = "sudo systemctl enable --now";
-            scd = "sudo systemctl disable --now";
             scr = "sudo systemctl restart";
             sdb = "systemd-analyze blame";
           } // templatesAliases;

@@ -50,6 +50,7 @@ in
         mpv
         joplin-desktop
         vscodium
+        tor-browser # Tor
 
         # Security
         bitwarden

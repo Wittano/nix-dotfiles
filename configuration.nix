@@ -142,12 +142,9 @@
       enableDirenv = true;
       default = true;
     };
-    services.autoUpgrade.enable = true;
   };
 
   # System
   system.stateVersion = "23.11";
-
-  security.polkit.enable = true;
 
 }
