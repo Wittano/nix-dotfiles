@@ -9,10 +9,7 @@
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  networking = {
-    networkmanager.enable = true;
-    useDHCP = lib.mkDefault true;
-  };
+  networking.useDHCP = lib.mkDefault true;
 
   fileSystems = {
     "/" = {

@@ -12,14 +12,11 @@
     {
       desktop = {
         apps.enable = true;
-        qtile = enableWithDevMode;
+        gnome.enable = true;
       };
-      editors.neovim.enable = true;
-      dev.ide.list = [ "go" "cpp" ];
+      dev.ide.list = [ "go" ];
       hardware = {
-        sound.enable = true;
         grub.enable = true;
-        wifi.enable = true;
         virtualization.enable = true;
         docker.enable = true;
         nvidia.enable = true;
@@ -30,7 +27,6 @@
           backupDir = "/mnt/backup/wittano.nixos";
         };
         syncthing.enable = true;
-        redshift.enable = true;
       };
     };
 

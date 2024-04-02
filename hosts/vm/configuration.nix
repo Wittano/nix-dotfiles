@@ -15,7 +15,7 @@
   users.users.wittano = {
     isNormalUser = true;
     description = "virt";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [ firefox vscode ];
   };
 
