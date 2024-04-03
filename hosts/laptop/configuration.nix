@@ -14,10 +14,7 @@
       nvidia.enable = true;
     };
     services = {
-      backup = {
-        enable = true;
-        backupDir = "/mnt/backup/wittano.nixos";
-      };
+      backup.enable = true;
       syncthing.enable = true;
     };
   };

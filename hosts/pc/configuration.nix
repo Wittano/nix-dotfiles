@@ -57,10 +57,7 @@
       };
       services = {
         boinc.enable = true;
-        backup = {
-          enable = true;
-          backupDir = "/mnt/backup/wittano.nixos";
-        };
+        backup.enable = true;
         ssh.enable = true;
         syncthing.enable = true;
         redshift.enable = true;

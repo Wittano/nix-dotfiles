@@ -8,9 +8,5 @@
       device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
     };
-    "/mnt/backup" = {
-      device = "/dev/disk/by-label/BACKUP";
-      fsType = "ext4";
-    };
   };
 }

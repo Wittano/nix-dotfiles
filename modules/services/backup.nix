@@ -48,70 +48,93 @@ in
   options = {
     modules.services.backup = {
       enable = mkEnableOption "Enable Backup service";
-      backupDir = mkOption {
+      device = mkOption {
+        type = types.str;
+        default = "/dev/disk/by-label/BACKUP";
+        description = "Path to backup parition device";
+        example = "/dev/disk/by-label/BACKUP_VOL_1";
+      };
+      format = mkOption {
+        type = types.str;
+        default = "ext4";
+        description = "Device partition format e.g. ext4, ntfs or zfs";
+        example = "ntfs";
+      };
+      location = mkOption {
         type = types.str;
         default = "/mnt/backup";
+        description = "Path to backup parition device";
+        example = "/mnt/devices/backup";
+      };
+      directory = mkOption {
+        type = types.str;
+        default = "/mnt/backup/wittano.nixos";
         example = "/home/$USER/backup";
-        description = ''
-          Directory, which contain your backup
-        '';
+        description = "Directory, which contain your backup";
       };
     };
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.gtk.gtk3.bookmarks = [ "file://${cfg.backupDir} Gaming" ];
+    fileSystems."${cfg.location}" = {
+      device = cfg.device;
+      fsType = cfg.format;
+    };
+
+    home-manager.users.wittano.gtk.gtk3.bookmarks = [
+      "file://${cfg.directory} Current Backup"
+      "file://${cfg.location} Backup device"
+    ];
 
     systemd.timers.backup.timerConfig = {
-      OnCalendar = "*-*-* *:00:00";
+      OnBootSec = "15m";
       Unit = "backup.service";
       OnUnitActiveSec = "1d";
     };
     systemd.services.backup = {
-      description = ''
-        Backup service for wittano home directory
-      '';
+      description = "Backup service for wittano home directory";
       serviceConfig = {
         Type = "oneshot";
         User = "wittano";
       };
       wantedBy = [ "multi-user.target" ];
       preStart = ''
-        mkdir -p ${cfg.backupDir}
-        chown wittano:users ${cfg.backupDir}
+        mkdir -p ${cfg.directory}
+        chown wittano:users ${cfg.directory}
       '';
+      path = with pkgs; [ coreutils gnutar findutils rsync pigz ];
       script = ''
-        today=$(${pkgs.coreutils}/bin/date -I)
-        base_dir=$(${pkgs.coreutils}/bin/dirname ${cfg.backupDir})
+        today=$(date -I)
+        base_dir=${cfg.location}
         archive_backup="$base_dir/wittano.backup-$today.tar"
 
         if [ -f $archive_backup ]; then
-          ${pkgs.coreutils}/bin/echo "Backup for '$today' has already created"
+          echo "Backup for '$today' has already created"
           exit 0
         fi
 
         create_archive() {
-          ${pkgs.gnutar}/bin/tar -c --use-compress-program=${pkgs.pigz}/bin/pigz -f $archive_backup ${cfg.backupDir}
+          tar -c --use-compress-program="pigz --best --recursive" -f $archive_backup ${cfg.location}
         }
 
         close_app() {
-          ${pkgs.coreutils}/bin/echo "Backup for '$today' wasn't created!"
+          echo "Backup for '$today' wasn't created!"
           exit -1
         }
 
         remove_oldest_backup() {
-          oldest_backup=$(${pkgs.findutils}/bin/find /mnt/backup -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -1 | ${pkgs.coreutils}/bin/cut -d' ' -f2-)
-          oldest_backup_name=$(${pkgs.coreutils}/bin/basename $oldest_backup)
+          oldest_backup=$(find ${cfg.location} -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | sort | head -1 | cut -d' ' -f2-)
+          oldest_backup_name="$(basename $oldest_backup)"
 
           if [[ -n "$oldest_backup" && "$oldest_backup_name" != "wittano.backup-$today.tar" ]]; then
-            ${pkgs.coreutils}/bin/rm $oldest_backup
+            rm $oldest_backup
           else
-            ${pkgs.coreutils}/bin/echo "The oldest backup wasn't found"
+            echo "The oldest backup wasn't found"
           fi
         }
 
         remove_failed_backup() {
-          ${pkgs.coreutils}/bin/echo "Failed to create backup. Check if you have space enough on disk"
+          echo "Failed to create backup. Check if you have space enough on disk"
 
           remove_oldest_backup
          
@@ -121,12 +144,12 @@ in
         resync() {
           remove_oldest_backup
 
-          ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.backupDir}
+          rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.directory}
 
           create_archive || remove_failed_backup
         }
 
-        ${pkgs.rsync}/bin/rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.backupDir} || resync
+        rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.directory} || resync
 
         create_archive || remove_failed_backup
       '';
