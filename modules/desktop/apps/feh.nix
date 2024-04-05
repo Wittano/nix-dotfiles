@@ -2,12 +2,16 @@
 with lib;
 with lib.my;
 let
-  rollWallpaper = "${pkgs.feh}/bin/feh --bg-fill --randomize ${dotfiles.wallpapers.source} --bg-fill --randomize ${dotfiles.wallpapers.source}";
+  rollWallpaper = pkgs.writeShellApplication {
+    name = "rollWallpaper";
+    runtimeInputs = with pkgs; [ feh ];
+    text = "feh --bg-fill --randomize ${dotfiles.wallpapers.source} --bg-fill --randomize ${dotfiles.wallpapers.source}";
+  };
 in
 {
   modules.desktop.qtile.autostartPrograms = [
-    rollWallpaper
+    "${rollWallpaper}/bin/rollWallpaper"
   ];
 
-  home-manager.users.wittano.programs.fish.shellAliases.rollWallpaper = rollWallpaper;
+  home-manager.users.wittano.home.packages = [ rollWallpaper ];
 }

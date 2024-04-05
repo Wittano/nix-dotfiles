@@ -67,6 +67,9 @@ def get_keybindings(groups: List[Group]) -> List[Key]:
 
         Key([SUPER_KEY, SHIFT_KEY], "q", lazy.spawn("switch-off"),
             desc="Shutdown Linux"),
+        
+        Key([SUPER_KEY], "r", lazy.spawn("rollWallpaper"),
+            desc="Change wallpaper using rollWallpaper script"),
     ]
 
     for group in groups:
