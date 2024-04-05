@@ -14,15 +14,10 @@ in
     home = {
       packages = with pkgs; [ rofi privateRepo.rofiSwitchOff ];
 
-      activation.linkMutableRofiConfig =
-        link.createMutableLinkActivation cfg "rofi";
-
       file.".local/share/rofi/themes".source =
         builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
     };
 
-    xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      rofi.source = dotfiles.rofi.source;
-    };
+    xdg.configFile.rofi.source = dotfiles.rofi.source;
   };
 }

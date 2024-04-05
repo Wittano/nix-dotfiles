@@ -7,7 +7,7 @@ with lib.my;
   home-manager.users.wittano = {
     home.packages = with pkgs; [ nitrogen ];
 
-    xdg.configFile = mkIf (cfg.enableDevMode == false) {
+    xdg.configFile = {
       "nitrogen/bg-saved.cfg".source = mapper.toCfg "bg-saved.cfg"
         {
           xin_1 = {

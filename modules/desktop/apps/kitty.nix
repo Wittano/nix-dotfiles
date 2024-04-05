@@ -2,16 +2,10 @@
 with lib;
 with lib.my; {
   home-manager.users.wittano = {
-    home = {
-      packages = with pkgs; [ kitty ];
-      activation.linkMutableKittyConfig =
-        link.createMutableLinkActivation cfg "kitty";
-    };
+    home.packages = with pkgs; [ kitty ];
 
     programs.fish.shellAliases.ssh = "kitty +kitten ssh";
 
-    xdg.configFile = mkIf (cfg.enableDevMode == false) {
-      "kitty".source = dotfiles.kitty.source;
-    };
+    xdg.configFile."kitty".source = dotfiles.kitty.source;
   };
 }

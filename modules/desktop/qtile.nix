@@ -33,10 +33,6 @@ in
 {
   options.modules.desktop.qtile = {
     enable = mkEnableOption "Enable Qtile desktop";
-    enableDevMode = mkEnableOption ''
-      Enable dev mode.
-      Special mode, that every external configuration will be mutable
-    '';
     autostartPrograms = mkOption {
       type = types.listOf types.str;
       example = [ "${pkgs.hello}/bin/hello --special-args" ];

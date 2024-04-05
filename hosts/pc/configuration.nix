@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, privateRepo, ... }: {
+{ config, pkgs, privateRepo, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
@@ -22,17 +22,10 @@
 
   programs.droidcam.enable = true;
 
-  modules =
-    let
-      enableWithDevMode = {
-        enable = true;
-        enableDevMode = isDevMode;
-      };
-    in
-    {
+  modules = {
       desktop = {
         apps.enable = true;
-        qtile = enableWithDevMode;
+        qtile.enable = true;
         gaming = {
           enable = true;
           enableAdditionalDisk = true;
