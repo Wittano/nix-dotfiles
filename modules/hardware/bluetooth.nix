@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -15,7 +15,10 @@ in {
   config = mkIf cfg.enable {
     modules.desktop.qtile.autostartPrograms = [ "${pkgs.blueman}/bin/blueman-applet" ];
 
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+      enable = true;
+      package = unstable.bluez;
+    };
     services.blueman.enable = true;
     hardware.enableAllFirmware = true;
   };
