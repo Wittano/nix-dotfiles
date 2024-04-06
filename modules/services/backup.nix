@@ -114,7 +114,7 @@ in
         fi
 
         create_archive() {
-          tar -c --use-compress-program="pigz --best --recursive" -f $archive_backup ${cfg.location}
+          tar -c --use-compress-program="pigz --best --recursive" -f $archive_backup ${cfg.directory}
         }
 
         close_app() {
