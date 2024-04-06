@@ -48,9 +48,10 @@ in
         unstable.freetube # Youtube desktop
         streamlink-twitch-gui-bin # Twitch desktop
         mpv
-        joplin-desktop
+        joplin-desktop # Notebook
         vscodium
         tor-browser # Tor
+        minder # Mind maps
 
         # Security
         bitwarden
