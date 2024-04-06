@@ -36,7 +36,7 @@
           theme = "sugar-candy";
         };
       };
-      dev.ide.list = [ "go" ];
+      dev.ide.list = [ "go" "cpp" ];
       hardware = {
         sound.enable = true;
         grub = {
