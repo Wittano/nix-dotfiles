@@ -33,7 +33,7 @@ in
         kazam
 
         # Web browser
-        vivaldi
+        unstable.vivaldi
 
         # Utils 
         thunderbird # Mail
