@@ -52,6 +52,7 @@ in
         vscodium
         tor-browser # Tor
         minder # Mind maps
+        insomnia # REST API Client
 
         # Security
         bitwarden
