@@ -3,24 +3,7 @@ with lib;
 let
   cfg = config.modules.desktop.gaming;
   osuLazer = privateRepo.osu-lazer;
-  steamGamingDir = if cfg.enableAdditionalDisk then "/mnt/gaming" else "$HOME/.steam/steam";
-
-  fixAge2Sync = pkgs.writeShellApplication {
-    name = "fixAge2Sync";
-    runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
-    text = ''
-      cd ${steamGamingDir}/SteamLibrary/steamapps/compatdata/813780/pfx/drive_c/windows/system32
-
-      if [ ! -e "vc_redist.x64.exe" ]; then
-          wget "https://aka.ms/vs/16/release/vc_redist.x64.exe"
-      fi
-
-      sudo cabextract vc_redist.x64.exe
-      sudo cabextract a10
-    '';
-  };
-  fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
-    "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+  steamGamingDir = if cfg.disk.enable then cfg.disk.path else "$HOME/.steam/steam";
 
   fixedMindustry = pkgs.mindustry.override {
     gradle = pkgs.gradle_7;
@@ -29,15 +12,16 @@ in
 {
   options = {
     modules.desktop.gaming = {
-      enable = mkEnableOption ''
-        Enable games tools
-      '';
-      enableAdditionalDisk = mkEnableOption ''
-        Add special disk to configuration      
-      '';
-      enableMihoyoGames = mkEnableOption ''
-        Install Genshin Impact and Honkai Railway
-      '';
+      enable = mkEnableOption "Enable games";
+      disk = {
+        enable = mkEnableOption "Add special disk to configuration";
+        path = mkOption {
+          type = types.str;
+          default = "/mnt/gaming";
+          description = "Path to mounted additional disk";
+        };
+      };
+      enableMihoyoGames = mkEnableOption "Install Genshin Impact and Honkai Railway";
     };
   };
 
@@ -49,7 +33,7 @@ in
     programs.honkers-railway-launcher.enable = cfg.enableMihoyoGames;
 
     home-manager.users.wittano = {
-      gtk.gtk3.bookmarks = mkIf (cfg.enableAdditionalDisk) [ "file://${steamGamingDir} Gaming" ];
+      gtk.gtk3.bookmarks = mkIf (cfg.disk.enable) [ "file://${steamGamingDir} Gaming" ];
       home.packages = with unstable; [
         # Lutris
         lutris
@@ -59,10 +43,6 @@ in
 
         # Wine
         wineWowPackages.full
-
-        # fix scripts
-        fixSteamSystemTray
-        fixAge2Sync
 
         # FSH
         steam-run
@@ -83,7 +63,7 @@ in
       package = unstable.steam;
     };
 
-    fileSystems = mkIf (cfg.enableAdditionalDisk) {
+    fileSystems = mkIf (cfg.disk.enable) {
       "${steamGamingDir}" = {
         device = "/dev/disk/by-label/GAMING";
         fsType = "ext4";

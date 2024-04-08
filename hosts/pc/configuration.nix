@@ -23,40 +23,41 @@
   programs.droidcam.enable = true;
 
   modules = {
-      desktop = {
-        apps.enable = true;
-        qtile.enable = true;
-        gaming = {
-          enable = true;
-          enableAdditionalDisk = true;
-          enableMihoyoGames = true;
-        };
-        sddm = {
-          enable = true;
-          theme = "sugar-candy";
-        };
+    desktop = {
+      apps.enable = true;
+      qtile.enable = true;
+      gaming = {
+        enable = true;
+        disk.enable = true;
+        scripts.enable = true;
+        enableMihoyoGames = true;
       };
-      dev.ide.list = [ "go" "cpp" "dotnet" ];
-      hardware = {
-        sound.enable = true;
-        grub = {
-          enable = true;
-          theme = privateRepo.honkai-railway;
-        };
-        wacom.enable = true;
-        nvidia.enable = true;
-        bluetooth.enable = true;
-        docker.enable = true;
-      };
-      services = {
-        boinc.enable = true;
-        backup.enable = true;
-        ssh.enable = true;
-        syncthing.enable = true;
-        redshift.enable = true;
-        filebot.enable = true;
-        polkit.enable = true;
+      sddm = {
+        enable = true;
+        theme = "sugar-candy";
       };
     };
+    dev.ide.list = [ "go" "cpp" "dotnet" ];
+    hardware = {
+      sound.enable = true;
+      grub = {
+        enable = true;
+        theme = privateRepo.honkai-railway;
+      };
+      wacom.enable = true;
+      nvidia.enable = true;
+      bluetooth.enable = true;
+      docker.enable = true;
+    };
+    services = {
+      boinc.enable = true;
+      backup.enable = true;
+      ssh.enable = true;
+      syncthing.enable = true;
+      redshift.enable = true;
+      filebot.enable = true;
+      polkit.enable = true;
+    };
+  };
 
 }

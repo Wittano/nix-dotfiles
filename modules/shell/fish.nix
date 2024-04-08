@@ -47,17 +47,22 @@ in
 
   options = {
     modules.shell.fish = {
-      enable = mkEnableOption ''
-        Enable fish shell
-      '';
+      enable = mkEnableOption "Enable fish shell";
+      enableDirenv = mkEnableOption "Enable direnv";
+      default = mkEnableOption "Enable fish shell as default shell for main user";
 
-      enableDirenv = mkEnableOption ''
-        Enable direnv
-      '';
-
-      default = mkEnableOption ''
-        Enable fish shell as default shell for main user
-      '';
+      # TODO Implement
+      completions = mkOption {
+        type = types.list types.attrOf;
+        default = [ ];
+        description = "list of custom completions";
+        example = [
+          {
+            name = "myprog";
+            text = "complete -c myprog -F -r";
+          }
+        ];
+      };
     };
   };
 
