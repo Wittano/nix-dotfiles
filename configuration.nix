@@ -103,7 +103,7 @@
 
     plymouth = {
       enable = true;
-      themePackages = with privateRepo; [ nixos-blur ];
+      themePackages = with privateRepo; [ nixos-blur-playmouth ];
       theme = "nixos-blur";
     };
   };

@@ -1,7 +1,5 @@
-{ privateRepo, ... }: {
-  luaConfig = ''
-    require('nvim_comment').setup()
-  '';
+{ pkgs, ... }: {
+  luaConfig = "require('nvim_comment').setup()";
 
-  deps = with privateRepo; [ nvim-comment ];
+  deps = with pkgs.vimPlugins; [ nvim-comment ];
 }

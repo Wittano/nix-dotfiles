@@ -36,7 +36,7 @@ in
       enable = true;
       cursorTheme = {
         name = "Bibata-Modern-Ice";
-        package = privateRepo.bibata-cursor-theme;
+        package = pkgs.bibata-cursors;
       };
       font = {
         name = "JetBrains Mono NL";

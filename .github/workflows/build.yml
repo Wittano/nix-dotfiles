@@ -15,21 +15,12 @@ jobs:
     strategy:
       matrix:
         packages: [
-            catppuccin-icon-theme,
-            nixos-blur,
+            nixos-blur-playmouth,
             dexy,
             sugar-candy,
             wings,
-            bibata-cursor-theme,
-            colloid-cursors-theme,
-            patcherDir,
-            rofiSwitchOff,
             gopher-nvim,
-            nvim-comment,
-            plenary-nvim,
             template-nvim,
-            osu-lazer,
-            osu-mime,
             honkai-railway
           ]
     runs-on: ubuntu-latest

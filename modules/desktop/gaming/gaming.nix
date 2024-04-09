@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.modules.desktop.gaming;
-  osuLazer = privateRepo.osu-lazer;
   steamGamingDir = if cfg.disk.enable then cfg.disk.path else "$HOME/.steam/steam";
 
   fixedMindustry = pkgs.mindustry.override {
@@ -50,7 +49,7 @@ in
         # Games
         prismlauncher # Minecraft launcher
         xivlauncher # FFXIV launcher
-        osuLazer
+        unstable.osu-lazer # osu!lazer
         airshipper # Veloren
         fixedMindustry # Mindustry
       ];

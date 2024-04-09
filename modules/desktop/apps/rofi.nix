@@ -2,6 +2,45 @@
 with lib;
 with lib.my;
 let
+  toybox = pkgs.toybox;
+  systemd = pkgs.systemd;
+
+  switchOffScript = pkgs.writeShellApplication {
+    name = "switch-off";
+    runtimeInputs = with pkgs; [ rofi toybox ];
+    text = ''
+      SHUTDOWN="Shutdown"
+      LOGOUT="Logout"
+      REBOOT="Reboot"
+
+      CHOICE=$(printf "%s\n%s\n%s" $SHUTDOWN $LOGOUT $REBOOT | rofi -dmenu)
+
+      case $CHOICE in
+      "$SHUTDOWN")
+        ${systemd}/bin/poweroff
+        ;;
+      "$LOGOUT")
+        QTILE=$(${toybox}/bin/pgrep qtile)
+        if [ -n "$QTILE" ]; then
+          echo "Kill qtile $QTILE"
+          kill -9 "$QTILE"
+        fi 
+        BSPWM=$(${toybox}/bin/pgrep bspwm)
+        if [ -n "$BSPWM" ]; then
+          kill -9 "$BSPWM"
+        fi
+        ;;
+      "$REBOOT")
+        ${systemd}/bin/reboot
+        ;;
+      "*")
+        echo "invalid option"
+        exit 1
+        ;;
+      esac
+    '';
+  };
+
   catpuccinTheme = pkgs.fetchFromGitHub {
     owner = "catppuccin";
     repo = "rofi";
@@ -12,10 +51,9 @@ in
 {
   home-manager.users.wittano = {
     home = {
-      packages = with pkgs; [ rofi privateRepo.rofiSwitchOff ];
+      packages = with pkgs; [ rofi switchOffScript ];
 
-      file.".local/share/rofi/themes".source =
-        builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
+      file.".local/share/rofi/themes".source = builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
     };
 
     xdg.configFile.rofi.source = dotfiles.rofi.source;

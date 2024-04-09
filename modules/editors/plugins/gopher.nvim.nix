@@ -19,6 +19,6 @@
     }
   '';
 
-  deps = with privateRepo; [ vimPlugins.nvim-treesitter gopher-nvim plenary-nvim ];
+  deps = with vimPlugins; [ vimPlugins.nvim-treesitter privateRepo.gopher-nvim plenary-nvim ];
 }
 
