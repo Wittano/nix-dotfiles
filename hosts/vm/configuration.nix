@@ -23,6 +23,7 @@
 
   modules = {
     services.ssh.enable = true;
+    editors.neovim.enable = true;
     desktop.openbox = {
       enable = true;
       enableDevMode = isDevMode;
