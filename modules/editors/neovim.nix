@@ -218,8 +218,7 @@ in
               tailwindcss.enable = true;
               taplo.enable = true;
               terraformls.enable = true;
-
-              # TODO Enable LSP server, when will be added to stable version of nixvim (26.12.2023)
+              nixd.enable = true;
 
               #graphql.enable = true;
               #dockerls.enable = true;

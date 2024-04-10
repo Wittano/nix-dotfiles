@@ -37,6 +37,7 @@
         theme = "sugar-candy";
       };
     };
+    editors.neovim.enable = true;
     dev.ide.list = [ "go" "cpp" "dotnet" ];
     hardware = {
       sound.enable = true;
