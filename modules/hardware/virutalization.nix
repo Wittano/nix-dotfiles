@@ -120,8 +120,12 @@ in
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
-    home-manager.users.wittano = mkIf (cfg.enableWindowsVM && config.modules.shell.fish.enable) {
-      xdg.configFile."fish/complitions/vm.fish".source = dotfiles.fish.completions."vm.fish".source;
+    modules.shell.fish.completions = mkIf (cfg.enableWindowsVM) [{
+      name = "vm";
+      value = dotfiles.fish.completions."vm.fish".source;
+    }];
+
+    home-manager.users.wittano = mkIf (cfg.enableWindowsVM) {
       programs.fish.shellAliases.vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
     };
 

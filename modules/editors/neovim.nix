@@ -7,18 +7,18 @@ in
 {
   options = {
     modules.editors.neovim = {
-      enable = mkEnableOption ''
-        Enable Neovim editor
-      '';
+      enable = mkEnableOption "Enable Neovim editor";
     };
   };
 
   config = mkIf cfg.enable {
+    modules.shell.fish.completions = [{
+      name = "tvi";
+      value = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
+    }];
+
     home-manager.users.wittano = {
       home.packages = with pkgs; [ ripgrep ];
-      xdg.configFile."fish/completions/tvi.fish".text = /*fish*/''
-        complete -c tvi -x -a "(__fish_complete_directories)"
-      '';
       programs.fish.functions.tvi.body = /*fish*/ ''
         if test -d $argv
           cd $argv

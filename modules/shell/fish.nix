@@ -42,6 +42,18 @@ let
       };
     }
   ];
+
+  completions = builtins.listToAttrs (lists.forEach cfg.completions (x: {
+    name = "fish/completions/${x.name}.fish";
+    value =
+      let
+        fieldName =
+          if builtins.typeOf x.value == "string"
+          then "text"
+          else "source";
+      in
+      { "${fieldName}" = x.value; };
+  }));
 in
 {
 
@@ -50,12 +62,21 @@ in
       enable = mkEnableOption "Enable fish shell";
       enableDirenv = mkEnableOption "Enable direnv";
       default = mkEnableOption "Enable fish shell as default shell for main user";
-
-      # TODO Implement
       completions = mkOption {
-        type = types.list types.attrOf;
+        type = with types; listOf (submodule {
+          options = {
+            name = mkOption {
+              type = str;
+              description = "Fish script name";
+            };
+            value = mkOption {
+              type = either str path;
+              description = "Fish script content";
+            };
+          };
+        });
         default = [ ];
-        description = "list of custom completions";
+        description = "List of custom completions";
         example = [
           {
             name = "myprog";
@@ -76,6 +97,8 @@ in
     environment.systemPackages = mkIf (cfg.enableDirenv) [ pkgs.direnv ];
 
     home-manager.users.wittano = {
+      xdg.configFile = completions;
+
       programs.fish = {
         enable = true;
         plugins = officialPlugins ++ customePlugins;

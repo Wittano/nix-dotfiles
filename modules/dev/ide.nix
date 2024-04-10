@@ -37,36 +37,32 @@ let
 
   installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.list;
 
-  cmdCompletions = builtins.listToAttrs (builtins.map
+  cmdCompletions = builtins.map
     (x:
       let
         path = avaiableIde."${x}".projectDir;
-        commandName = "p${x}";
       in
-      {
-        name = "fish/completions/${commandName}.fish";
-        value = {
-          text = /*fish*/ ''
-            function get_projects_dir
-              ls ${path}
-            end
+      rec {
+        name = "p${x}";
+        value = ''
+          function get_projects_dir
+            ls ${path}
+          end
 
-            for project in (get_projects_dir)
-              complete -c ${commandName} -f -a "$project"
-            end
-          '';
-        };
+          for project in (get_projects_dir)
+            complete -c ${name} -f -a "$project"
+          end
+        '';
       })
-    cfg.list);
+    cfg.list;
 
   commands = builtins.listToAttrs (builtins.map
     (x:
       let
         path = avaiableIde."${x}".projectDir;
-        commandName = "p${x}";
       in
       {
-        name = commandName;
+        name = "p${x}";
         value = {
           body = /*fish*/ ''
             set -l args_len $(count $argv)
@@ -93,9 +89,10 @@ in
   };
 
   config = mkIf ((builtins.length cfg.list) != 0) {
+    modules.shell.fish.completions = cmdCompletions;
+
     home-manager.users.wittano = {
       home.packages = installedIDEs;
-      xdg.configFile = cmdCompletions;
 
       programs.fish.functions = commands;
     };

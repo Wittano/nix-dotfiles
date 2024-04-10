@@ -43,17 +43,19 @@ in
   };
 
   config = mkIf (cfg.scripts.enable && cfg.enable) {
-    home-manager.users.wittano = {
-      home.packages = [ fixMf fixAge2Sync fixSteamSystemTray ];
-      xdg.configFile = mkIf (config.modules.shell.fish.enable) {
-        "fish/completions/mf-fix.fish".text = ''
+    modules.shell.fish.completions = [
+      {
+        name = "mf-fix";
+        value = ''
           complete -c mf-fix -s v -l verbose --no-files
           complete -c mf-fix -s h -l help --no-files
           complete -c mf-fix -s e -l executable -F -r
           complete -c mf-fix -s n -l noconfirm --no-files
         '';
-      };
-    };
+      }
+    ];
+
+    home-manager.users.wittano.home.packages = [ fixMf fixAge2Sync fixSteamSystemTray ];
   };
 
 }
