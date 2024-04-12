@@ -53,6 +53,7 @@ in
         tor-browser # Tor
         minder # Mind maps
         insomnia # REST API Client
+        mongodb-compass # MongoDB desktop client
 
         # Security
         bitwarden
