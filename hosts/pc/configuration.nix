@@ -48,6 +48,10 @@
       wacom.enable = true;
       nvidia.enable = true;
       bluetooth.enable = true;
+      virtualization = {
+        enable = true;
+        enableWindowsVM = true;
+      };
       docker.enable = true;
     };
     services = {

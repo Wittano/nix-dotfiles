@@ -10,29 +10,13 @@ in
 
   options = {
     modules.hardware.virtualization = {
-      enable = mkEnableOption ''
-        Enable virutalization tools
-      '';
-
-      enableWindowsVM = mkEnableOption ''
-        Enable Windows Gaming VM
-      '';
-
-      enableVagrant = mkEnableOption ''
-        Enable Vagrant tool for virtualization
-      '';
+      enable = mkEnableOption "Enable virutalization tools";
+      enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
+      enableVagrant = mkEnableOption "Enable Vagrant tool for virtualization";
     };
   };
 
   config = mkIf cfg.enable {
-
-    assertions = [
-      {
-        assertion = !(config.modules.desktop.gaming.enable && cfg.enableWindowsVM);
-        message = "You can't using gaming module and gaming VM";
-      }
-    ];
-
     virtualisation = {
       virtualbox.host.enable = cfg.enableVagrant;
       libvirtd = {
@@ -131,7 +115,7 @@ in
 
     boot = {
       # Check if linux kernel 6.X.X fixed problem with black screen after shutdown gaming VM
-      kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;
+      # kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
       kernelModules = [ "kvm-intel" "vifo-pci" ];
     };
