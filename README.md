@@ -1,6 +1,6 @@
 # Wittano NixOS configuration
 
-Personal repositorium configuration, packages and Nix related staff. Repository is fully support [flake](https://nixos.wiki/wiki/Flakes) and you can use packages or template in your configs:
+Personal repository configuration, packages and Nix related staff. Repository is fully support [flake](https://nixos.wiki/wiki/Flakes) and you can use packages or template in your configs:
 
 - Packages
 ```nix
