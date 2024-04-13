@@ -5,13 +5,13 @@ rec {
     builtins.mapAttrs
       (n: v:
         let
-          newPath = "${path}/${n}";
-          sourceAttrs = { source = newPath; };
+          source = path + "/${n}";
+          sourceAttrs = { inherit source; };
         in
         if v == "regular" then
           sourceAttrs
         else
-          sourceAttrs // mapDirToAttrs newPath)
+          sourceAttrs // mapDirToAttrs source)
       (attrsets.filterAttrs (n: v: n != ".git") (builtins.readDir path));
 
   toTOML = name: attrs: (pkgs.formats.toml { }).generate name attrs;

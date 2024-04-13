@@ -4,6 +4,8 @@ with lib.my;
 let
   cfg = config.modules.hardware.virtualization;
   virutalizationDir = mapper.mapDirToAttrs ./virtualization;
+
+  virshPath = "${config.virtualisation.libvirtd.package}/bin/virsh";
 in
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -39,13 +41,13 @@ in
     services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
       name = "windows";
       manage = "window";
-      start = "sudo virsh start win10";
+      start = "virsh start win10";
     }];
 
     security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
       users = [ "wittano" ];
       commands = [{
-        command = "${pkgs.libvirt}/bin/virsh start win10";
+        command = "${virshPath} start win10";
         options = [ "NOPASSWD" ];
       }];
     }];
@@ -64,8 +66,10 @@ in
         in
         [ env ];
 
+      # TODO Move hooks to virtualization.libvrit.hooks option
       preStart =
         let
+          # TODO Fix problem with boinc permission in script
           stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
             #!/usr/bin/env bash
 
@@ -104,18 +108,16 @@ in
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
-    modules.shell.fish.completions = mkIf (cfg.enableWindowsVM) [{
+    modules.shell.fish.completions = mkIf (cfg.enableVagrant) [{
       name = "vm";
       value = dotfiles.fish.completions."vm.fish".source;
     }];
 
-    home-manager.users.wittano = mkIf (cfg.enableWindowsVM) {
+    home-manager.users.wittano = mkIf (cfg.enableVagrant) {
       programs.fish.shellAliases.vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";
     };
 
     boot = {
-      # Check if linux kernel 6.X.X fixed problem with black screen after shutdown gaming VM
-      # kernelPackages = mkIf cfg.enableWindowsVM pkgs.linuxPackages_5_15;
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
       kernelModules = [ "kvm-intel" "vifo-pci" ];
     };
