@@ -94,60 +94,69 @@ in
 
     environment.shells = mkIf cfg.default (with pkgs; [ fish ]);
 
-    environment.systemPackages = mkIf (cfg.enableDirenv) [ pkgs.direnv ];
-
     home-manager.users.wittano = {
       xdg.configFile = completions;
 
-      programs.fish = {
-        enable = true;
-        plugins = officialPlugins ++ customePlugins;
-        interactiveShellInit = mkIf (cfg.enableDirenv) ''
-          direnv hook fish | source
-        '';
-        shellAliases =
-          let
-            host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
-            templatesAliases = attrsets.mapAttrs'
-              (n: v: {
-                name = "t${n}";
-                value = "${pkgs.nixFlakes}/bin/nix flake init --template $NIX_DOTFILES#${n}";
-              })
-              (builtins.readDir templateDir);
-            rebuild = name:
-              let
-                impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
-                profile = "${config.environment.variables.NIX_DOTFILES}#${name}";
-              in
-              "sudo nixos-rebuild switch --flake ${profile} ${impureFlag}";
-          in
-          {
-            xc = "xprop | grep CLASS";
-            re = rebuild host;
-            dev = rebuild "${host}-dev";
+      programs = {
+        direnv = {
+          enable = cfg.enableDirenv;
+          nix-direnv.enable = cfg.enableDirenv;
+          config = {
+            global = {
+              load_dotenv = true;
+              disable_stdin = true;
+            };
+            whitelist.prefix = [ "/home/wittano/projects" ];
+          };
+        };
 
-            # Programs
-            neofetch = "nix run nixpkgs#neofetch";
-            onefetch = "nix run nixpkgs#onefetch";
-            py = "nix run nixpkgs#python3";
+        fish = {
+          enable = true;
+          plugins = officialPlugins ++ customePlugins;
+          shellAliases =
+            let
+              host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
+              templatesAliases = attrsets.mapAttrs'
+                (n: v: {
+                  name = "t${n}";
+                  value = "${pkgs.nixFlakes}/bin/nix flake init --template $NIX_DOTFILES#${n}";
+                })
+                (builtins.readDir templateDir);
+              rebuild = name:
+                let
+                  impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
+                  profile = "${config.environment.variables.NIX_DOTFILES}#${name}";
+                in
+                "sudo nixos-rebuild switch --flake ${profile} ${impureFlag}";
+            in
+            {
+              xc = "xprop | grep CLASS";
+              re = rebuild host;
+              dev = rebuild "${host}-dev";
 
-            # Projects
-            pnix = "cd $NIX_DOTFILES";
-            plab = "cd $HOME/projects/config/home-lab";
+              # Programs
+              neofetch = "nix run nixpkgs#neofetch";
+              onefetch = "nix run nixpkgs#onefetch";
+              py = "nix run nixpkgs#python3";
 
-            # Nix
-            nfu = "nix flake update";
-            nfc = "nix flake check";
-            repl = "nix repl -f '<nixpkgs>'";
+              # Projects
+              pnix = "cd $NIX_DOTFILES";
+              plab = "cd $HOME/projects/config/home-lab";
 
-            # systemd
-            scs = "sudo systemctl status";
-            scst = "sudo systemctl stop";
-            scsta = "sudo systemctl start";
-            sce = "sudo systemctl enable --now";
-            scr = "sudo systemctl restart";
-            sdb = "systemd-analyze blame";
-          } // templatesAliases;
+              # Nix
+              nfu = "nix flake update";
+              nfc = "nix flake check";
+              repl = "nix repl -f '<nixpkgs>'";
+
+              # systemd
+              scs = "sudo systemctl status";
+              scst = "sudo systemctl stop";
+              scsta = "sudo systemctl start";
+              sce = "sudo systemctl enable --now";
+              scr = "sudo systemctl restart";
+              sdb = "systemd-analyze blame";
+            } // templatesAliases;
+        };
       };
     };
   };
