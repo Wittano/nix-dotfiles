@@ -1,4 +1,6 @@
 { ... }: {
+  hardware.cpu.intel.updateMicrocode = true;
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/ROOT";
