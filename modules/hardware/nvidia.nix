@@ -7,9 +7,7 @@ in
 {
   options = {
     modules.hardware.nvidia = {
-      enable = mkEnableOption ''
-        Enable nvidia drivers
-      '';
+      enable = mkEnableOption "Enable nvidia drivers";
     };
   };
 

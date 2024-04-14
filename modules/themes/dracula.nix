@@ -18,9 +18,7 @@ in
 {
   options = {
     modules.themes.dracula = {
-      enable = mkEnableOption ''
-        Enable dracula theme as system theme
-      '';
+      enable = mkEnableOption "Enable dracula theme as system theme";
     };
   };
 
@@ -28,9 +26,7 @@ in
     environment.systemPackages = with pkgs; [ dracula-theme ];
 
     home-manager.users.wittano.home.file = {
-      ".themes/Dracula-withoutBorder".source =
-        builtins.toPath "${draculaOpenbox}/Dracula-withoutBorder";
-
+      ".themes/Dracula-withoutBorder".source = draculaOpenbox + "/Dracula-withoutBorder";
       ".icons/dracula".source = draculaIcon;
     };
   };

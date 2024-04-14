@@ -7,9 +7,7 @@ in
 {
   options = {
     modules.services.prometheus = {
-      enable = mkEnableOption ''
-        Enable prometheus service
-      '';
+      enable = mkEnableOption "Enable prometheus service";
     };
   };
 

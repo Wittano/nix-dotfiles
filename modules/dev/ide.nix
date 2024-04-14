@@ -35,6 +35,8 @@ let
     };
   };
 
+  ideNames = builtins.attrNames avaiableIde;
+
   installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.list;
 
   cmdCompletions = builtins.map
@@ -81,7 +83,7 @@ in
   options = {
     modules.dev.ide = {
       list = mkOption {
-        type = types.listOf types.str;
+        type = types.listOf (types.enum ideNames);
         description = "List of enabled IDEs";
         default = [ ];
       };

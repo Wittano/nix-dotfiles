@@ -7,9 +7,7 @@ in
 {
   options = {
     modules.hardware.grub = {
-      enable = mkEnableOption ''
-        Enable GRUB2 as bootloader
-      '';
+      enable = mkEnableOption "Enable GRUB2 as bootloader";
       theme = mkOption {
         type = types.nullOr types.package;
         default = null;

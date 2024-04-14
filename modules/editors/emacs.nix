@@ -12,14 +12,10 @@ in
 {
   options = {
     modules.editors.emacs = {
-      enable = mkEnableOption ''
-        Enable Emacs editor
-      '';
-      enableDevMode = mkEnableOption ''
-        Enable Emacs configuration in dev mode
-      '';
+      enable = mkEnableOption "Enable Emacs editor";
+      enableDevMode = mkEnableOption "Enable Emacs configuration in dev mode";
       version = mkOption {
-        type = types.str;
+        type = types.enum [ "doom" "own" ];
         default = "doom";
         example = "own";
         description = ''
@@ -47,9 +43,7 @@ in
         file.".doom.d" =
           mkIf (cfg.enableDevMode == false && cfg.version == "doom") {
             source = dotfiles.".doom.d".source;
-            onChange = ''
-              ${pkgs.systemd}/bin/systemctl --user restart emacs.service
-            '';
+            onChange = "${pkgs.systemd}/bin/systemctl --user restart emacs.service";
           };
       };
 

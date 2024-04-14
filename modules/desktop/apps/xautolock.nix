@@ -3,6 +3,6 @@
     enable = true;
     time = 15;
     enableNotifier = true;
-    notifier = ''${pkgs.libnotify}/bin/notify-send "Locking in 10 seconds"'';
+    notifier = "${pkgs.libnotify}/bin/notify-send 'Locking in 10 seconds'";
   };
 }

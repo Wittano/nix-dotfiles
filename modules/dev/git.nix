@@ -5,11 +5,7 @@ in
 {
   options = {
     modules.dev.git = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable git";
-      };
+      enable = mkEnableOption "Enable git";
     };
   };
 

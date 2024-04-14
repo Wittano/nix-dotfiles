@@ -6,16 +6,12 @@ let
 in {
   options = {
     modules.hardware.sound = {
-      enable = mkEnableOption ''
-        Enable sound
-      '';
+      enable = mkEnableOption "Enable sound";
       driver = mkOption {
-        type = types.str;
+        type = types.enum [ "pulseaudio" "pipewire" ];
         default = "pulseaudio";
         example = "pipewire";
-        description = ''
-          Select sound driver
-        '';
+        description = "Select sound driver";
       };
     };
   };

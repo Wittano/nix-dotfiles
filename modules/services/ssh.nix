@@ -6,9 +6,7 @@ let
 in {
   options = {
     modules.services.ssh = {
-      enable = mkEnableOption ''
-        Enable ssh
-      '';
+      enable = mkEnableOption "Enable ssh";
     };
   };
 
