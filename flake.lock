@@ -259,15 +259,15 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1713092828,
-        "narHash": "sha256-5BvP4sQnM3sbW2pyoNAF9slqwCq6zi9PUpiz9W2GnX0=",
-        "owner": "Wittano",
+        "lastModified": 1713094772,
+        "narHash": "sha256-bfTpngjaTO8tdNsox/nSSjHybRDn/e0Pe064XPcSrcI=",
+        "owner": "voidlhf",
         "repo": "StarRailGrubThemes",
-        "rev": "3bc4f2d75a7e344524ecc344ef5b6b9c45391d4a",
+        "rev": "b1aefcf3eb21124491bd8ca7ca454422f51efb30",
         "type": "github"
       },
       "original": {
-        "owner": "Wittano",
+        "owner": "voidlhf",
         "repo": "StarRailGrubThemes",
         "type": "github"
       }
