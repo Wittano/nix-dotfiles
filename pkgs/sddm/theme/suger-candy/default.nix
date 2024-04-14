@@ -15,7 +15,7 @@
 
   installPhase = ''
     mkdir -p $out/share/sddm/themes
-    cp -r . $out/share/sddm/themes/sugar-candy
+    cp -r . $out/share/sddm/themes/suger-candy
   '';
 
   meta = with lib; {
