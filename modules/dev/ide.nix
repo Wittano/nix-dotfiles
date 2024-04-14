@@ -39,6 +39,28 @@ let
 
   installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.list;
 
+  mkCommand = path: {
+    body = /*fish*/ ''
+      set -l args_len $(count $argv)
+
+      if test "$args_len" -eq 0
+        cd ${path}
+      else
+        cd ${path}/$argv
+      end
+    '';
+  };
+
+  mkCompletions = name: path: ''
+    function get_projects_dir
+      ls ${path}
+    end
+
+    for project in (get_projects_dir)
+      complete -c ${name} -f -a "$project"
+    end
+  '';
+
   cmdCompletions = builtins.map
     (x:
       let
@@ -46,15 +68,7 @@ let
       in
       rec {
         name = "p${x}";
-        value = ''
-          function get_projects_dir
-            ls ${path}
-          end
-
-          for project in (get_projects_dir)
-            complete -c ${name} -f -a "$project"
-          end
-        '';
+        value = mkCompletions name path;
       })
     cfg.list;
 
@@ -65,19 +79,17 @@ let
       in
       {
         name = "p${x}";
-        value = {
-          body = /*fish*/ ''
-            set -l args_len $(count $argv)
-
-            if test "$args_len" -eq 0
-              cd ${path}
-            else
-              cd ${path}/$argv
-            end
-          '';
-        };
+        value = mkCommand path;
       })
     cfg.list);
+
+  forkCommand.pfork = mkCommand "$HOME/projects/own/fork";
+  forkCompletions = [
+    rec {
+      name = "pfork";
+      value = mkCompletions name "$HOME/projects/own/fork";
+    }
+  ];
 in
 {
   options = {
@@ -91,12 +103,12 @@ in
   };
 
   config = mkIf ((builtins.length cfg.list) != 0) {
-    modules.shell.fish.completions = cmdCompletions;
+    modules.shell.fish.completions = cmdCompletions ++ forkCompletions;
 
     home-manager.users.wittano = {
       home.packages = installedIDEs;
 
-      programs.fish.functions = commands;
+      programs.fish.functions = commands // forkCommand;
     };
   };
 }
