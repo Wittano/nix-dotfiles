@@ -1,10 +1,22 @@
 { config, pkgs, lib, privateRepo, ... }:
 with lib;
 with lib.my;
-let 
+let
   cfg = config.modules.desktop.sddm;
-  sddmThemeNames = builtins.attrNames (builtins.readDir ./../../pkgs/sddm);
-in {
+  splitByMinus = n: strings.splitString "-" n;
+
+  pkgNames = attrsets.mapAttrsToList (_: v: if v ? pname then v.pname else v.name) privateRepo;
+  sddmPkgNames = builtins.filter (x: builtins.any (e: e == "sddm") (splitByMinus x)) pkgNames;
+  sddmThemeNames = builtins.map
+    (x:
+      let
+        themeNameParts = splitByMinus (builtins.head (strings.splitString "sddm" x));
+        themeName = lists.take ((builtins.length themeNameParts) - 1) themeNameParts;
+      in
+      strings.concatStringsSep "-" themeName)
+    sddmPkgNames;
+in
+{
 
   options.modules.desktop.sddm = {
     enable = mkEnableOption "Enable SDDM as display manager";
@@ -12,7 +24,7 @@ in {
       type = types.enum sddmThemeNames;
       default = "dexy";
       example = "wings";
-      description = "SDDM theme from Wittano nix-repo(https://github.com/Wittano/nix-repo)";
+      description = "SDDM theme from privateRepo";
     };
   };
 

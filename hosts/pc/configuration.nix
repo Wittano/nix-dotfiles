@@ -34,7 +34,7 @@
       };
       sddm = {
         enable = true;
-        theme = "sugar-candy";
+        theme = "suger-candy";
       };
     };
     editors.neovim.enable = true;
