@@ -78,8 +78,8 @@ pkgs.mkShell {
     shellcheck
     shfmt
 
-    # Github actions
-    act
+    # Custom scripts
     testGithubActions
+    testSddmTheme
   ];
 }
