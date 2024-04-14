@@ -5,7 +5,7 @@
   version = "0.0.0";
 
   src = ./.;
-  projectFile = "Dotnet/Dotnet.csproj"; # TODO Replace path
+  projectFile = "Dotnet/Dotnet.csproj";
 
   dotnet-sdk = dotnetCorePackages.dotnet_8.sdk;
   dotnet-runtime = dotnetCorePackages.dotnet_8.runtime;

@@ -1,8 +1,6 @@
 { lib
 , stdenv
 , fetchgit
-, plasma-framework ? pkgs.libsForQt5.plasma-framework
-, plasma-workspace ? pkgs.libsForQt5.plasma-workspace
 , pkgs
 }: stdenv.mkDerivation {
   name = "suger-candy-sddm-theme";
