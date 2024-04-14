@@ -1,4 +1,4 @@
-{ config, pkgs, privateRepo, ... }: {
+{ config, pkgs, system, inputs, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
@@ -43,7 +43,7 @@
       sound.enable = true;
       grub = {
         enable = true;
-        theme = privateRepo.honkai-railway;
+        theme = inputs.honkai-railway-grub-theme.packages.${system}.dr_ratio-grub-theme;
       };
       wacom.enable = true;
       nvidia.enable = true;

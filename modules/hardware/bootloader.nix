@@ -19,7 +19,7 @@ in
 
   config = mkIf cfg.enable {
     boot.loader.grub = {
-      splashImage = "${cfg.theme}/background.png";
+      splashImage = mkIf (cfg.theme != null) "${cfg.theme}/background.png";
       efiSupport = true;
       enable = true;
       theme = cfg.theme;

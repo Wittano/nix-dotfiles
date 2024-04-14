@@ -33,6 +33,7 @@
       url = "github:nix-community/nixvim?ref=nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    honkai-railway-grub-theme.url = "github:Wittano/StarRailGrubThemes";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

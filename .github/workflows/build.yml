@@ -21,7 +21,6 @@ jobs:
             wings,
             gopher-nvim,
             template-nvim,
-            honkai-railway
           ]
     runs-on: ubuntu-latest
     steps:

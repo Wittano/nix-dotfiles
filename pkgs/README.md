@@ -8,4 +8,3 @@ List of available packages:
 | [Wings](https://github.com/L4ki/Wings-Plasma-Themes)            | wings                | Wings Themes For Plasma Desktop                                                                                                                                                                                                                   |
 | [gopher.nvim](https://github.com/olexsmir/gopher.nvim)             | gopher-nvim           | Neovim plugin for make golang development easiest
 | [template.nvim](https://github.com/nvimdev/template.nvim)          | template-nvim         | Quickly insert templates into file        |
-| [StarRailGrubThemes](https://github.com/voidlhf/StarRailGrubThemes) | honaki-railway | A pack of GRUB2 themes for Honkai: Star Rail |

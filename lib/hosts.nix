@@ -4,7 +4,7 @@
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo;
+        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo system;
         hostname = name;
         secretDir = ./../secrets;
         templateDir = ./../templates;
