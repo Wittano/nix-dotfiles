@@ -15,6 +15,7 @@ in
     '';
   };
 
+  # TODO Migrate configuration to home-manager
   config = mkIf cfg.enable (mkMerge (with desktopApps; [
     nitrogen
     picom
