@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, unstable, lib, ... }:
+{ config, pkgs, home-manager, lib, ... }:
 with lib;
 with lib.my;
 let
@@ -6,7 +6,7 @@ let
 
   avaiableIde = {
     python = {
-      package = unstable.jetbrains.pycharm-professional;
+      package = pkgs.jetbrains.pycharm-professional;
       projectDir = "$HOME/projects/own/python";
     };
     cpp = {
@@ -14,23 +14,23 @@ let
       projectDir = "$HOME/projects/own/cpp";
     };
     go = {
-      package = unstable.jetbrains.goland;
+      package = pkgs.jetbrains.goland;
       projectDir = "$HOME/projects/own/go";
     };
     dotnet = {
-      package = unstable.jetbrains.rider;
+      package = pkgs.jetbrains.rider;
       projectDir = "$HOME/projects/own/dotnet";
     };
     rust = {
-      package = unstable.jetbrains.rust-rover;
+      package = pkgs.jetbrains.rust-rover;
       projectDir = "$HOME/projects/own/rust";
     };
     jvm = {
-      package = unstable.jetbrains.idea-ultimate;
+      package = pkgs.jetbrains.idea-ultimate;
       projectDir = "$HOME/projects/own/jvm";
     };
     andorid = {
-      package = unstable.andorid-studio;
+      package = pkgs.andorid-studio;
       projectDir = "$HOME/projects/own/andorid";
     };
   };
