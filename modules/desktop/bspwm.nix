@@ -24,7 +24,7 @@ in
     rofi
     polybar
     {
-      cfg.autostartPrograms = [ "${pkgs.wmname}/bin/wmname compiz" ];
+      modules.desktop.bspwm.autostartPrograms = [ "${pkgs.wmname}/bin/wmname compiz" ];
 
       home-manager.users.wittano = {
         home.packages = with pkgs; [ gsimplecal ];
