@@ -18,4 +18,5 @@ in
     inherit lib home-manager pkgs dotfiles privateRepo unstable;
   };
   pkgs = import ./pkgs.nix { inherit lib pkgs; };
+  desktop = import ./desktop.nix { inherit lib pkgs; };
 }
