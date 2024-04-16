@@ -259,11 +259,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1713160253,
-        "narHash": "sha256-6r3Q0mtzaT+am4EJQLFCNMWn/+8Wt9TQ0QKdScgo8OM=",
+        "lastModified": 1713224719,
+        "narHash": "sha256-N1eA1pS2Vdp8QmGVyweIP06paCbvqbyRd5D8TCSzW4U=",
         "owner": "voidlhf",
         "repo": "StarRailGrubThemes",
-        "rev": "5df586f5e05b1bf95105439d9e16e283e82eb989",
+        "rev": "373f15bb5ce95a47e0b6257699f759a96966cd0b",
         "type": "github"
       },
       "original": {
@@ -368,11 +368,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1713013257,
-        "narHash": "sha256-ZEfGB3YCBVggvk0BQIqVY7J8XF/9jxQ68fCca6nib+8=",
+        "lastModified": 1713145326,
+        "narHash": "sha256-m7+IWM6mkWOg22EC5kRUFCycXsXLSU7hWmHdmBfmC3s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "90055d5e616bd943795d38808c94dbf0dd35abe8",
+        "rev": "53a2c32bc66f5ae41a28d7a9a49d321172af621e",
         "type": "github"
       },
       "original": {
