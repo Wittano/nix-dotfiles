@@ -3,13 +3,16 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.qtile;
-  desktopApps = apps.desktopApps config cfg;
+  desktopApps = desktop.mkAppsSet { inherit config cfg; };
   autostartScript = desktop.mkAutostart "qtile" cfg.autostartPrograms;
+
+  devMode = desktop.mkDevMode config cfg {
+    ".config/qtile" = dotfiles.qtile.source;
+    ".config/autostart.sh" = autostartScript;
+  };
 in
 {
-  options.modules.desktop.qtile = {
-    enable = mkEnableOption "Enable Qtile desktop";
-  } // (desktop.mkAutostartOption "qtile");
+  options.modules.desktop.qtile = desktop.mkDesktopOption { inherit devMode; };
 
   config = mkIf (cfg.enable) (mkMerge (with desktopApps; [
     feh
@@ -20,16 +23,8 @@ in
     tmux
     kitty
     rofi
+    devMode.config
     {
-      home-manager.users.wittano = {
-        home.activation.linkMutableQtileConfig = link.createMutableLinkActivation cfg "qtile";
-
-        xdg.configFile = {
-          qtile.source = dotfiles.qtile.source;
-          "autostart.sh".source = autostartScript;
-        };
-      };
-
       services.xserver = {
         enable = true;
         windowManager.qtile.enable = true;

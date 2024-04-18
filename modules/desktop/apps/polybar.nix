@@ -1,13 +1,14 @@
-{ pkgs, lib, home-manager, dotfiles, cfg, ... }:
+{ pkgs, lib, home-manager, dotfiles, config, name, ... }:
 with lib;
 with lib.my;
 {
   fonts.packages = with pkgs; [ font-awesome font-awesome_5 siji ];
 
-  home-manager.users.wittano = {
-    home.packages = with pkgs; [ polybar ];
+  # TODO Migate to home-manager options
+  home-manager.users.wittano.home.packages = with pkgs; [ polybar ];
 
-    xdg.configFile.polybar.source = dotfiles.polybar.source;
+  modules.desktop.${name}.mutableSources = {
+    ".config/polybar" = dotfiles.polybar.source;
   };
 
 }

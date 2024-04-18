@@ -1,10 +1,13 @@
-{ pkgs, lib, ... }: {
-  mkAutostartOption = desktopName: {
-    autostartPrograms = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+{ pkgs, lib, dotfiles, home-manager, privateRepo, unstable, ... }:
+with lib;
+with lib.my;
+rec {
+  mkAutostartOption = {
+    autostartPrograms = mkOption {
+      type = types.listOf types.str;
       example = [ "${pkgs.hello}/bin/hello --special-args" ];
       default = [ ];
-      description = "list of programs, that should start on ${desktopName} startup";
+      description = "list of programs, that should start on startup";
     };
   };
 
@@ -37,4 +40,50 @@
         _log_app "$app"
       done
     '';
+
+  mkDevMode = config: cfg: pathAttrs: {
+    options = {
+      enableDevMode = mkEnableOption "Enable dev mode";
+      mutableSources = mkOption {
+        type = types.attrs;
+        description = "Set of additional sources, which should be include to desktop as mutable links";
+        example = {
+          "/path/to/file" = ./test.txt;
+          "/path/to/string" = "my string";
+        };
+        default = { };
+      };
+    };
+
+    config =
+      let
+        additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
+      in
+      link.mkMutableLinks config cfg (pathAttrs // additionalSources);
+  };
+
+  mkAppsSet = { config, cfg, name ? "qtile" }:
+    let
+      sourceDir = ./../modules/desktop/apps;
+      appFiles = lib.attrsets.filterAttrs
+        (n: v: ((lib.strings.hasSuffix ".nix" n) && v == "regular"))
+        (builtins.readDir sourceDir);
+    in
+    lib.attrsets.mapAttrs'
+      (n: v: {
+        name = builtins.replaceStrings [ ".nix" ] [ "" ] n;
+        value = import "${sourceDir}/${n}" {
+          inherit cfg privateRepo pkgs dotfiles home-manager unstable config lib name;
+        };
+      })
+      appFiles;
+
+  mkDesktopOption = { devMode ? null }:
+    let
+      devModeOptions = attrsets.optionalAttrs (devMode != null && devMode ? options) devMode.options;
+      autoStartOptions = mkAutostartOption;
+    in
+    {
+      enable = mkEnableOption "Enable desktop";
+    } // devModeOptions // autoStartOptions;
 }

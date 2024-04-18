@@ -1,4 +1,4 @@
-{ cfg, pkgs, lib, home-manager, dotfiles, privateRepo, ... }:
+{ cfg, pkgs, lib, home-manager, dotfiles, privateRepo, name, ... }:
 with lib;
 with lib.my;
 let
@@ -55,7 +55,9 @@ in
 
       file.".local/share/rofi/themes".source = builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
     };
+  };
 
-    xdg.configFile.rofi.source = dotfiles.rofi.source;
+  modules.desktop.${name}.mutableSources = {
+    ".config/rofi" = dotfiles.rofi.source;
   };
 }

@@ -3,17 +3,15 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.openbox;
-  desktopApps = apps.desktopApps config cfg;
+  desktopApps = desktop.mkAppsSet { inherit config cfg; name = "openbox"; };
+
+  devMode = desktop.mkDevMode config cfg {
+    ".config/openbox" = dotfiles.openbox.source;
+    ".config/tint2" = dotfiles.tint2.source;
+  };
 in
 {
-
-  options.modules.desktop.openbox = {
-    enable = mkEnableOption "Enable Openbox desktop";
-    enableDevMode = mkEnableOption ''
-      Enable dev mode.
-      Special mode, that every external configuration will be mutable
-    '';
-  };
+  options.modules.desktop.openbox = desktop.mkDesktopOption { inherit devMode; };
 
   config = mkIf cfg.enable (mkMerge (with desktopApps; [
     nitrogen
@@ -21,30 +19,20 @@ in
     rofi
     gtk
     xautolock
-    tint2
     dunst
+    devMode.config
     {
-      home-manager.users.wittano = {
-        home = {
-          packages = with pkgs; [
-            openbox-menu
-            lxmenu-data
-            obconf
-            volumeicon
-            gsimplecal
+      home-manager.users.wittano.home.packages = with pkgs; [
+        openbox-menu
+        lxmenu-data
+        obconf
+        volumeicon
+        gsimplecal
+        tint2
 
-            # Utils
-            arandr
-          ];
-
-          activation.linkMutableOpenboxConfig = link.createMutableLinkActivation cfg "openbox";
-        };
-
-        xdg.configFile = mkIf (cfg.enableDevMode == false) {
-          openbox.source = dotfiles.openbox.source;
-        };
-
-      };
+        # Utils
+        arandr
+      ];
 
       services.xserver = {
         enable = true;

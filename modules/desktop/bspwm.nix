@@ -3,16 +3,13 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.bspwm;
-  desktopApps = apps.desktopApps config cfg;
+  desktopApps = desktop.mkAppsSet { inherit config cfg; name = "bspwm"; };
+  devMode = desktop.mkDevMode config cfg { };
 
   package = pkgs.bspwm;
 in
 {
-
-  options.modules.desktop.bspwm = {
-    enable = mkEnableOption "Enable BSPWM desktop";
-    enableDevMode = mkEnableOption "Enable dev mode. Special mode, that every external configuration will be mutable";
-  } // (desktop.mkAutostartOption "bspwm");
+  options.modules.desktop.bspwm = (desktop.mkDesktopOption { inherit devMode; });
 
   config = mkIf cfg.enable (mkMerge (with desktopApps; [
     nitrogen

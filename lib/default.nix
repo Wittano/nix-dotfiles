@@ -3,7 +3,8 @@ let
   mapper = import ./mapper.nix { inherit lib pkgs; };
   imports = import ./imports.nix { inherit lib; };
 
-  dotfiles = mapper.mapDirToAttrs ./../dotfiles;
+  dotfilesPath = ./../dotfiles;
+  dotfiles = mapper.mapDirToAttrs dotfilesPath;
 
   home-manager = inputs.home-manager;
 in
@@ -13,10 +14,7 @@ in
   hosts = import ./hosts.nix {
     inherit lib system pkgs unstable dotfiles inputs privateRepo imports;
   };
-  link = import ./link.nix { inherit lib; };
-  apps = import ./apps.nix {
-    inherit lib home-manager pkgs dotfiles privateRepo unstable;
-  };
+  link = import ./link.nix { inherit lib pkgs dotfiles dotfilesPath; };
   pkgs = import ./pkgs.nix { inherit lib pkgs; };
-  desktop = import ./desktop.nix { inherit lib pkgs; };
+  desktop = import ./desktop.nix { inherit lib pkgs home-manager dotfiles privateRepo unstable; };
 }

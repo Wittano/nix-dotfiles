@@ -1,4 +1,4 @@
-{ config, pkgs, system, inputs, ... }: {
+{ config, pkgs, system, inputs, isDevMode ? false, ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
@@ -25,7 +25,10 @@
   modules = {
     desktop = {
       apps.enable = true;
-      qtile.enable = true;
+      qtile = {
+        enable = true;
+        enableDevMode = isDevMode;
+      };
       gaming = {
         enable = true;
         disk.enable = true;

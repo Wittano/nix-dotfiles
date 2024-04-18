@@ -1,73 +1,111 @@
-{ lib, ... }:
+{ lib, pkgs, dotfiles, dotfilesPath, ... }:
 with lib;
 let
-  isWittanoUserChecker = ''
-    if [ "$USER" != "wittano" ]; then
-      echo "Invalid user! This script can be used by 'wittano' user"
-      exit -1
-    fi
-  '';
-
-  fileExistFunction = ''
-    _file_exist() {
-      if [ ! -e $1 ]; then
-        echo "File $1 must be exist!"
-        exit -1
+  mkUnlinkerScript = array: ''
+    unlinkerArray=(${array})
+    for LINE in "''${unlinkerArray[@]}"; do
+      DEST=$(echo "$LINE" | cut -d ' ' -f 2)
+      if [[ "$DEST" != /* ]]; then
+        DEST="$HOME/$DEST"
       fi
-    }
+
+      if [ -h "$DEST" ]; then
+        unlink "$DEST"
+      fi
+    done
   '';
+  mkLinkerSciprt = array: ''
+    linkerArray=(${array})
 
-  createMutableLink = src: dest: ''
-    #!/bin/sh
+    for LINE in "''${linkerArray[@]}"; do
+      SRC=$(echo "$LINE" | cut -d ' ' -f 1)
+      DEST=$(echo "$LINE" | cut -d ' ' -f 2)
+      if [[ "$DEST" != /* ]]; then
+        DEST="$HOME/$DEST"
+      fi
 
-    ${fileExistFunction}
+      if [ -f "$DEST" ]; then
+        mv "$DEST" "$DEST.old"
+      fi
 
-    ${isWittanoUserChecker}
-
-    DOTFILES_BACKUP=$HOME/.dotfiles.backup
-
-    # Create .dotfiles.backup directory
-    if [ ! -d $DOTFILES_BACKUP ]; then
-      mkdir -p $DOTFILES_BACKUP
-    fi
-
-    _file_exist ${src}
-
-    if [ ! -L "${dest}" ] && [ -e "${dest}" ]; then
-      mv ${dest} $DOTFILES_BACKUP
-    fi
-
-    if [ ! -L "${dest}" ]; then
-       ln -s ${src} ${dest}
-    fi
-  '';
-
-  removeMutableLink = dest: ''
-    #!/bin/sh
-
-    ${isWittanoUserChecker}
-
-    NIX_STORE_PATH=$(readlink ${dest} | grep '/nix/store' || echo "")
-
-    if [ -L "${dest}" ] && [ -z $NIX_STORE_PATH ]; then
-      unlink ${dest} || echo "Warning: File the path: ${dest}, cannot be removed"
-    fi
+      ln -s "$SRC" "$DEST"
+    done
   '';
 in
 {
-  createMutableLinkActivation = cfg: path:
+  mkMutableLinks = config: cfg: paths:
     let
-      src = "$DOTFILES/${path}";
-      dest = "$HOME/${path}";
+      filtredPaths = attrsets.filterAttrs
+        (n: v:
+          let
+            type = builtins.typeOf v;
+            condition = type == "string" || type == "path" || type == "set";
+          in
+          debug.traceIf (!condition) "Ignored value for ${n}. Invalid type: ${type}" condition)
+        paths;
+
       isDevMode = cfg ? enableDevMode && cfg.enableDevMode;
-      activationScript =
-        if isDevMode then
-          createMutableLink src dest
-        else
-          removeMutableLink dest;
+      rootPaths = attrsets.filterAttrs (n: v: strings.hasPrefix "/" n) filtredPaths;
+      configPaths = attrsets.filterAttrs (n: v: strings.hasPrefix ".config" n) filtredPaths;
+      homePaths = attrsets.filterAttrs (n: v: !(strings.hasPrefix ".config" n) && !(strings.hasPrefix "/" n)) filtredPaths;
+
+      isAttrsNotEmpty = attrs: builtins.length (builtins.attrNames attrs) != 0;
+
+      mapSourceToFiles = source: attrsets.mapAttrs'
+        (n: v:
+          let
+            type = builtins.typeOf v;
+            basename = builtins.baseNameOf n;
+            fixedDotfilesPath = builtins.replaceStrings [ ".config/" ] [ "" ] n;
+            devModeFile =
+              if isDevMode && (builtins.pathExists (dotfilesPath + fixedDotfilesPath)) == true
+              then "${config.environment.variables.NIX_DOTFILES}/dotfiles/${fixedDotfilesPath}"
+              else v;
+            finalFile = if type == "string" then builtins.toFile basename v else devModeFile;
+          in
+          attrsets.nameValuePair fixedDotfilesPath finalFile)
+        source;
+
+      mapLinksToFileContent = links: strings.optionalString
+        (isAttrsNotEmpty links)
+        (strings.concatStringsSep " " (attrsets.mapAttrsToList (n: v: "'${v} ${n}'") links));
+
+      mapSourceToHomeManagerFiles = files: attrsets.optionalAttrs
+        (isAttrsNotEmpty files)
+        (builtins.mapAttrs (_: v: { source = v; }) files);
+
+      homeFiles = mapSourceToFiles homePaths;
+      rootFiles = mapSourceToFiles rootPaths;
+      configFiles = mapSourceToFiles configPaths;
+
+      linkerArray =
+        let
+          homeLinks = mapLinksToFileContent homeFiles;
+          configLinks = mapLinksToFileContent configFiles;
+        in
+        strings.optionalString isDevMode (homeLinks + " " + configLinks);
+
+      rootLinkerArray = mapLinksToFileContent rootFiles;
+      unlinkerArray = mapLinksToFileContent filtredPaths;
     in
-    if isDevMode then
-      hm.dag.entryAfter [ "writeBoundary" ] activationScript
-    else
-      hm.dag.entryBefore [ "checkFilesChanged" ] activationScript;
+    {
+      home-manager.users.wittano = {
+        home = {
+          file = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles homeFiles);
+          activation = {
+            cleanUpMutableLinks = hm.dag.entryBefore [ "linkGeneration" ] (mkUnlinkerScript unlinkerArray);
+            createMutableLinks = mkIf isDevMode (hm.dag.entryAfter [ "linkGeneration" ] (mkLinkerSciprt linkerArray));
+          };
+        };
+        xdg.configFile = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles configFiles);
+      };
+
+      system.userActivationScripts = mkIf (isAttrsNotEmpty rootPaths) {
+        linkSystemFiles.text = ''
+          ${mkUnlinkerScript rootLinkerArray}
+
+          ${mkLinkerSciprt rootLinkerArray}
+        '';
+      };
+    };
 }
