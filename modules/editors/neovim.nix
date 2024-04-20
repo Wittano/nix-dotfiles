@@ -218,7 +218,8 @@ in
               tailwindcss.enable = true;
               taplo.enable = true;
               terraformls.enable = true;
-              nixd.enable = true;
+              nil_ls.enable = true; # Nix
+              hls.enable = true; # Haskell
 
               #graphql.enable = true;
               #dockerls.enable = true;
