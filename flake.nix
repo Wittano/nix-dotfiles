@@ -69,6 +69,23 @@
           description = "Template for ${name}";
         };
       });
+
+      shellPkgs = import inputs.nixpkgs-unstable {
+          inherit system;
+          
+          config = {
+            allowUnfree = true;
+            allowBroken = true;
+          };
+        };
+
+      devShells = let 
+        names = builtins.attrNames (builtins.readDir ./shells);
+        mkShellAttrs = name: lib.attrsets.nameValuePair 
+        (builtins.replaceStrings [".nix"] [""] name) 
+        (import ./shells + "/${name}.nix" {pkgs = shellPkgs; });
+        shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
+      in shells;
     in
     {
       lib = lib.my;
@@ -92,7 +109,9 @@
         in
         normalHosts // devHosts;
 
-      devShells.${pkgs.system}.default = import ./shell.nix { inherit pkgs; };
+      devShells.${pkgs.system} = devShells // {
+        default = import ./shells/nix.nix {pkgs = shellPkgs;};
+      };
 
       packages.x86_64-linux = privateRepo;
 

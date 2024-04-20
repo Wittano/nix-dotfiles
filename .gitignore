@@ -160,6 +160,7 @@ result
 __pycache__/
 venv/
 .direnv
+.envrc
 
 # Templates
 templates/**/*.lock

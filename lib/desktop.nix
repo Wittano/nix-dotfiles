@@ -86,4 +86,8 @@ rec {
     {
       enable = mkEnableOption "Enable desktop";
     } // devModeOptions // autoStartOptions;
+
+
+  # TODO Create desktop module factory
+  mkDesktopModule = {};
 }
