@@ -164,3 +164,8 @@ venv/
 
 # Templates
 templates/**/*.lock
+
+# Xmonad
+*.o
+*.hi
+!dotfiles/xmonad/*.hs
