@@ -1,4 +1,4 @@
-{ pkgs, home-manager, lib, dotfiles, cfg, name, ... }:
+{ pkgs, lib, dotfiles, desktopName, ... }:
 with lib;
 with lib.my; {
   # TODO Migate to home-manager options
@@ -8,7 +8,7 @@ with lib.my; {
     programs.fish.shellAliases.ssh = "kitty +kitten ssh";
   };
 
-  modules.desktop.${name}.mutableSources = {
+  modules.desktop.${desktopName}.mutableSources = {
     ".config/kitty" = dotfiles.kitty.source;
   };
 }

@@ -1,28 +1,29 @@
-{ config, pkgs, lib, dotfiles, ... }:
+{ config, pkgs, lib, dotfiles, isDevMode, ... }:
 with lib;
 with lib.my;
-let
-  cfg = config.modules.desktop.bspwm;
-  desktopApps = desktop.mkAppsSet { inherit config cfg; name = "bspwm"; };
-  devMode = desktop.mkDevMode config cfg { };
+desktop.mkDesktopModule {
+  inherit config isDevMode;
 
-  package = pkgs.bspwm;
-in
-{
-  options.modules.desktop.bspwm = (desktop.mkDesktopOption { inherit devMode; });
-
-  config = mkIf cfg.enable (mkMerge (with desktopApps; [
-    nitrogen
-    picom
-    gtk
-    alacritty
-    tmux
-    dunst
-    rofi
-    polybar
+  name = "bspwm";
+  mutableSources = {
+    ".config/qtile" = dotfiles.qtile.source;
+  };
+  desktopApps = [
+    "nitrogen"
+    "picom"
+    "gtk"
+    "alacritty"
+    "tmux"
+    "dunst"
+    "rofi"
+    "polybar"
+  ];
+  autostart = [ "${pkgs.wmname}/bin/wmname compiz" ];
+  extraConfig = ({ cfg, autostartScript, ... }:
+    let
+      package = pkgs.bspwm;
+    in
     {
-      modules.desktop.bspwm.autostartPrograms = [ "${pkgs.wmname}/bin/wmname compiz" ];
-
       home-manager.users.wittano = {
         home.packages = with pkgs; [ gsimplecal ];
 
@@ -30,7 +31,7 @@ in
           inherit package;
 
           enable = true;
-          extraConfigEarly = desktop.mkAutostart "bspwm" cfg.autostartPrograms;
+          extraConfigEarly = autostartScript;
 
           alwaysResetDesktops = cfg.enableDevMode;
           monitors = {
@@ -171,7 +172,5 @@ in
           enable = true;
         };
       };
-    }
-  ]));
-
+    });
 }

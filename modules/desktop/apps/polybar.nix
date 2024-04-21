@@ -1,4 +1,4 @@
-{ pkgs, lib, home-manager, dotfiles, config, name, ... }:
+{ pkgs, lib, dotfiles, desktopName, ... }:
 with lib;
 with lib.my;
 {
@@ -7,7 +7,7 @@ with lib.my;
   # TODO Migate to home-manager options
   home-manager.users.wittano.home.packages = with pkgs; [ polybar ];
 
-  modules.desktop.${name}.mutableSources = {
+  modules.desktop.${desktopName}.mutableSources = {
     ".config/polybar" = dotfiles.polybar.source;
   };
 

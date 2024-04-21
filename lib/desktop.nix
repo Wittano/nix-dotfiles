@@ -1,17 +1,13 @@
 { pkgs, lib, dotfiles, home-manager, privateRepo, unstable, ... }:
 with lib;
 with lib.my;
-rec {
-  mkAutostartOption = {
-    autostartPrograms = mkOption {
-      type = types.listOf types.str;
-      example = [ "${pkgs.hello}/bin/hello --special-args" ];
-      default = [ ];
-      description = "list of programs, that should start on startup";
-    };
-  };
+let
+  desktopAppsDir = ./../modules/desktop/apps;
+  desktopAppNames = builtins.attrNames (builtins.map
+    (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
+    (builtins.readDir desktopAppsDir));
 
-  mkAutostart = desktopName: cmds:
+  mkAutostartScript = desktopName: cmds:
     assert builtins.all (x: builtins.typeOf x == "string") cmds;
     let
       programs = builtins.concatStringsSep "\n" (builtins.map (x: ''"${x}"'') cmds);
@@ -41,53 +37,89 @@ rec {
       done
     '';
 
-  mkDevMode = config: cfg: pathAttrs: {
-    options = {
-      enableDevMode = mkEnableOption "Enable dev mode";
-      mutableSources = mkOption {
-        type = types.attrs;
-        description = "Set of additional sources, which should be include to desktop as mutable links";
-        example = {
-          "/path/to/file" = ./test.txt;
-          "/path/to/string" = "my string";
-        };
-        default = { };
-      };
+  mkDesktopApp = config: cfg: appName: desktopName: rec {
+    name = builtins.replaceStrings [ ".nix" ] [ "" ] appName;
+    value = import (desktopAppsDir + "/${name}.nix") {
+      inherit cfg privateRepo pkgs dotfiles home-manager unstable config lib desktopName;
     };
-
-    config =
-      let
-        additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
-      in
-      link.mkMutableLinks config cfg (pathAttrs // additionalSources);
   };
-
-  mkAppsSet = { config, cfg, name ? "qtile" }:
+in
+{
+  mkDesktopModule =
+    { name
+    , config
+    , isDevMode
+    , autostart ? [ ]
+    , autostartPath ? ".config/${name}/autostart.sh"
+    , desktopApps ? [ ]
+    , mutableSources ? { }
+    , extraConfig ? ({}: { })
+    }:
     let
-      sourceDir = ./../modules/desktop/apps;
-      appFiles = lib.attrsets.filterAttrs
-        (n: v: ((lib.strings.hasSuffix ".nix" n) && v == "regular"))
-        (builtins.readDir sourceDir);
-    in
-    lib.attrsets.mapAttrs'
-      (n: v: {
-        name = builtins.replaceStrings [ ".nix" ] [ "" ] n;
-        value = import "${sourceDir}/${n}" {
-          inherit cfg privateRepo pkgs dotfiles home-manager unstable config lib name;
-        };
-      })
-      appFiles;
+      cfg = config.modules.desktop.${name};
+      self = modules.desktop.${name};
 
-  mkDesktopOption = { devMode ? null }:
-    let
-      devModeOptions = attrsets.optionalAttrs (devMode != null && devMode ? options) devMode.options;
-      autoStartOptions = mkAutostartOption;
+      source =
+        if builtins.length cfg.autostartPrograms > 0
+        then mutableSources // { "${autostartPath}" = mkAutostartScript name cfg.autostartPrograms; }
+        else mutableSources;
+      mutableSourceFiles =
+        let
+          additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
+        in
+        link.mkMutableLinks config cfg (source // additionalSources);
+
+      apps = builtins.map (appName: (mkDesktopApp config cfg appName name).value) desktopApps;
+
+      extraConfigModule =
+        if builtins.typeOf extraConfig == "lambda"
+        then extraConfig { inherit self cfg; autostartScript = source; }
+        else extraConfig;
+
+      moduleChecker = {
+        assertions = [
+          {
+            assertion = builtins.typeOf extraConfig == "set";
+            message = "extraConfigFunc must return set of configuration";
+          }
+          {
+            assertion = builtins.all (x: builtins.pathExists (desktopAppsDir + "/${x}.nix")) desktopApps;
+            message =
+              let
+                msg = builtins.concatStringsSep ", " desktopAppNames;
+              in
+              "One of desktop apps doesn't exist. There are avaiable apps: [${msg}]";
+          }
+        ];
+      };
+
+      modules = [
+        mutableSourceFiles
+        moduleChecker
+        extraConfigModule
+      ] ++ apps;
     in
     {
-      enable = mkEnableOption "Enable desktop";
-    } // devModeOptions // autoStartOptions;
+      options.modules.desktop.${name} = {
+        enable = mkEnableOption "Enable ${name} desktop";
+        autostartPrograms = mkOption {
+          type = types.listOf types.str;
+          example = [ "${pkgs.hello}/bin/hello --special-args" ];
+          default = [ ];
+          description = "list of programs, that should start on startup";
+        };
+        enableDevMode = mkEnableOption "Enable dev mode for ${name}";
+        mutableSources = mkOption {
+          type = types.attrs;
+          description = "Set of additional sources, which should be include to desktop as mutable links";
+          example = {
+            "/path/to/file" = ./test.txt;
+            "/path/to/string" = "my string";
+          };
+          default = { };
+        };
+      };
 
-
-  # TODO Create desktop module factory
-  mkDesktopModule = {};
+      config = mkIf (cfg.enable) (mkMerge modules);
+    };
 }

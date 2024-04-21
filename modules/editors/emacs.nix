@@ -27,6 +27,7 @@ in
     };
   };
 
+  # TODO Return to emacs
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home = {

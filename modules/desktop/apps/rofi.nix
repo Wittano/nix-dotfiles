@@ -1,4 +1,4 @@
-{ cfg, pkgs, lib, home-manager, dotfiles, privateRepo, name, ... }:
+{ pkgs, lib, dotfiles, desktopName, ... }:
 with lib;
 with lib.my;
 let
@@ -57,7 +57,7 @@ in
     };
   };
 
-  modules.desktop.${name}.mutableSources = {
+  modules.desktop.${desktopName}.mutableSources = {
     ".config/rofi" = dotfiles.rofi.source;
   };
 }
