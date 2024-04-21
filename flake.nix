@@ -70,22 +70,24 @@
         };
       });
 
-      shellPkgs = import inputs.nixpkgs-unstable {
-          inherit system;
-          
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-          };
-        };
+      devShells =
+        let
+          shellPkgs = import inputs.nixpkgs-unstable {
+            inherit system;
 
-      devShells = let 
-        names = builtins.attrNames (builtins.readDir ./shells);
-        mkShellAttrs = name: lib.attrsets.nameValuePair 
-        (builtins.replaceStrings [".nix"] [""] name) 
-        (import ./shells + "/${name}.nix" {pkgs = shellPkgs; });
-        shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
-      in shells;
+            config = {
+              allowUnfree = true;
+              allowBroken = true;
+            };
+          };
+          names = builtins.attrNames (builtins.readDir ./shells);
+          mkShellAttrs = name: {
+            name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
+            value = import (./shells + "/${name}") { pkgs = shellPkgs; };
+          };
+          shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
+        in
+        shells;
     in
     {
       lib = lib.my;
@@ -109,9 +111,7 @@
         in
         normalHosts // devHosts;
 
-      devShells.${pkgs.system} = devShells // {
-        default = import ./shells/nix.nix {pkgs = shellPkgs;};
-      };
+      devShells.${pkgs.system} = devShells;
 
       packages.x86_64-linux = privateRepo;
 

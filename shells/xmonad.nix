@@ -1,19 +1,13 @@
 { pkgs ? import <nixpkgs> { } }:
+let
+  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
+in
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    # Haskell
     ghc
     haskellPackages.haskell-language-server
     cabal-install
     cabal2nix
     stack
-
-    # Nix
-    nixpkgs-fmt
-    nil
-
-    # Bash
-    shellcheck
-    shfmt
-  ];
+  ] ++ nixDeps;
 }

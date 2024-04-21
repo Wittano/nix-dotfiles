@@ -57,19 +57,12 @@ let
         sddm-greeter --test-mode --theme "$NIX_DOTFILES/result/share/sddm/themes/$1"           
       '';
     };
+
+  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
 in
 pkgs.mkShell {
-  buildInputs = with pkgs; [
-    # Nix
-    nixpkgs-fmt
-    nil
-
-    # Bash
-    shellcheck
-    shfmt
-
-    # Custom scripts
+  buildInputs = [
     testGithubActions
     testSddmTheme
-  ];
+  ] ++ nixDeps;
 }

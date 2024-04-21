@@ -1,6 +1,9 @@
 { pkgs ? import <nixpkgs> { } }:
+let
+  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
+in
 pkgs.mkShell {
-  buildInputs = with pkgs; [
+  nativeBuildInputs = with pkgs; [
     # For Qtile
     python311Packages.qtile
     python311Packages.mypy
@@ -10,13 +13,5 @@ pkgs.mkShell {
     python311Packages.isort # Python Refactor
     isort
     vscode-extensions.ms-python.vscode-pylance # Python LSP
-
-    # Nix
-    nixpkgs-fmt
-    nil
-
-    # Bash
-    shellcheck
-    shfmt
-  ];
+  ] ++ nixDeps;
 }
