@@ -218,7 +218,10 @@ in
               tailwindcss.enable = true;
               taplo.enable = true;
               terraformls.enable = true;
-              nil_ls.enable = true; # Nix
+              nil_ls = {
+                enable = true; # Nix
+                settings.formatting.command = ["nixpkgs-fmt"];
+              };
               hls.enable = true; # Haskell
 
               #graphql.enable = true;
