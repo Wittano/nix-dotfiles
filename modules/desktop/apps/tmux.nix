@@ -1,4 +1,4 @@
-{ cfg, pkgs, lib, home-manager, dotfiles, ... }:
+{ pkgs, lib, ... }:
 with lib;
 with lib.my; {
   home-manager.users.wittano.programs = {

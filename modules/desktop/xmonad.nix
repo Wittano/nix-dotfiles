@@ -1,10 +1,10 @@
-{ config, isDevMode, lib, ... }:
+{ config, isDevMode, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
   inherit config isDevMode;
 
-  name = "xmoand";
+  name = "xmonad";
   desktopApps = [
     "feh"
     "gtk"

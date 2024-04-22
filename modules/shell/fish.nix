@@ -110,6 +110,7 @@ in
           };
         };
 
+        # TODO Create alias for changing desktop (e.g qtile, xmonad, bspwm, openbox etc.) for each NixOS configuration
         fish = {
           enable = true;
           plugins = officialPlugins ++ customePlugins;

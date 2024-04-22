@@ -1,4 +1,4 @@
-{ cfg, pkgs, lib, home-manager, dotfiles, ... }:
+{ pkgs, lib, dotfiles, ... }:
 with lib;
 with lib.my; {
   home-manager.users.wittano = {

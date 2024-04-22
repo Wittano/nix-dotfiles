@@ -1,9 +1,8 @@
-{ pkgs, lib, config, unstable, home-manager, ... }:
+{ pkgs, lib, config, unstable, ... }:
 with lib;
 with builtins;
 let
   cfg = config.modules.desktop.apps;
-  programsWithoutArgs = builtins.map (x: meta.getExe x) autostartPrograms;
 in
 {
   options = {

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, dotfiles, cfg, ... }:
+{ pkgs, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 let

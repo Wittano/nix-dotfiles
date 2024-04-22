@@ -1,9 +1,6 @@
-{ config
-, pkgs
+{ pkgs
 , unstable
 , lib
-, home-manager
-, isDevMode ? false
 , privateRepo
 , ...
 }: {
@@ -113,6 +110,8 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
+
+  # TODO Added nh after upgrade system to 24.05 version
 
   # Home-manager
   home-manager = {

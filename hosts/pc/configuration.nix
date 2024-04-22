@@ -1,4 +1,5 @@
-{ config, pkgs, system, inputs, isDevMode ? false, ... }: {
+{ system, inputs, isDevMode ? false, ... }:
+{
 
   imports = [ ./hardware.nix ./networking.nix ];
 

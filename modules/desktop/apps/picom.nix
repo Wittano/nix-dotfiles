@@ -1,6 +1,4 @@
-{ pkgs, lib, cfg, ... }:
-with lib;
-with lib.my;
+{ pkgs, ... }:
 {
   services.picom = {
     enable = true;

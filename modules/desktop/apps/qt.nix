@@ -1,4 +1,4 @@
-{ pkgs, home-manager, lib, cfg, privateRepo, ... }:
+{ pkgs, lib, ... }:
 with lib;
 with lib.my;
 {
