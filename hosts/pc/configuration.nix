@@ -1,4 +1,4 @@
-{ system, inputs, isDevMode ? false, ... }:
+{ system, inputs, ... }:
 {
 
   imports = [ ./hardware.nix ./networking.nix ];
@@ -26,19 +26,11 @@
   modules = {
     desktop = {
       apps.enable = true;
-      qtile = {
-        enable = true;
-        enableDevMode = isDevMode;
-      };
       gaming = {
         enable = true;
         disk.enable = true;
         scripts.enable = true;
         enableMihoyoGames = true;
-      };
-      sddm = {
-        enable = true;
-        theme = "suger-candy";
       };
     };
     editors.neovim.enable = true;

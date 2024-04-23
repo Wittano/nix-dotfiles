@@ -1,4 +1,4 @@
-{ lib, pkgs, dotfiles, dotfilesPath, ... }:
+{ lib, dotfilesPath, ... }:
 with lib;
 let
   mkUnlinkerScript = array: ''
@@ -33,7 +33,7 @@ let
   '';
 in
 {
-  mkMutableLinks = config: cfg: paths:
+  mkMutableLinks = config: isDevMode: paths:
     let
       filtredPaths = attrsets.filterAttrs
         (n: v:
@@ -44,7 +44,6 @@ in
           debug.traceIf (!condition) "Ignored value for ${n}. Invalid type: ${type}" condition)
         paths;
 
-      isDevMode = cfg ? enableDevMode && cfg.enableDevMode;
       rootPaths = attrsets.filterAttrs (n: v: strings.hasPrefix "/" n) filtredPaths;
       configPaths = attrsets.filterAttrs (n: v: strings.hasPrefix ".config" n) filtredPaths;
       homePaths = attrsets.filterAttrs (n: v: !(strings.hasPrefix ".config" n) && !(strings.hasPrefix "/" n)) filtredPaths;

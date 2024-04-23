@@ -37,12 +37,13 @@ let
       done
     '';
 
-  mkDesktopApp = config: cfg: appName: desktopName: rec {
-    name = builtins.replaceStrings [ ".nix" ] [ "" ] appName;
-    value = import (desktopAppsDir + "/${name}.nix") {
-      inherit cfg privateRepo pkgs dotfiles home-manager unstable config lib desktopName;
+    mkDesktopApp = config: cfg: appName: desktopName: 
+    let 
+      name = builtins.replaceStrings [ ".nix" ] [ "" ] appName; 
+    in
+    import (desktopAppsDir + "/${name}.nix") {
+      inherit cfg pkgs dotfiles config lib desktopName;
     };
-  };
 in
 {
   mkDesktopModule =
@@ -53,33 +54,39 @@ in
     , autostartPath ? ".config/${name}/autostart.sh"
     , desktopApps ? [ ]
     , mutableSources ? { }
-    , extraConfig ? ({}: { })
+    , extraConfig ? { }
     }:
     let
       cfg = config.modules.desktop.${name};
       self = modules.desktop.${name};
 
       source =
-        if builtins.length cfg.autostartPrograms > 0
-        then mutableSources // { "${autostartPath}" = mkAutostartScript name cfg.autostartPrograms; }
+        let
+          autostartMerge = cfg.autostartPrograms ++ autostart;
+        in
+        if builtins.length autostartMerge > 0
+        then mutableSources // { "${autostartPath}" = mkAutostartScript name autostartMerge; }
         else mutableSources;
-      mutableSourceFiles =
+      mutableSourceFiles = 
         let
           additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
         in
-        link.mkMutableLinks config cfg (source // additionalSources);
+        link.mkMutableLinks config isDevMode (source // additionalSources);
 
-      apps = builtins.map (appName: (mkDesktopApp config cfg appName name).value) desktopApps;
+      apps = builtins.map (appName: mkDesktopApp config cfg appName name) desktopApps;
 
       extraConfigModule =
         if builtins.typeOf extraConfig == "lambda"
-        then extraConfig { inherit self cfg; autostartScript = source; }
+        then extraConfig { inherit self cfg isDevMode; 
+          autostartScript = strings.concatStringsSep "\n" (builtins.attrValues source); 
+        }
         else extraConfig;
 
+      # TODO Change module checker for module config 
       moduleChecker = {
         assertions = [
           {
-            assertion = builtins.typeOf extraConfig == "set";
+            assertion = builtins.typeOf extraConfigModule == "set";
             message = "extraConfigFunc must return set of configuration";
           }
           {
@@ -108,7 +115,6 @@ in
           default = [ ];
           description = "list of programs, that should start on startup";
         };
-        enableDevMode = mkEnableOption "Enable dev mode for ${name}";
         mutableSources = mkOption {
           type = types.attrs;
           description = "Set of additional sources, which should be include to desktop as mutable links";

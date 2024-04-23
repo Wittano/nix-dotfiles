@@ -15,6 +15,7 @@ in
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
 
+    # FIXME added autostart programs for enabled desktop
     modules.desktop.qtile.autostartPrograms = [
       "vivaldi"
       "telegram-desktop"

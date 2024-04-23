@@ -1,12 +1,9 @@
-{ config, pkgs, ... }: {
+{ ... }: {
 
   imports = [ ./hardware.nix ./networking.nix ];
 
   modules = {
-    desktop = {
-      apps.enable = true;
-      gnome.enable = true;
-    };
+    desktop.apps.enable = true;
     dev.ide.list = [ "go" ];
     hardware = {
       grub.enable = true;

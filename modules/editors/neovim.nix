@@ -220,7 +220,7 @@ in
               terraformls.enable = true;
               nil_ls = {
                 enable = true; # Nix
-                settings.formatting.command = ["nixpkgs-fmt"];
+                settings.formatting.command = ["${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"];
               };
               hls.enable = true; # Haskell
 

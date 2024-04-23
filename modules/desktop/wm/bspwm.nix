@@ -19,7 +19,7 @@ desktop.mkDesktopModule {
     "polybar"
   ];
   autostart = [ "${pkgs.wmname}/bin/wmname compiz" ];
-  extraConfig = ({ cfg, autostartScript, ... }:
+  extraConfig = ({ cfg, autostartScript, isDevMode, ... }:
     let
       package = pkgs.bspwm;
     in
@@ -33,7 +33,7 @@ desktop.mkDesktopModule {
           enable = true;
           extraConfigEarly = autostartScript;
 
-          alwaysResetDesktops = cfg.enableDevMode;
+          alwaysResetDesktops = isDevMode;
           monitors = {
             "DVI-D-0" = [ "dev" "www" "sys" ];
             "HDMI-0" = [ "chat" "www" "doc" ];

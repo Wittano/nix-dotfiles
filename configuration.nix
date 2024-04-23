@@ -2,8 +2,10 @@
 , unstable
 , lib
 , privateRepo
+, desktopName
 , ...
-}: {
+}:
+with lib;{
 
   # Nix configuration
   nix = {
@@ -128,18 +130,30 @@
   };
 
   # Internal modules
-  modules = {
-    utils = {
-      enable = true;
-      enableGlobalUtils = true;
-    };
-    dev.git.enable = true;
-    shell.fish = {
-      enable = true;
-      enableDirenv = true;
-      default = true;
-    };
-  };
+  modules =
+    let
+      enableDesktop = attrsets.optionalAttrs (desktopName != "") ({
+        desktop = {
+          "${desktopName}".enable = true;
+          sddm = {
+            enable = true;
+            theme = "suger-candy";
+          };
+        };
+      });
+    in
+    {
+      utils = {
+        enable = true;
+        enableGlobalUtils = true;
+      };
+      dev.git.enable = true;
+      shell.fish = {
+        enable = true;
+        enableDirenv = true;
+        default = true;
+      };
+    } // enableDesktop;
 
   # System
   system.stateVersion = "23.11";

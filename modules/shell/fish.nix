@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, hostname, dotfiles, templateDir, ... }:
+{ config, lib, pkgs, hostname, templateDir, desktopName, ... }:
 with lib;
 with lib.my;
 let
@@ -110,19 +110,42 @@ in
           };
         };
 
-        # TODO Create alias for changing desktop (e.g qtile, xmonad, bspwm, openbox etc.) for each NixOS configuration
         fish = {
           enable = true;
           plugins = officialPlugins ++ customePlugins;
           shellAliases =
             let
-              host = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
+              host = (builtins.replaceStrings [ "-dev" ] [ "" ] hostname) +
+                (strings.optionalString (desktopName != "") "-${desktopName}");
               templatesAliases = attrsets.mapAttrs'
                 (n: v: {
                   name = "t${n}";
                   value = "${pkgs.nixFlakes}/bin/nix flake init --template $NIX_DOTFILES#${n}";
                 })
                 (builtins.readDir templateDir);
+
+              rebuildDesktop = type:
+                let
+                  desktops = attrsets.mapAttrs'
+                    (n: value: {
+                      inherit value;
+                      name = builtins.replaceStrings [ ".nix" ] [ "" ] n;
+                    })
+                    (builtins.readDir ./../desktop/wm);
+                in
+                attrsets.mapAttrs'
+                  (n: v:
+                    let
+                      nixosConfig = "${hostname}-${n}" + (strings.optionalString (type == "dev") "-dev");
+                    in
+                    {
+                      name = if type != "dev" then "re-${n}" else "dev-${n}";
+                      value = rebuild nixosConfig;
+                    })
+                  desktops;
+
+              rebuildDesktopAliases = (rebuildDesktop "") // (rebuildDesktop "dev");
+
               rebuild = name:
                 let
                   impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
@@ -156,7 +179,7 @@ in
               sce = "sudo systemctl enable --now";
               scr = "sudo systemctl restart";
               sdb = "systemd-analyze blame";
-            } // templatesAliases;
+            } // templatesAliases // rebuildDesktopAliases;
         };
       };
     };

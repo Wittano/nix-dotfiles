@@ -94,20 +94,33 @@
 
       nixosConfigurations =
         let
-          inherit (lib.attrsets) mapAttrs' nameValuePair;
+          inherit (lib.attrsets) nameValuePair;
           inherit (lib.my.hosts) mkHost;
+          inherit (lib.lists) flatten;
 
-          hosts = builtins.readDir ./hosts;
-          devHosts = mapAttrs'
-            (n: v:
+          hosts = builtins.attrNames (builtins.readDir ./hosts);
+          desktopHosts = builtins.map
+            (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
+            (builtins.attrNames (builtins.readDir ./modules/desktop/wm));
+
+          finalHosts = (flatten (builtins.map (x: builtins.map (d: "${x}-${d}") desktopHosts) hosts)) ++ hosts;
+
+          devHosts = builtins.listToAttrs (builtins.map
+            (n:
               let devName = "${n}-dev";
               in
               nameValuePair (devName) (mkHost {
                 name = devName;
                 isDevMode = true;
               }))
-            hosts;
-          normalHosts = builtins.mapAttrs (n: v: mkHost { name = n; }) hosts;
+            finalHosts);
+
+          normalHosts = builtins.listToAttrs (builtins.map
+            (name: {
+              inherit name;
+              value = mkHost { inherit name; };
+            })
+            finalHosts);
         in
         normalHosts // devHosts;
 

@@ -1,22 +1,27 @@
-{ lib, system, pkgs, unstable, dotfiles, privateRepo, inputs, imports, ... }: {
+{ lib, system, pkgs, unstable, dotfiles, privateRepo, inputs, imports, ... }:
+with lib; {
   mkHost = { name, isDevMode ? false }:
+    let
+      splitName = strings.splitString "-" name;
+      desktopName = strings.optionalString (builtins.length splitName >= 2) (builtins.elemAt splitName 1);
+      hostname = builtins.head splitName;
+    in
     inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo system;
-        hostname = name;
+        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo system hostname desktopName;
         secretDir = ./../secrets;
         templateDir = ./../templates;
       };
 
       modules =
         let
-          hostname = builtins.replaceStrings [ "-dev" ] [ "" ] name;
+          hostnameNoDev = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
         in
         [
           ./../configuration.nix
-          ./../hosts/${hostname}/configuration.nix
+          ./../hosts/${hostnameNoDev}/configuration.nix
 
           inputs.filebot.nixosModules.default
           inputs.agenix.nixosModules.default

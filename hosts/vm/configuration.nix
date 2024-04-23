@@ -1,4 +1,4 @@
-{ config, pkgs, isDevMode ? false, ... }: {
+{ pkgs, ... }: {
 
   imports = [ ./hardware.nix ];
 
@@ -24,10 +24,6 @@
   modules = {
     services.ssh.enable = true;
     editors.neovim.enable = true;
-    desktop.openbox = {
-      enable = true;
-      enableDevMode = isDevMode;
-    };
   };
 
 }
