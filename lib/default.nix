@@ -17,4 +17,5 @@ in
   link = import ./link.nix { inherit lib pkgs dotfiles dotfilesPath; };
   pkgs = import ./pkgs.nix { inherit lib pkgs; };
   desktop = import ./desktop.nix { inherit lib pkgs home-manager dotfiles privateRepo unstable; };
+  string = import ./strings.nix { inherit lib; };
 }

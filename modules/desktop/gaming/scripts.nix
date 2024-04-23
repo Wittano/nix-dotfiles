@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, unstable, ... }:
+{ config, lib, pkgs, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -15,6 +15,7 @@ let
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
     "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
 
+  # TODO Check if script works with Darksikers 1 Warmaster Edition
   fixMf =
     let
       mfFixRepo = pkgs.fetchFromGitHub {

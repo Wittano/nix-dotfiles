@@ -80,10 +80,10 @@
               allowBroken = true;
             };
           };
-          names = builtins.attrNames (builtins.readDir ./shells);
+          names = lib.my.string.mkNixNamesFromDir ./shells;
           mkShellAttrs = name: {
-            name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
-            value = import (./shells + "/${name}") { pkgs = shellPkgs; };
+            inherit name;
+            value = import (./shells + "/${name}.nix") { pkgs = shellPkgs; };
           };
           shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
         in
@@ -99,9 +99,7 @@
           inherit (lib.lists) flatten;
 
           hosts = builtins.attrNames (builtins.readDir ./hosts);
-          desktopHosts = builtins.map
-            (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
-            (builtins.attrNames (builtins.readDir ./modules/desktop/wm));
+          desktopHosts = lib.my.string.mkNixNamesFromDir ./modules/desktop/wm;
 
           finalHosts = (flatten (builtins.map (x: builtins.map (d: "${x}-${d}") desktopHosts) hosts)) ++ hosts;
 

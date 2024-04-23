@@ -1,11 +1,15 @@
 { lib, system, pkgs, unstable, dotfiles, privateRepo, inputs, imports, ... }:
-with lib; {
+with lib;
+with lib.my;
+{
   mkHost = { name, isDevMode ? false }:
     let
-      desktops = builtins.map
-        (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
-        (builtins.attrNames (builtins.readDir ./../modules/desktop/wm));
-      findDesktop = builtins.any (x: (builtins.match "^([a-z]+)-(${x})-*" name) != null) desktops;
+      desktops = string.mkNixNamesFromDir ./../modules/desktop/wm;
+      findDesktop =
+        let
+          devSuffix = strings.optionalString (strings.hasSuffix "dev" name) "-(dev)$";
+        in
+        builtins.any (x: (builtins.match "^([a-z]+)-(${x})${devSuffix}" name) != null) desktops;
 
       splitName = strings.splitString "-" name;
       desktopName = strings.optionalString findDesktop (builtins.elemAt splitName 1);
@@ -22,7 +26,7 @@ with lib; {
 
       modules =
         let
-          hostnameNoDev = builtins.replaceStrings [ "-dev" ] [ "" ] hostname;
+          hostnameNoDev = string.removeSuffix "-dev" hostname;
         in
         [
           ./../configuration.nix

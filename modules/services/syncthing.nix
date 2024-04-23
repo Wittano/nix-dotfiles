@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, lib, ... }:
 with lib;
 with lib.my;
 let
@@ -22,7 +22,7 @@ in
 
   config =
     mkIf (cfg.enable && encryptedConfig != null) {
-      services.syncthing = rec {
+      services.syncthing = {
         enable = true;
         systemService = true;
         dataDir = "${homeDir}/.cache/syncthing";

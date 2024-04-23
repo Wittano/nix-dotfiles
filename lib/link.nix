@@ -33,7 +33,14 @@ let
   '';
 in
 {
-  mkMutableLinks = config: isDevMode: paths:
+  # TODO Added checking linked files in previous generation
+  mkMutableLinks =
+    { config
+    , isDevMode ? false
+    , paths ? { }
+    , username ? "wittano"
+    , dotfilesRepo ? config.environment.variables.NIX_DOTFILES # path or string to dotfiles directory
+    }:
     let
       filtredPaths = attrsets.filterAttrs
         (n: v:
@@ -44,9 +51,8 @@ in
           debug.traceIf (!condition) "Ignored value for ${n}. Invalid type: ${type}" condition)
         paths;
 
-      rootPaths = attrsets.filterAttrs (n: v: strings.hasPrefix "/" n) filtredPaths;
-      configPaths = attrsets.filterAttrs (n: v: strings.hasPrefix ".config" n) filtredPaths;
-      homePaths = attrsets.filterAttrs (n: v: !(strings.hasPrefix ".config" n) && !(strings.hasPrefix "/" n)) filtredPaths;
+      rootPaths = attrsets.filterAttrs (n: _: strings.hasPrefix "/" n) filtredPaths;
+      homePaths = attrsets.filterAttrs (n: _: !(strings.hasPrefix "/" n)) filtredPaths;
 
       isAttrsNotEmpty = attrs: builtins.length (builtins.attrNames attrs) != 0;
 
@@ -55,14 +61,14 @@ in
           let
             type = builtins.typeOf v;
             basename = builtins.baseNameOf n;
-            fixedDotfilesPath = builtins.replaceStrings [ ".config/" ] [ "" ] n;
+            fixedDotfilesPath = builtins.replaceStrings [ ".config" ] [ "" ] n;
             devModeFile =
               if isDevMode && (builtins.pathExists (dotfilesPath + fixedDotfilesPath)) == true
-              then "${config.environment.variables.NIX_DOTFILES}/dotfiles/${fixedDotfilesPath}"
+              then "${dotfilesRepo}/dotfiles${fixedDotfilesPath}"
               else v;
             finalFile = if type == "string" then builtins.toFile basename v else devModeFile;
           in
-          attrsets.nameValuePair fixedDotfilesPath finalFile)
+          attrsets.nameValuePair n finalFile)
         source;
 
       mapLinksToFileContent = links: strings.optionalString
@@ -71,32 +77,25 @@ in
 
       mapSourceToHomeManagerFiles = files: attrsets.optionalAttrs
         (isAttrsNotEmpty files)
-        (builtins.mapAttrs (_: v: { source = v; }) files);
+        (builtins.mapAttrs (_: source: { inherit source; }) files);
 
       homeFiles = mapSourceToFiles homePaths;
       rootFiles = mapSourceToFiles rootPaths;
-      configFiles = mapSourceToFiles configPaths;
 
-      linkerArray =
-        let
-          homeLinks = mapLinksToFileContent homeFiles;
-          configLinks = mapLinksToFileContent configFiles;
-        in
-        strings.optionalString isDevMode (homeLinks + " " + configLinks);
+      linkerArray = strings.optionalString isDevMode (mapLinksToFileContent homeFiles);
 
       rootLinkerArray = mapLinksToFileContent rootFiles;
       unlinkerArray = mapLinksToFileContent filtredPaths;
     in
     {
-      home-manager.users.wittano = {
+      home-manager.users.${username} = {
         home = {
           file = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles homeFiles);
           activation = {
-            cleanUpMutableLinks = hm.dag.entryBefore [ "linkGeneration" ] (mkUnlinkerScript unlinkerArray);
+            cleanUpMutableLinks = hm.dag.entryBefore [ "checkLinkTargets" ] (mkUnlinkerScript unlinkerArray);
             createMutableLinks = mkIf isDevMode (hm.dag.entryAfter [ "linkGeneration" ] (mkLinkerSciprt linkerArray));
           };
         };
-        xdg.configFile = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles configFiles);
       };
 
       system.userActivationScripts = mkIf (isAttrsNotEmpty rootPaths) {

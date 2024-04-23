@@ -3,9 +3,7 @@ with lib;
 with lib.my;
 let
   desktopAppsDir = ./../modules/desktop/apps;
-  desktopAppNames = builtins.attrNames (builtins.map
-    (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
-    (builtins.readDir desktopAppsDir));
+  desktopAppNames = string.mkNixNamesFromDir desktopAppNames;
 
   mkAutostartScript = desktopName: cmds:
     assert builtins.all (x: builtins.typeOf x == "string") cmds;
@@ -37,9 +35,9 @@ let
       done
     '';
 
-    mkDesktopApp = config: cfg: appName: desktopName: 
-    let 
-      name = builtins.replaceStrings [ ".nix" ] [ "" ] appName; 
+  mkDesktopApp = config: cfg: appName: desktopName:
+    let
+      name = string.removeSuffix ".nix" appName;
     in
     import (desktopAppsDir + "/${name}.nix") {
       inherit cfg pkgs dotfiles config lib desktopName;
@@ -67,19 +65,25 @@ in
         if builtins.length autostartMerge > 0
         then mutableSources // { "${autostartPath}" = mkAutostartScript name autostartMerge; }
         else mutableSources;
-      mutableSourceFiles = 
+      mutableSourceFiles =
         let
           additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
         in
-        link.mkMutableLinks config isDevMode (source // additionalSources);
+        link.mkMutableLinks {
+          inherit config isDevMode;
+          paths = (source // additionalSources);
+        };
 
       apps = builtins.map (appName: mkDesktopApp config cfg appName name) desktopApps;
 
       extraConfigModule =
         if builtins.typeOf extraConfig == "lambda"
-        then extraConfig { inherit self cfg isDevMode; 
-          autostartScript = strings.concatStringsSep "\n" (builtins.attrValues source); 
-        }
+        then
+          extraConfig
+            {
+              inherit self cfg isDevMode;
+              autostartScript = strings.concatStringsSep "\n" (builtins.attrValues source);
+            }
         else extraConfig;
 
       # TODO Change module checker for module config 

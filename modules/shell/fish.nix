@@ -115,7 +115,7 @@ in
           plugins = officialPlugins ++ customePlugins;
           shellAliases =
             let
-              host = (builtins.replaceStrings [ "-dev" ] [ "" ] hostname) +
+              host = (string.removeSuffix "-dev" hostname) +
                 (strings.optionalString (desktopName != "") "-${desktopName}");
               templatesAliases = attrsets.mapAttrs'
                 (n: v: {
@@ -129,7 +129,7 @@ in
                   desktops = attrsets.mapAttrs'
                     (n: value: {
                       inherit value;
-                      name = builtins.replaceStrings [ ".nix" ] [ "" ] n;
+                      name = string.removeSuffix ".nix" n;
                     })
                     (builtins.readDir ./../desktop/wm);
                 in

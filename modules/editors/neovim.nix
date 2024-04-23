@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, dotfiles, inputs, privateRepo, ... }:
+{ config, pkgs, lib, inputs, privateRepo, ... }:
 with lib;
 with lib.my;
 let
@@ -47,6 +47,11 @@ in
         enableMan = true;
         viAlias = true;
 
+        # TODO Add nerdtree as plugin
+        # TODO Add better naviation system
+        # TODO Add better template system
+        # TODO Add nix repl into config
+        # FIXME Closing window with LSP finding references 
         extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence ] ++ customPlugins;
 
         extraConfigLua = /*lua*/
@@ -220,7 +225,7 @@ in
               terraformls.enable = true;
               nil_ls = {
                 enable = true; # Nix
-                settings.formatting.command = ["${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt"];
+                settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
               };
               hls.enable = true; # Haskell
 
