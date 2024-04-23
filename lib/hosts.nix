@@ -2,8 +2,13 @@
 with lib; {
   mkHost = { name, isDevMode ? false }:
     let
+      desktops = builtins.map
+        (x: builtins.replaceStrings [ ".nix" ] [ "" ] x)
+        (builtins.attrNames (builtins.readDir ./../modules/desktop/wm));
+      findDesktop = builtins.any (x: (builtins.match "^([a-z]+)-(${x})-*" name) != null) desktops;
+
       splitName = strings.splitString "-" name;
-      desktopName = strings.optionalString (builtins.length splitName >= 2) (builtins.elemAt splitName 1);
+      desktopName = strings.optionalString findDesktop (builtins.elemAt splitName 1);
       hostname = builtins.head splitName;
     in
     inputs.nixpkgs.lib.nixosSystem rec {
