@@ -15,7 +15,6 @@ in
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
 
-    # FIXME added autostart programs for enabled desktop
     modules.desktop.qtile.autostartPrograms = [
       "vivaldi"
       "telegram-desktop"
@@ -23,6 +22,7 @@ in
       "spotify"
       "freetube"
       "signal-desktop --use-tray-icon --no-sandbox"
+      "gnome-pomodoro"
     ];
 
     home-manager.users.wittano = {
@@ -54,6 +54,7 @@ in
         minder # Mind maps
         insomnia # REST API Client
         mongodb-compass # MongoDB desktop client
+        gnome.pomodoro
 
         # Security
         bitwarden
