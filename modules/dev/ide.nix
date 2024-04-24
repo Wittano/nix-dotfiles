@@ -1,9 +1,10 @@
-{ config, pkgs, home-manager, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.dev.ide;
 
+  # TODO Autogenerate IDE from jetbrains
   avaiableIde = {
     python = {
       package = pkgs.jetbrains.pycharm-professional;

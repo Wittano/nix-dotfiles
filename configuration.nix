@@ -114,6 +114,7 @@ with lib;{
   };
 
   # TODO Added nh after upgrade system to 24.05 version
+  # TODO Use more rec keyword
 
   # Home-manager
   home-manager = {

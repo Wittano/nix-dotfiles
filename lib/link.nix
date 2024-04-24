@@ -1,39 +1,78 @@
-{ lib, dotfilesPath, ... }:
+{ lib, dotfilesPath, pkgs, ... }:
 with lib;
 let
-  mkUnlinkerScript = array: ''
-    unlinkerArray=(${array})
-    for LINE in "''${unlinkerArray[@]}"; do
-      DEST=$(echo "$LINE" | cut -d ' ' -f 2)
-      if [[ "$DEST" != /* ]]; then
-        DEST="$HOME/$DEST"
-      fi
+  linkerFileName = "linker";
 
-      if [ -h "$DEST" ]; then
-        unlink "$DEST"
-      fi
-    done
-  '';
-  mkLinkerSciprt = array: ''
-    linkerArray=(${array})
+  isAttrsNotEmpty = attrs: builtins.length (builtins.attrNames attrs) != 0;
 
-    for LINE in "''${linkerArray[@]}"; do
-      SRC=$(echo "$LINE" | cut -d ' ' -f 1)
-      DEST=$(echo "$LINE" | cut -d ' ' -f 2)
-      if [[ "$DEST" != /* ]]; then
-        DEST="$HOME/$DEST"
-      fi
+  mapLinksToFileContent = links: strings.optionalString
+    (isAttrsNotEmpty links)
+    (strings.concatStringsSep " " (attrsets.mapAttrsToList (n: v: "'${v} ${n}'") links));
 
-      if [ -f "$DEST" ]; then
-        mv "$DEST" "$DEST.old"
-      fi
+  mkUnlinkerScript = array:
+    let
+      unlinkFileScript = pkgs.writeScript "unlinkFile.sh" /*bash*/ ''
+        while read -r path; do
+          if [ -h "$path" ]; then
+            unlink "$path"
+          fi
+        done <"$1"
+      '';
+    in
+      /*bash*/ ''
+      find /nix/store -maxdepth 1 -type f -iname '*${linkerFileName}' -print | xargs ${unlinkFileScript} || echo "Something goes wrong with unlining files from previous generations"
 
-      ln -s "$SRC" "$DEST"
-    done
-  '';
+      unlinkerArray=(${array})
+      for LINE in "''${unlinkerArray[@]}"; do
+        DEST=$(echo "$LINE" | cut -d ' ' -f 2)
+        if [[ "$DEST" != /* ]]; then
+          DEST="$HOME/$DEST"
+        fi
+
+        if [ -h "$DEST" ]; then
+          unlink "$DEST"
+        fi
+      done
+    '';
+  mkLinkerSciprt = mutableLinks: username:
+    let
+      content = builtins.filter
+        (x: !(strings.hasPrefix builtins.storeDir x))
+        (builtins.map
+          (x:
+            if !(strings.hasPrefix "/" x)
+            then "/home/${username}/" + x
+            else x
+          )
+          (builtins.attrNames mutableLinks));
+
+      genFile = builtins.toFile linkerFileName (builtins.concatStringsSep "\n" content);
+      linkerArray = mapLinksToFileContent mutableLinks;
+    in
+      /*bash*/''
+      linkerArray=(${linkerArray})
+
+      for LINE in "''${linkerArray[@]}"; do
+        SRC=$(echo "$LINE" | cut -d ' ' -f 1)
+        DEST=$(echo "$LINE" | cut -d ' ' -f 2)
+        if [[ "$DEST" != /* ]]; then
+          DEST="$HOME/$DEST"
+        fi
+
+        if [ -f "$DEST" ]; then
+          mv "$DEST" "$DEST.old"
+        fi
+
+        ln -s "$SRC" "$DEST"
+      done
+
+      if [ ! -f ${genFile} ]; then
+        echo "failed found ${genFile} file"
+        exit 1
+      fi
+    '';
 in
 {
-  # TODO Added checking linked files in previous generation
   mkMutableLinks =
     { config
     , isDevMode ? false
@@ -54,8 +93,6 @@ in
       rootPaths = attrsets.filterAttrs (n: _: strings.hasPrefix "/" n) filtredPaths;
       homePaths = attrsets.filterAttrs (n: _: !(strings.hasPrefix "/" n)) filtredPaths;
 
-      isAttrsNotEmpty = attrs: builtins.length (builtins.attrNames attrs) != 0;
-
       mapSourceToFiles = source: attrsets.mapAttrs'
         (n: v:
           let
@@ -71,18 +108,12 @@ in
           attrsets.nameValuePair n finalFile)
         source;
 
-      mapLinksToFileContent = links: strings.optionalString
-        (isAttrsNotEmpty links)
-        (strings.concatStringsSep " " (attrsets.mapAttrsToList (n: v: "'${v} ${n}'") links));
-
       mapSourceToHomeManagerFiles = files: attrsets.optionalAttrs
         (isAttrsNotEmpty files)
         (builtins.mapAttrs (_: source: { inherit source; }) files);
 
       homeFiles = mapSourceToFiles homePaths;
       rootFiles = mapSourceToFiles rootPaths;
-
-      linkerArray = strings.optionalString isDevMode (mapLinksToFileContent homeFiles);
 
       rootLinkerArray = mapLinksToFileContent rootFiles;
       unlinkerArray = mapLinksToFileContent filtredPaths;
@@ -93,7 +124,7 @@ in
           file = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles homeFiles);
           activation = {
             cleanUpMutableLinks = hm.dag.entryBefore [ "checkLinkTargets" ] (mkUnlinkerScript unlinkerArray);
-            createMutableLinks = mkIf isDevMode (hm.dag.entryAfter [ "linkGeneration" ] (mkLinkerSciprt linkerArray));
+            createMutableLinks = mkIf isDevMode (hm.dag.entryAfter [ "linkGeneration" ] (mkLinkerSciprt homeFiles username));
           };
         };
       };
@@ -102,7 +133,7 @@ in
         linkSystemFiles.text = ''
           ${mkUnlinkerScript rootLinkerArray}
 
-          ${mkLinkerSciprt rootLinkerArray}
+          ${mkLinkerSciprt rootFiles username}
         '';
       };
     };
