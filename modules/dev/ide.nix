@@ -4,37 +4,17 @@ with lib.my;
 let
   cfg = config.modules.dev.ide;
 
-  # TODO Autogenerate IDE from jetbrains
-  avaiableIde = {
-    python = {
-      package = pkgs.jetbrains.pycharm-professional;
-      projectDir = "$HOME/projects/own/python";
-    };
-    cpp = {
-      package = pkgs.jetbrains.clion;
-      projectDir = "$HOME/projects/own/cpp";
-    };
-    go = {
-      package = pkgs.jetbrains.goland;
-      projectDir = "$HOME/projects/own/go";
-    };
-    dotnet = {
-      package = pkgs.jetbrains.rider;
-      projectDir = "$HOME/projects/own/dotnet";
-    };
-    rust = {
-      package = pkgs.jetbrains.rust-rover;
-      projectDir = "$HOME/projects/own/rust";
-    };
-    jvm = {
-      package = pkgs.jetbrains.idea-ultimate;
-      projectDir = "$HOME/projects/own/jvm";
-    };
-    andorid = {
-      package = pkgs.andorid-studio;
-      projectDir = "$HOME/projects/own/andorid";
-    };
-  };
+  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${config.home-manager.users.wittano.home.homeDirectory}/projects/own/${n}"; }) attr;
+
+  avaiableIde = addProjectDirField (with pkgs.jetbrains; {
+    python.package = pycharm-professional;
+    cpp.package = clion;
+    go.package = goland;
+    dotnet.package = rider;
+    rust.package = rust-rover;
+    jvm.package = idea-ultimate;
+    andorid.package = pkgs.andorid-studio;
+  });
 
   ideNames = builtins.attrNames avaiableIde;
 
@@ -107,7 +87,23 @@ in
     modules.shell.fish.completions = cmdCompletions ++ forkCompletions;
 
     home-manager.users.wittano = {
-      home.packages = installedIDEs;
+      home = {
+        packages = installedIDEs;
+        activation = {
+          createProjectsDir =
+            let
+              projectDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.list;
+              bashArray = builtins.concatStringsSep " " (builtins.map (x: "'${x}'") projectDirs);
+            in
+            lib.hm.dag.entryBefore [ "writeBoundary" ] /*bash*/''
+              projectDirs=(${bashArray})
+
+              for dir in "''${projectDirs[@]}"; do
+                mkdir -m700 -p "$dir" || echo "failed create $dir"
+              done
+            '';
+        };
+      };
 
       programs.fish.functions = commands // forkCommand;
     };
