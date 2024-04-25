@@ -3,7 +3,6 @@ with lib;
 with lib.my;
 let
   desktopAppsDir = ./../modules/desktop/apps;
-  desktopAppNames = string.mkNixNamesFromDir desktopAppNames;
 
   mkAutostartScript = desktopName: cmds:
     assert builtins.all (x: builtins.typeOf x == "string") cmds;
@@ -35,13 +34,9 @@ let
       done
     '';
 
-  mkDesktopApp = config: cfg: appName: desktopName:
-    let
-      name = string.removeSuffix ".nix" appName;
-    in
-    import (desktopAppsDir + "/${name}.nix") {
-      inherit cfg pkgs dotfiles config lib desktopName;
-    };
+  mkDesktopApp = config: cfg: appName: desktopName: import (desktopAppsDir + "/${appName}.nix") {
+    inherit cfg pkgs dotfiles config lib desktopName;
+  };
 in
 {
   mkDesktopModule =
@@ -65,14 +60,10 @@ in
         if builtins.length autostartMerge > 0
         then mutableSources // { "${autostartPath}" = mkAutostartScript name autostartMerge; }
         else mutableSources;
-      mutableSourceFiles =
-        let
-          additionalSources = attrsets.optionalAttrs (cfg ? mutableSources) cfg.mutableSources;
-        in
-        link.mkMutableLinks {
-          inherit config isDevMode;
-          paths = (source // additionalSources);
-        };
+      mutableSourceFiles = link.mkMutableLinks {
+        inherit config isDevMode;
+        paths = (source // cfg.mutableSources);
+      };
 
       apps = builtins.map (appName: mkDesktopApp config cfg appName name) desktopApps;
 
@@ -86,20 +77,11 @@ in
             }
         else extraConfig;
 
-      # TODO Change module checker for module config 
       moduleChecker = {
         assertions = [
           {
             assertion = builtins.typeOf extraConfigModule == "set";
             message = "extraConfigFunc must return set of configuration";
-          }
-          {
-            assertion = builtins.all (x: builtins.pathExists (desktopAppsDir + "/${x}.nix")) desktopApps;
-            message =
-              let
-                msg = builtins.concatStringsSep ", " desktopAppNames;
-              in
-              "One of desktop apps doesn't exist. There are avaiable apps: [${msg}]";
           }
         ];
       };
