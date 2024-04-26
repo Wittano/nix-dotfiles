@@ -98,10 +98,18 @@ in
           let
             type = builtins.typeOf v;
             basename = builtins.baseNameOf n;
-            fixedDotfilesPath = builtins.replaceStrings [ ".config" ] [ "" ] n;
+            fixedPath = strings.removePrefix "." (
+              let
+                split = strings.splitString "/" n;
+              in
+              if builtins.length split > 1
+              then builtins.concatStringsSep "/" (builtins.tail split)
+              else n
+            );
+            dotfilesSourcePath = dotfilesPath + "/${fixedPath}";
             devModeFile =
-              if isDevMode && (builtins.pathExists (dotfilesPath + fixedDotfilesPath)) == true
-              then "${dotfilesRepo}/dotfiles${fixedDotfilesPath}"
+              if isDevMode && (builtins.pathExists dotfilesSourcePath) == true
+              then "${dotfilesRepo}/dotfiles/${fixedPath}"
               else v;
             finalFile = if type == "string" then builtins.toFile basename v else devModeFile;
           in
