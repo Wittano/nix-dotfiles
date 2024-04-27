@@ -21,7 +21,6 @@ import XMonad.Layout.SimplestFloat (simplestFloat)
 import XMonad.Layout.Spacing (Border (Border), spacing, spacingRaw)
 import XMonad.Layout.ToggleLayouts qualified as T
 import XMonad.Layout.WindowArranger (windowArrange)
-import XMonad.Prelude (Endo, isInfixOf)
 import XMonad.StackSet (Screen (workspace))
 import XMonad.StackSet qualified as W
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -110,6 +109,7 @@ myConfig =
                           ++ remapKeys
                       )
 
+-- TODO export creating rules for apps to external module
 gamesStaff =
   [ "lutris",
     "Shogun2",
@@ -161,7 +161,9 @@ musicStaff =
     "[sS]potify*"
   ]
 
-chatStaff = ["discord", "[sS]ignal*", "[eE]lement", "telegram-desktop"]
+freeTubeRegex = "^[Ff](ree)[Tt](ube)$"
+
+chatStaff = ["discord", "[sS]ignal*", "[eE]lement", "^[Tt]{1}(elegram)|(-)|[dD]{1}(esktop)$", freeTubeRegex, "streamlink-twitch-gui"]
 
 docStaff = ["obsidian", "Evince", "[eE]og", "[jJ]oplin"]
 
@@ -175,9 +177,11 @@ mkShiftWindowToWorkspace id = map mkShift
     workspaceIndex :: Int -> Int
     workspaceIndex 0 = 0
     workspaceIndex i
-      | i >= length myWorkspaces = length myWorkspaces - 1
+      | i >= workspacesCount = workspacesCount - 1
       | i < 0 = 0
       | otherwise = i - 1
+      where
+        workspacesCount = length myWorkspaces
 
 myManageHook = composeGeneral <+> workspaceFixedApps
   where
@@ -206,13 +210,14 @@ myManageHook = composeGeneral <+> workspaceFixedApps
           className =? "notification" --> doFloat,
           className =? "pinentry-gtk-2" --> doFloat,
           className =? "splash" --> doFloat,
-          className =? "toolbar" --> doFloat
+          className =? "toolbar" --> doFloat,
+          className ~? freeTubeRegex --> doFloat
         ]
 
 -- TODO Migrate to xmonad logger
 myStartupHook = spawnOnce "bash ~/.config/autostart.sh"
 
-myLayout = tall ||| Mirror tall ||| Full
+myLayout = tall ||| Mirror tall ||| max
   where
     tall =
       T.toggleLayouts floats $
@@ -222,6 +227,7 @@ myLayout = tall ||| Mirror tall ||| Full
               spacing 20 $
                 magnifiercz' 1.5 $
                   Tall nmaster delta ratio
+    max = noBorders Full
     floats = renamed [Replace "floats"] $ smartBorders simplestFloat
     nmaster = 1
     ratio = 1 / 2
