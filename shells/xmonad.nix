@@ -1,12 +1,13 @@
-{ unstable ? import <nixpkgs> { }, haskell-language-server, xmonad-with-packages, xmonadctl, haskellPackages }:
+{ unstable ? import <nixpkgs> { }
+, callPackage
+, haskell-language-server
+, xmonad-with-packages
+, xmonadctl
+, haskellPackages
+}:
 let
-  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
+  nixDeps = (callPackage ./default.nix { inherit unstable; }).nativeBuildInputs;
   xmonadDevDeps = haskellPackages.ghcWithPackages (pkgs: with pkgs; [
-    cabal-install
-    cabal2nix
-    stack
-
-    # Xmonad
     xmonad
     xmonad-contrib
     xmonad-extras

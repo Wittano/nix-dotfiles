@@ -1,8 +1,15 @@
-{ unstable ? import <nixpkgs> { }, python311Packages, vscode-extensions, isort, ... }:
+{ unstable ? import <nixpkgs> { }
+, mkShell
+, callPackage
+, python311Packages
+, vscode-extensions
+, isort
+, ...
+}:
 let
-  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
+  nixDeps = (callPackage ./default.nix { inherit unstable; }).nativeBuildInputs;
 in
-unstable.mkShell {
+mkShell {
   nativeBuildInputs = with python311Packages; [
     # For Qtile
     qtile

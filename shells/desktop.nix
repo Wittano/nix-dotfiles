@@ -1,9 +1,21 @@
-{ unstable ? import <nixpkgs> { } }:
+{ unstable ? import <nixpkgs> { }
+, writeShellApplication
+, gst_all_1
+, mkShell
+, callPackage
+, libsForQt5
+, coreutils
+, sddm
+, nix
+, docker
+, act
+, ...
+}:
 let
-  testGithubActions = unstable.writeShellApplication
+  testGithubActions = writeShellApplication
     {
       name = "testGithubActions";
-      runtimeInputs = with unstable; [ coreutils docker act ];
+      runtimeInputs = [ coreutils docker act ];
       text = ''
         function stop_docker {
           CONTAINER_IDS=$(docker ps | tail -n +2)
@@ -18,12 +30,12 @@ let
         stop_docker
       '';
     };
-  testSddmTheme = unstable.writeShellApplication
+  testSddmTheme = writeShellApplication
     {
       name = "testSddmTheme";
       runtimeInputs =
         let
-          gstreamerDeps = with unstable.gst_all_1; [
+          gstreamerDeps = with gst_all_1; [
             gstreamer
             gst-plugins-ugly
             gst-plugins-bad
@@ -31,20 +43,20 @@ let
             gst-plugins-base
             gst-libav
           ];
-          plasmaDeps = with unstable.libsForQt5; [
+          plasmaDeps = with libsForQt5; [
             plasma-framework
             plasma-workspace
           ];
-          qt5Deps = with unstable.libsForQt5.qt5; [
+          qt5Deps = with libsForQt5.qt5; [
             qtgraphicaleffects
             qtquickcontrols2
             qtbase
             qtsvg
             qtmultimedia
-            unstable.libsForQt5.phonon-backend-gstreamer
+            libsForQt5.phonon-backend-gstreamer
           ];
         in
-        (with unstable; [ coreutils sddm nix ]) ++ qt5Deps ++ plasmaDeps ++ gstreamerDeps;
+        [ coreutils sddm nix ] ++ qt5Deps ++ plasmaDeps ++ gstreamerDeps;
       text = ''
         THEME_DIR="./pkgs/sddm/theme/$1";
 
@@ -58,9 +70,9 @@ let
       '';
     };
 
-  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
+  nixDeps = (callPackage ./default.nix { inherit unstable; }).nativeBuildInputs;
 in
-unstable.mkShell {
+mkShell {
   buildInputs = [
     testGithubActions
     testSddmTheme
