@@ -1,9 +1,9 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ unstable ? import <nixpkgs> { } }:
 let
-  testGithubActions = pkgs.writeShellApplication
+  testGithubActions = unstable.writeShellApplication
     {
       name = "testGithubActions";
-      runtimeInputs = with pkgs; [ coreutils docker act ];
+      runtimeInputs = with unstable; [ coreutils docker act ];
       text = ''
         function stop_docker {
           CONTAINER_IDS=$(docker ps | tail -n +2)
@@ -18,12 +18,12 @@ let
         stop_docker
       '';
     };
-  testSddmTheme = pkgs.writeShellApplication
+  testSddmTheme = unstable.writeShellApplication
     {
       name = "testSddmTheme";
       runtimeInputs =
         let
-          gstreamerDeps = with pkgs.gst_all_1; [
+          gstreamerDeps = with unstable.gst_all_1; [
             gstreamer
             gst-plugins-ugly
             gst-plugins-bad
@@ -31,20 +31,20 @@ let
             gst-plugins-base
             gst-libav
           ];
-          plasmaDeps = with pkgs.libsForQt5; [
+          plasmaDeps = with unstable.libsForQt5; [
             plasma-framework
             plasma-workspace
           ];
-          qt5Deps = with pkgs.libsForQt5.qt5; [
+          qt5Deps = with unstable.libsForQt5.qt5; [
             qtgraphicaleffects
             qtquickcontrols2
             qtbase
             qtsvg
             qtmultimedia
-            pkgs.libsForQt5.phonon-backend-gstreamer
+            unstable.libsForQt5.phonon-backend-gstreamer
           ];
         in
-        (with pkgs; [ coreutils sddm nix ]) ++ qt5Deps ++ plasmaDeps ++ gstreamerDeps;
+        (with unstable; [ coreutils sddm nix ]) ++ qt5Deps ++ plasmaDeps ++ gstreamerDeps;
       text = ''
         THEME_DIR="./pkgs/sddm/theme/$1";
 
@@ -58,9 +58,9 @@ let
       '';
     };
 
-  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
+  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
 in
-pkgs.mkShell {
+unstable.mkShell {
   buildInputs = [
     testGithubActions
     testSddmTheme

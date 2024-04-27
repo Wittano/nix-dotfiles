@@ -1,4 +1,4 @@
-{ pkgs, lib, dotfiles, ... }:
+{ pkgs, lib, dotfiles, desktopName, ... }:
 with lib;
 with lib.my;
 let
@@ -9,7 +9,7 @@ let
   };
 in
 {
-  modules.desktop.qtile.autostartPrograms = [
+  modules.desktop.${desktopName}.autostartPrograms = [
     "${rollWallpaper}/bin/rollWallpaper"
   ];
 

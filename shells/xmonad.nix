@@ -1,7 +1,7 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ unstable ? import <nixpkgs> { }, haskell-language-server, xmonad-with-packages, xmonadctl, haskellPackages }:
 let
-  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
-  xmonadDevDeps = pkgs.haskellPackages.ghcWithPackages (pkgs: with pkgs; [
+  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
+  xmonadDevDeps = haskellPackages.ghcWithPackages (pkgs: with pkgs; [
     cabal-install
     cabal2nix
     stack
@@ -9,10 +9,12 @@ let
     # Xmonad
     xmonad
     xmonad-contrib
+    xmonad-extras
+    xmobar
   ]);
 in
-pkgs.mkShell {
-  buildInputs = with pkgs; [
+unstable.mkShell {
+  buildInputs = [
     # Haskell deps
     haskell-language-server
 
@@ -20,6 +22,5 @@ pkgs.mkShell {
     xmonadDevDeps
     xmonad-with-packages
     xmonadctl
-    xmonad-log
   ] ++ nixDeps;
 }

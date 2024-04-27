@@ -106,6 +106,7 @@ in
               then builtins.concatStringsSep "/" (builtins.tail split)
               else n
             );
+            # TODO search resursive files in directiores
             dotfilesSourcePath = dotfilesPath + "/${fixedPath}";
             devModeFile =
               if isDevMode && (builtins.pathExists dotfilesSourcePath) == true
@@ -129,6 +130,7 @@ in
     {
       home-manager.users.${username} = {
         home = {
+          # TODO added files if files didn't find in dotfiles 
           file = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles homeFiles);
           activation = {
             cleanUpMutableLinks = hm.dag.entryBefore [ "checkLinkTargets" ] (mkUnlinkerScript unlinkerArray);

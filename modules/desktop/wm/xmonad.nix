@@ -16,15 +16,22 @@ desktop.mkDesktopModule {
     "rofi"
   ];
   mutableSources = {
-    ".xmonad" = dotfiles.xmonad.source;
+    ".config/xmonad" = dotfiles.xmonad.source;
   };
+  autostartPath = ".config/autostart.sh";
   extraConfig = {
     services.xserver = {
       enable = true;
       windowManager.xmonad = {
         enable = true;
+        enableContribAndExtras = true;
         enableConfiguredRecompile = isDevMode;
       };
+    };
+
+    home-manager.users.wittano.programs.xmobar = {
+      enable = true;
+      extraConfig = mkIf (isDevMode) (builtins.readFile dotfiles.xmonad.xmobarrc.source);
     };
   };
 }

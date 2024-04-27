@@ -83,7 +83,7 @@
           names = lib.my.string.mkNixNamesFromDir ./shells;
           mkShellAttrs = name: {
             inherit name;
-            value = import (./shells + "/${name}.nix") { pkgs = shellPkgs; };
+            value = pkgs.callPackage (./shells + "/${name}.nix") { unstable = shellPkgs; };
           };
           shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
         in

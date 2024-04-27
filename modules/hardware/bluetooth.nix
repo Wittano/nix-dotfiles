@@ -1,9 +1,10 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, desktopName, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.hardware.bluetooth;
-in {
+in
+{
   options = {
     modules.hardware.bluetooth = {
       enable = mkEnableOption ''
@@ -13,7 +14,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    modules.desktop.qtile.autostartPrograms = [ "${pkgs.blueman}/bin/blueman-applet" ];
+    modules.desktop.${desktopName}.autostartPrograms = [ "${pkgs.blueman}/bin/blueman-applet" ];
 
     hardware.bluetooth = {
       enable = true;

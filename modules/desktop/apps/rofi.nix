@@ -20,15 +20,11 @@ let
         ${systemd}/bin/poweroff
         ;;
       "$LOGOUT")
-        QTILE=$(${toybox}/bin/pgrep qtile)
-        if [ -n "$QTILE" ]; then
-          echo "Kill qtile $QTILE"
-          kill -9 "$QTILE"
+        DESKTOP=$(${toybox}/bin/pgrep ${desktopName})
+        if [ -n "$DESKTOP" ]; then
+          echo "Kill ${desktopName} $DESKTOP"
+          kill -9 "$DESKTOP"
         fi 
-        BSPWM=$(${toybox}/bin/pgrep bspwm)
-        if [ -n "$BSPWM" ]; then
-          kill -9 "$BSPWM"
-        fi
         ;;
       "$REBOOT")
         ${systemd}/bin/reboot

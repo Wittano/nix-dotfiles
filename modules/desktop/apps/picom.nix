@@ -27,10 +27,10 @@
 
       # Border
       corner-radius = 10;
-      round-borders = 1;
-      rounded-corners-exclude = [
-        "window_type = 'dock'"
+      corners-rule = [
+        "10:class_g = 'xmobar'"
       ];
+      round-borders = 1;
 
       # Blur
       blur-background = true;

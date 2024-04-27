@@ -1,16 +1,16 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ unstable ? import <nixpkgs> { }, python311Packages, vscode-extensions, isort, ... }:
 let
-  nixDeps = (pkgs.callPackage ./default.nix { }).nativeBuildInputs;
+  nixDeps = (unstable.callPackage ./default.nix { }).nativeBuildInputs;
 in
-pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [
+unstable.mkShell {
+  nativeBuildInputs = with python311Packages; [
     # For Qtile
-    python311Packages.qtile
-    python311Packages.mypy
+    qtile
+    mypy
 
     # Python
-    python311Packages.yapf # Python Formatter
-    python311Packages.isort # Python Refactor
+    yapf # Python Formatter
+    isort # Python Refactor
     isort
     vscode-extensions.ms-python.vscode-pylance # Python LSP
   ] ++ nixDeps;

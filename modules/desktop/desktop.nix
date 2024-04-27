@@ -1,4 +1,4 @@
-{ pkgs, lib, config, unstable, ... }:
+{ pkgs, lib, config, unstable, desktopName, ... }:
 with lib;
 with builtins;
 let
@@ -15,7 +15,7 @@ in
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
 
-    modules.desktop.qtile.autostartPrograms = [
+    modules.desktop.${desktopName}.autostartPrograms = [
       "vivaldi"
       "telegram-desktop"
       "discord"
