@@ -4,7 +4,6 @@ import XMonad qualified as W
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWindows qualified as W
 import XMonad.Actions.OnScreen qualified as W
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks (ToggleStruts (ToggleStruts), avoidStruts, manageDocks)
 import XMonad.Hooks.ManageHelpers (doFullFloat, isFullscreen)
@@ -18,14 +17,14 @@ import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL))
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Renamed (Rename (Replace), renamed)
 import XMonad.Layout.SimplestFloat (simplestFloat)
-import XMonad.Layout.Spacing (Border (Border), spacing, spacingRaw)
+import XMonad.Layout.Spacing (spacing, spacingRaw)
 import XMonad.Layout.ToggleLayouts qualified as T
 import XMonad.Layout.WindowArranger (windowArrange)
 import XMonad.StackSet (Screen (workspace))
 import XMonad.StackSet qualified as W
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Hacks (trayerPaddingXmobarEventHook, windowedFullscreenFixEventHook)
-import XMonad.Util.Loggers
+import XMonad.Util.Loggers (logTitles)
 import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Util.Ungrab (unGrab)
 import XMonad.Util.WindowPropertiesRE
@@ -119,7 +118,6 @@ gamesStaff =
     "Castle Story",
     "The Honkers Railway Launcher",
     "PrismLauncher",
-    "War Thunder*",
     "^([a-zA-Z0-9_]+).x86_64$",
     "^([a-zA-Z0-9_]+).amd64$",
     "^([a-zA-Z0-9_]+).exe$",
@@ -163,14 +161,16 @@ chatStaff =
     "streamlink-twitch-gui"
   ]
 
-docStaff = ["obsidian", "Evince", "[eE]og", "[jJ]oplin", "^([a-z]+)-pomodoro$"]
-
-scienceStaff = ["(Boinc)|(BOINC)*", "Virt-manager", "VirtualBox Manager"]
+docStaff = ["Evince", "[eE]og", "[jJ]oplin"]
 
 mkShiftWindowToWorkspace id = map mkShift
   where
     workspace = myWorkspaces !! workspaceIndex id
-    mkShift appRegex = className ~? appRegex --> doShift workspace
+    mkShift appRegex
+      | any (`elem` regexChars) appRegex = className ~? appRegex --> doShift workspace
+      | otherwise = className =? appRegex --> doShift workspace
+      where
+        regexChars = "[]^${}"
 
     workspaceIndex :: Int -> Int
     workspaceIndex 0 = 0
@@ -192,7 +192,6 @@ myManageHook = composeGeneral <+> workspaceFixedApps
           ++ mkShiftWindowToWorkspace 2 webBrowsers
           ++ mkShiftWindowToWorkspace 1 devStaff
           ++ mkShiftWindowToWorkspace 3 terminals
-          ++ mkShiftWindowToWorkspace 4 scienceStaff
           ++ mkShiftWindowToWorkspace 4 musicStaff
           ++ mkShiftWindowToWorkspace 4 docStaff
     composeGeneral =
