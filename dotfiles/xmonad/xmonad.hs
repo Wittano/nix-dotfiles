@@ -120,10 +120,10 @@ gamesStaff =
     "The Honkers Railway Launcher",
     "PrismLauncher",
     "War Thunder*",
-    ".x86_64",
-    ".amd64",
-    ".exe",
-    ".x64",
+    "^([a-zA-Z0-9_]+).x86_64$",
+    "^([a-zA-Z0-9_]+).amd64$",
+    "^([a-zA-Z0-9_]+).exe$",
+    "^([a-zA-Z0-9_]+).x64$",
     "[Ll]inux$",
     "steam_app*",
     "[Ss]team*",
@@ -133,39 +133,37 @@ gamesStaff =
 
 webBrowsers =
   [ "Chromium",
-    "qutebrowser",
-    "[fF]irefox*",
-    "[Nn]avigator",
-    "[tT]or*",
-    "Vivaldi-*"
+    "^[fF]irefox*",
+    "^[tT]or*",
+    "^Vivaldi-*"
   ]
 
 devStaff =
   [ "Emacs",
-    "Code",
-    "jetbrains-*",
-    "code-oss",
+    "^jetbrains-*",
+    "^([cC]ode)|(-oss)",
     "(vsc)|(VSC)odium"
   ]
 
 terminals =
   [ "kitty",
-    "[tT]erminator",
     "[aA]lacrity"
   ]
 
-musicStaff =
-  [ "Qmmp",
-    "player",
-    "Rhythmbox",
-    "[sS]potify*"
+musicStaff = ["^[sS]potify*"]
+
+freeTubeRegex = "[Ff](ree)[Tt](ube)"
+
+chatStaff =
+  [ "[dD]iscord",
+    "^[sS]ignal*",
+    "[eE]lement",
+    "[Tt]elegram[dD]esktop",
+    freeTubeRegex,
+    "streamlink-twitch-gui"
   ]
 
-freeTubeRegex = "^[Ff](ree)[Tt](ube)$"
-
-chatStaff = ["discord", "[sS]ignal*", "[eE]lement", "^[Tt]{1}(elegram)|(-)|[dD]{1}(esktop)$", freeTubeRegex, "streamlink-twitch-gui"]
-
-docStaff = ["obsidian", "Evince", "[eE]og", "[jJ]oplin"]
+docStaff = ["obsidian", "Evince", "[eE]og", "[jJ]oplin", "^([a-z]+)-pomodoro$"]
 
 scienceStaff = ["(Boinc)|(BOINC)*", "Virt-manager", "VirtualBox Manager"]
 
@@ -191,8 +189,8 @@ myManageHook = composeGeneral <+> workspaceFixedApps
       composeAll $
         mkShiftWindowToWorkspace 5 gamesStaff
           ++ mkShiftWindowToWorkspace 5 chatStaff
-          ++ mkShiftWindowToWorkspace 1 webBrowsers
-          ++ mkShiftWindowToWorkspace 0 devStaff
+          ++ mkShiftWindowToWorkspace 2 webBrowsers
+          ++ mkShiftWindowToWorkspace 1 devStaff
           ++ mkShiftWindowToWorkspace 3 terminals
           ++ mkShiftWindowToWorkspace 4 scienceStaff
           ++ mkShiftWindowToWorkspace 4 musicStaff
