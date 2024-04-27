@@ -7,8 +7,10 @@ with lib.my;
   # TODO Migate to home-manager options
   home-manager.users.wittano.home.packages = with pkgs; [ polybar ];
 
-  modules.desktop.${desktopName}.mutableSources = {
-    ".config/polybar" = dotfiles.polybar.source;
+  modules.desktop = mkIf (desktopName != "") {
+    ${desktopName}.mutableSources = {
+      ".config/polybar" = dotfiles.polybar.source;
+    };
   };
 
 }
