@@ -1,6 +1,6 @@
-{ pkgs ? import <nixpkgs> { } }:
-pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [
+{ unstable ? import <nixpkgs> { } }:
+unstable.mkShell {
+  nativeBuildInputs = with unstable; [
     # Nix
     nixpkgs-fmt
     nil
