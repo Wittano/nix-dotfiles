@@ -34,8 +34,8 @@ let
       done
     '';
 
-  mkDesktopApp = config: cfg: appName: desktopName: import (desktopAppsDir + "/${appName}.nix") {
-    inherit cfg pkgs dotfiles config lib desktopName;
+  mkDesktopApp = config: appName: desktopName: import (desktopAppsDir + "/${appName}.nix") {
+    inherit pkgs dotfiles config lib desktopName;
   };
 in
 {
@@ -53,19 +53,19 @@ in
       cfg = config.modules.desktop.${name};
       self = modules.desktop.${name};
 
+      autostartMerge = cfg.autostartPrograms ++ autostart;
+      autostartScript = mkAutostartScript name autostartMerge;
+
       source =
-        let
-          autostartMerge = cfg.autostartPrograms ++ autostart;
-        in
         if builtins.length autostartMerge > 0
-        then mutableSources // { "${autostartPath}" = mkAutostartScript name autostartMerge; }
+        then mutableSources // { "${autostartPath}" = autostartScript; }
         else mutableSources;
       mutableSourceFiles = link.mkMutableLinks {
         inherit config isDevMode;
         paths = (source // cfg.mutableSources);
       };
 
-      apps = builtins.map (appName: mkDesktopApp config cfg appName name) desktopApps;
+      apps = builtins.map (appName: mkDesktopApp config appName name) desktopApps;
 
       extraConfigModule =
         if builtins.typeOf extraConfig == "lambda"
@@ -73,7 +73,7 @@ in
           extraConfig
             {
               inherit self cfg isDevMode;
-              autostartScript = strings.concatStringsSep "\n" (builtins.attrValues source);
+              autostartScript = builtins.readFile autostartScript;
             }
         else extraConfig;
 

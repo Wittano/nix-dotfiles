@@ -5,9 +5,6 @@ desktop.mkDesktopModule {
   inherit config isDevMode;
 
   name = "bspwm";
-  mutableSources = {
-    ".config/qtile" = dotfiles.qtile.source;
-  };
   desktopApps = [
     "nitrogen"
     "picom"
