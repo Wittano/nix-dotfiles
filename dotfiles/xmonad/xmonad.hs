@@ -6,7 +6,7 @@ import XMonad.Actions.CycleWindows qualified as W
 import XMonad.Actions.OnScreen qualified as W
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks (ToggleStruts (ToggleStruts), avoidStruts, manageDocks)
-import XMonad.Hooks.ManageHelpers (doFullFloat, isFullscreen)
+import XMonad.Hooks.ManageHelpers (doFullFloat, doSink, isFullscreen)
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.WindowSwallowing (swallowEventHook)
@@ -208,7 +208,7 @@ myManageHook = composeGeneral <+> workspaceFixedApps
           className =? "pinentry-gtk-2" --> doFloat,
           className =? "splash" --> doFloat,
           className =? "toolbar" --> doFloat,
-          className ~? freeTubeRegex --> doFloat
+          className ~? freeTubeRegex --> doSink
         ]
 
 -- TODO Migrate to xmonad logger
