@@ -1,0 +1,25 @@
+cabal-version:      3.0
+name:               witomonad
+version:            0.1.0.0
+license:            NONE
+author:             Wittano Bonarotti
+maintainer:         radoslaw.ratyna@gmail.com
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:  Main
+
+    build-depends:    
+        base ^>=4.17.2.1,
+        xmonad >=0.17.0 && <0.18.0,
+        xmonad-contrib >=0.17.0 && <0.18.0,
+        xmonad-extras >=0.17.0 && <0.18.0
+
+    hs-source-dirs:   src
+
+    default-language: GHC2021

@@ -4,6 +4,7 @@
 , xmonad-with-packages
 , xmonadctl
 , haskellPackages
+, cabal-install
 }:
 let
   nixDeps = (callPackage ./default.nix { inherit unstable; }).nativeBuildInputs;
@@ -18,6 +19,7 @@ unstable.mkShell {
   buildInputs = [
     # Haskell deps
     haskell-language-server
+    cabal-install
 
     # Xmonad
     xmonadDevDeps

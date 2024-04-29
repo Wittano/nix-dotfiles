@@ -13,6 +13,9 @@ let
       export DISPLAY=":0"
     
       log_dir=$HOME/.local/share/${desktopName}
+      if [ ! -d "$log_dir"  ]; then
+        mkdir -p "$log_dir" || exit
+      fi
 
       _log_app() {
         exec_path=$(echo "$1" | awk '{ print $1 }')
