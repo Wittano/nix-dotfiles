@@ -2,9 +2,9 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.dev.ide;
+  cfg = config.modules.dev.lang;
 
-  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${config.home-manager.users.wittano.home.homeDirectory}/projects/own/${n}"; }) attr;
+  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "$HOME/projects/own/${n}"; }) attr;
 
   avaiableIde = addProjectDirField (with pkgs.jetbrains; {
     python.package = pycharm-professional;
@@ -16,9 +16,15 @@ let
     andorid.package = pkgs.andorid-studio;
   });
 
-  ideNames = builtins.attrNames avaiableIde;
+  langWithoutIde = {
+    "fork" = "$HOME/projects/own/fork";
+    "haskell" = "$HOME/projects/own/haskell";
+  };
 
-  installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.list;
+  ideNames = builtins.attrNames avaiableIde;
+  langNames = builtins.attrNames langWithoutIde;
+
+  installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.ides;
 
   mkCommand = path: {
     body = /*fish*/ ''
@@ -51,7 +57,7 @@ let
         name = "p${x}";
         value = mkCompletions name path;
       })
-    cfg.list;
+    cfg.ides;
 
   commands = builtins.listToAttrs (builtins.map
     (x:
@@ -62,29 +68,42 @@ let
         name = "p${x}";
         value = mkCommand path;
       })
-    cfg.list);
+    cfg.ides);
 
-  forkCommand.pfork = mkCommand "$HOME/projects/own/fork";
-  forkCompletions = [
-    rec {
-      name = "pfork";
-      value = mkCompletions name "$HOME/projects/own/fork";
-    }
-  ];
+
+  langCmds = {
+    commands = builtins.listToAttrs (builtins.map
+      (x: {
+        name = "p${x}";
+        value = mkCommand langWithoutIde.${x};
+      })
+      cfg.lang);
+    completions = builtins.map
+      (x: rec {
+        name = "p${x}";
+        value = mkCompletions name langWithoutIde.${x};
+      })
+      cfg.lang;
+  };
 in
 {
   options = {
-    modules.dev.ide = {
-      list = mkOption {
-        type = types.listOf (types.enum ideNames);
+    modules.dev.lang = {
+      lang = mkOption {
+        type = with types; listOf (enum langNames);
+        description = "List of aliases to language directories, that doesn't have IDE";
+        default = [ ];
+      };
+      ides = mkOption {
+        type = with types; listOf (enum ideNames);
         description = "List of enabled IDEs";
         default = [ ];
       };
     };
   };
 
-  config = mkIf ((builtins.length cfg.list) != 0) {
-    modules.shell.fish.completions = cmdCompletions ++ forkCompletions;
+  config = mkIf ((builtins.length (cfg.ides ++ cfg.lang)) != 0) {
+    modules.shell.fish.completions = cmdCompletions ++ langCmds.completions;
 
     home-manager.users.wittano = {
       home = {
@@ -92,8 +111,9 @@ in
         activation = {
           createProjectsDir =
             let
-              projectDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.list;
-              bashArray = builtins.concatStringsSep " " (builtins.map (x: "'${x}'") projectDirs);
+              idesDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.ides;
+              langDirs = builtins.map (x: langWithoutIde.${x}) cfg.lang;
+              bashArray = bash.mkBashArray (idesDirs ++ langDirs);
             in
             lib.hm.dag.entryBefore [ "writeBoundary" ] /*bash*/''
               projectDirs=(${bashArray})
@@ -105,7 +125,7 @@ in
         };
       };
 
-      programs.fish.functions = commands // forkCommand;
+      programs.fish.functions = commands // langCmds.commands;
     };
   };
 }

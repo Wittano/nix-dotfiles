@@ -4,7 +4,7 @@
 
   modules = {
     desktop.apps.enable = true;
-    dev.ide.list = [ "go" ];
+    dev.lang.ides = [ "go" ];
     hardware = {
       grub.enable = true;
       docker.enable = true;

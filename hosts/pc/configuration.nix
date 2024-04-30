@@ -34,7 +34,10 @@
       };
     };
     editors.neovim.enable = true;
-    dev.ide.list = [ "go" "cpp" "dotnet" ];
+    dev.lang = {
+      ides = [ "go" "cpp" "dotnet" ];
+      lang = [ "fork" "haskell" ];
+    };
     hardware = {
       sound.enable = true;
       grub = {
