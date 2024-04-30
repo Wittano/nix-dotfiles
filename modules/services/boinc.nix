@@ -10,7 +10,9 @@ let
 in
 {
   options = {
-    modules.services.boinc = { enable = mkEnableOption "Enable BOINC deamon"; };
+    modules.services.boinc = {
+      enable = mkEnableOption "Enable BOINC deamon";
+    };
   };
 
   config = mkIf cfg.enable {

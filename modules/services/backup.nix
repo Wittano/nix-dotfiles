@@ -103,6 +103,7 @@ in
         chown wittano:users ${cfg.directory}
       '';
       path = with pkgs; [ coreutils gnutar findutils rsync pigz ];
+      # TODO Export script into shell file with shcheck
       script = ''
         today=$(date -I)
         base_dir=${cfg.location}

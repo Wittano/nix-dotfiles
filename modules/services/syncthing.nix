@@ -2,6 +2,7 @@
 with lib;
 with lib.my;
 let
+  # TODO Replaced absolute path
   homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;
   encryptedConfig =
@@ -14,9 +15,7 @@ in
 {
   options = {
     modules.services.syncthing = {
-      enable = mkEnableOption ''
-        Enable syncthing deamon
-      '';
+      enable = mkEnableOption "Enable syncthing deamon";
     };
   };
 

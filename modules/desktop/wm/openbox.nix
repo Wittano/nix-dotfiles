@@ -17,6 +17,7 @@ desktop.mkDesktopModule {
     "xautolock"
     "dunst"
   ];
+  # TODO Update config
   extraConfig = {
     home-manager.users.wittano.home.packages = with pkgs; [
       openbox-menu

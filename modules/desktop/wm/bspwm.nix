@@ -1,4 +1,4 @@
-{ config, pkgs, lib, dotfiles, isDevMode, ... }:
+{ config, pkgs, lib, isDevMode, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
@@ -24,6 +24,7 @@ desktop.mkDesktopModule {
       home-manager.users.wittano = {
         home.packages = with pkgs; [ gsimplecal ];
 
+        # TODO Update config
         xsession.windowManager.bspwm = {
           inherit package;
 

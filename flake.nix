@@ -90,6 +90,7 @@
         shells;
     in
     {
+      # TODO Export more common function or utities into lib.my e.g. creating bash array as string
       lib = lib.my;
 
       nixosConfigurations =
@@ -124,6 +125,7 @@
 
       devShells.${pkgs.system} = devShells;
 
+      # TODO Update packages
       packages.x86_64-linux = privateRepo;
 
       templates = builtins.listToAttrs templates;

@@ -1,6 +1,5 @@
 { lib
 , stdenv
-, pkgs
 , fetchFromGitHub
 }: stdenv.mkDerivation {
   name = "wings-sddm-theme";

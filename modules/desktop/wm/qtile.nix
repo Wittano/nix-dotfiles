@@ -19,6 +19,7 @@ desktop.mkDesktopModule {
     "rofi"
   ];
   autostartPath = ".config/autostart.sh";
+  # TODO Reduce configuration size
   extraConfig = {
     services.xserver = {
       enable = true;

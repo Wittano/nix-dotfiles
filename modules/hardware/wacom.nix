@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
@@ -20,6 +20,7 @@ in
     };
   };
 
+  # TODO Add automount tabel after mount into PC after startup system
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = true;
 

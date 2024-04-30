@@ -9,7 +9,8 @@ let
   home-manager = inputs.home-manager;
 in
 {
-  # TODO Clean up unused imports 
+  # TODO Clean up unused imports
+  # TODO I have a big plans for this project (Pls, no refactor)... Big plans (refactor lib function)
   inherit mapper imports;
 
   hosts = import ./hosts.nix {

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, unstable, dotfiles, ... }:
+{ config, pkgs, lib, modulesPath, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -13,6 +13,7 @@ in
   options = {
     modules.hardware.virtualization = {
       enable = mkEnableOption "Enable virutalization tools";
+      # FIXME problem with second boot of Window VM
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
       enableVagrant = mkEnableOption "Enable Vagrant tool for virtualization";
     };
@@ -69,7 +70,7 @@ in
       # TODO Move hooks to virtualization.libvrit.hooks option
       preStart =
         let
-          # TODO Fix problem with boinc permission in script
+          # FIXME problem with boinc permission in script
           stopBoincScript = pkgs.writeScript "stop-boinc.sh" ''
             #!/usr/bin/env bash
 

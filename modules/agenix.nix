@@ -2,12 +2,14 @@
 with lib;
 with lib.my;
 let
+  # TODO Check if I can read external directory without impure way
   storeKeys = "/home/wittano/.ssh";
   sshDir = lists.optionals
     (builtins.pathExists storeKeys)
     (builtins.readDir storeKeys);
 
   privateKeys = attrsets.filterAttrs (n: _: (strings.hasSuffix "age" n)) sshDir;
+  # TODO Clean up code base from old functioncality or unnecessary function 
   privateKeyNames = attrsets.mapAttrsToList (n: _: builtins.replaceStrings [ ".age" ] [ "" ] n) privateKeys;
   privateKeysPaths = attrsets.mapAttrsToList (n: _: "${storeKeys}/${n}") privateKeys;
 
@@ -36,6 +38,7 @@ let
     ageFiles;
 in
 {
+  # FIXME problem with do not detect external files
   warnings = lists.optionals (!builtins.pathExists storeKeys) [
     "Missing ${storeKeys} directory"
   ];

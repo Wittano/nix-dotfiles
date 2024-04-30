@@ -1,7 +1,6 @@
 { lib
 , stdenv
 , fetchgit
-, pkgs
 }: stdenv.mkDerivation {
   name = "suger-candy-sddm-theme";
 

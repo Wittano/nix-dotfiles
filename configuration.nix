@@ -54,6 +54,7 @@ with lib;{
 
   services.xserver.layout = "pl";
 
+  # TODO Reduce unused fonts
   # Fonts
   fonts.packages = with pkgs; [
     source-code-pro
@@ -106,6 +107,15 @@ with lib;{
   };
 
   hardware.trackpoint.emulateWheel = true;
+
+  # Network
+  networking = {
+    hostName = "nixos";
+    firewall = {
+      allowPing = false;
+      rejectPackets = true;
+    };
+  };
 
   #User settings
   users.users.wittano = {

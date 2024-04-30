@@ -2,6 +2,7 @@
 
   imports = [ ./hardware.nix ./networking.nix ];
 
+  # TODO Install configuration on physical laptop
   modules = {
     desktop.apps.enable = true;
     dev.lang.ides = [ "go" ];

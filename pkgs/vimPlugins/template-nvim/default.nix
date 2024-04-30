@@ -1,6 +1,5 @@
 { vimUtils
 , fetchFromGitHub
-, lib
 , ...
 }: vimUtils.buildVimPlugin {
   pname = "template.nvim";

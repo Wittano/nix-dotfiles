@@ -11,6 +11,7 @@ in
     };
   };
 
+  # TODO Split configuration to small parts
   config = mkIf cfg.enable {
     modules.shell.fish.completions = [{
       name = "tvi";
@@ -49,9 +50,13 @@ in
 
         # TODO Add nerdtree as plugin
         # TODO Add better naviation system
+        # TODO Add better manage files in project
         # TODO Add better template system
         # TODO Add nix repl into config
+        # TODO Create full Haskell IDE (LSP, Formatter, syntax, optional DAP, Cabal and Stack integration)
+        # TODO Add better plugin for tracking TODOs,FIXMEs
         # FIXME Closing window with LSP finding references 
+        # FIXME Hide dotfiles even they index by Git
         extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence ] ++ customPlugins;
 
         extraConfigLua = /*lua*/
@@ -304,6 +309,7 @@ in
           nix.enable = true;
 
           surround.enable = true;
+          # TODO add better configuration for todo-comments
           todo-comments.enable = true;
           fugitive.enable = true;
 

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, dotfiles, inputs, ... }:
+{ config, pkgs, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 let
@@ -27,7 +27,7 @@ in
     };
   };
 
-  # TODO Return to emacs
+  # TODO Update emacs configuration or Doom emacs 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home = {

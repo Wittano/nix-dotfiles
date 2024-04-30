@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  # TODO Create deployment system via NixOps for my NixOS VM on homelab proxmox
 
   imports = [ ./hardware.nix ];
 

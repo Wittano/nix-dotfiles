@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 let
-  desktopAppsDir = ./../modules/desktop/apps;
+  desktopAppsDir = ./../modules/desktop/submodules;
 
   mkAutostartScript = desktopName: cmds:
     assert builtins.all (x: builtins.typeOf x == "string") cmds;

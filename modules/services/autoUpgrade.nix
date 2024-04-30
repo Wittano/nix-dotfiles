@@ -1,4 +1,4 @@
-{ pkgs, lib, config, home-manager, hostname, ... }:
+{ pkgs, lib, config, hostname, ... }:
 with lib;
 with lib.my;
 let
@@ -7,6 +7,7 @@ let
   impureFlag = optionalString config.modules.services.syncthing.enable "--impure";
 in
 {
+  # TODO Check if nixos autoupgrade service works for my purposes
   options = {
     modules.services.autoUpgrade = {
       enable = mkEnableOption "Enable autoUpgrade service";

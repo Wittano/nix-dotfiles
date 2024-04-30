@@ -18,8 +18,9 @@ in
     };
   };
 
+  # TODO check if WiFi adapter works
   config = mkIf cfg.enable {
-    # TODO Fix problem with blocking playing spotify tracks by NetworkManager
+    # FIXME problem with blocking playing spotify tracks by NetworkManager
     networking.wireless.enable = true;
 
     boot = mkIf cfg.enableTpLink {
