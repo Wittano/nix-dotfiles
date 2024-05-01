@@ -45,15 +45,15 @@ let
   };
 in
 {
-  home-manager.users.wittano = {
-    home = {
+  mutableSources = {
+    ".config/rofi" = dotfiles.rofi.source;
+  };
+
+  config = {
+    home-manager.users.wittano.home = {
       packages = with pkgs; [ rofi switchOffScript ];
 
       file.".local/share/rofi/themes".source = builtins.toPath "${catpuccinTheme}/basic/.local/share/rofi/themes";
     };
-  };
-
-  modules.desktop.${desktopName}.mutableSources = {
-    ".config/rofi" = dotfiles.rofi.source;
   };
 }

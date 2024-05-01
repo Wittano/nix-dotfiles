@@ -1,22 +1,24 @@
-{ config, pkgs, lib, isDevMode, ... }:
+{ config, pkgs, lib, isDevMode, hostname, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode;
+  inherit config isDevMode hostname;
 
   name = "bspwm";
-  desktopApps = [
+  apps = [
     "nitrogen"
     "picom"
     "gtk"
     "alacritty"
     "tmux"
+    "bluetooth"
     "dunst"
     "rofi"
     "polybar"
   ];
-  autostart = [ "${pkgs.wmname}/bin/wmname compiz" ];
-  extraConfig = ({ cfg, autostartScript, isDevMode, ... }:
+  installAutostartFile = false;
+  autostart = autostart.mkAutostart { programs = [ "wmname compiz" ]; };
+  extraConfig = ({ cfg, isDevMode, activationPath, ... }:
     let
       package = pkgs.bspwm;
     in
@@ -29,7 +31,7 @@ desktop.mkDesktopModule {
           inherit package;
 
           enable = true;
-          extraConfigEarly = autostartScript;
+          extraConfigEarly = builtins.readFile activationPath;
 
           alwaysResetDesktops = isDevMode;
           monitors = {

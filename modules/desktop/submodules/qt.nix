@@ -2,10 +2,13 @@
 with lib;
 with lib.my;
 {
-  qt = {
-    enable = true;
-    style = "adwaita-dark";
-  };
+  config = {
+    # TODO add new custom theme for Qt apps
+    qt = {
+      enable = true;
+      style = "adwaita-dark";
+    };
 
-  environment.systemPackages = with pkgs.libsForQt5; [ breeze-icons ];
+    environment.systemPackages = with pkgs.libsForQt5; [ breeze-icons ];
+  };
 }

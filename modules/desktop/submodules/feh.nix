@@ -1,4 +1,4 @@
-{ pkgs, lib, dotfiles, desktopName, ... }:
+{ pkgs, lib, dotfiles, ... }:
 with lib;
 with lib.my;
 let
@@ -9,9 +9,13 @@ let
   };
 in
 {
-  modules.desktop.${desktopName}.autostartPrograms = [
-    "${rollWallpaper}/bin/rollWallpaper"
-  ];
+  autostart = [{
+    name = "setup-wallpaper";
+    path = [ rollWallpaper ];
+    script = "rollWallpaper";
+  }];
 
-  home-manager.users.wittano.home.packages = [ rollWallpaper ];
+  config = {
+    home-manager.users.wittano.home.packages = [ rollWallpaper ];
+  };
 }

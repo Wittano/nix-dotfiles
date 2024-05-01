@@ -1,15 +1,16 @@
-{ config, lib, dotfiles, isDevMode, ... }:
+{ config, lib, dotfiles, isDevMode, hostname, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode;
+  inherit config isDevMode hostname;
 
   name = "qtile";
   mutableSources = {
     ".config/qtile" = dotfiles.qtile.source;
   };
-  desktopApps = [
+  apps = [
     "feh"
+    "bluetooth"
     "gtk"
     "qt"
     "dunst"
@@ -18,7 +19,6 @@ desktop.mkDesktopModule {
     "kitty"
     "rofi"
   ];
-  autostartPath = ".config/autostart.sh";
   # TODO Reduce configuration size
   extraConfig = {
     services.xserver = {

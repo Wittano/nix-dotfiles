@@ -24,14 +24,11 @@
   programs.droidcam.enable = true;
 
   modules = {
-    desktop = {
-      apps.enable = true;
-      gaming = {
-        enable = true;
-        disk.enable = true;
-        scripts.enable = true;
-        enableMihoyoGames = true;
-      };
+    desktop.gaming = {
+      enable = true;
+      disk.enable = true;
+      scripts.enable = true;
+      enableMihoyoGames = true;
     };
     editors.neovim.enable = true;
     dev.lang = {
@@ -46,7 +43,6 @@
       };
       wacom.enable = true;
       nvidia.enable = true;
-      bluetooth.enable = true;
       virtualization = {
         enable = true;
         enableWindowsVM = true;

@@ -10,6 +10,7 @@ let
 in
 {
   # TODO Clean up unused imports
+  # TODO Auto add lib based of filename
   # TODO I have a big plans for this project (Pls, no refactor)... Big plans (refactor lib function)
   inherit mapper imports;
 
@@ -21,4 +22,5 @@ in
   desktop = import ./desktop.nix { inherit lib pkgs home-manager dotfiles privateRepo unstable; };
   string = import ./strings.nix { inherit lib; };
   bash = import ./bash.nix { inherit lib; };
+  autostart = import ./autostart.nix { inherit lib pkgs unstable; };
 }

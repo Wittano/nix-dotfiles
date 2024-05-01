@@ -10,8 +10,10 @@ let
   });
 in
 {
-  home-manager.users.wittano.services.dunst = {
-    enable = true;
-    configFile = catppuccinDunstConfig.src."macchiato.conf".source;
+  config = {
+    home-manager.users.wittano.services.dunst = {
+      enable = true;
+      configFile = catppuccinDunstConfig.src."macchiato.conf".source;
+    };
   };
 }

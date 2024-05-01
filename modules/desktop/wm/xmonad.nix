@@ -1,24 +1,24 @@
-{ config, isDevMode, lib, dotfiles, ... }:
+{ config, isDevMode, lib, dotfiles, hostname, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode;
+  inherit config isDevMode hostname;
 
   name = "xmonad";
-  desktopApps = [
+  apps = [
     "feh"
     "gtk"
     "qt"
     "dunst"
     "picom"
     "tmux"
+    "bluetooth"
     "kitty"
     "rofi"
   ];
   mutableSources = {
     ".config/xmonad" = dotfiles.xmonad.source;
   };
-  autostartPath = ".config/autostart.sh";
   extraConfig = {
     services.xserver = {
       enable = true;

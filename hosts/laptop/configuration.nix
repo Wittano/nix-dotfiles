@@ -4,7 +4,6 @@
 
   # TODO Install configuration on physical laptop
   modules = {
-    desktop.apps.enable = true;
     dev.lang.ides = [ "go" ];
     hardware = {
       grub.enable = true;

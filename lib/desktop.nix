@@ -1,44 +1,9 @@
-{ pkgs, lib, dotfiles, ... }:
+{ pkgs, lib, dotfiles, unstable, ... }:
 with lib;
 with lib.my;
 let
-  desktopAppsDir = ./../modules/desktop/submodules;
-
-  mkAutostartScript = desktopName: cmds:
-    assert builtins.all (x: builtins.typeOf x == "string") cmds;
-    let
-      programs = builtins.concatStringsSep "\n" (builtins.map (x: ''"${x}"'') cmds);
-    in
-    pkgs.writeShellScript "autostart.sh" ''
-      export DISPLAY=":0"
-    
-      log_dir=$HOME/.local/share/${desktopName}
-      if [ ! -d "$log_dir"  ]; then
-        mkdir -p "$log_dir" || exit
-      fi
-
-      _log_app() {
-        exec_path=$(echo "$1" | awk '{ print $1 }')
-        app_name=$(basename "$exec_path")
-        time=$(date +"%D %T")
-
-        echo "[autostart] $time: Launch $app_name"
-        ${pkgs.bash}/bin/bash -c "$1" 2>"$log_dir/$app_name.log" || echo "[warning] $" &
-      }
-
-      declare -a programs
-
-      programs=(${programs})
-
-      IFS=""
-
-      for app in ''${programs[*]}; do
-        _log_app "$app"
-      done
-    '';
-
-  mkDesktopApp = config: appName: desktopName: import (desktopAppsDir + "/${appName}.nix") {
-    inherit pkgs dotfiles config lib desktopName;
+  mkDesktopApp = config: name: desktopName: import (./../modules/desktop/submodules + "/${name}.nix") {
+    inherit pkgs dotfiles config unstable lib desktopName;
   };
 in
 {
@@ -46,38 +11,105 @@ in
     { name
     , config
     , isDevMode
+    , hostname
     , autostart ? [ ]
-    , autostartPath ? ".config/${name}/autostart.sh"
-    , desktopApps ? [ ]
+    , apps ? [ ]
     , mutableSources ? { }
     , extraConfig ? { }
+    , enableSessionTarget ? true
+    , installAutostartFile ? true
     }:
     let
       cfg = config.modules.desktop.${name};
       self = modules.desktop.${name};
 
-      autostartMerge = cfg.autostartPrograms ++ autostart;
-      autostartScript = mkAutostartScript name autostartMerge;
+      desktopApps =
+        let
+          appsList = builtins.map (appName: mkDesktopApp config appName name) (apps ++ [ "general" ]);
+        in
+        builtins.filter
+          (app:
+            let
+              hostOnlyList = app.onlyFor or [ ];
+            in
+            if builtins.length hostOnlyList > 0
+            then builtins.any (n: n == hostname) hostOnlyList
+            else true
+          )
+          appsList;
 
-      source =
-        if builtins.length autostartMerge > 0
-        then mutableSources // { "${autostartPath}" = autostartScript; }
-        else mutableSources;
-      mutableSourceFiles = link.mkMutableLinks {
-        inherit config isDevMode;
-        paths = (source // cfg.mutableSources);
+      desktopAppsModule = mkMerge (builtins.map (x: x.config or { }) desktopApps);
+
+      # THX hyprland configuration from home-manager. It isn't your code. OUR CODE
+      activationSession =
+        let
+          variables = builtins.concatStringsSep " "
+            [
+              "DISPLAY"
+              "XDG_CURRENT_DESKTOP"
+            ];
+        in
+        pkgs.writeShellScript "autostart.sh" ''
+          ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${variables}
+
+          systemctl --user stop ${desktopSessionTarget}.target
+          systemctl --user start ${desktopSessionTarget}.target
+        '';
+      desktopSessionTarget = "${name}-session";
+      sessionTargetModule = mkIf enableSessionTarget {
+        systemd.user.targets."${desktopSessionTarget}" = {
+          after = [ "graphical-session-pre.target" ];
+          wants = [ "graphical-session-pre.target" ];
+          bindsTo = [ "graphical-session.target" ];
+        };
+
+        home-manager.users.wittano.xdg.configFile = mkIf installAutostartFile {
+          "autostart.sh".source = activationSession;
+        };
       };
 
-      apps = builtins.map (appName: mkDesktopApp config appName name) desktopApps;
+      autostartModule =
+        let
+          appsAutostart = lists.flatten (builtins.map (x: x.autostart or [ ]) desktopApps);
+          cmds = appsAutostart ++ autostart;
+
+          mkAutostartService = action:
+            let
+              serviceName = "${action.name}-autostart";
+              basicTools = with pkgs; [ coreutils toybox ];
+            in
+            {
+              systemd.user.services.${serviceName} = {
+                description = "Start ${serviceName} on ${name} autostart";
+                bindsTo = [ "${desktopSessionTarget}.target" ];
+                path = action.path ++ basicTools;
+
+                serviceConfig = {
+                  StandardOutput = "journal";
+                };
+
+                wantedBy = [ "${desktopSessionTarget}.target" ];
+                script = action.script;
+              };
+            };
+        in
+        mkMerge (builtins.map mkAutostartService cmds);
+
+      mutableSourceFiles =
+        let
+          mutableAppsSources = lists.foldr
+            (next: prev: prev // (next.mutableSources  or { }))
+            { }
+            desktopApps;
+        in
+        link.mkMutableLinks {
+          inherit config isDevMode;
+          paths = mutableAppsSources // mutableSources;
+        };
 
       extraConfigModule =
         if builtins.typeOf extraConfig == "lambda"
-        then
-          extraConfig
-            {
-              inherit self cfg isDevMode;
-              autostartScript = builtins.readFile autostartScript;
-            }
+        then extraConfig { inherit self cfg isDevMode; activationPath = activationSession; }
         else extraConfig;
 
       moduleChecker = {
@@ -90,29 +122,17 @@ in
       };
 
       modules = [
+        autostartModule
         mutableSourceFiles
         moduleChecker
         extraConfigModule
-      ] ++ apps;
+        desktopAppsModule
+        sessionTargetModule
+      ];
     in
     {
       options.modules.desktop.${name} = {
         enable = mkEnableOption "Enable ${name} desktop";
-        autostartPrograms = mkOption {
-          type = types.listOf types.str;
-          example = [ "${pkgs.hello}/bin/hello --special-args" ];
-          default = [ ];
-          description = "list of programs, that should start on startup";
-        };
-        mutableSources = mkOption {
-          type = types.attrs;
-          description = "Set of additional sources, which should be include to desktop as mutable links";
-          example = {
-            "/path/to/file" = ./test.txt;
-            "/path/to/string" = "my string";
-          };
-          default = { };
-        };
       };
 
       config = mkIf (cfg.enable) (mkMerge modules);

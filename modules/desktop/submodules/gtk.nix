@@ -30,48 +30,50 @@ let
   catppuccinThemeName = "Catppuccin-Frappe-Standard-Blue-Dark";
 in
 {
-  home-manager.users.wittano = {
-    home.packages = with pkgs; [ dconf ];
-    gtk = {
-      enable = true;
-      cursorTheme = {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
+  config = {
+    home-manager.users.wittano = {
+      home.packages = with pkgs; [ dconf ];
+      gtk = {
+        enable = true;
+        cursorTheme = {
+          name = "Bibata-Modern-Ice";
+          package = pkgs.bibata-cursors;
+        };
+        font = {
+          name = "JetBrains Mono NL";
+          size = 12;
+          package = pkgs.jetbrains-mono;
+        };
+        iconTheme = {
+          name = "Colloid-${colloidSchemaVariant}-dark";
+          package = colloidIconTheme;
+        };
+        theme = {
+          name = catppuccinThemeName;
+          package = catppuccinTheme;
+        };
+        gtk3 = {
+          extraConfig = gtkSettings;
+          bookmarks = [
+            "file:///tmp Temporary"
+            "file:///home/wittano/Documents"
+            "file:///home/wittano/Music"
+            "file:///home/wittano/Pictures"
+            "file:///home/wittano/Videos"
+            "file:///home/wittano/Downloads"
+            "file:///home/wittano/projects/own Projects"
+            "file:///home/wittano/.config Config files"
+            "file://${config.environment.variables.NIX_DOTFILES} Nix dotfiles"
+          ];
+        };
+        gtk4.extraConfig = gtkSettings;
       };
-      font = {
-        name = "JetBrains Mono NL";
-        size = 12;
-        package = pkgs.jetbrains-mono;
-      };
-      iconTheme = {
-        name = "Colloid-${colloidSchemaVariant}-dark";
-        package = colloidIconTheme;
-      };
-      theme = {
-        name = catppuccinThemeName;
-        package = catppuccinTheme;
-      };
-      gtk3 = {
-        extraConfig = gtkSettings;
-        bookmarks = [
-          "file:///tmp Temporary"
-          "file:///home/wittano/Documents"
-          "file:///home/wittano/Music"
-          "file:///home/wittano/Pictures"
-          "file:///home/wittano/Videos"
-          "file:///home/wittano/Downloads"
-          "file:///home/wittano/projects/own Projects"
-          "file:///home/wittano/.config Config files"
-          "file://${config.environment.variables.NIX_DOTFILES} Nix dotfiles"
-        ];
-      };
-      gtk4.extraConfig = gtkSettings;
-    };
 
-    xdg.configFile = {
-      "gtk-4.0/assets".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk-dark.css";
+      xdg.configFile = {
+        "gtk-4.0/assets".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk-dark.css";
+      };
     };
   };
 }
