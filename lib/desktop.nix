@@ -1,8 +1,8 @@
-{ pkgs, lib, dotfiles, unstable, ... }:
+{ pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
-  mkDesktopApp = config: name: desktopName: import (./../modules/desktop/submodules + "/${name}.nix") {
+  mkDesktopApp = config: dotfiles: name: desktopName: import (./../modules/desktop/submodules + "/${name}.nix") {
     inherit pkgs dotfiles config unstable lib desktopName;
   };
 in
@@ -11,6 +11,7 @@ in
     { name
     , config
     , isDevMode
+    , dotfiles
     , hostname
     , autostart ? [ ]
     , apps ? [ ]
@@ -25,7 +26,7 @@ in
 
       desktopApps =
         let
-          appsList = builtins.map (appName: mkDesktopApp config appName name) (apps ++ [ "general" ]);
+          appsList = builtins.map (appName: mkDesktopApp config dotfiles appName name) (apps ++ [ "general" ]);
         in
         builtins.filter
           (app:

@@ -1,8 +1,8 @@
-{ config, lib, dotfiles, isDevMode, hostname, ... }:
+{ config, lib, dotfiles, isDevMode, hostname,  ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode hostname;
+  inherit config isDevMode hostname dotfiles;
 
   name = "qtile";
   mutableSources = {

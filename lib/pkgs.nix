@@ -1,4 +1,4 @@
-{ lib, pkgs }: rec {
+{ lib, pkgs, ... }: rec {
   inherit (lib.attrsets) filterAttrs nameValuePair mapAttrs' mapAttrsToList;
   inherit (lib.lists) flatten last;
 

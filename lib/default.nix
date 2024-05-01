@@ -1,26 +1,12 @@
 { lib, system, inputs, pkgs, unstable, privateRepo, ... }:
+with lib;
 let
-  mapper = import ./mapper.nix { inherit lib pkgs; };
-  imports = import ./imports.nix { inherit lib; };
-
   dotfilesPath = ./../dotfiles;
-  dotfiles = mapper.mapDirToAttrs dotfilesPath;
-
-  home-manager = inputs.home-manager;
 in
-{
-  # TODO Clean up unused imports
-  # TODO Auto add lib based of filename
-  # TODO I have a big plans for this project (Pls, no refactor)... Big plans (refactor lib function)
-  inherit mapper imports;
-
-  hosts = import ./hosts.nix {
-    inherit lib system pkgs unstable dotfiles inputs privateRepo imports;
-  };
-  link = import ./link.nix { inherit lib pkgs dotfiles dotfilesPath; };
-  pkgs = import ./pkgs.nix { inherit lib pkgs; };
-  desktop = import ./desktop.nix { inherit lib pkgs home-manager dotfiles privateRepo unstable; };
-  string = import ./strings.nix { inherit lib; };
-  bash = import ./bash.nix { inherit lib; };
-  autostart = import ./autostart.nix { inherit lib pkgs unstable; };
-}
+# TODO I have a big plans for this project (Pls, no refactor)... Big plans (refactor lib function)
+attrsets.mapAttrs'
+  (n: v: {
+    name = strings.removeSuffix ".nix" n;
+    value = import (./. + "/${n}") { inherit lib pkgs dotfilesPath privateRepo unstable inputs system; };
+  })
+  (builtins.readDir ./.)

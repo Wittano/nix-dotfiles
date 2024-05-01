@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode hostname;
+  inherit config isDevMode hostname dotfiles;
 
   name = "xmonad";
   apps = [

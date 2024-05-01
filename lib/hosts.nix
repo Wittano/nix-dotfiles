@@ -1,6 +1,26 @@
-{ lib, system, pkgs, unstable, dotfiles, privateRepo, inputs, imports, ... }:
+{ lib, system, pkgs, unstable, privateRepo, inputs, dotfilesPath, ... }:
 with lib;
 with lib.my;
+let
+  importModulesPath = path:
+    let
+      ignoredDir = [ "submodules" "utils" "plugins" ];
+      source = attrsets.filterAttrs
+        (n: _: all (x: x != n) ignoredDir)
+        (builtins.readDir path);
+
+      mkModulePath = n: v:
+        let newPath = "${path}/${n}";
+        in if v == "regular" then
+          if strings.hasSuffix "nix" newPath then newPath else null
+        else
+          importModulesPath newPath;
+      modulesList = lists.flatten (attrsets.mapAttrsToList mkModulePath source);
+    in
+    builtins.filter (e: e != null) modulesList;
+
+  dotfiles = mapper.mapDirToAttrs dotfilesPath;
+in
 {
   mkHost = { name, isDevMode ? false }:
     let
@@ -26,7 +46,7 @@ with lib.my;
 
       modules =
         let
-          hostnameNoDev = string.removeSuffix "-dev" hostname;
+          hostnameNoDev = strings.removeSuffix "-dev" hostname;
         in
         [
           ./../configuration.nix
@@ -37,6 +57,6 @@ with lib.my;
           inputs.nixvim.nixosModules.nixvim
           inputs.aagl.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
-        ] ++ (imports.importModulesPath ./../modules);
+        ] ++ (importModulesPath ./../modules);
     };
 }

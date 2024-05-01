@@ -1,8 +1,8 @@
-{ config, pkgs, lib, isDevMode, hostname, ... }:
+{ config, pkgs, lib, isDevMode, hostname, dotfiles, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
-  inherit config isDevMode hostname;
+  inherit config isDevMode hostname dotfiles;
 
   name = "bspwm";
   apps = [
