@@ -14,6 +14,7 @@ let
       inherit name;
       path = runtimeInputs;
       script = "${name} ${args}";
+      pkgs = pkg;
     };
 in
 {

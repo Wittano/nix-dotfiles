@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ pkgs, lib, unstable, system, ... }:
 with lib;
 with lib.my;
 let
@@ -77,13 +77,66 @@ in
           mkAutostartService = action:
             let
               serviceName = "${action.name}-autostart";
-              basicTools = with pkgs; [ coreutils toybox ];
+
+              nixPkgs = action.pkgs or pkgs;
+              basicTools = with nixPkgs; [ coreutils toybox xdg-utils ];
+              runtimeLibs = with nixPkgs; [
+                alsa-lib
+                at-spi2-atk
+                at-spi2-core
+                atk
+                cairo
+                cups
+                curlWithGnuTls
+                dbus
+                expat
+                ffmpeg_4
+                fontconfig
+                freetype
+                gdk-pixbuf
+                glib
+                gtk3
+                harfbuzz
+                libayatana-appindicator
+                libdbusmenu
+                libdrm
+                libgcrypt
+                libGL
+                libnotify
+                libpng
+                libpulseaudio
+                libxkbcommon
+                mesa
+                nss_latest
+                pango
+                stdenv.cc.cc
+                systemd
+                xorg.libICE
+                xorg.libSM
+                xorg.libX11
+                xorg.libxcb
+                xorg.libXcomposite
+                xorg.libXcursor
+                xorg.libXdamage
+                xorg.libXext
+                xorg.libXfixes
+                xorg.libXi
+                xorg.libXrandr
+                xorg.libXrender
+                xorg.libXScrnSaver
+                xorg.libxshmfence
+                xorg.libXtst
+                zlib
+              ];
             in
             {
               systemd.user.services.${serviceName} = {
                 description = "Start ${serviceName} on ${name} autostart";
                 bindsTo = [ "${desktopSessionTarget}.target" ];
                 path = action.path ++ basicTools;
+                environment = {
+                  LD_LIBRARY_PATH = strings.makeLibraryPath runtimeLibs;
+                };
 
                 serviceConfig = {
                   StandardOutput = "journal";
