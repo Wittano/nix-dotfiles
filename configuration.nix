@@ -3,6 +3,7 @@
 , lib
 , privateRepo
 , desktopName
+, hostname
 , ...
 }:
 with lib;{
@@ -167,6 +168,12 @@ with lib;{
     } // enableDesktop;
 
   # System
-  system.stateVersion = "23.11";
-
+  system = {
+    stateVersion = "23.11";
+    autoUpgrade = {
+      enable = true;
+      flake = "github:wittano/nix-dotfiles#${hostname}-${desktopName}";
+      dates = "daily";
+    };
+  };
 }
