@@ -12,8 +12,12 @@ in
     };
   };
 
-  # TODO check if WiFi adapter works
   config = mkIf cfg.enable {
+    warnings = [{
+      warning = cfg.enableTpLink && config.boot.kernelPackages != pkgs.linuxPackages;
+      message = "Mofule modules.hardware.wifi force change your kernel to stable version ${pkgs.linuxPackages.kernel.version}";
+    }];
+
     networking.networkmanager.enable = true;
 
     boot = mkIf cfg.enableTpLink {

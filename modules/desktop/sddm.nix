@@ -20,7 +20,6 @@ in
 
   options.modules.desktop.sddm = {
     enable = mkEnableOption "Enable SDDM as display manager";
-    # TODO Add new theme
     theme = mkOption {
       type = types.enum sddmThemeNames;
       default = "dexy";
