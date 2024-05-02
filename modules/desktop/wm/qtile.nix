@@ -1,4 +1,4 @@
-{ config, lib, dotfiles, isDevMode, hostname,  ... }:
+{ config, lib, dotfiles, isDevMode, hostname, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
@@ -21,6 +21,8 @@ desktop.mkDesktopModule {
   ];
   # TODO Reduce configuration size
   extraConfig = {
+    fonts.packages = with pkgs; [ nerdfonts ];
+
     services.xserver = {
       enable = true;
       windowManager.qtile.enable = true;

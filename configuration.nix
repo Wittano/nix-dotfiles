@@ -55,19 +55,16 @@ with lib;{
 
   services.xserver.layout = "pl";
 
-  # TODO Reduce unused fonts
   # Fonts
   fonts.packages = with pkgs; [
-    source-code-pro
-    hanazono
     noto-fonts
     noto-fonts-extra
     noto-fonts-color-emoji
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji-blob-bin
-    jetbrains-mono
-    nerdfonts
+
+    hanazono
     hackgen-nf-font
   ];
 
