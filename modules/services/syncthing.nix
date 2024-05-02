@@ -2,15 +2,11 @@
 with lib;
 with lib.my;
 let
-  # TODO Replaced absolute path
-  homeDir = "/home/wittano";
   cfg = config.modules.services.syncthing;
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
+
   encryptedConfig =
-    if (config.age.secrets ? syncthing)
-    then
-      attrsets.optionalAttrs (builtins.pathExists config.age.secrets.syncthing.path)
-        (builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path))
-    else null;
+    builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path);
 in
 {
   options = {
@@ -20,16 +16,16 @@ in
   };
 
   config =
-    mkIf (cfg.enable && encryptedConfig != null) {
+    mkIf (cfg.enable) {
       services.syncthing = {
-        enable = true;
+        enable = builtins.pathExists config.age.secrets.syncthing.path;
         systemService = true;
         dataDir = "${homeDir}/.cache/syncthing";
         configDir = "${homeDir}/.config/syncthing";
         user = "wittano";
         settings = {
-          folders = attrsets.optionalAttrs (encryptedConfig ? folders) encryptedConfig.folders;
-          devices = attrsets.optionalAttrs (encryptedConfig ? devices) encryptedConfig.devices;
+          folders = encryptedConfig.folders or { };
+          devices = encryptedConfig.devices or { };
           extraOptions.gui.theme = "dark";
         };
       };

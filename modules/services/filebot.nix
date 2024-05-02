@@ -15,7 +15,6 @@ in
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";
-      # TODO export toml configuration into toml file
       configPath = mapper.toTOML "filebot.toml" {
         Pictures = {
           src = [ "$HOME/Downloads/*.(gif|jpe?g|tiff?|png|webp|bmp)" ];
