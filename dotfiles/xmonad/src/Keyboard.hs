@@ -13,6 +13,7 @@ import XMonad.Layout.ToggleLayouts qualified as T
 import XMonad.StackSet qualified as W
 import XMonad.Util.Ungrab (unGrab)
 
+-- TODO add change screen keybind M-n
 customKeybinds :: [(String, X ())]
 customKeybinds =
   [ ("M-e", spawn "rofi -show drun"),

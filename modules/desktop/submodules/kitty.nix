@@ -1,13 +1,26 @@
-{ pkgs, lib, dotfiles, ... }:
-with lib;
-with lib.my; {
-  mutableSources = {
-    ".config/kitty" = dotfiles.kitty.source;
+{ pkgs, ... }:
+let
+  catppuccinTheme = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
+    repo = "kitty";
+    rev = "d7d61716a83cd135344cbb353af9d197c5d7cec1";
+    sha256 = "sha256-mRFa+40fuJCUrR1o4zMi7AlgjRtFmii4fNsQyD8hIjM=";
   };
+  themeName = "mocha";
+in
+{
   config = {
-    # TODO Migate to home-manager options
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ kitty ];
+      programs.kitty = {
+        enable = true;
+        extraConfig = builtins.readFile (catppuccinTheme + "/themes/${themeName}.conf");
+        font = {
+          size = 18;
+          name = "JetBrains Mono";
+          package = pkgs.jetbrains-mono;
+        };
+        shellIntegration.enableFishIntegration = true;
+      };
 
       programs.fish.shellAliases.ssh = "kitty +kitten ssh";
     };
