@@ -43,17 +43,19 @@ let
     }
   ];
 
-  completions = builtins.listToAttrs (lists.forEach cfg.completions (x: {
-    name = "fish/completions/${x.name}.fish";
-    value =
-      let
-        fieldName =
-          if builtins.typeOf x.value == "string"
-          then "text"
-          else "source";
-      in
-      { "${fieldName}" = x.value; };
-  }));
+  completions = attrsets.mapAttrs'
+    (n: v: {
+      name = "fish/completions/${n}.fish";
+      value =
+        let
+          fieldName =
+            if builtins.typeOf v == "string"
+            then "text"
+            else "source";
+        in
+        { "${fieldName}" = v; };
+    })
+    cfg.completions;
 in
 {
 
@@ -63,26 +65,12 @@ in
       enableDirenv = mkEnableOption "Enable direnv";
       default = mkEnableOption "Enable fish shell as default shell for main user";
       completions = mkOption {
-        type = with types; listOf (submodule {
-          options = {
-            name = mkOption {
-              type = str;
-              description = "Fish script name";
-            };
-            value = mkOption {
-              type = either str path;
-              description = "Fish script content";
-            };
-          };
-        });
-        default = [ ];
+        type = with types; attrsOf (either str path);
+        default = { };
         description = "List of custom completions";
-        example = [
-          {
-            name = "myprog";
-            text = "complete -c myprog -F -r";
-          }
-        ];
+        example = {
+          "myprog" = "complete -c myprog -F -r";
+        };
       };
     };
   };
@@ -117,6 +105,7 @@ in
             let
               host = (strings.removeSuffix "-dev" hostname) +
                 (strings.optionalString (desktopName != "") "-${desktopName}");
+                
               templatesAliases = attrsets.mapAttrs'
                 (n: v: {
                   name = "t${n}";

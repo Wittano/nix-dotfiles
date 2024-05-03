@@ -109,9 +109,8 @@ in
     systemd.services.pcscd.enable = !cfg.enableWindowsVM;
     systemd.sockets.pcscd.enable = !cfg.enableWindowsVM;
 
-    modules.shell.fish.completions = mkIf (cfg.enableVagrant) [{
-      name = "vm";
-      value = ''
+    modules.shell.fish.completions = mkIf (cfg.enableVagrant) {
+      "vm" = ''
         function __fish_vm_list
           find $HOME/projects/config/system -name Vagrantfile -type f | cut -d '/' -f 8
         end
@@ -126,7 +125,7 @@ in
         complete -f -c vm -n "not __fish_seen_subcommand_from all" -a all
         complete -f -c vm -n "__fish_seen_subcommand_from all; and not __fish_seen_subcommand_from $vagrant_commands" -a "$vagrant_commands"
       '';
-    }];
+    };
 
     home-manager.users.wittano = mkIf (cfg.enableVagrant) {
       programs.fish.shellAliases.vm = "bash ${virutalizationDir."select-vagrant-vm.sh".source}";

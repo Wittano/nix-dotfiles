@@ -13,10 +13,7 @@ in
 
   # TODO Split configuration to small parts
   config = mkIf cfg.enable {
-    modules.shell.fish.completions = [{
-      name = "tvi";
-      value = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
-    }];
+    modules.shell.fish.completions."tvi" = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
 
     home-manager.users.wittano = {
       home.packages = with pkgs; [ ripgrep ];

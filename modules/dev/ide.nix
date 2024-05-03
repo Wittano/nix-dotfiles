@@ -48,7 +48,7 @@ let
     end
   '';
 
-  cmdCompletions = builtins.map
+  cmdCompletions = builtins.listToAttrs (builtins.map
     (x:
       let
         path = avaiableIde."${x}".projectDir;
@@ -57,7 +57,7 @@ let
         name = "p${x}";
         value = mkCompletions name path;
       })
-    cfg.ides;
+    cfg.ides);
 
   commands = builtins.listToAttrs (builtins.map
     (x:
@@ -78,12 +78,12 @@ let
         value = mkCommand langWithoutIde.${x};
       })
       cfg.lang);
-    completions = builtins.map
+    completions = builtins.listToAttrs (builtins.map
       (x: rec {
         name = "p${x}";
         value = mkCompletions name langWithoutIde.${x};
       })
-      cfg.lang;
+      cfg.lang);
   };
 in
 {
@@ -103,7 +103,7 @@ in
   };
 
   config = mkIf ((builtins.length (cfg.ides ++ cfg.lang)) != 0) {
-    modules.shell.fish.completions = cmdCompletions ++ langCmds.completions;
+    modules.shell.fish.completions = cmdCompletions // langCmds.completions;
 
     home-manager.users.wittano = {
       home = {
