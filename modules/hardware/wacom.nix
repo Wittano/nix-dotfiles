@@ -3,15 +3,19 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.hardware.wacom;
-  dependecies = strings.makeBinPath (with pkgs;[ xf86_input_wacom gawk ]);
-  serviceScript = pkgs.writeScript "setup-wacom.sh" /*fish*/''
-    #!/bin/bash
-    devices=$(xsetwacom list devices | awk '{print $9}')
+  name = "setup-wacom";
+  setupWacom = pkgs.writeShellApplication {
+    inherit name;
 
-    for d in $devices; do
-      xsetwacom --set "$d" MapToOutput HEAD-0
-    done
-  '';
+    runtimeInputs = with pkgs;[ xf86_input_wacom gawk ];
+    text = ''
+      devices=$(xsetwacom list devices | awk '{print $9}')
+
+      for d in $devices; do
+        xsetwacom --set "$d" MapToOutput HEAD-0
+      done
+    '';
+  };
 in
 {
   options = {
@@ -25,9 +29,9 @@ in
     services.xserver.wacom.enable = true;
 
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ krita ];
+      home.packages = with pkgs; [ krita setupWacom ];
 
-      systemd.user.services."setup-wacom" = {
+      systemd.user.services.${name} = {
         Unit = {
           Description = "Map tablet to primary display";
           After = [ "graphical-session-pre.target" ];
@@ -36,20 +40,12 @@ in
 
         Service = {
           Type = "oneshot";
-          ExecStart = "${pkgs.bash}/bin/bash ${serviceScript}";
-          Environment = [ ''DISPLAY=":0"'' "PATH=${dependecies}" ];
+          ExecStart = meta.getExe setupWacom;
+          Environment = [ ''DISPLAY=":0"'' ];
         };
 
         Install.WantedBy = [ "graphical-session.target" ];
       };
-
-      programs.fish.functions.fixWacom.body = /*fish*/ ''
-        set -l devices (${pkgs.xf86_input_wacom}/bin/xsetwacom list devices | ${pkgs.gawk}/bin/awk '{print $9}')
-
-        for d in $devices;
-          ${pkgs.xf86_input_wacom}/bin/xsetwacom --set "$d" MapToOutput HEAD-0
-        end
-      '';
     };
   };
 }
