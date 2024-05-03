@@ -32,7 +32,7 @@
     };
     editors.neovim.enable = true;
     dev.lang = {
-      ides = [ "go" "cpp" "dotnet" ];
+      ides = [ "go" "cpp" "rust" ];
       lang = [ "fork" "haskell" ];
     };
     hardware = {
