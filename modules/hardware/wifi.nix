@@ -13,10 +13,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    warnings = [{
-      warning = cfg.enableTpLink && config.boot.kernelPackages != pkgs.linuxPackages;
-      message = "Mofule modules.hardware.wifi force change your kernel to stable version ${pkgs.linuxPackages.kernel.version}";
-    }];
+    warnings = lists.optional (cfg.enableTpLink) [
+      "Module modules.hardware.wifi force change your kernel to stable version ${pkgs.linuxPackages.kernel.version}"
+    ];
 
     networking.networkmanager.enable = true;
 
