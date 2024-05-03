@@ -1,4 +1,4 @@
-{ config, lib, dotfiles, isDevMode, hostname, ... }:
+{ config, pkgs, lib, dotfiles, isDevMode, hostname, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
