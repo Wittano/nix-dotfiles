@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -11,7 +11,7 @@ let
     cpp.package = clion;
     go.package = goland;
     dotnet.package = rider;
-    rust.package = rust-rover;
+    rust.package = unstable.jetbrains.rust-rover;
     jvm.package = idea-ultimate;
     andorid.package = pkgs.andorid-studio;
   });
