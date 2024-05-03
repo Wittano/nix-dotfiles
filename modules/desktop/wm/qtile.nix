@@ -19,9 +19,8 @@ desktop.mkDesktopModule {
     "kitty"
     "rofi"
   ];
-  # TODO Reduce configuration size
   extraConfig = {
-    fonts.packages = with pkgs; [ nerdfonts ];
+    fonts.packages = with pkgs; [ nerdfonts jetbrains-mono ];
 
     services.xserver = {
       enable = true;
