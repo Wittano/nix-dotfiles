@@ -2,16 +2,23 @@
 with lib;
 with lib.my;
 let
-  draculaOpenbox = pkgs.fetchFromGitHub {
-    owner = "dracula";
+  catppuccin = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
     repo = "openbox";
-    rev = "b3222509bb291dc62d201a66a1547a7aac0040b3";
-    sha256 = "sha256-GZ6/ThHBP3TZshDPHdsNjQEpqowt4eqva0MI/mzELRg=";
+    rev = "56b996e2118bfe55492b9e4febb129af51e476a2";
+    sha256 = "sha256-5Hx/qn5LV7zdicJu9k3fHSuBoIMryNu6s3hkosQrMVw=";
   };
-  draculaIcon = pkgs.fetchzip {
-    url = "https://github.com/dracula/gtk/files/5214870/Dracula.zip";
-    sha256 = "sha256-rcSKlgI3bxdh4INdebijKElqbmAfTwO+oEt6M2D1ls0=";
-  };
+
+  themes = trivial.pipe catppuccin [
+    builtins.readDir
+    (attrsets.filterAttrs (n: v: strings.hasPrefix "Catppuccin" n && v == "directory"))
+    (attrsets.mapAttrs' (n: _: {
+      name = ".themes/${n}";
+      value = {
+        source = catppuccin + "/${n}";
+      };
+    }))
+  ];
 in
 desktop.mkDesktopModule {
   inherit config isDevMode hostname dotfiles;
@@ -25,14 +32,18 @@ desktop.mkDesktopModule {
   apps = [
     "bluetooth"
     "nitrogen"
+    "picom"
     "kitty"
     "rofi"
+    "tmux"
     "gtk"
-    "xautolock"
     "dunst"
   ];
   installAutostartFile = false;
-  # TODO Update config
+  autostart = autostart.mkAutostart {
+    programs = [ "tint2" "volumeicon" ];
+    path = with pkgs; [ volumeicon gsimplecal ];
+  };
   extraConfig = { activationPath, ... }: {
     home-manager.users.wittano = {
       home = {
@@ -40,22 +51,15 @@ desktop.mkDesktopModule {
           openbox-menu
           lxmenu-data
           obconf
-          volumeicon
-          gsimplecal
           tint2
           # Utils
           arandr
         ];
-        file = {
-          ".themes/Dracula-withoutBorder".source = draculaOpenbox + "/Dracula-withoutBorder";
-          ".icons/dracula".source = draculaIcon;
-        };
+        file = themes;
       };
 
       xdg.configFile."openbox/autostart".source = activationPath;
     };
-
-    environment.systemPackages = with pkgs; [ dracula-theme ];
 
     services.xserver = {
       enable = true;

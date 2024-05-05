@@ -22,6 +22,7 @@ desktop.mkDesktopModule {
   extraConfig = {
     services.xserver = {
       enable = true;
+      # TODO Added steam patches for xmonad to pkgs overlay
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;

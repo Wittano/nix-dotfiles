@@ -75,6 +75,7 @@ in
     };
   };
 
+  # TODO implement configuration of restic
   config = mkIf cfg.enable {
     fileSystems."${cfg.location}" = {
       device = cfg.device;

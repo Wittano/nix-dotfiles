@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, system, ... }:
+{ pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
 let

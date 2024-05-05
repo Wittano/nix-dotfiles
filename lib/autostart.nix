@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 with lib;
 let
-  mkAutostartAttr = { name, args, pkg }:
+  mkAutostartAttr = { name, args, pkg, path ? [] }:
     let
       split = strings.splitString "-" name;
       secPart = builtins.elemAt split 1;
@@ -12,19 +12,19 @@ let
     in
     {
       inherit name;
-      path = runtimeInputs;
+      path = runtimeInputs ++ path;
       script = "${name} ${args}";
       pkgs = pkg;
     };
 in
 {
-  mkAutostart = { programs, pkg ? pkgs }: builtins.map
+  mkAutostart = { programs, pkg ? pkgs, path ? [] }: builtins.map
     (program:
       let
         split = strings.splitString " " program;
       in
       mkAutostartAttr {
-        inherit pkg;
+        inherit pkg path;
 
         name = builtins.head split;
         args = strings.optionalString
