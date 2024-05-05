@@ -1,48 +1,48 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.services.backup;
-
-  excludedList = builtins.toFile "exclude.txt" ''
-    VirtualBox*
-    Games/***
-    .ansible
-    *cache*
-    .dotnet
-    .m2
-    *pnpm*
-    .gradle
-    .java
-    .jdks
-    .npm
-    .vagrant.d
-    .rustup
-    .nuget
-    .emacs.d
-    .paradoxlauncher
-    .local/share/Steam/***
-    .local/share/virtualenvs
-    .local/share/JetBrains
-    .local/share/*-launcher
-    .local/share/bottles
-    .local/share/PrismaLauncher
-    .local/share/openttd
-    .local/share/lutris
-    .local/share/Trash
-    **/*/node_modules
-    **/*/venv
-    **/*/CMakeFiles
-    **/*/.idea
-    .steam
-    go/**/*
-    git
-    .sbt
-    .osu
-    .xlore
-    .sikiko
-    .tor project
-  '';
+  path = "/etc/ssh/restic.key";
+  exclude = [
+    "VirtualBox*"
+    "Games/***"
+    ".ansible"
+    "*cache*"
+    ".dotnet"
+    ".m2"
+    "*pnpm*"
+    ".gradle"
+    ".java"
+    ".jdks"
+    ".npm"
+    ".vagrant.d"
+    ".rustup"
+    ".nuget"
+    ".emacs.d"
+    ".paradoxlauncher"
+    ".local/share/Steam/***"
+    ".local/share/virtualenvs"
+    ".local/share/JetBrains"
+    ".local/share/*-launcher"
+    ".local/share/bottles"
+    ".local/share/PrismaLauncher"
+    ".local/share/openttd"
+    ".local/share/lutris"
+    ".local/share/Trash"
+    "**/*/node_modules"
+    "**/*/venv"
+    "**/*/CMakeFiles"
+    "**/*/.idea"
+    ".steam"
+    "go/**/*"
+    "git"
+    ".sbt"
+    ".osu"
+    ".xlore"
+    ".sikiko"
+    ".tor project"
+  ];
 in
 {
   options = {
@@ -75,7 +75,6 @@ in
     };
   };
 
-  # TODO implement configuration of restic
   config = mkIf cfg.enable {
     fileSystems."${cfg.location}" = {
       device = cfg.device;
@@ -87,76 +86,29 @@ in
       "file://${cfg.location} Backup device"
     ];
 
-    systemd.timers.backup.timerConfig = {
-      OnBootSec = "15m";
-      Unit = "backup.service";
-      OnUnitActiveSec = "1d";
-    };
-    systemd.services.backup = {
-      description = "Backup service for wittano home directory";
-      serviceConfig = {
-        Type = "oneshot";
-        User = "wittano";
+    services.openssh.hostKeys = [{
+      inherit path;
+      bits = 4096;
+      type = "rsa";
+    }];
+
+    system.activationScripts.resticKeyChangeOwner = "chown wittano ${path} ${path}.pub";
+
+    services.restic.backups.home = {
+      inherit exclude;
+
+      pruneOpts = [ "--keep-weekly 4" ];
+      user = "wittano";
+      repository = cfg.directory;
+      paths = [ config.home-manager.users.wittano.home.homeDirectory ];
+      passwordFile = path;
+      timerConfig = {
+        OnBootSec = "15m";
+        OnUnitActiveSec = "1d";
+        Persistent = true;
       };
-      wantedBy = [ "multi-user.target" ];
-      preStart = ''
-        mkdir -p ${cfg.directory}
-        chown wittano:users ${cfg.directory}
-      '';
-      path = with pkgs; [ coreutils gnutar findutils rsync pigz ];
-      # TODO Export script into shell file with shcheck
-      script = ''
-        today=$(date -I)
-        base_dir=${cfg.location}
-        archive_backup="$base_dir/wittano.backup-$today.tar"
-
-        if [ -f $archive_backup ]; then
-          echo "Backup for '$today' has already created"
-          exit 0
-        fi
-
-        create_archive() {
-          tar -c --use-compress-program="pigz --best --recursive" -f $archive_backup ${cfg.directory}
-        }
-
-        close_app() {
-          echo "Backup for '$today' wasn't created!"
-          exit -1
-        }
-
-        remove_oldest_backup() {
-          oldest_backup=$(find ${cfg.location} -maxdepth 1 -name wittano.backup-*.tar -type f -printf '%T+ %p\n' | sort | head -1 | cut -d' ' -f2-)
-          oldest_backup_name="$(basename $oldest_backup)"
-
-          if [[ -n "$oldest_backup" && "$oldest_backup_name" != "wittano.backup-$today.tar" ]]; then
-            rm $oldest_backup
-          else
-            echo "The oldest backup wasn't found"
-          fi
-        }
-
-        remove_failed_backup() {
-          echo "Failed to create backup. Check if you have space enough on disk"
-
-          remove_oldest_backup
-         
-          create_archive || close_app
-        }
-
-        resync() {
-          remove_oldest_backup
-
-          rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.directory}
-
-          create_archive || remove_failed_backup
-        }
-
-        rsync -aAX --delete --exclude-from="${excludedList}" "$HOME" ${cfg.directory} || resync
-
-        create_archive || remove_failed_backup
-      '';
+      initialize = true;
     };
   };
-
 }
 

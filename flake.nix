@@ -126,6 +126,7 @@
       devShells.${pkgs.system} = devShells;
 
       # TODO Update packages
+      # TODO Move private private respository into pkgs
       packages.x86_64-linux = privateRepo;
 
       templates = builtins.listToAttrs templates;
