@@ -13,8 +13,7 @@
   '';
 
   meta = with lib; {
-    # Offical git website with source was gone. I had to move package into my repository
-    # homepage = "https://git.gurkan.in/gurkan/nixos-blur-plymouth";
+    homepage = "https://git.gurkan.in/gurkan/nixos-blur-plymouth";
     description = "Blue plymouth theme created by gurkan";
     license = licenses.gpl3;
     maintainers = with maintainers; [ Wittano ];
