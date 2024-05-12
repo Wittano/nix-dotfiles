@@ -1,17 +1,33 @@
-name: Build Wittano nix repository
-run-name: Build Wittano nix repository
+name: update-flake-lock
 on:
-  repository_dispatch:
-    types: [create-pull-request]
+  workflow_dispatch:
   push:
     branches:
-      - 'main'
+      - main
   pull_request:
-    types: [opened, edited, reopened, synchronize]
-permissions:
-  contents: read
+    types:
+      - opened
+      - reopened
+      - synchronize
+  schedule:
+    - cron: "0 0 * * 0"
+
 jobs:
+  lockfile:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Enable magic Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Check flake
+        uses: DeterminateSystems/flake-checker-action@main
+      - name: Update flake.lock
+        uses: ./.
   build:
+    needs: lockfile
     strategy:
       matrix:
         packages: [
