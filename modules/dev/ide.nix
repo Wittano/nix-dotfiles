@@ -14,6 +14,8 @@ let
     dotnet.package = rider;
     rust.package = unstable.jetbrains.rust-rover;
     jvm.package = idea-ultimate;
+    sql.package = datagrip;
+    web.package = webstorm;
     andorid.package = pkgs.andorid-studio;
   });
 
