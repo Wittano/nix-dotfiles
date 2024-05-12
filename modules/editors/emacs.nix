@@ -3,8 +3,10 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.editors.emacs;
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
+  
   downloadDoomEmacsScript = ''
-    if [ ! -e $HOME/.emacs.d/bin/doom ]; then
+    if [ ! -e ${homeDir}/.emacs.d/bin/doom ]; then
       ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
     fi
   '';

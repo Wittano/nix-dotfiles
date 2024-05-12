@@ -1,8 +1,10 @@
-{ config, pkgs, home-manager, lib, privateRepo, unstable, ... }:
+{ config, pkgs, lib, unstable, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
-  steamGamingDir = if cfg.disk.enable then cfg.disk.path else "$HOME/.steam/steam";
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
+
+  steamGamingDir = if cfg.disk.enable then cfg.disk.path else "${homeDir}/.steam/steam";
 
   fixedMindustry = pkgs.mindustry.override {
     gradle = pkgs.gradle_7;

@@ -4,6 +4,7 @@ with lib.my;
 let
   cfg = config.modules.hardware.virtualization;
   virutalizationDir = mapper.mapDirToAttrs ./virtualization;
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
 
   virshPath = "${config.virtualisation.libvirtd.package}/bin/virsh";
 in
@@ -112,7 +113,7 @@ in
     modules.shell.fish.completions = mkIf (cfg.enableVagrant) {
       "vm" = ''
         function __fish_vm_list
-          find $HOME/projects/config/system -name Vagrantfile -type f | cut -d '/' -f 8
+          find ${homedir}/projects/config/system -name Vagrantfile -type f | cut -d '/' -f 8
         end
 
         set -l vagrant_commands destroy start halt up ssh reload restart

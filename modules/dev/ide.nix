@@ -4,7 +4,8 @@ with lib.my;
 let
   cfg = config.modules.dev.lang;
 
-  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "$HOME/projects/own/${n}"; }) attr;
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
+  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/own/${n}"; }) attr;
 
   avaiableIde = addProjectDirField (with pkgs.jetbrains; {
     python.package = pycharm-professional;
@@ -17,8 +18,8 @@ let
   });
 
   langWithoutIde = {
-    "fork" = "$HOME/projects/own/fork";
-    "haskell" = "$HOME/projects/own/haskell";
+    "fork" = "${homeDir}/projects/own/fork";
+    "haskell" = "${homeDir}/projects/own/haskell";
   };
 
   ideNames = builtins.attrNames avaiableIde;
