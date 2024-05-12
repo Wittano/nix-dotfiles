@@ -31,6 +31,8 @@ let
 
   mkCommand = path: {
     body = /*fish*/ ''
+      mkdir -p ${path}
+
       set -l args_len $(count $argv)
 
       if test "$args_len" -eq 0
@@ -43,7 +45,7 @@ let
 
   mkCompletions = name: path: ''
     function get_projects_dir
-      ls ${path}
+      ls ${path} || echo ""
     end
 
     for project in (get_projects_dir)
