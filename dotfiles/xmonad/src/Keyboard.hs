@@ -13,7 +13,11 @@ import XMonad.Layout.ToggleLayouts qualified as T
 import XMonad.StackSet qualified as W
 import XMonad.Util.Ungrab (unGrab)
 
--- TODO add change screen keybind M-n
+flipScreen :: ScreenId -> ScreenId
+flipScreen 1 = 0
+flipScreen 0 = 1
+flipScreen sid = sid - 1
+
 customKeybinds :: [(String, X ())]
 customKeybinds =
   [ ("M-e", spawn "rofi -show drun"),
@@ -38,7 +42,7 @@ remapKeys =
     ( "M-<Space>",
       do
         sid <- withWindowSet $ return . W.screen . W.current
-        mirrorWorkspace <- let screenId = if sid == 1 then 0 else 1 in screenWorkspace screenId
+        mirrorWorkspace <- screenWorkspace (flipScreen sid)
         windows $ W.greedyView $ fromJust mirrorWorkspace
     )
   ]
