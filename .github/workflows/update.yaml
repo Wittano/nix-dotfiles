@@ -1,4 +1,4 @@
-name: update-flake-lock
+name: Update wittano nix repository
 on:
   workflow_dispatch:
   push:
