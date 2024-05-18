@@ -5,7 +5,7 @@
 , hostname
 , ...
 }:
-with lib;{
+with lib; rec {
 
   # Nix configuration
   nix = {
@@ -19,7 +19,7 @@ with lib;{
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixFlakes;
+    package = pkgs.nix;
     extraOptions = "experimental-features = nix-command flakes";
   };
 
@@ -49,7 +49,7 @@ with lib;{
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "pl";
+    keyMap = services.xserver.layout;
   };
 
   services.xserver.layout = "pl";
@@ -71,7 +71,8 @@ with lib;{
   environment = {
     systemPackages = with pkgs; [ vim htop bash ];
     variables =
-      let projectConfigDir = "/home/wittano/projects/config";
+      let
+        projectConfigDir = "/home/wittano/projects/config";
       in
       {
         EDITOR = "vim";
@@ -121,7 +122,6 @@ with lib;{
   };
 
   # TODO Added nh after upgrade system to 24.05 version
-  # TODO Use more rec keyword
 
   # Home-manager
   home-manager = {
@@ -129,7 +129,7 @@ with lib;{
     useUserPackages = true;
     backupFileExtension = "backup";
     users.wittano = {
-      home.stateVersion = "23.11";
+      home.stateVersion = system.stateVersion;
       services.home-manager.autoUpgrade = {
         enable = true;
         frequency = "daily";
