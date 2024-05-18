@@ -1,37 +1,19 @@
 {
   description = "A simple Go package";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
 
-  outputs = { self, nixpkgs }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-    in
-    {
-      package.${system}.default = pkgs.buildGoModule {
-        pname = "go-app";
-        src = ./.;
-
-        vendorSha256 = pkgs.lib.fakeSha256;
-      };
-
-      devShells.${system}.default = pkgs.mkShell {
-        hardeningDisable = [ "all" ];
-
-        GOROOT = "${pkgs.go}/share/go";
-        DEBUG_ARGS = "";
-
-        buildInputs = with pkgs; [
-          # GO
-          go
-          gotools
-          gnumake
-
-          # Github actions
-          act
-        ];
-      };
-    };
-
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem
+      (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          package.default = pkgs.callPackage ./nix/default.nix { };
+          devShells.default = pkgs.callPackage ./nix/default.nix { };
+        }) // { nixosModules.default = ./nix/module.nix; };
 }

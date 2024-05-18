@@ -1,5 +1,5 @@
 {
-  description = "Kotlin Desktop Compose";
+  description = "cmake-clang++";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -17,4 +17,3 @@
           devShells.default = pkgs.callPackage ./nix/default.nix { };
         }) // { nixosModules.default = ./nix/module.nix; };
 }
-

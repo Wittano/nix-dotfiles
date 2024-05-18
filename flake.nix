@@ -128,7 +128,6 @@
       # TODO Move private private respository into pkgs
       packages.x86_64-linux = privateRepo;
 
-      # TODO Update templates
       templates = builtins.listToAttrs templates;
     };
 }

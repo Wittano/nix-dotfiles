@@ -1,11 +1,11 @@
 { buildDotnetModule
 , dotnetCorePackages
 }: buildDotnetModule {
-  pname = "dotnet";
+  pname = "avalonia";
   version = "0.0.0";
 
   src = ./.;
-  projectFile = "Dotnet/Dotnet.csproj";
+  projectFile = "Avalonia/Avalonia.csproj";
 
   dotnet-sdk = dotnetCorePackages.dotnet_8.sdk;
   dotnet-runtime = dotnetCorePackages.dotnet_8.runtime;
