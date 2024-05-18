@@ -7,12 +7,12 @@ let
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
   addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/own/${n}"; }) attr;
 
-  avaiableIde = addProjectDirField (with pkgs.jetbrains; {
+  avaiableIde = addProjectDirField (with unstable.jetbrains; {
     python.package = pycharm-professional;
     cpp.package = clion;
     go.package = goland;
     dotnet.package = rider;
-    rust.package = unstable.jetbrains.rust-rover;
+    rust.package = rust-rover;
     jvm.package = idea-ultimate;
     sql.package = datagrip;
     web.package = webstorm;
