@@ -1,4 +1,7 @@
-{ srcOnly, privateRepo, ... }:
+{ srcOnly
+, template-nvim # Package from private repository
+, ...
+}:
 let
   templateDir = srcOnly {
     pname = "template-dir";
@@ -16,5 +19,5 @@ in
     require("telescope").load_extension('find_template')
   '';
 
-  deps = with privateRepo; [ template-nvim ];
+  deps = [ template-nvim ];
 }

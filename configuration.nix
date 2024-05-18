@@ -1,7 +1,6 @@
 { pkgs
 , unstable
 , lib
-, privateRepo
 , desktopName
 , hostname
 , ...
@@ -99,7 +98,7 @@ with lib;{
 
     plymouth = {
       enable = true;
-      themePackages = with privateRepo; [ nixos-blur-playmouth ];
+      themePackages = with pkgs; [ nixos-blur-playmouth ];
       theme = "nixos-blur";
     };
   };

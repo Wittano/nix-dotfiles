@@ -40,11 +40,14 @@
     let
       system = "x86_64-linux";
 
+      wittanoOverylay = _: _: privateRepo;
+
       mkPkgs = p:
         import p {
           inherit system;
 
           config.allowUnfree = true;
+          overlays = [ wittanoOverylay ];
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
@@ -90,7 +93,6 @@
         shells;
     in
     {
-      # TODO Export more common function or utities into lib.my e.g. creating bash array as string
       lib = lib.my;
 
       nixosConfigurations =
@@ -124,10 +126,7 @@
         normalHosts // devHosts;
 
       devShells.${pkgs.system} = devShells;
-
-      # TODO Move private private respository into pkgs
-      packages.x86_64-linux = privateRepo;
-
+      packages.${system} = privateRepo;
       templates = builtins.listToAttrs templates;
     };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, privateRepo, ... }:
+{ config, pkgs, lib, inputs, ... }:
 with lib;
 with lib.my;
 let
@@ -32,7 +32,7 @@ in
       let
         nixvimLib = inputs.nixvim.lib.x86_64-linux;
         plugins = builtins.map
-          (x: pkgs.callPackage ./plugins/${x} { inherit privateRepo; })
+          (x: pkgs.callPackage ./plugins/${x} { })
           (builtins.attrNames
             (attrsets.filterAttrs
               (n: _: strings.hasSuffix ".nix" n)

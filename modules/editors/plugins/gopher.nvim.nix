@@ -3,7 +3,7 @@
 , gotests
 , impl
 , iferr
-, privateRepo
+, gopher-nvim # Package from private repository
 , vimPlugins
 , ...
 }: {
@@ -19,6 +19,6 @@
     }
   '';
 
-  deps = with vimPlugins; [ vimPlugins.nvim-treesitter privateRepo.gopher-nvim plenary-nvim ];
+  deps = with vimPlugins; [ vimPlugins.nvim-treesitter gopher-nvim plenary-nvim ];
 }
 
