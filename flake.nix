@@ -125,6 +125,7 @@
         in
         normalHosts // devHosts;
 
+      overlays.default = wittanoOverylay;
       devShells.${pkgs.system} = devShells;
       packages.${system} = privateRepo;
       templates = builtins.listToAttrs templates;
