@@ -40,14 +40,14 @@
     let
       system = "x86_64-linux";
 
-      wittanoOverylay = _: _: privateRepo;
+      wittanoOverlay = _: _: privateRepo;
 
       mkPkgs = p:
         import p {
           inherit system;
 
           config.allowUnfree = true;
-          overlays = [ wittanoOverylay ];
+          overlays = [ wittanoOverlay ];
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
@@ -125,7 +125,7 @@
         in
         normalHosts // devHosts;
 
-      overlays.default = wittanoOverylay;
+      overlays.default = wittanoOverlay;
       devShells.${pkgs.system} = devShells;
       packages.${system} = privateRepo;
       templates = builtins.listToAttrs templates;
