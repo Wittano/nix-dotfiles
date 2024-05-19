@@ -13,7 +13,7 @@
           pkgs = import nixpkgs { inherit system; };
         in
         {
-          package.default = pkgs.callPackage ./nix/default.nix { };
-          devShells.default = pkgs.callPackage ./nix/default.nix { };
+          package.default = pkgs.callPackage ./nix/pkg.nix { };
+          devShells.default = pkgs.callPackage ./nix/shell.nix { };
         }) // { nixosModules.default = ./nix/module.nix; };
 }

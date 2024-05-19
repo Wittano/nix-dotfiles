@@ -19,7 +19,7 @@ with lib;
 let
   sdk = dotnetCorePackages.dotnet_8.sdk;
 
-  fetchDeps = (callPackage ./default.nix { }).fetch-deps;
+  fetchDeps = (callPackage ./pkg.nix { }).fetch-deps;
   updateDeps = writeShellApplication {
     name = "updateDeps";
     runtimeInputs = [ coreutils toybox ];

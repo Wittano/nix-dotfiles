@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.app;
-  app = pkgs.callPackage ./default.nix { };
+  app = pkgs.callPackage ./pkg.nix { };
 in
 {
   options = {
