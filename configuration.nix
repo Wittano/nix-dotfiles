@@ -121,8 +121,6 @@ with lib; rec {
     extraGroups = [ "wheel" ];
   };
 
-  # TODO Added nh after upgrade system to 24.05 version
-
   # Home-manager
   home-manager = {
     extraSpecialArgs = { inherit pkgs unstable lib; };

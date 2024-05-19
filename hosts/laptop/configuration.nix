@@ -2,7 +2,6 @@
 
   imports = [ ./hardware.nix ./networking.nix ];
 
-  # TODO Added encrypted home and backup directory
   modules = {
     dev.lang.ides = [ "go" ];
     hardware = {

@@ -26,7 +26,6 @@ desktop.mkDesktopModule {
       home-manager.users.wittano = {
         home.packages = with pkgs; [ gsimplecal ];
 
-        # TODO Update config
         xsession.windowManager.bspwm = {
           inherit package;
 

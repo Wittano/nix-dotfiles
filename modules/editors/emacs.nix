@@ -29,7 +29,6 @@ in
     };
   };
 
-  # TODO Update emacs configuration or Doom emacs 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
       home = {

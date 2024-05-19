@@ -130,7 +130,6 @@ in
     {
       home-manager.users.${username} = {
         home = {
-          # TODO added files if files didn't find in dotfiles 
           file = attrsets.optionalAttrs (!isDevMode) (mapSourceToHomeManagerFiles homeFiles);
           activation = {
             cleanUpMutableLinks = hm.dag.entryBefore [ "checkLinkTargets" ] (mkUnlinkerScript unlinkerArray);

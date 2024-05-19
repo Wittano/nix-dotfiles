@@ -3,7 +3,6 @@ with lib;
 let
   dotfilesPath = ./../dotfiles;
 in
-# TODO I have a big plans for this project (Pls, no refactor)... Big plans (refactor lib function)
 attrsets.mapAttrs'
   (n: v: {
     name = strings.removeSuffix ".nix" n;

@@ -24,7 +24,6 @@ in
     };
   };
 
-  # TODO Add automount tabel after mount into PC after startup system
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = true;
 

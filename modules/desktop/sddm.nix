@@ -29,7 +29,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    # TODO export additional runtime dependecy for themes, after upgrade system to NixOS 24.05
     environment.systemPackages =
       let
         themes = [ privateRepo."${cfg.theme}" ];
