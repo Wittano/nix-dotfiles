@@ -171,3 +171,5 @@ templates/**/*.lock
 !dotfiles/xmonad/*.hs
 dotfiles/xmonad/dist-newstyle/
 secrets/*.json
+
+dotfiles/xmonad/src/Main

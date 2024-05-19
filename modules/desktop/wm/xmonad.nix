@@ -1,4 +1,4 @@
-{ config, isDevMode, lib, dotfiles, hostname, ... }:
+{ config, isDevMode, lib, dotfiles, hostname, unstable, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
@@ -22,16 +22,16 @@ desktop.mkDesktopModule {
   extraConfig = {
     services.xserver = {
       enable = true;
-      # TODO Added steam patches for xmonad to pkgs overlay
       windowManager.xmonad = {
         enable = true;
-        enableContribAndExtras = true;
+        haskellPackages = unstable.haskellPackages;
         enableConfiguredRecompile = isDevMode;
       };
     };
 
     home-manager.users.wittano.programs.xmobar = {
       enable = true;
+      package = unstable.xmobar;
       extraConfig = mkIf (isDevMode) (builtins.readFile dotfiles.xmonad.xmobarrc.source);
     };
   };
