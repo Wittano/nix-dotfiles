@@ -32,7 +32,7 @@
     };
     editors.neovim.enable = true;
     dev.lang = {
-      ides = [ "go" "cpp" "sql" ];
+      ides = [ "go" "cpp" "sql" "jvm" "rust" ];
       lang = [ "fork" "haskell" ];
     };
     hardware = {
