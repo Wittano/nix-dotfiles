@@ -12,12 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v9
       - name: Check Nix flake inputs
         uses: DeterminateSystems/flake-checker-action@v5
         with:
           send-statistics: false
           fail-mode: true
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v9
       - name: Check repository
         run: nix flake check

@@ -11,17 +11,18 @@ on:
 permissions:
   contents: read
 jobs:
-  lockfile:
+  check-flake:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v11
       - uses: DeterminateSystems/magic-nix-cache-action@v6
-      - uses: DeterminateSystems/update-flake-lock@v21
       - uses: DeterminateSystems/flake-checker-action@v7
       - name: Check nix repository
         run: nix flake check
   build:
+    needs:
+      - check-flake
     strategy:
       matrix:
         packages: [
