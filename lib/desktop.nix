@@ -130,17 +130,16 @@ in
               ];
             in
             {
+              home-manager.users.wittano.programs.fish.shellAliases.${serviceName} =
+                "systemctl --user restart ${serviceName}.service";
+
               systemd.user.services.${serviceName} = {
                 description = "Start ${serviceName} on ${name} autostart";
                 bindsTo = [ "${desktopSessionTarget}.target" ];
                 path = action.path ++ basicTools;
-                environment = {
-                  LD_LIBRARY_PATH = strings.makeLibraryPath runtimeLibs;
-                };
+                environment.LD_LIBRARY_PATH = strings.makeLibraryPath runtimeLibs;
 
-                serviceConfig = {
-                  StandardOutput = "journal";
-                };
+                serviceConfig.StandardOutput = "journal";
 
                 wantedBy = [ "${desktopSessionTarget}.target" ];
                 script = action.script;

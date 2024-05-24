@@ -1,7 +1,7 @@
 { system, inputs, ... }:
 {
 
-  imports = [ ./hardware.nix ./networking.nix ];
+  imports = [ ./hardware.nix ];
 
   services.xserver.xrandrHeads = [
     {
