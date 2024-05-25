@@ -49,6 +49,7 @@ desktop.mkDesktopModule {
           openbox-menu
           lxmenu-data
           obconf
+          volumeicon
           tint2
           # Utils
           arandr
