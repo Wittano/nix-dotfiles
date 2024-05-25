@@ -1,9 +1,5 @@
-{ pkgs, unstable, ... }: {
-  autostart = [{
-    name = "blueman-applet";
-    path = with pkgs; [ blueman ];
-    script = "blueman-applet";
-  }];
+{ unstable, ... }: {
+  autostart = [ "blueman-applet" ];
 
   onlyFor = [ "pc" ];
 

@@ -2,22 +2,15 @@
 with lib;
 with lib.my;
 {
-  autostart =
-    let
-      unstablePrograms = [ "vivaldi" ];
-      stablePrograms = [
-        "telegram-desktop"
-        "discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
-        "spotify"
-        "freetube"
-        "gnome-pomodoro"
-        "signal-desktop --use-tray-icon --no-sandbox"
-      ];
-
-      stableAutostart = autostart.mkAutostart { programs = stablePrograms; };
-      unstableAutostart = autostart.mkAutostart { programs = unstablePrograms; pkg = unstable; };
-    in
-    unstableAutostart ++ stableAutostart;
+  autostart = [
+    "vivaldi"
+    "telegram-desktop"
+    "discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
+    "spotify"
+    "freetube"
+    "gnome-pomodoro"
+    "signal-desktop --use-tray-icon --no-sandbox"
+  ];
 
   config = {
     programs.file-roller.enable = true; # Archive explorer

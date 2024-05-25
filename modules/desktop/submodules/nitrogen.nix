@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 {
-  autostart = autostart.mkAutostart { programs = [ "nitrogen --restore" ]; };
+  autostart = [ "nitrogen --restore" ];
 
   config = {
     home-manager.users.wittano = {

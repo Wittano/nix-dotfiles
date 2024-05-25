@@ -2,6 +2,33 @@
 with lib;
 with lib.my;
 let
+  mkAutostartScript = desktopName: cmds:
+    assert builtins.all (x: builtins.typeOf x == "string") cmds;
+    let
+      programs = bash.mkBashArray cmds;
+    in
+    pkgs.writeShellScript "autostart.sh" ''
+      export DISPLAY=":0"
+    
+      log_dir=$HOME/.local/share/${desktopName}
+      if [ ! -d "$log_dir"  ]; then
+        mkdir -p "$log_dir" || exit
+      fi
+      _log_app() {
+        exec_path=$(echo "$1" | awk '{ print $1 }')
+        app_name=$(basename "$exec_path")
+        time=$(date +"%D %T")
+        echo "[autostart] $time: Launch $app_name"
+        ${pkgs.bash}/bin/bash -c "$1" 2>"$log_dir/$app_name.log" || echo "[warning] $" &
+      }
+      declare -a programs
+      programs=(${programs})
+      IFS=""
+      for app in ''${programs[*]}; do
+        _log_app "$app"
+      done
+    '';
+
   mkDesktopApp = config: dotfiles: name: desktopName: import (./../modules/desktop/submodules + "/${name}.nix") {
     inherit pkgs dotfiles config unstable lib desktopName secretDir;
   };
@@ -14,6 +41,7 @@ in
     , dotfiles
     , hostname
     , autostart ? [ ]
+    , autostartPath ? "autostart.sh"
     , apps ? [ ]
     , mutableSources ? { }
     , extraConfig ? { }
@@ -41,112 +69,14 @@ in
 
       desktopAppsModule = mkMerge (builtins.map (x: x.config or { }) desktopApps);
 
-      # THX hyprland configuration from home-manager. It isn't your code. OUR CODE
-      activationSession =
-        let
-          variables = builtins.concatStringsSep " "
-            [
-              "DISPLAY"
-              "XDG_CURRENT_DESKTOP"
-            ];
-        in
-        pkgs.writeShellScript "autostart.sh" ''
-          ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${variables}
-
-          systemctl --user stop ${desktopSessionTarget}.target
-          systemctl --user start ${desktopSessionTarget}.target
-        '';
-      desktopSessionTarget = "${name}-session";
-      sessionTargetModule = mkIf enableSessionTarget {
-        systemd.user.targets."${desktopSessionTarget}" = {
-          after = [ "graphical-session-pre.target" ];
-          wants = [ "graphical-session-pre.target" ];
-          bindsTo = [ "graphical-session.target" ];
-        };
-
-        home-manager.users.wittano.xdg.configFile = mkIf installAutostartFile {
-          "autostart.sh".source = activationSession;
-        };
-      };
-
       autostartModule =
         let
           appsAutostart = lists.flatten (builtins.map (x: x.autostart or [ ]) desktopApps);
           cmds = appsAutostart ++ autostart;
-
-          mkAutostartService = action:
-            let
-              serviceName = "${action.name}-autostart";
-
-              nixPkgs = action.pkgs or pkgs;
-              basicTools = with nixPkgs; [ coreutils toybox xdg-utils ];
-              runtimeLibs = with nixPkgs; [
-                alsa-lib
-                at-spi2-atk
-                at-spi2-core
-                atk
-                cairo
-                cups
-                curlWithGnuTls
-                dbus
-                expat
-                ffmpeg_4
-                fontconfig
-                freetype
-                gdk-pixbuf
-                glib
-                gtk3
-                harfbuzz
-                libayatana-appindicator
-                libdbusmenu
-                libdrm
-                libgcrypt
-                libGL
-                libnotify
-                libpng
-                libpulseaudio
-                libxkbcommon
-                mesa
-                nss_latest
-                pango
-                stdenv.cc.cc
-                systemd
-                xorg.libICE
-                xorg.libSM
-                xorg.libX11
-                xorg.libxcb
-                xorg.libXcomposite
-                xorg.libXcursor
-                xorg.libXdamage
-                xorg.libXext
-                xorg.libXfixes
-                xorg.libXi
-                xorg.libXrandr
-                xorg.libXrender
-                xorg.libXScrnSaver
-                xorg.libxshmfence
-                xorg.libXtst
-                zlib
-              ];
-            in
-            {
-              home-manager.users.wittano.programs.fish.shellAliases.${serviceName} =
-                "systemctl --user restart ${serviceName}.service";
-
-              systemd.user.services.${serviceName} = {
-                description = "Start ${serviceName} on ${name} autostart";
-                bindsTo = [ "${desktopSessionTarget}.target" ];
-                path = action.path ++ basicTools;
-                environment.LD_LIBRARY_PATH = strings.makeLibraryPath runtimeLibs;
-
-                serviceConfig.StandardOutput = "journal";
-
-                wantedBy = [ "${desktopSessionTarget}.target" ];
-                script = action.script;
-              };
-            };
         in
-        mkMerge (builtins.map mkAutostartService cmds);
+        {
+          home-manager.users.wittano.xdg.configFile.${autostartPath}.source = mkAutostartScript name cmds;
+        };
 
       mutableSourceFiles =
         let
@@ -162,7 +92,7 @@ in
 
       extraConfigModule =
         if builtins.typeOf extraConfig == "lambda"
-        then extraConfig { inherit self cfg isDevMode; activationPath = activationSession; }
+        then extraConfig { inherit self cfg isDevMode; }
         else extraConfig;
 
       moduleChecker = {
@@ -180,7 +110,6 @@ in
         moduleChecker
         extraConfigModule
         desktopAppsModule
-        sessionTargetModule
       ];
     in
     {

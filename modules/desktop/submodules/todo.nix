@@ -7,7 +7,7 @@ let
   keyPath = (secretDir + "/privatekey.pem");
 in
 {
-  autostart = autostart.mkAutostart { programs = [ "planify" ]; pkg = unstable; };
+  autostart = [ "io.github.alainm23.planify" ];
 
   config = {
     networking.firewall.interfaces.eno1.allowedTCPPorts = [ port ];

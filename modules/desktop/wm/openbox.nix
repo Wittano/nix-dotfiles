@@ -40,11 +40,9 @@ desktop.mkDesktopModule {
     "dunst"
   ];
   installAutostartFile = false;
-  autostart = autostart.mkAutostart {
-    programs = [ "tint2" "volumeicon" ];
-    path = with pkgs; [ volumeicon gsimplecal ];
-  };
-  extraConfig = { activationPath, ... }: {
+  autostart = [ "tint2" "volumeicon" ];
+  autostartPath = "openbox/autostart";
+  extraConfig = {
     home-manager.users.wittano = {
       home = {
         packages = with pkgs; [
@@ -57,8 +55,6 @@ desktop.mkDesktopModule {
         ];
         file = themes;
       };
-
-      xdg.configFile."openbox/autostart".source = activationPath;
     };
 
     services.xserver = {

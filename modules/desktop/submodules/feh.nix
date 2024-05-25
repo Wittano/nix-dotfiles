@@ -9,11 +9,7 @@ let
   };
 in
 {
-  autostart = [{
-    name = "setup-wallpaper";
-    path = [ rollWallpaper ];
-    script = "rollWallpaper";
-  }];
+  autostart = [ (meta.getExe rollWallpaper) ];
 
   config = {
     home-manager.users.wittano.home.packages = [ rollWallpaper ];

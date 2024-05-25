@@ -17,8 +17,8 @@ desktop.mkDesktopModule {
     "polybar"
   ];
   installAutostartFile = false;
-  autostart = autostart.mkAutostart { programs = [ "wmname compiz" ]; };
-  extraConfig = ({ cfg, isDevMode, activationPath, ... }:
+  autostart = [ "wmname compiz" ];
+  extraConfig = ({ cfg, isDevMode, ... }:
     let
       package = pkgs.bspwm;
     in
@@ -30,7 +30,6 @@ desktop.mkDesktopModule {
           inherit package;
 
           enable = true;
-          extraConfigEarly = builtins.readFile activationPath;
 
           alwaysResetDesktops = isDevMode;
           monitors = {
