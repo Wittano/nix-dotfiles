@@ -9,6 +9,7 @@ with lib.my;
     "spotify"
     "freetube"
     "gnome-pomodoro"
+    "thunderbird"
     "signal-desktop --use-tray-icon --no-sandbox"
   ];
 
