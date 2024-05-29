@@ -259,11 +259,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1716052437,
-        "narHash": "sha256-eDPz7SqAt0AzsdMN8ol/a4kcgt4IqIOK0usFqtUJk1M=",
+        "lastModified": 1716900305,
+        "narHash": "sha256-gLxE4QgeW7LNBhEvT8+IcQUS10/ihw2BLjkWfkDte8Q=",
         "owner": "voidlhf",
         "repo": "StarRailGrubThemes",
-        "rev": "e9d3657f228e9768626d06677b2bbe794450206d",
+        "rev": "78e854e00d5f5893232e3617c3307e3151ae075d",
         "type": "github"
       },
       "original": {
