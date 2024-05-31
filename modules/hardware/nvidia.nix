@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
@@ -12,7 +12,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = with pkgs; [ nvtop ];
+    home-manager.users.wittano.home.packages = with pkgs; [ nvtopPackages.msm ];
 
     services.xserver.videoDrivers = mkIf config.services.xserver.enable [ "nvidia" ];
 

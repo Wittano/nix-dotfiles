@@ -31,7 +31,7 @@ with lib.my;
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        soundux
+        vesktop
         figma-linux # Figma
         cinnamon.nemo # File explorer
 

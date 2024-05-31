@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{ oldPkgs, ... }:
 {
   config = {
     services.picom = {
       enable = true;
-      package = pkgs.picom-allusive;
+      package = builtins.trace ''
+        Package picom-allusive is removed in NixOS 24.05 version.
+        Fix it, after added new animation format
+      ''
+        oldPkgs.picom-allusive;
       backend = "glx";
       fade = true;
       fadeDelta = 4;
@@ -31,7 +35,7 @@
         corners-rule = [
           "10:class_g = 'xmobar'"
         ];
-        round-borders = 1;
+        round-borders = 3;
 
         # Blur
         blur-background = true;
@@ -40,6 +44,8 @@
         blur-background-exclude = [
           "window_type = 'dock'"
         ];
+
+        dbus = true;
 
         # Fade
         no-fading-openclose = false;

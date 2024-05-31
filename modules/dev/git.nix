@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let cfg = config.modules.dev.git;
 in
@@ -14,11 +14,11 @@ in
       home.packages = with pkgs; [ lazygit ];
       services.gpg-agent = {
         enable = true;
-        pinentryFlavor = "gtk2";
+        pinentryPackage = pkgs.pinentry-gtk2;
       };
 
-      programs = rec {
-        git = rec {
+      programs = {
+        git = {
           enable = true;
           userName = "Wittano Bonarotti";
           userEmail = "radoslaw.ratyna@gmail.com";

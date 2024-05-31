@@ -49,10 +49,10 @@ with lib; rec {
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = services.xserver.layout;
+    keyMap = services.xserver.xkb.layout;
   };
 
-  services.xserver.layout = "pl";
+  services.xserver.xkb.layout = "pl";
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -85,10 +85,8 @@ with lib; rec {
 
   # Linux Kernel settings
   boot = {
-    supportedFilesystems = [ "ntfs" ];
-    initrd = {
-      availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-    };
+    supportedFilesystems.ntfs = true;
+    initrd.availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
 
     tmp.cleanOnBoot = true;
 
@@ -135,6 +133,15 @@ with lib; rec {
     };
   };
 
+  # Programs
+  programs = {
+    nh = {
+      enable = true;
+      flake = environment.variables.DOTFILES;
+    };
+    nix-ld.enable = true;
+  };
+
   # Internal modules
   modules =
     let
@@ -163,7 +170,7 @@ with lib; rec {
 
   # System
   system = {
-    stateVersion = "23.11";
+    stateVersion = "24.05";
     autoUpgrade = {
       enable = true;
       flake = "github:wittano/nix-dotfiles#${hostname}-${desktopName}";

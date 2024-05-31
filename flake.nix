@@ -20,17 +20,18 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    oldNixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     filebot.url = "github:Wittano/filebot";
     aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:ezKEa/aagl-gtk-on-nix/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
     nixvim = {
-      url = "github:nix-community/nixvim?ref=nixos-23.11";
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
@@ -52,12 +53,13 @@
 
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
+      oldPkgs = mkPkgs inputs.oldNixpkgs;
 
       privateRepo = lib.my.pkgs.importPkgs ./pkgs;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
+        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo oldPkgs; };
       });
 
       templatesDirs = builtins.attrNames

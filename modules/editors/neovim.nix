@@ -56,7 +56,7 @@ in
 
         globals.mapleader = " ";
 
-        options = {
+        opts = {
           number = true;
           relativenumber = true;
           swapfile = false;
@@ -77,22 +77,24 @@ in
             in
             {
               enable = true;
-              terminalColors = true;
-              background = {
-                dark = theme;
-                light = theme;
-              };
-              styles = {
-                comments = [ "italic" ];
-                functions = [ "italic" ];
-              };
-              flavour = theme;
-              integrations = {
-                native_lsp.enabled = true;
-                telescope.enabled = true;
-                dap = {
-                  enable_ui = true;
-                  enabled = true;
+              settings = {
+                term_colors = true;
+                background = {
+                  dark = theme;
+                  light = theme;
+                };
+                styles = {
+                  comments = [ "italic" ];
+                  functions = [ "italic" ];
+                };
+                flavour = theme;
+                integrations = {
+                  native_lsp.enabled = true;
+                  telescope.enabled = true;
+                  dap = {
+                    enable_ui = true;
+                    enabled = true;
+                  };
                 };
               };
             };
@@ -102,9 +104,11 @@ in
           treesitter.enable = true;
 
           undotree = {
-            autoOpenDiff = true;
-            focusOnToggle = true;
             enable = true;
+            settings = {
+              AutoOpenDiff = true;
+              FocusOnToggle = true;
+            };
           };
 
           dap = {
@@ -220,25 +224,25 @@ in
                 settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
               };
               hls.enable = true; # Haskell
-
-              #graphql.enable = true;
-              #dockerls.enable = true;
-              #ansiblels.enable = true;
+              graphql.enable = true;
+              dockerls.enable = true;
+              ansiblels.enable = true;
             };
           };
 
-          nvim-cmp = {
+          cmp = {
             enable = true;
-            sources = [
-              { name = "nvim_lsp"; }
-              { name = "path"; }
-              { name = "snippy"; }
-              { name = "spell"; }
-              { name = "buffer"; }
-            ];
-            snippet.expand = "luasnip";
-            mappingPresets = [ "insert" ];
-            mapping = {
+            settings = {
+              sources = [
+                { name = "nvim_lsp"; }
+                { name = "path"; }
+                { name = "snippy"; }
+                { name = "spell"; }
+                { name = "buffer"; }
+              ];
+              snippet.expand = "luasnip";
+            };
+            cmdline.mapping = {
               "<C-b>" = "cmp.mapping.scroll_docs(-4)";
               "<C-f>" = "cmp.mapping.scroll_docs(4)";
               "<C-Space>" = "cmp.mapping.complete()";
@@ -301,9 +305,9 @@ in
 
           telescope = {
             enable = true;
-            extensions.file_browser = {
+            extensions.file-browser = {
               enable = true;
-              hidden = true;
+              settings.hidden = true;
             };
             keymaps = {
               "<leader>ff" = "find_files";
@@ -319,7 +323,7 @@ in
 
           nvim-autopairs = {
             enable = true;
-            disableInReplaceMode = true;
+            settings.disable_in_replace_mode = true;
           };
         };
 
@@ -330,7 +334,7 @@ in
             key = "<leader>fe";
           }
           {
-            action = # lua
+            action.__raw = # lua
               ''
                 function()
                   local newFileName = vim.fn.input("Enter new file name: ", "", "dir")
@@ -346,10 +350,9 @@ in
                 end
               '';
             key = "<leader>fc";
-            lua = true;
           }
           {
-            action = # lua
+            action.__raw = # lua
               ''
                 function()
                   local newDirectoryName = vim.fn.input("Enter new directory name: ", "", "dir")
@@ -360,7 +363,6 @@ in
                 end
               '';
             key = "<leader>fd";
-            lua = true;
           }
           # TmuxNavigate
           {
@@ -386,8 +388,7 @@ in
           }
           # DAP
           {
-            action = ''function() require("dapui").toggle() end'';
-            lua = true;
+            action.__raw = ''function() require("dapui").toggle() end'';
             key = "<F9>";
           }
           {
