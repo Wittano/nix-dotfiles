@@ -38,7 +38,7 @@ with lib.my;
         # Apps
         spotify
         unstable.freetube # Youtube desktop
-        streamlink-twitch-gui-bin # Twitch desktop
+        unstable.streamlink-twitch-gui-bin # Twitch desktop
         mpv
         joplin-desktop # Notebook
         vscodium
