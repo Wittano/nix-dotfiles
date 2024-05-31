@@ -143,7 +143,7 @@ with lib; rec {
           "${desktopName}".enable = true;
           sddm = {
             enable = true;
-            theme = "wings";
+            theme = "dexy";
           };
         };
       });

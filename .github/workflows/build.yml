@@ -29,7 +29,6 @@ jobs:
             nixos-blur-playmouth,
             dexy,
             suger-candy,
-            wings,
             gopher-nvim,
             template-nvim,
           ]
