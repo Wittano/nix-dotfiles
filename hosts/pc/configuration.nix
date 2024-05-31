@@ -54,6 +54,7 @@
     services = {
       boinc.enable = true;
       backup.enable = true;
+      rss.enable = true;
       syncthing.enable = true;
       redshift.enable = true;
       filebot.enable = true;
