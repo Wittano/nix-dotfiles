@@ -1,8 +1,8 @@
-{ config, lib, pkgs, unstable, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 with lib.my;
 let
-  patcherDir = unstable.writeShellApplication {
+  patcherDir = pkgs.writeShellApplication {
     name = "patcherDir";
     runtimeInputs = with pkgs; [ findutils file gnugrep coreutils patchelf ];
     text = builtins.readFile ./utils/patcherDir.sh;
