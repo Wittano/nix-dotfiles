@@ -11,6 +11,10 @@ in
     };
   };
 
+  imports = [
+    inputs.nixvim.nixosModules.nixvim
+  ];
+
   config = mkIf cfg.enable {
     modules.shell.fish.completions."tvi" = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
 

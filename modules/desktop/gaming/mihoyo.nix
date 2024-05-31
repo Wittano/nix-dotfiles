@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, inputs, ... }:
 with lib;
 with lib.my;
 let
@@ -11,6 +11,10 @@ in
       enable = mkEnableOption "Enable Mihoyo games";
     };
   };
+
+  imports = [
+    inputs.aagl.nixosModules.default
+  ];
 
   config = mkIf (cfg.enable && gamingCfg.enable) {
     # Genshin Impact

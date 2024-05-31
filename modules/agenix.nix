@@ -9,6 +9,10 @@ let
     (builtins.readDir secretDir);
 in
 {
+  imports = [
+    inputs.agenix.nixosModules.default
+  ];
+
   environment.systemPackages = [ inputs.agenix.packages.x86_64-linux.default ];
 
   services.openssh = mkIf (!config.modules.services.ssh.enable) {

@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, inputs, ... }:
 with lib;
 with lib.my;
 let
@@ -11,6 +11,10 @@ in
       enable = mkEnableOption "Enable filebot service";
     };
   };
+
+  imports = [
+    inputs.filebot.nixosModules.default
+  ];
 
   config = {
     services.filebot = {

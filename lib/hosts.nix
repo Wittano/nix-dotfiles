@@ -51,10 +51,6 @@ in
           ./../configuration.nix
           ./../hosts/${hostnameNoDev}/configuration.nix
 
-          inputs.filebot.nixosModules.default
-          inputs.agenix.nixosModules.default
-          inputs.nixvim.nixosModules.nixvim
-          inputs.aagl.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
         ] ++ (importModulesPath ./../modules);
     };
