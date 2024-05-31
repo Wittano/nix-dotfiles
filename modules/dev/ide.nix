@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -16,89 +16,75 @@ let
     jvm.package = idea-ultimate;
     sql.package = datagrip;
     web.package = webstorm;
-    andorid.package = pkgs.andorid-studio;
+    andorid.package = unstable.andorid-studio;
+    haskell.extraConfig = {
+      # Haskell IDE
+      modules.editors.neovim.enable = true;
+    };
+    fork = { };
   });
 
-  langWithoutIde = {
-    "fork" = "${homeDir}/projects/own/fork";
-    "haskell" = "${homeDir}/projects/own/haskell";
-  };
+  installedIDEs = trivial.pipe cfg.ides [
+    (builtins.map (x: avaiableIde."${x}".package or null))
+    (builtins.filter (x: x != null))
+  ];
+
+  cmdCompletions = trivial.pipe cfg.ides [
+    (builtins.map
+      (x:
+        let
+          path = avaiableIde."${x}".projectDir;
+        in
+        rec {
+          name = "p${x}";
+          value = ''
+            function get_projects_dir
+              ls ${path} || echo ""
+            end
+
+            for project in (get_projects_dir)
+              complete -c ${name} -f -a "$project"
+            end
+          '';
+        }))
+    builtins.listToAttrs
+  ];
+
+  commands = trivial.pipe cfg.ides [
+    (builtins.map
+      (x:
+        let
+          path = avaiableIde."${x}".projectDir;
+        in
+        {
+          name = "p${x}";
+          value = {
+            body = /*fish*/ ''
+              mkdir -p ${path}
+
+              set -l args_len $(count $argv)
+
+              if test "$args_len" -eq 0
+                cd ${path}
+              else
+                cd ${path}/$argv
+              end
+            '';
+          };
+        })
+    )
+    builtins.listToAttrs
+  ];
 
   ideNames = builtins.attrNames avaiableIde;
-  langNames = builtins.attrNames langWithoutIde;
-
-  installedIDEs = builtins.map (x: avaiableIde."${x}".package) cfg.ides;
-
-  mkCommand = path: {
-    body = /*fish*/ ''
-      mkdir -p ${path}
-
-      set -l args_len $(count $argv)
-
-      if test "$args_len" -eq 0
-        cd ${path}
-      else
-        cd ${path}/$argv
-      end
-    '';
-  };
-
-  mkCompletions = name: path: ''
-    function get_projects_dir
-      ls ${path} || echo ""
-    end
-
-    for project in (get_projects_dir)
-      complete -c ${name} -f -a "$project"
-    end
-  '';
-
-  cmdCompletions = builtins.listToAttrs (builtins.map
-    (x:
-      let
-        path = avaiableIde."${x}".projectDir;
-      in
-      rec {
-        name = "p${x}";
-        value = mkCompletions name path;
-      })
-    cfg.ides);
-
-  commands = builtins.listToAttrs (builtins.map
-    (x:
-      let
-        path = avaiableIde."${x}".projectDir;
-      in
-      {
-        name = "p${x}";
-        value = mkCommand path;
-      })
-    cfg.ides);
-
-
-  langCmds = {
-    commands = builtins.listToAttrs (builtins.map
-      (x: {
-        name = "p${x}";
-        value = mkCommand langWithoutIde.${x};
-      })
-      cfg.lang);
-    completions = builtins.listToAttrs (builtins.map
-      (x: rec {
-        name = "p${x}";
-        value = mkCompletions name langWithoutIde.${x};
-      })
-      cfg.lang);
-  };
+  extraConfigs = trivial.pipe ideNames [
+    (builtins.map (x: avaiableIde.${x}.extraConfig or { }))
+    mkMerge
+  ];
 in
 {
   options = {
     modules.dev.lang = {
-      lang = mkOption {
-        type = with types; listOf (enum langNames);
-        description = "List of aliases to language directories, that doesn't have IDE";
-        default = [ ];
-      };
       ides = mkOption {
         type = with types; listOf (enum ideNames);
         description = "List of enabled IDEs";
@@ -107,18 +93,18 @@ in
     };
   };
 
-  config = mkIf ((builtins.length (cfg.ides ++ cfg.lang)) != 0) {
-    modules.shell.fish.completions = cmdCompletions // langCmds.completions;
+  config = mkIf ((builtins.length cfg.ides) != 0) (mkMerge [
+    extraConfigs
+    {
+      modules.shell.fish.completions = cmdCompletions;
 
-    home-manager.users.wittano = {
-      home = {
-        packages = installedIDEs;
-        activation = {
-          createProjectsDir =
+      home-manager.users.wittano = {
+        home = {
+          packages = installedIDEs;
+          activation.createProjectsDir =
             let
               idesDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.ides;
-              langDirs = builtins.map (x: langWithoutIde.${x}) cfg.lang;
-              bashArray = bash.mkBashArray (idesDirs ++ langDirs);
+              bashArray = bash.mkBashArray (idesDirs);
             in
             lib.hm.dag.entryBefore [ "writeBoundary" ] /*bash*/''
               projectDirs=(${bashArray})
@@ -128,10 +114,10 @@ in
               done
             '';
         };
-      };
 
-      programs.fish.functions = commands // langCmds.commands;
-    };
-  };
+        programs.fish.functions = commands;
+      };
+    }
+  ]);
 }
 

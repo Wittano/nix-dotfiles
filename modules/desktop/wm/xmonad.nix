@@ -29,7 +29,7 @@ desktop.mkDesktopModule {
       };
     };
 
-    modules.dev.lang.lang = [ "haskell" ];
+    modules.dev.lang.ides = [ "haskell" ];
 
     home-manager.users.wittano.programs.xmobar = {
       enable = true;
