@@ -22,6 +22,9 @@ desktop.mkDesktopModule {
   extraConfig = {
     fonts.packages = with pkgs; [ nerdfonts jetbrains-mono ];
 
+    # Configuration development tool
+    modules.dev.lang.ides = [ "python" ];
+
     services.xserver = {
       enable = true;
       windowManager.qtile.enable = true;

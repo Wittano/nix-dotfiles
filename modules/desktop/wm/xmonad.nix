@@ -29,6 +29,8 @@ desktop.mkDesktopModule {
       };
     };
 
+    modules.dev.lang.lang = [ "haskell" ];
+
     home-manager.users.wittano.programs.xmobar = {
       enable = true;
       package = unstable.xmobar;

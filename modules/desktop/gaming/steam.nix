@@ -58,6 +58,9 @@ in
     '';
 
     home-manager.users.wittano.home.packages = [ fixMf fixAge2Sync fixSteamSystemTray ];
+
+    # Modding and game staff tool
+    modules.dev.lang.ides = [ "dotnet" ];
   };
 
 }
