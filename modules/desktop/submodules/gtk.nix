@@ -28,17 +28,29 @@ let
     variant = "frappe";
   };
   catppuccinThemeName = "Catppuccin-Frappe-Standard-Blue-Dark";
+  cursorTheme = {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+  };
 in
 {
   config = {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ dconf ];
+      home = {
+        packages = with pkgs; [ dconf ];
+        pointerCursor = {
+          size = 22;
+          x11 = {
+            enable = true;
+            defaultCursor = cursorTheme.name;
+          };
+          gtk.enable = true;
+        } // cursorTheme;
+      };
       gtk = {
+        inherit cursorTheme;
+
         enable = true;
-        cursorTheme = {
-          name = "Bibata-Modern-Ice";
-          package = pkgs.bibata-cursors;
-        };
         font = {
           name = "JetBrains Mono NL";
           size = 12;
