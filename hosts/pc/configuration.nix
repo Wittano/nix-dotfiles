@@ -32,8 +32,8 @@
     };
     editors.neovim.enable = true;
     dev.lang = {
-      ides = [ "go" "cpp" "sql" "jvm" "rust" "dotnet" "python" ];
-      lang = [ "fork" "haskell" ];
+      ides = [ "go" "sql" ];
+      lang = [ "fork" ];
     };
     hardware = {
       sound.enable = true;
