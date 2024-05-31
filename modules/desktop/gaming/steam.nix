@@ -2,14 +2,15 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.gaming;
+  cfg = config.modules.desktop.gaming.steam;
+  gamingCfg = config.modules.desktop.gaming;
 
-  fixAge2Sync = unstable.writeShellApplication {
+  fixAge2Sync = pkgs.writeShellApplication {
     name = "fixAge2Sync";
     runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
     text = builtins.readFile ./scripts/fixAge2Sync.sh;
     runtimeEnv = {
-      STEAM_GAME_DIR = cfg.disk.path;
+      STEAM_GAME_DIR = gamingCfg.disk.path;
     };
   };
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
@@ -38,11 +39,17 @@ let
 in
 {
 
-  options.modules.desktop.gaming.scripts = {
-    enable = mkEnableOption "Enable custom scripts to fixing or imporved games";
+  options.modules.desktop.gaming.steam = {
+    enable = mkEnableOption "Enable steam and scripts for games installed via Steam";
+    enableScripts = mkEnableOption "Install custom script to fix games e.g. Age of Empier, Steam systray icon or Darksider 1";
   };
 
-  config = mkIf (cfg.scripts.enable && cfg.enable) {
+  config = mkIf (cfg.enable && gamingCfg.enable) {
+    programs.steam = {
+      enable = true;
+      package = unstable.steam;
+    };
+
     modules.shell.fish.completions."mf-fix" = ''
       complete -c mf-fix -s v -l verbose --no-files
       complete -c mf-fix -s h -l help --no-files

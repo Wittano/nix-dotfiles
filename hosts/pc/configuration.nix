@@ -27,8 +27,13 @@
     desktop.gaming = {
       enable = true;
       disk.enable = true;
-      scripts.enable = true;
-      enableMihoyoGames = true;
+      steam = {
+        enable = true;
+        enableScripts = true;
+      };
+      games.enable = true;
+      mihoyo.enable = true;
+      minecraft.enable = true;
     };
     editors.neovim.enable = true;
     dev.lang = {
