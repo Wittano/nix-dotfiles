@@ -1,24 +1,17 @@
 { unstable ? import <nixpkgs> { }
 , mkShell
 , callPackage
-, python311Packages
-, vscode-extensions
-, isort
+, python3
+, pipenv
 , ...
 }:
 let
   nixDeps = (callPackage ./default.nix { inherit unstable; }).nativeBuildInputs;
 in
 mkShell {
-  nativeBuildInputs = with python311Packages; [
-    # For Qtile
-    qtile
-    mypy
-
+  nativeBuildInputs = [
     # Python
-    yapf # Python Formatter
-    isort # Python Refactor
-    isort
-    vscode-extensions.ms-python.vscode-pylance # Python LSP
+    python3
+    pipenv
   ] ++ nixDeps;
 }
