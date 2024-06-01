@@ -5,7 +5,7 @@ with lib.my;
   autostart = [
     "vivaldi"
     "telegram-desktop"
-    "discord --ignore-gpu-blocklist --disable-features=UseOzonePlatform --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy"
+    "vesktop"
     "spotify"
     "freetube"
     "gnome-pomodoro"
@@ -31,7 +31,6 @@ with lib.my;
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        vesktop
         figma-linux # Figma
         cinnamon.nemo # File explorer
 
@@ -56,7 +55,7 @@ with lib.my;
         telegram-desktop
         signal-desktop
         element-desktop # matrix communicator
-        discord
+        vesktop # Discord with linux patches
       ];
     };
   };
