@@ -2,12 +2,12 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.gaming.games;
+  cfg = config.modules.desktop.gaming.lutris;
   gamingCfg = config.modules.desktop.gaming;
 in
 {
   options = {
-    modules.desktop.gaming.games = {
+    modules.desktop.gaming.lutris = {
       enable = mkEnableOption "Enable lutris and utilties to run games";
     };
   };

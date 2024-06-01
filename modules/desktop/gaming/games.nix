@@ -2,12 +2,12 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.gaming.lutris;
+  cfg = config.modules.desktop.gaming.games;
   gamingCfg = config.modules.desktop.gaming;
 in
 {
   options = {
-    modules.desktop.gaming.lutris = {
+    modules.desktop.gaming.games = {
       enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
     };
   };
@@ -15,7 +15,6 @@ in
   config = mkIf (cfg.enable && gamingCfg.enable) {
     home-manager.users.wittano.home.packages = with unstable; [
       # Games
-      prismlauncher # Minecraft launcher
       xivlauncher # FFXIV launcher
       osu-lazer # osu!lazer
       airshipper # Veloren
