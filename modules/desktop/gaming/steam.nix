@@ -16,25 +16,31 @@ let
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
     "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
 
-  fixMf =
+  fixDarksiders =
     let
-      mfFixRepo = pkgs.fetchFromGitHub {
-        repo = "mf-fix";
-        owner = "HoodedDeath";
-        rev = "e3286c34280e04f62b0519cf47abe6c21b04207a";
-        sha256 = "sha256-sgHNTQv7htTYXaCqtoIb5nGMnh72nuph8AXHRfIV/Dc=";
+      repo = pkgs.srcOnly {
+        name = "mf-installcab_steamdeck";
+        version = "08-11-2023";
+        src = pkgs.fetchFromGitLab {
+          repo = "mf-installcab_steamdeck";
+          owner = "steevyp";
+          rev = "c7b89af844d056eb0d5d700ae702b9581094d017";
+          sha256 = "sha256-8UlZcELv0JLmjymucYV/Wq/2C+M+PT6ETKa6EZssJpU=";
+        };
+
+        patches = [ ./patches/fix-darksiders.patch ];
       };
-      fixedScript = builtins.replaceStrings [ "python2" ] [ "python" ] (builtins.readFile "${mfFixRepo}/mf-fix.sh");
     in
     pkgs.writeShellApplication {
-      name = "mf-fix";
-      runtimeInputs = with pkgs; [ python3 coreutils sudo wineWowPackages.full meshoptimizer ];
-      excludeShellChecks = [ "SC2181" "SC2034" "SC2199" "SC2086" ];
-      text = ''
-        cd ${mfFixRepo}
-
-        ${fixedScript}
-      '';
+      name = "fix-darksiders";
+      runtimeInputs = with pkgs; [ python3 coreutils toybox cabextract wget ];
+      runtimeEnv = {
+        PROTON = "/mnt/gaming/SteamLibrary/steamapps/common/Proton 8.0";
+        WINEPREFIX = "/mnt/gaming/SteamLibrary/steamapps/compatdata/462780/pfx";
+        SCRIPTDIR = builtins.toString repo;
+        GAME_EXE = "/mnt/gaming/SteamLibrary/steamapps/common/Darksiders Warmastered Edition";
+      };
+      text = builtins.readFile (repo + "/install-mf-64.sh");
     };
 in
 {
@@ -57,7 +63,14 @@ in
       complete -c mf-fix -s n -l noconfirm --no-files
     '';
 
-    home-manager.users.wittano.home.packages = [ fixMf fixAge2Sync fixSteamSystemTray ];
+    home-manager.users.wittano.home.packages = [ fixDarksiders fixAge2Sync fixSteamSystemTray ];
+
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        wineWowPackages.full
+      ];
+    };
 
     # Modding and game staff tool
     modules.dev.lang.ides = [ "dotnet" ];

@@ -139,7 +139,6 @@ with lib; rec {
       enable = true;
       flake = environment.variables.DOTFILES;
     };
-    nix-ld.enable = true;
   };
 
   # Internal modules
