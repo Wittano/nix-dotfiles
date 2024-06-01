@@ -11,7 +11,7 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ lazygit ];
+      home.packages = with pkgs; [ lazygit xclip ];
       services.gpg-agent = {
         enable = true;
         pinentryPackage = pkgs.pinentry-gtk2;
