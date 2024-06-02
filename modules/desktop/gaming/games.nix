@@ -15,7 +15,6 @@ in
   config = mkIf (cfg.enable && gamingCfg.enable) {
     home-manager.users.wittano.home.packages = with unstable; [
       # Games
-      xivlauncher # FFXIV launcher
       osu-lazer # osu!lazer
       airshipper # Veloren
       mindustry # Mindustry
