@@ -71,7 +71,7 @@ _music_staff: List[str] = [
     r"[sS]potify*",
 ]
 
-_chat_staff: List[str] = ["discord", r"[sS]ignal*", r"[eE]lement", "telegram-desktop"]
+_chat_staff: List[str] = ["discord", "vesktop", r"[sS]ignal*", r"[eE]lement", "telegram-desktop"]
 
 _doc_staff: List[str] = ["obsidian", "Evince", r"[eE]og", r"[jJ]oplin"]
 

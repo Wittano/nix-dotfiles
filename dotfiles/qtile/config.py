@@ -65,10 +65,10 @@ wmname = "LG3D"
 @hook.subscribe.startup_once
 def autostart_hook():
     home_dir = os.environ['HOME']
-    autostartPath = f"{home_dir}/.config/autostart.sh"
+    autostart_path = f"{home_dir}/.config/autostart.sh"
 
-    if os.path.isfile(autostartPath):
-        subprocess.call([autostartPath])
+    if os.path.isfile(autostart_path):
+        subprocess.call([autostart_path])
 
 
 @hook.subscribe.client_new
