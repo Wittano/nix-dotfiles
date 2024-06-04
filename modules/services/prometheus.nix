@@ -14,6 +14,9 @@ in
   config = mkIf cfg.enable {
     networking.firewall.interfaces.eno1.allowedTCPPorts = [ 9090 9100 ];
 
+    # Development promethues exportes
+    modules.dev.lang.ides = [ "go" ];
+
     services.prometheus = {
       enable = true;
       port = 9090;

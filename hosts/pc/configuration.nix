@@ -36,7 +36,7 @@
       minecraft.enable = true;
     };
     editors.neovim.enable = true;
-    dev.lang.ides = [ "go" "sql" "fork" ];
+    dev.lang.ides = [ "go" "sql" "fork" "cpp" ];
     hardware = {
       sound.enable = true;
       grub = {

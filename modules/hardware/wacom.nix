@@ -27,6 +27,9 @@ in
   config = mkIf cfg.enable {
     services.xserver.wacom.enable = true;
 
+    # Development fixs and features for drivers
+    modules.dev.lang.ides = [ "cpp" ];
+
     home-manager.users.wittano = {
       home.packages = with pkgs; [ krita setupWacom ];
 

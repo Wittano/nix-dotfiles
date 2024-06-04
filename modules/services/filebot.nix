@@ -17,6 +17,8 @@ in
   ];
 
   config = {
+    modules.dev.lang.ides = [ "go" ];
+
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";

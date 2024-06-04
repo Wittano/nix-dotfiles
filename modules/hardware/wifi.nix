@@ -19,6 +19,9 @@ in
 
     networking.networkmanager.enable = true;
 
+    # Development fixs and features for drivers
+    modules.dev.lang.ides = [ "cpp" ];
+
     boot = mkIf cfg.enableTpLink {
       kernelPackages = mkForce pkgs.linuxPackages;
       extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];
