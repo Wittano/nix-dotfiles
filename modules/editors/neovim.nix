@@ -275,7 +275,7 @@ in
           };
 
           barbar = {
-            enable = true;
+            enable = false;
             autoHide = true;
             insertAtEnd = true;
             keymaps = {
