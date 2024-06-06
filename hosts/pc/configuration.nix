@@ -40,6 +40,7 @@
       sound.enable = true;
       grub = {
         enable = true;
+        enableMultiBoot = true;
         theme = inputs.honkai-railway-grub-theme.packages.${system}.dr_ratio-grub-theme;
       };
       wacom.enable = true;

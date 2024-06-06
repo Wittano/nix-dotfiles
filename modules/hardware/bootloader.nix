@@ -14,6 +14,7 @@ in
         example = pkgs.nixos-grub2-theme;
         description = "Set GRUB theme";
       };
+      enableMultiBoot = mkEnableOption "Enable os-probe to detect other systems";
     };
   };
 
@@ -24,6 +25,7 @@ in
       enable = true;
       theme = cfg.theme;
       device = "nodev";
+      useOSProber = cfg.enableMultiBoot;
     };
   };
 }
