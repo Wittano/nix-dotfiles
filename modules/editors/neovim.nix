@@ -274,25 +274,7 @@ in
             setup.go.formatter = [ "goimports" ];
           };
 
-          barbar = {
-            enable = false;
-            autoHide = true;
-            insertAtEnd = true;
-            keymaps = {
-              close = "<leader>bd";
-              goTo1 = "<leader>b1";
-              goTo2 = "<leader>b2";
-              goTo3 = "<leader>b3";
-              goTo4 = "<leader>b4";
-              goTo5 = "<leader>b5";
-              goTo6 = "<leader>b6";
-              goTo7 = "<leader>b7";
-              goTo8 = "<leader>b8";
-              goTo9 = "<leader>b9";
-              next = "<leader>bj";
-              previous = "<leader>bk";
-            };
-          };
+          # FIXME Revert barbar plugin
 
           tmux-navigator.enable = true;
 
