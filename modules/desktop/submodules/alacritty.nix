@@ -1,25 +1,16 @@
 { pkgs, lib, ... }:
 with lib;
 with lib.my;
-let
-  catppuccinTheme = mapper.mapDirToAttrs (pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "alacritty";
-    rev = "ce476fb41f307d90f841c1a4fd7f0727c21248b2";
-    sha256 = "sha256-bpHznCqkNMbauDQjh98qj2+r1V8mXQIVmvKTldLcln0=";
-  });
-  colorTheme = theme: (catppuccinTheme."catppuccin-${theme}.toml".source);
-in
 {
   config = {
     fonts.packages = with pkgs; [ jetbrains-mono ];
 
     home-manager.users.wittano.programs.alacritty = {
       enable = true;
+      catppuccin.enable = true;
       settings = {
         general = {
           shell = "${pkgs.fish}/bin/fish";
-          import = [ (colorTheme "mocha") ];
           "live_config_reload" = false;
         };
         env.TERM = "xterm-256color";

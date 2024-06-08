@@ -35,6 +35,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

@@ -27,9 +27,9 @@ with lib.my; {
         enable = true;
         mouse = true;
         newSession = false;
+        catppuccin.enable = true;
         plugins = with pkgs.tmuxPlugins; [
           tmux-fzf
-          catppuccin
           sensible
           vim-tmux-navigator
           yank

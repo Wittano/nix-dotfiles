@@ -36,14 +36,6 @@ let
       esac
     '';
   };
-
-  catpuccinTheme = pkgs.fetchFromGitHub {
-    owner = "catppuccin";
-    repo = "rofi";
-    rev = "5350da41a11814f950c3354f090b90d4674a95ce";
-    sha256 = "sha256-DNorfyl3C4RBclF2KDgwvQQwixpTwSRu7fIvihPN8JY=";
-  };
-  themeName = "catppuccin-macchiato";
 in
 {
   config = {
@@ -54,7 +46,10 @@ in
 
       programs.rofi = {
         enable = true;
-        theme = "${catpuccinTheme}/basic/.local/share/rofi/themes/${themeName}.rasi";
+        catppuccin = {
+          enable = true;
+          flavor = "macchiato";
+        };
         terminal = meta.getExe pkgs.kitty;
         extraConfig = {
           disable-history = false;

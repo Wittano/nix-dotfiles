@@ -11,7 +11,7 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano = {
-      home.packages = with pkgs; [ lazygit xclip ];
+      home.packages = with pkgs; [ xclip ];
       services.gpg-agent = {
         enable = true;
         pinentryPackage = pkgs.pinentry-gtk2;
@@ -27,6 +27,14 @@ in
             init.defaultBranch = "main";
             pull.rebase = true;
             commit.gpgsign = true;
+          };
+        };
+
+        lazygit = {
+          enable = true;
+          catppuccin = {
+            enable = true;
+            flavor = "macchiato";
           };
         };
 

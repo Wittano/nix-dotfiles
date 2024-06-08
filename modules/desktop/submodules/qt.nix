@@ -1,23 +1,6 @@
 { pkgs, lib, ... }:
 with lib;
 with lib.my;
-let
-  catppuccinTheme = pkgs.fetchFromGitHub {
-    repo = "Kvantum";
-    owner = "catppuccin";
-    rev = "04be2ad3d28156cfb62478256f33b58ee27884e9";
-    sha256 = "sha256-apOPiVwePXbdKM1/0HAfHzIqAZxvfgL5KHzhoIMXLqI=";
-  };
-
-  themes = attrsets.mapAttrs'
-    (n: _: {
-      name = "Kvantum/${n}";
-      value = {
-        source = catppuccinTheme + "/src/${n}";
-      };
-    })
-    (builtins.readDir (catppuccinTheme + "/src"));
-in
 {
   config = {
     qt = {
@@ -38,12 +21,13 @@ in
       qt = {
         enable = true;
         platformTheme.name = "qtct";
-        style.name = "kvantum";
-      };
-
-      xdg.configFile = themes // {
-        "Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
-          General.theme = "Catppuccin-Frappe-Sky";
+        style = {
+          name = "kvantum";
+          catppuccin = {
+            enable = true;
+            accent = "sky";
+            flavor = "frappe";
+          };
         };
       };
     };

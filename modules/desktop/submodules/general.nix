@@ -19,6 +19,12 @@ with lib.my;
 
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";
+
+      programs.mpv = {
+        enable = true;
+        catppuccin.enable = true;
+      };
+
       home.packages = with pkgs; [
         # Utils
         flameshot
@@ -38,7 +44,6 @@ with lib.my;
         spotify
         unstable.freetube # Youtube desktop
         unstable.streamlink-twitch-gui-bin # Twitch desktop
-        mpv
         joplin-desktop # Notebook
         vscodium
         tor-browser # Tor

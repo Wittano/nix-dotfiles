@@ -3,6 +3,7 @@
 , lib
 , desktopName
 , hostname
+, inputs
 , ...
 }:
 with lib; rec {
@@ -125,6 +126,7 @@ with lib; rec {
     useUserPackages = true;
     backupFileExtension = "backup";
     users.wittano = {
+      imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
       home.stateVersion = system.stateVersion;
       services.home-manager.autoUpgrade = {
         enable = true;

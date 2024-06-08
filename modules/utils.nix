@@ -22,7 +22,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.wittano.home.packages = mkIf (cfg.enable) [ patcherDir ];
-    environment.systemPackages = mkIf (cfg.enableGlobalUtils) (with pkgs; [ btop ]);
+    home-manager.users.wittano = {
+      home.packages = mkIf (cfg.enable) [ patcherDir ];
+
+      programs.btop = {
+        enable = cfg.enableGlobalUtils;
+        catppuccin.enable = true;
+      };
+    };
   };
 }
