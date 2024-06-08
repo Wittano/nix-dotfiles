@@ -28,7 +28,6 @@ jobs:
         packages: [
             nixos-blur-playmouth,
             dexy,
-            suger-candy,
             gopher-nvim,
             template-nvim,
           ]
