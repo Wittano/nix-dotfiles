@@ -1,4 +1,4 @@
-{ config, lib, unstable, ... }:
+{ config, lib, pkgs, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -18,8 +18,7 @@ let
     web.package = webstorm;
     andorid.package = unstable.andorid-studio;
     haskell.extraConfig = {
-      # Haskell IDE
-      modules.editors.neovim.enable = true;
+      home-manager.users.wittano.home.packages = with pkgs; [ vscodium ];
     };
     fork = { };
   });

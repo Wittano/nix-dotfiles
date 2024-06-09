@@ -2,11 +2,11 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.editors.neovim;
+  cfg = config.modules.dev.neovim;
 in
 {
   options = {
-    modules.editors.neovim = {
+    modules.dev.neovim = {
       enable = mkEnableOption "Enable Neovim editor";
     };
   };
