@@ -149,7 +149,10 @@ with lib; rec {
       enableDesktop = attrsets.optionalAttrs (desktopName != "") ({
         desktop = {
           "${desktopName}".enable = true;
-          sddm.enable = true;
+          sddm = {
+            enable = true;
+            theme = "dexy";
+          };
         };
       });
     in
