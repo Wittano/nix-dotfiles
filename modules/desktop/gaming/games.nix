@@ -10,6 +10,7 @@ let
     osu-lazer # osu!lazer
     airshipper # Veloren
     mindustry # Mindustry
+    xivlauncher # FF XIV
   ];
 in
 {
