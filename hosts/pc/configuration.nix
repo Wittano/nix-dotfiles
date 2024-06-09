@@ -33,7 +33,6 @@
       };
       games.enable = true;
       mihoyo.enable = true;
-      minecraft.enable = true;
     };
     dev.lang.ides = [ "go" "sql" "fork" "cpp" ];
     hardware = {
@@ -43,12 +42,7 @@
         enableMultiBoot = true;
         theme = inputs.honkai-railway-grub-theme.packages.${system}.dr_ratio-grub-theme;
       };
-      wacom.enable = true;
       nvidia.enable = true;
-      virtualization = {
-        enable = true;
-        enableWindowsVM = true;
-      };
       docker.enable = true;
     };
     services = {
@@ -58,7 +52,6 @@
       syncthing.enable = true;
       redshift.enable = true;
       filebot.enable = true;
-      polkit.enable = true;
     };
   };
 

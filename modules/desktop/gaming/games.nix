@@ -4,6 +4,13 @@ with lib.my;
 let
   cfg = config.modules.desktop.gaming.games;
   gamingCfg = config.modules.desktop.gaming;
+
+  games = with unstable; [
+    # Games
+    osu-lazer # osu!lazer
+    airshipper # Veloren
+    mindustry # Mindustry
+  ];
 in
 {
   options = {
@@ -13,11 +20,9 @@ in
   };
 
   config = mkIf (cfg.enable && gamingCfg.enable) {
-    home-manager.users.wittano.home.packages = with unstable; [
-      # Games
-      osu-lazer # osu!lazer
-      airshipper # Veloren
-      mindustry # Mindustry
-    ];
+    home-manager.users.wittano.home.packages = games;
+
+    # Install wacom drivers if osu-lazor is installed
+    modules.hardware.wacom.enable = lists.any (x: strings.hasPrefix "osu" x.name) games;
   };
 }
