@@ -1,7 +1,5 @@
 # Packages
 Packages are aviable via standard flake packages or [Nix overlays](https://ryantm.github.io/nixpkgs/using/overlays/):
-| Name                                                            | Nix package name     | Description                                                                                                                                                                                                                                       |
-|-----------------------------------------------------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Nixos-Blur](https://git.gurkan.in/gurkan/nixos-blur-plymouth)  | nixos-blur-playmouth | A nice theme for bootscreen :)                                                                                                                                                                                                                    |
-| [gopher.nvim](https://github.com/olexsmir/gopher.nvim)             | gopher-nvim           | Neovim plugin for make golang development easiest
-| [template.nvim](https://github.com/nvimdev/template.nvim)          | template-nvim         | Quickly insert templates into file        |
+| Name                                                           | Nix package name     | Description                    |
+|----------------------------------------------------------------|----------------------|--------------------------------|
+| [Nixos-Blur](https://git.gurkan.in/gurkan/nixos-blur-plymouth) | nixos-blur-playmouth | A nice theme for bootscreen :) |

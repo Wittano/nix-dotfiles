@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  luaConfig = "require('nvim_comment').setup()";
+  luaConfig = "";
 
   deps = with pkgs.vimPlugins; [ nvim-comment ];
 }

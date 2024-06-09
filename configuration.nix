@@ -159,6 +159,7 @@ with lib; rec {
         enableGlobalUtils = true;
       };
       dev.git.enable = true;
+      editors.neovim.enable = true;
       shell.fish = {
         enable = true;
         enableDirenv = true;
