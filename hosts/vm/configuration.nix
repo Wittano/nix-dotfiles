@@ -20,9 +20,6 @@
 
   environment.systemPackages = with pkgs; [ git ];
 
-  modules = {
-    services.ssh.enable = true;
-    editors.neovim.enable = true;
-  };
+  modules.services.ssh.enable = true;
 
 }
