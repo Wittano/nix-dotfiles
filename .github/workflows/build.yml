@@ -27,9 +27,7 @@ jobs:
       matrix:
         packages: [
             nixos-blur-playmouth,
-            dexy,
-            gopher-nvim,
-            template-nvim,
+            dexy
           ]
     runs-on: ubuntu-latest
     steps:
