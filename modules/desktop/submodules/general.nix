@@ -30,6 +30,9 @@ with lib.my;
         flameshot
         kazam
 
+        # Folder Dialog menu
+        gnome.zenity
+
         # Web browser
         unstable.vivaldi
 
@@ -46,7 +49,6 @@ with lib.my;
         unstable.streamlink-twitch-gui-bin # Twitch desktop
         joplin-desktop # Notebook
         vscodium
-        tor-browser # Tor
         minder # Mind maps
         insomnia # REST API Client
         mongodb-compass # MongoDB desktop client
