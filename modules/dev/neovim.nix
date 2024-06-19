@@ -111,7 +111,10 @@ in
           };
           servers = {
             yamlls.enable = true;
-            bashls.enable = true;
+            bashls = {
+              enable = true;
+              package = pkgs.nodePackages.bash-language-server;
+            };
             jsonls.enable = true;
             taplo.enable = true;
           };
