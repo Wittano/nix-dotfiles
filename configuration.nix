@@ -3,6 +3,7 @@
 , lib
 , desktopName
 , hostname
+, config
 , inputs
 , ...
 }:
@@ -143,7 +144,7 @@ with lib; rec {
     };
   };
 
-  # Internal modules
+  # Internal modulesjournalctl -xeu display-manager.service
   modules =
     let
       enableDesktop = attrsets.optionalAttrs (desktopName != "") ({
@@ -151,7 +152,7 @@ with lib; rec {
           "${desktopName}".enable = true;
           sddm = {
             enable = true;
-            theme = "dexy";
+            package = pkgs.catppuccin-sddm-corners;
           };
         };
       });

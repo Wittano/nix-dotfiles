@@ -1,63 +1,42 @@
-{ config, pkgs, lib, privateRepo, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.modules.desktop.sddm;
-  splitByMinus = n: strings.splitString "-" n;
+  theme = trivial.pipe (cfg.package + "/share/sddm/themes") [
+    builtins.readDir
+    builtins.attrNames
+    builtins.head
+  ];
 
-  pkgNames = attrsets.mapAttrsToList (_: v: if v ? pname then v.pname else v.name) privateRepo;
-  sddmPkgNames = builtins.filter (x: builtins.any (e: e == "sddm") (splitByMinus x)) pkgNames;
-  sddmThemeNames = builtins.map
-    (x:
-      let
-        themeNameParts = splitByMinus (builtins.head (strings.splitString "sddm" x));
-        themeName = lists.take ((builtins.length themeNameParts) - 1) themeNameParts;
-      in
-      strings.concatStringsSep "-" themeName)
-    sddmPkgNames;
+  extraPackages = trivial.pipe cfg.package [
+    builtins.attrNames
+    (builtins.filter (strings.hasPrefix "propagated"))
+    (builtins.map (x: cfg.package."${x}"))
+    lists.flatten
+  ];
 in
 {
 
   options.modules.desktop.sddm = {
     enable = mkEnableOption "Enable SDDM as display manager";
-    theme = mkOption {
-      type = types.enum sddmThemeNames;
-      default = "dexy";
-      example = "wings";
-      description = "SDDM theme from privateRepo";
+    package = mkOption {
+      type = types.package;
+      example = pkgs.dexy;
+      description = "Package of sddm theme";
     };
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs."${cfg.theme}" ];
+    environment.systemPackages = [ cfg.package ];
     services.displayManager.sddm = {
-      enable = cfg.enable;
-      theme = cfg.theme;
-      extraPackages =
-        let
-          gstreamerDeps = with pkgs.gst_all_1; [
-            gstreamer
-            gst-plugins-ugly
-            gst-plugins-bad
-            gst-plugins-good
-            gst-plugins-base
-            gst-libav
-          ];
-          plasmaDeps = with pkgs.libsForQt5; [
-            plasma-framework
-            plasma-workspace
-          ];
-          qt5Deps = with pkgs.libsForQt5.qt5; [
-            qtgraphicaleffects
-            qtquickcontrols2
-            qtbase
-            qtsvg
-            qtmultimedia
-            pkgs.libsForQt5.phonon-backend-gstreamer
-          ];
-        in
-        qt5Deps ++ gstreamerDeps ++ plasmaDeps;
+      inherit theme extraPackages;
+
+      enable = true;
       autoNumlock = true;
+      settings = {
+        General.InputMethod="";
+      };
     };
   };
 }

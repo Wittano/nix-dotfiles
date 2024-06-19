@@ -46,6 +46,7 @@ let
           plasmaDeps = with libsForQt5; [
             plasma-framework
             plasma-workspace
+            unstable.kdePackages.sddm
           ];
           qt5Deps = with libsForQt5.qt5; [
             qtgraphicaleffects

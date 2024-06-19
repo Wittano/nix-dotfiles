@@ -1,6 +1,8 @@
 { lib
 , stdenv
 , fetchFromGitHub
+, libsForQt5
+, kdePackages
 }: stdenv.mkDerivation {
   name = "dexy-sddm-theme";
 
@@ -12,6 +14,12 @@
   };
 
   dontWrapQtApps = true;
+
+  propagatedUserEnvPkgs = with libsForQt5; [
+    plasma-framework
+    plasma-workspace
+    kdePackages.sddm
+  ];
 
   installPhase = ''
     mkdir -p $out/share/sddm/themes
