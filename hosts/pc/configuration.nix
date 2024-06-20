@@ -34,7 +34,7 @@
       games.enable = true;
       mihoyo.enable = true;
     };
-    dev.lang.ides = [ "go" "sql" "fork" "cpp" ];
+    dev.lang.ides = [ "go" "sql" "fork" ];
     hardware = {
       sound.enable = true;
       grub = {
