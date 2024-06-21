@@ -62,7 +62,7 @@ with lib.my;
         telegram-desktop
         signal-desktop
         element-desktop # matrix communicator
-        vesktop # Discord with linux patches
+        unstable.vesktop # Discord with linux patches
       ];
     };
   };
