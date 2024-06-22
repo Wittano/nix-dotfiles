@@ -43,7 +43,6 @@
       };
       grub = {
         enable = true;
-        enableMultiBoot = true;
         theme = inputs.honkai-railway-grub-theme.packages.${system}.dr_ratio-grub-theme;
       };
       nvidia.enable = true;
@@ -51,7 +50,6 @@
     };
     services = {
       boinc.enable = true;
-      ssh.enable = true;
       backup.enable = true;
       rss.enable = true;
       syncthing.enable = true;
