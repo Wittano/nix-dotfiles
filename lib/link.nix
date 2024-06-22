@@ -73,6 +73,20 @@ let
     '';
 in
 {
+  mkLink = { src, dest, active ? false }:
+    let linkFile = strings.optionalString active "ln -s ${src} ${dest}"; in ''
+      DIR=$(dirname ${dest})
+
+      mkdir -p "$DIR"
+
+      if [ -e "${dest}" ]; then
+        unlink ${dest} || rm ${dest}
+      fi
+
+      ${linkFile}
+      
+    '';
+
   mkMutableLinks =
     { config
     , isDevMode ? false

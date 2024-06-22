@@ -4,8 +4,6 @@ with lib.my;
 let
   cfg = config.modules.hardware.virtualization;
   virutalizationDir = mapper.mapDirToAttrs ./virtualization;
-
-  virshPath = "${config.virtualisation.libvirtd.package}/bin/virsh";
 in
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -35,20 +33,6 @@ in
 
     users.users.wittano.extraGroups = [ "libvirtd" ];
 
-    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
-      name = "windows";
-      manage = "window";
-      start = "virsh start win10";
-    }];
-
-    security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
-      users = [ "wittano" ];
-      commands = [{
-        command = "${virshPath} start win10";
-        options = [ "NOPASSWD" ];
-      }];
-    }];
-
     programs = {
       virt-manager.enable = true;
       dconf.enable = true;
@@ -58,28 +42,27 @@ in
 
     systemd = {
       services = {
-        libvirtd = mkIf cfg.enableWindowsVM {
-          path =
-            let
-              env = pkgs.buildEnv {
-                name = "qemu-hook-env";
-                paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
-              };
-            in
-            [ env ];
-
-          preStart = mkIf (cfg.enableWindowsVM) ''
-            mkdir -p /var/lib/libvirt/vbios
-
-            ln -sf ${virutalizationDir."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
-          '';
-        };
-
+        libvirtd.path = mkIf cfg.enableWindowsVM (with pkgs; [ bash libvirt kmod systemd ripgrep sd ]);
         pcscd.enable = mkIf cfg.enableWindowsVM false;
       };
-      
+
       sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
     };
+
+    system.activationScripts.installWindowsVMFiles =
+      let
+        vibiosLink = link.mkLink {
+          src = virutalizationDir."vibios.rom".source;
+          dest = "/var/lib/libvirt/vbios/vibios.rom";
+          active = cfg.enableWindowsVM;
+        };
+
+        qemuHookScript = link.mkLink {
+          src = virutalizationDir.hooks.qemu.source;
+          dest = "/var/lib/libvirt/hooks/qemu";
+          active = cfg.enableWindowsVM;
+        };
+      in vibiosLink + qemuHookScript;
 
     boot = {
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
