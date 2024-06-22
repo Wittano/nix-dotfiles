@@ -37,6 +37,10 @@
     dev.lang.ides = [ "go" "sql" "fork" ];
     hardware = {
       sound.enable = true;
+      virtualization = {
+        enable = true;
+        enableWindowsVM = true;
+      };
       grub = {
         enable = true;
         enableMultiBoot = true;
@@ -47,6 +51,7 @@
     };
     services = {
       boinc.enable = true;
+      ssh.enable = true;
       backup.enable = true;
       rss.enable = true;
       syncthing.enable = true;

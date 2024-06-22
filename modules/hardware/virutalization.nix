@@ -18,16 +18,19 @@ in
   };
 
   config = mkIf cfg.enable {
-    virtualisation.libvirtd = {
-      enable = true;
-      onBoot = "ignore";
-      onShutdown = "shutdown";
-      qemu = {
-        package = unstable.qemu;
-        ovmf.enable = true;
-        runAsRoot = true;
+    virtualisation = {
+      spiceUSBRedirection.enable = true;
+      libvirtd = {
+        enable = true;
+        onBoot = "ignore";
+        onShutdown = "shutdown";
+        qemu = {
+          package = unstable.qemu;
+          ovmf.enable = true;
+          runAsRoot = true;
+        };
+        hooks.qemu.win10 = mkIf (cfg.enableWindowsVM) ./virtualization/hooks/win10;
       };
-      hooks.qemu.win10 = mkIf (cfg.enableWindowsVM) ./virtualization/hooks/win10;
     };
 
     users.users.wittano.extraGroups = [ "libvirtd" ];
@@ -46,29 +49,37 @@ in
       }];
     }];
 
-    programs.virt-manager.enable = true;
+    programs = {
+      virt-manager.enable = true;
+      dconf.enable = true;
+    };
 
     environment.systemPackages = with pkgs; [ libguestfs ];
 
-    systemd.services.libvirtd = mkIf cfg.enableWindowsVM {
-      path =
-        let
-          env = pkgs.buildEnv {
-            name = "qemu-hook-env";
-            paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
-          };
-        in
-        [ env ];
+    systemd = {
+      services = {
+        libvirtd = mkIf cfg.enableWindowsVM {
+          path =
+            let
+              env = pkgs.buildEnv {
+                name = "qemu-hook-env";
+                paths = with pkgs; [ bash libvirt kmod systemd ripgrep sd ];
+              };
+            in
+            [ env ];
 
-      preStart = mkIf (cfg.enableWindowsVM) ''
-        mkdir -p /var/lib/libvirt/vbios
+          preStart = mkIf (cfg.enableWindowsVM) ''
+            mkdir -p /var/lib/libvirt/vbios
 
-        ln -sf ${virutalizationDir."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
-      '';
+            ln -sf ${virutalizationDir."vibios.rom".source} /var/lib/libvirt/vbios/vibios.rom
+          '';
+        };
+
+        pcscd.enable = mkIf cfg.enableWindowsVM false;
+      };
+      
+      sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
     };
-
-    systemd.services.pcscd.enable = mkIf cfg.enableWindowsVM false;
-    systemd.sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
 
     boot = {
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];
