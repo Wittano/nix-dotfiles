@@ -14,6 +14,7 @@ desktop.mkDesktopModule {
     "tmux"
     "bluetooth"
     "kitty"
+    "ranger"
     "rofi"
   ];
   mutableSources = {

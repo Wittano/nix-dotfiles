@@ -16,6 +16,7 @@ desktop.mkDesktopModule {
     "dunst"
     "picom"
     "tmux"
+    "ranger"
     "kitty"
     "rofi"
   ];

@@ -14,6 +14,7 @@ desktop.mkDesktopModule {
     "bluetooth"
     "dunst"
     "rofi"
+    "ranger"
     "polybar"
   ];
   installAutostartFile = false;
