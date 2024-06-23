@@ -28,7 +28,6 @@ with lib.my;
       home.packages = with pkgs; [
         # Utils
         flameshot
-        kazam
 
         # Folder Dialog menu
         gnome.zenity
@@ -40,18 +39,15 @@ with lib.my;
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        figma-linux # Figma
         cinnamon.nemo # File explorer
 
         # Apps
         spotify
         unstable.freetube # Youtube desktop
-        unstable.streamlink-twitch-gui-bin # Twitch desktop
         joplin-desktop # Notebook
         vscodium
         minder # Mind maps
         insomnia # REST API Client
-        mongodb-compass # MongoDB desktop client
         gnome.pomodoro
 
         # Security
