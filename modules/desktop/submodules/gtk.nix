@@ -21,6 +21,13 @@ let
     "gtk-modules" = "gail:atk-bridge";
     "gtk-application-prefer-dark-theme" = true;
   };
+  catppuccinTheme = pkgs.catppuccin-gtk.override {
+    accents = [ "blue" ];
+    size = "standard";
+    tweaks = [ "normal" ];
+    variant = "frappe";
+  };
+  catppuccinThemeName = "Catppuccin-Frappe-Standard-Blue-Dark";
   cursorTheme = {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
@@ -49,11 +56,6 @@ in
         inherit cursorTheme;
 
         enable = true;
-        catppuccin = {
-          enable = true;
-          flavor = "frappe";
-          accent = "blue";
-        };
         font = {
           name = "JetBrains Mono NL";
           size = 12;
@@ -62,6 +64,10 @@ in
         iconTheme = {
           name = "Colloid-${colloidSchemaVariant}-dark";
           package = colloidIconTheme;
+        };
+        theme = {
+          name = catppuccinThemeName;
+          package = catppuccinTheme;
         };
         gtk3 = {
           extraConfig = gtkSettings;
@@ -78,6 +84,12 @@ in
           ];
         };
         gtk4.extraConfig = gtkSettings;
+      };
+
+      xdg.configFile = {
+        "gtk-4.0/assets".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/assets";
+        "gtk-4.0/gtk.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk.css";
+        "gtk-4.0/gtk-dark.css".source = "${catppuccinTheme}/share/themes/${catppuccinThemeName}/gtk-4.0/gtk-dark.css";
       };
     };
   };
