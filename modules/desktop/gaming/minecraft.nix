@@ -19,6 +19,11 @@ in
       prismlauncher
     ];
 
+    modules.hardware.virtualization.stopServices = mkIf (cfg.enableMapRender) [{
+      name = "win10";
+      services = [ "render-bluemap-maps.service" ];
+    }];
+
     # Minecraft development kit
     modules.dev.lang.ides = [ "jvm" ];
 

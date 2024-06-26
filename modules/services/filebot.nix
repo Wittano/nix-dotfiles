@@ -19,6 +19,11 @@ in
   config = {
     modules.dev.lang.ides = [ "go" ];
 
+    modules.hardware.virtualization.stopServices = [{
+      name = "win10";
+      services = [ "fielbot.service" ];
+    }];
+
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";

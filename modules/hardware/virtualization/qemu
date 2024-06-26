@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+GUEST_NAME="$1"
+HOOK_NAME="$2"
+STATE_NAME="$3"
+
+BASEDIR=$(dirname "$0")
+
+HOOKPATH="$BASEDIR/qemu.d/$GUEST_NAME/$HOOK_NAME/$STATE_NAME"
+
+if [ ! -d "$HOOKPATH" ]; then
+    echo "Hooks directory $HOOKPATH wasn't found"
+    exit 0
+fi
+
+find "$HOOKPATH" -maxdepth 1 -type f -executable | while IFS= read -r file; do
+    if [ -n "$file" ]; then
+        bash -c "$file" "$@"
+    fi
+done

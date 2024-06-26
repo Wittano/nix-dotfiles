@@ -18,6 +18,11 @@ in
   config = mkIf cfg.enable {
     users.users.wittano.extraGroups = [ "boinc" ];
 
+    modules.hardware.virtualization.stopServices = [{
+      name = "win10";
+      services = [ "boinc.service" ];
+    }];
+
     services.boinc = {
       inherit extraEnvPackages;
 
