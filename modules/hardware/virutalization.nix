@@ -113,21 +113,18 @@ in
       sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
     };
 
-    system.activationScripts.installWindowsVMFiles =
-      let
-        vibiosLink = link.mkLink {
-          src = virutalizationDir."vibios.rom".source;
-          dest = "/var/lib/libvirt/vbios/vibios.rom";
-          active = cfg.enableWindowsVM;
-        };
-
-        qemuHookScript = link.mkLink {
-          src = virutalizationDir.qemu.source;
-          dest = "/var/lib/libvirt/hooks/qemu";
-          active = cfg.enableWindowsVM;
-        };
-      in
-      vibiosLink + qemuHookScript;
+    system.activationScripts.installWindowsVMFiles = link.mkLinks [
+      {
+        src = virutalizationDir."vibios.rom".source;
+        dest = "/var/lib/libvirt/vbios/vibios.rom";
+        active = cfg.enableWindowsVM;
+      }
+      {
+        src = virutalizationDir.qemu.source;
+        dest = "/var/lib/libvirt/hooks/qemu";
+        active = cfg.enableWindowsVM;
+      }
+    ];
 
     boot = {
       kernelParams = [ "intel_iommu=on" "iommu=pt" ];

@@ -73,19 +73,25 @@ let
     '';
 in
 {
-  mkLink = { src, dest, active ? false }:
-    let linkFile = strings.optionalString active "ln -s ${src} ${dest}"; in ''
-      DIR=$(dirname ${dest})
+  mkLinks = links:
+    let
+      mkScript = src: dest: ''
+        DIR=$(dirname ${dest})
 
-      mkdir -p "$DIR"
+        mkdir -p "$DIR"
 
-      if [ -e "${dest}" ]; then
-        unlink ${dest} || rm ${dest}
-      fi
+        if [ -e "${dest}" ]; then
+          unlink ${dest} || rm ${dest}
+        fi
 
-      ${linkFile}
-      
-    '';
+        ln -s ${src} ${dest}
+      '';
+    in
+    trivial.pipe links [
+      (builtins.filter (x: x.active or false))
+      (builtins.map (x: mkScript x.src x.dest))
+      (builtins.concatStringsSep "\n\n")
+    ];
 
   mkMutableLinks =
     { config
