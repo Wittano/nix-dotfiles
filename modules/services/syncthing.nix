@@ -5,10 +5,12 @@ let
   cfg = config.modules.services.syncthing;
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
 
-  encryptedConfig = trivial.pipe config.age.secrets.syncthing.path [
-    builtins.readFile
-    builtins.fromJSON
-  ];
+  encryptedConfig =
+    if builtins.pathExists config.age.secrets.syncthing.path then
+      trivial.pipe config.age.secrets.syncthing.path [
+        builtins.readFile
+        builtins.fromJSON
+      ] else debug.traceValFn (x: "Missing decrypted syncthing configuration. Load default empty config") { };
 in
 {
   options = {
