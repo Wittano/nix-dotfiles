@@ -5,11 +5,15 @@ let
   cfg = config.modules.desktop.gaming.games;
   gamingCfg = config.modules.desktop.gaming;
 
+  fixedMindustry = unstable.mindustry.override {
+    gradle = unstable.gradle_7;
+  };
+
   games = with unstable; [
     # Games
     osu-lazer # osu!lazer
     airshipper # Veloren
-    mindustry # Mindustry
+    fixedMindustry # Mindustry
     xivlauncher # FF XIV
   ];
 in

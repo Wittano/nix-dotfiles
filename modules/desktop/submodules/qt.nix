@@ -13,14 +13,14 @@ with lib.my;
       home = {
         packages = with pkgs; [ kdePackages.qt6ct libsForQt5.qt5ct ];
         sessionVariables = {
-          QT_QPA_PLATFORMTHEME = "qt5ct";
+          QT_QPA_PLATFORMTHEME = "kvantum";
           QT_QPA_PLATFORM = "xcb";
         };
       };
 
       qt = {
         enable = true;
-        platformTheme.name = "qtct";
+        platformTheme.name = "kvantum";
         style = {
           name = "kvantum";
           catppuccin = {

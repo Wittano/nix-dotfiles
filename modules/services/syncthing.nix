@@ -5,8 +5,10 @@ let
   cfg = config.modules.services.syncthing;
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
 
-  encryptedConfig =
-    builtins.fromJSON (builtins.readFile config.age.secrets.syncthing.path);
+  encryptedConfig = trivial.pipe config.age.secrets.syncthing.path [
+    builtins.readFile
+    builtins.fromJSON
+  ];
 in
 {
   options = {
@@ -18,7 +20,7 @@ in
   config =
     mkIf (cfg.enable) {
       services.syncthing = {
-        enable = builtins.pathExists config.age.secrets.syncthing.path;
+        enable = true;
         systemService = true;
         dataDir = "${homeDir}/.cache/syncthing";
         configDir = "${homeDir}/.config/syncthing";
