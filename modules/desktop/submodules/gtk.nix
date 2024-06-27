@@ -27,7 +27,7 @@ let
     tweaks = [ "normal" ];
     variant = "frappe";
   };
-  catppuccinThemeName = "Catppuccin-Frappe-Standard-Blue-Dark";
+  catppuccinThemeName = "catppuccin-frappe-blue-standard+normal";
   cursorTheme = {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
