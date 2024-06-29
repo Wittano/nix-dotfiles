@@ -1,4 +1,4 @@
-{ pkgs, lib, config, home-manager, ... }:
+{ lib, config, ... }:
 with lib;
 with lib.my;
 let
@@ -12,6 +12,14 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    modules.hardware.virtualization.stopServices = [{
+      name = "win10";
+      services = [
+        "docker.service"
+        "docker.socket"
+      ];
+    }];
+
     virtualisation.docker = {
       enable = true;
       autoPrune = {
