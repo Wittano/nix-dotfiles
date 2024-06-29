@@ -45,6 +45,7 @@ in
             devices = [
               "Phone"
               "TrueNAS"
+              "Win10VM"
             ];
           };
           backup = {
@@ -110,6 +111,7 @@ in
           Phone.id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
           TrueNAS.id = "CIMVMQO-7RLKQAL-BXRS6Z3-XXFPRLB-PYHZUR3-KKH5HGX-PFWLY6S-C3KLEQ6";
           Karol.id = "F7EH7MZ-N5VYRKT-IA2XWJG-I7SPGDP-RDVSZCU-WTCI534-NQPF7I2-KLE6IQL";
+          Win10VM.id = "4KACCLO-MJCLRTA-2TOCUIE-4CNJL3W-EWUDXIR-2MIPHNC-HMZPQFP-IYTOHAW";
         };
         extraOptions.gui.theme = "dark";
       };
