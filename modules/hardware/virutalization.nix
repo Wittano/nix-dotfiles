@@ -43,7 +43,7 @@ let
             (builtins.map (x: x.services or [ ]))
             lists.flatten
             lists.unique
-            (builtins.map (x: "systemctl stop ${x} || echo 'Failed disable ${x} service' &"))
+            (builtins.map (x: "systemctl stop ${x} || true"))
             (mkQemuHook name)
           ];
         })
