@@ -131,7 +131,6 @@ in
       kernelModules = [ "kvm-intel" "vifo-pci" ];
     };
 
-    services.openssh.openFirewall = mkForce false;
-    modules.services.boinc.enable = true;
+    modules.services.ssh.enable = true;
   };
 }
