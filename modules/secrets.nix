@@ -1,27 +1,9 @@
-{ config, lib, inputs, pkgs, secretDir, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 with lib.my;
-let
-  keyPath = "/etc/ssh/syncthing.key";
-
-  secretFiles = attrsets.filterAttrs
-    (n: _: strings.hasSuffix ".age" n)
-    (builtins.readDir secretDir);
-in
 {
-  imports = [
-    inputs.agenix.nixosModules.default
-  ];
-
-  environment.systemPackages = [ inputs.agenix.packages.x86_64-linux.default ];
-
   services.openssh = mkIf (!config.modules.services.ssh.enable) {
     enable = mkForce true;
-    hostKeys = [{
-      bits = 4096;
-      path = keyPath;
-      type = "rsa";
-    }];
     openFirewall = false;
     allowSFTP = false;
     settings = {
@@ -65,16 +47,4 @@ in
           moveNewerKey "$p.pub" || echo "failed move file $p.pub"
       done
     '';
-
-  
-  age.secrets = attrsets.mapAttrs'
-    (n: _:
-      {
-        name = strings.removeSuffix ".age" n;
-        value = {
-          file = secretDir + "/${n}";
-          owner = "wittano";
-        };
-      })
-    secretFiles;
 }

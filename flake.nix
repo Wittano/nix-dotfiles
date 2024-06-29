@@ -29,7 +29,6 @@
       url = "github:ezKEa/aagl-gtk-on-nix/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix.url = "github:ryantm/agenix";
     nixvim.url = "github:nix-community/nixvim";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin.url = "github:catppuccin/nix";
