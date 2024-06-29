@@ -5,7 +5,7 @@ with lib.my;
   autostart = [
     "vivaldi"
     "telegram-desktop"
-    "vesktop"
+    "discord"
     "spotify"
     "freetube"
     "gnome-pomodoro"
@@ -58,7 +58,7 @@ with lib.my;
         telegram-desktop
         signal-desktop
         element-desktop # matrix communicator
-        unstable.vesktop # Discord with linux patches
+        unstable.discord
       ];
     };
   };
