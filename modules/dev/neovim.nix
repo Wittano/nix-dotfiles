@@ -117,30 +117,67 @@ in
             };
             jsonls.enable = true;
             taplo.enable = true;
+            pylsp = {
+              enable = true;
+              settings.plugins = {
+                rope.enabled = true;
+                pylsp_mypy.enabled = true;
+                pylint.enabled = true;
+                isort.enabled = true;
+                flake8.enabled = true;
+                black.enabled = true;
+              };
+            };
+            terraformls.enable = true;
+            nil-ls = {
+              enable = true; # Nix
+              settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
+            };
+            dockerls.enable = true;
+            ansiblels.enable = true;
+            lua-ls.enable = true;
+            cmake.enable = true;
           };
         };
 
-        cmp-path.enable = true;
-        cmp-spell.enable = true;
-        cmp-buffer.enable = true;
+        cmp-nvim-lua.enable = true;
         cmp-nvim-lsp.enable = true;
-
+        cmp-path.enable = true;
+        cmp-snippy.enable = true;
+        cmp-buffer.enable = true;
+        cmp-spell.enable = true;
+        cmp-vim-lsp.enable = true;
         cmp = {
           enable = true;
-          settings.sources = [
-            { name = "nvim_lsp"; }
-            { name = "path"; }
-            { name = "spell"; }
-            { name = "buffer"; }
-          ];
-          cmdline.mapping = {
-            "<C-b>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<C-Space>" = "cmp.mapping.complete()";
-            "<C-e>" = "cmp.mapping.abort()";
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
+          settings = {
+            sources = [
+              { name = "nvim_lsp"; }
+              { name = "path"; }
+              { name = "snippy"; }
+              { name = "spell"; }
+              { name = "buffer"; }
+              { name = "vim_lsp"; }
+              { name = "nvim_lua"; }
+            ];
+            snippet.expand = "luasnip";
+            mapping.__raw = ''
+              cmp.mapping.preset.insert({
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<CR>'] = cmp.mapping.confirm({ select = true }),
+              })
+            '';
           };
         };
+
+        lsp-format = {
+          enable = true;
+          lspServersToEnable = "all";
+        };
+
+        nix.enable = true;
 
         tmux-navigator.enable = true;
 
