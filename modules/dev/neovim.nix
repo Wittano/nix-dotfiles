@@ -133,6 +133,8 @@ in
               enable = true; # Nix
               settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
             };
+            hls.enable = config.modules.desktop.xmonad.enable
+              || ((lists.findFirst (x: x == "haskell") null config.modules.dev.lang.ides) != null);
             dockerls.enable = true;
             ansiblels.enable = true;
             lua-ls.enable = true;
