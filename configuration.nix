@@ -3,7 +3,6 @@
 , lib
 , desktopName
 , hostname
-, config
 , inputs
 , ...
 }:
@@ -142,6 +141,11 @@ with lib; rec {
       enable = true;
       flake = environment.variables.DOTFILES;
     };
+  };
+
+  services.locate = {
+    enable = true;
+    interval = "21:37";
   };
 
   # Internal modulesjournalctl -xeu display-manager.service
