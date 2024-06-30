@@ -136,19 +136,12 @@ with lib; rec {
   };
 
   # Programs
-  programs = {
-    nh = {
-      enable = true;
-      flake = environment.variables.DOTFILES;
-    };
-  };
-
   services.locate = {
     enable = true;
     interval = "21:37";
   };
 
-  # Internal modulesjournalctl -xeu display-manager.service
+  # Internal modules
   modules =
     let
       enableDesktop = attrsets.optionalAttrs (desktopName != "") ({
