@@ -27,12 +27,13 @@ in
     services.filebot = {
       enable = cfg.enable;
       user = "wittano";
+      updateInterval = "1m";
       configPath = mapper.toTOML "filebot.toml" {
         Pictures = {
           src = [ "${homeDir}/Downloads/*.(gif|jpe?g|tiff?|png|webp|bmp)" ];
           dest = "${homeDir}/Pictures";
         };
-        ToDocument = {
+        Docs = {
           src = [ "${homeDir}/Downloads/*.(zip|tar*)" "${homeDir}/Downloads/*.pdf" ];
           dest = "${homeDir}/Documents";
         };
@@ -40,10 +41,6 @@ in
           src = [ "${homeDir}/Downloads/*.iso" ];
           moveToTrash = true;
           after = 1;
-        };
-        Jars = {
-          src = [ "${homeDir}/Downloads/*.jar" ];
-          dest = "~/mc-mods";
         };
       };
     };
