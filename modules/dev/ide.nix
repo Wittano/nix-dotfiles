@@ -20,7 +20,9 @@ let
     haskell.extraConfig = {
       modules.dev.neovim.enable = true;
     };
-    fork = { };
+    fork = {
+      home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+    };
   });
 
   installedIDEs = trivial.pipe cfg.ides [

@@ -45,7 +45,7 @@ with lib.my;
         spotify
         unstable.freetube # Youtube desktop
         joplin-desktop # Notebook
-        vscodium
+        unstable.vscodium # VS code
         minder # Mind maps
         insomnia # REST API Client
         gnome.pomodoro
