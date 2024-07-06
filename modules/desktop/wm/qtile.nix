@@ -16,7 +16,7 @@ desktop.mkDesktopModule {
     "dunst"
     "picom"
     "tmux"
-    "ranger"
+    "superfile"
     "kitty"
     "rofi"
   ];
