@@ -1,6 +1,14 @@
 { pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
+let
+  fixedSignal = pkgs.signal-desktop.overrideAttrs (oldAttrs: {
+    preFixup = oldAttrs.preFixup + ''
+      substituteInPlace $out/share/applications/${oldAttrs.pname}.desktop \
+      --replace "$out/bin/${oldAttrs.pname}" "$out/bin/${oldAttrs.pname} --use-tray-icon"
+    '';
+  });
+in
 {
   autostart = [
     "vivaldi"
@@ -56,7 +64,7 @@ with lib.my;
 
         # Communicator
         telegram-desktop
-        signal-desktop
+        fixedSignal
         element-desktop # matrix communicator
         unstable.discord
       ];
