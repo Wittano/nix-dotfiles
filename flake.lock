@@ -429,21 +429,6 @@
         "type": "github"
       }
     },
-    "oldNixpkgs": {
-      "locked": {
-        "lastModified": 1719957072,
-        "narHash": "sha256-gvFhEf5nszouwLAkT9nWsDzocUTqLWHuL++dvNjMp9I=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7144d6241f02d171d25fba3edeaf15e0f2592105",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-23.11",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "aagl": "aagl",
@@ -453,8 +438,7 @@
         "honkai-railway-grub-theme": "honkai-railway-grub-theme",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixvim": "nixvim",
-        "oldNixpkgs": "oldNixpkgs"
+        "nixvim": "nixvim"
       }
     },
     "systems": {

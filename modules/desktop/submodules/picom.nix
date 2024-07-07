@@ -1,13 +1,9 @@
-{ oldPkgs, ... }:
+{ pkgs, ... }:
 {
   config = {
     services.picom = {
       enable = true;
-      package = builtins.trace ''
-        Package picom-allusive is removed in NixOS 24.05 version.
-        Fix it, after added new animation format
-      ''
-        oldPkgs.picom-allusive;
+      package = pkgs.picom-allusive;
       backend = "glx";
       fade = true;
       fadeDelta = 4;
