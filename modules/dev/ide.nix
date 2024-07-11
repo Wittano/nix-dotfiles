@@ -18,7 +18,7 @@ let
     web.package = webstorm;
     andorid.package = unstable.andorid-studio;
     haskell.extraConfig = {
-      modules.dev.neovim.enable = true;
+      home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
     };
     fork = {
       home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
