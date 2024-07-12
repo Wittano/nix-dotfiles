@@ -13,5 +13,7 @@ in
 
   config = mkIf cfg.enable {
     services.commafeed.enable = true;
+
+    networking.firewall.allowedTCPPorts = [ 8082 ];
   };
 }
