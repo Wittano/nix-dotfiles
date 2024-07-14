@@ -1,4 +1,4 @@
-{ config, isDevMode, lib, dotfiles, hostname, unstable, ... }:
+{ config, isDevMode, lib, dotfiles, hostname, pkgs, unstable, ... }:
 with lib;
 with lib.my;
 desktop.mkDesktopModule {
@@ -29,6 +29,8 @@ desktop.mkDesktopModule {
         enableConfiguredRecompile = isDevMode;
       };
     };
+
+    environment.systemPackages = with pkgs; [ cabal-install ];
 
     modules.dev.lang.ides = [ "haskell" ];
 

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+cd "$HOME/.config/xmonad" || exit 1
+
+cabal --enable-nix build
+
+BIN_PATH=$(cabal list-bin xmonad-x86_64-linux)
+
+DEST_PATH="$HOME/.cache/xmonad"
+mkdir -p "$DEST_PATH"
+
+cp -r "$BIN_PATH" "$DEST_PATH/xmonad-x86_64-linux"
