@@ -1,4 +1,4 @@
-name: update-flake-lock
+name: Update flake.lock
 on:
   workflow_dispatch:
   schedule:
@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v11
+      - uses: DeterminateSystems/nix-installer-action@v12
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v21
+        uses: DeterminateSystems/update-flake-lock@v2
         with:
           pr-assignees: Wittano
           pr-title: "chore(flake): update flake.lock" 
