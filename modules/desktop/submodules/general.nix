@@ -52,7 +52,7 @@ in
         # Apps
         spotify
         unstable.freetube # Youtube desktop
-        joplin-desktop # Notebook
+        unstable.joplin-desktop # Notebook
         unstable.vscodium # VS code
         minder # Mind maps
         insomnia # REST API Client
