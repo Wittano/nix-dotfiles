@@ -7,7 +7,7 @@ let
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
   addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/own/${n}"; }) attr;
 
-  avaiableIde = addProjectDirField (with unstable.jetbrains; {
+  avaiableIde = addProjectDirField (with unstable.jetbrains; rec {
     python.package = pycharm-professional;
     cpp.package = clion;
     go.package = goland;
@@ -20,9 +20,20 @@ let
     haskell.extraConfig = {
       home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
     };
-    fork = {
-      home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
-    };
+    fork.extraConfig =
+      let
+        cppExtraConfig = cpp.extraConfig or { };
+        rustExtraConfig = rust.extraConfig or { };
+        jvmExtraConfig = jvm.extraConfig or { };
+      in
+      mkMerge [
+        cppExtraConfig
+        rustExtraConfig
+        jvmExtraConfig
+        {
+          home-manager.users.wittano.home.packages = with unstable; [ vscodium jvm.package rust.package cpp.package ];
+        }
+      ];
   });
 
   installedIDEs = trivial.pipe cfg.ides [
