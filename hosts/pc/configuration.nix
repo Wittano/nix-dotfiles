@@ -34,7 +34,7 @@
       games.enable = true;
       mihoyo.enable = true;
     };
-    dev.lang.ides = [ "go" "sql" "haskell" "fork" ];
+    dev.lang.ides = [ "go" "sql" "haskell" "fork" "jvm" "cpp" "rust" ];
     hardware = {
       sound.enable = true;
       virtualization = {

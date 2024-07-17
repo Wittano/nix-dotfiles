@@ -20,7 +20,7 @@ let
     haskell.extraConfig = {
       home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
     };
-    fork = {
+    fork.extraConfig = {
       home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
     };
   });
