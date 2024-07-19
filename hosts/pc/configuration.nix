@@ -35,11 +35,12 @@
       mihoyo.enable = true;
     };
     dev.lang.ides = [ "go" "sql" "haskell" "fork" "jvm" "cpp" "rust" ];
-    hardware = {
+    hardware = rec {
+      grub.enableMultiBoot = true;
       sound.enable = true;
       virtualization = {
-        enable = true;
-        enableWindowsVM = true;
+        enable = !grub.enableMultiBoot;
+        enableWindowsVM = !grub.enableMultiBoot;
       };
       grub = {
         enable = true;
