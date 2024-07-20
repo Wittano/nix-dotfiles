@@ -1,6 +1,38 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+with lib;
+let
+  restartPicomScript = pkgs.wrietShellApplication {
+    name = "restart-picom";
+    runtimeInputs = with pkgs; [ toybox systemd ];
+    text = ''
+      if [ systemctl --user is-active picom.service ]; then
+        exit 0
+      fi
+
+      while true; do
+        if [ -z "$(pgrep--ignore-case steam)" ]; then
+          systemd --user start picom.service
+        fi
+        sleep 1
+      done
+    '';
+  };
+in
 {
   config = {
+    systemd.user.services."steam-picom-guard" = {
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "picom.service" ];
+
+      serviceConfig = {
+        ExecCondition = "${pkgs.toybox}/bin/pgrep --ignore-case steam";
+        ExecStart = meta.getExe restartPicomScript;
+        RestartSec = 30;
+        Restart = "always";
+      };
+    };
+
     services.picom = {
       enable = true;
       package = pkgs.picom-allusive;
