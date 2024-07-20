@@ -1,35 +1,34 @@
 { pkgs, lib, ... }:
+let guardName = "gaming-picom-guard"; in
 with lib;
-let
-  restartPicomScript = pkgs.wrietShellApplication {
-    name = "restart-picom";
-    runtimeInputs = with pkgs; [ toybox systemd ];
-    text = ''
-      if [ systemctl --user is-active picom.service ]; then
-        exit 0
-      fi
-
-      while true; do
-        if [ -z "$(pgrep--ignore-case steam)" ]; then
-          systemd --user start picom.service
-        fi
-        sleep 1
-      done
-    '';
-  };
-in
 {
   config = {
-    systemd.user.services."steam-picom-guard" = {
-      wantedBy = [ "graphical-session.target" ];
-      partOf = [ "graphical-session.target" ];
-      after = [ "picom.service" ];
+    systemd.user = {
+      services.${guardName} = {
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        after = [ "picom.service" ];
+        path = with pkgs; [ systemd toybox ];
+        script = ''
+          while true; do
+            if ! pgrep --ignore-case steam > /dev/null; then
+              systemctl --user start picom.service
+              break
+            fi
+            sleep 1
 
-      serviceConfig = {
-        ExecCondition = "${pkgs.toybox}/bin/pgrep --ignore-case steam";
-        ExecStart = meta.getExe restartPicomScript;
-        RestartSec = 30;
-        Restart = "always";
+            if systemctl --user is-active picom.service > /dev/null; then
+              systemctl --user stop picom.service
+            fi
+          done
+        '';
+        postStop = "systemctl --user start picom.service";
+
+        serviceConfig.ExecCondition = "${pkgs.toybox}/bin/pgrep --ignore-case steam";
+      };
+      timers.${guardName} = {
+        wantedBy = [ "${guardName}.service" ];
+        timerConfig.OnActiveSec = "1m";
       };
     };
 
