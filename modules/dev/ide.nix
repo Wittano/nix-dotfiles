@@ -7,23 +7,43 @@ let
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
   addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/own/${n}"; }) attr;
 
-  avaiableIde = addProjectDirField (with unstable.jetbrains; {
-    python.package = pycharm-professional;
-    cpp.package = clion;
-    go.package = goland;
-    dotnet.package = rider;
-    rust.package = rust-rover;
-    jvm.package = idea-ultimate;
-    sql.package = datagrip;
-    web.package = webstorm;
-    andorid.package = unstable.andorid-studio;
-    haskell.extraConfig = {
-      home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
-    };
-    fork.extraConfig = {
-      home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
-    };
-  });
+  avaiableIde =
+    let
+      mkExtraConfig = ide: mkMerge [
+        {
+          home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+        }
+        (ide.extraConfig or { })
+      ];
+    in
+    addProjectDirField (with unstable.jetbrains; rec {
+      python.package = pycharm-professional;
+      cpp.package = clion;
+      go.package = goland;
+      dotnet.package = rider;
+      rust.package = rust-rover;
+      jvm.package = idea-ultimate;
+      sql.package = datagrip;
+      web.package = webstorm;
+      andorid.package = unstable.andorid-studio;
+      haskell.extraConfig = {
+        home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
+      };
+      fork.extraConfig =
+        let
+          jvmConfig = mkExtraConfig jvm;
+          cppConfig = mkExtraConfig cpp;
+          rustConfig = mkExtraConfig rust;
+        in
+        mkMerge [
+          jvmConfig
+          cppConfig
+          rustConfig
+          {
+            home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+          }
+        ];
+    });
 
   installedIDEs = trivial.pipe cfg.ides [
     (builtins.map (x: avaiableIde."${x}".package or null))
