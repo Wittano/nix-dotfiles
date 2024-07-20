@@ -10,6 +10,7 @@ desktop.mkDesktopModule {
     "gtk"
     "qt"
     "dunst"
+    "picom"
     "tmux"
     "bluetooth"
     "kitty"
