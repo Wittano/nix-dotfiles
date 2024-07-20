@@ -23,12 +23,9 @@ with lib;
           done
         '';
         postStop = "systemctl --user start picom.service";
+        startAt = "*-*-* *:*:00";
 
         serviceConfig.ExecCondition = "${pkgs.toybox}/bin/pgrep --ignore-case steam";
-      };
-      timers.${guardName} = {
-        wantedBy = [ "${guardName}.service" ];
-        timerConfig.OnActiveSec = "1m";
       };
     };
 
