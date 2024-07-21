@@ -49,83 +49,21 @@
 
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
-      oldPkgs = mkPkgs inputs.oldNixpkgs;
 
       privateRepo = lib.my.pkgs.importPkgs ./pkgs;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo oldPkgs; };
+        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
       });
-
-      templatesDirs = builtins.attrNames
-        (lib.filterAttrs (n: v: v == "directory")
-          (builtins.readDir ./templates));
-
-      templates = lib.lists.forEach templatesDirs (name: {
-        inherit name;
-
-        value = {
-          path = ./templates/${name};
-          description = "Template for ${name}";
-        };
-      });
-
-      devShells =
-        let
-          shellPkgs = import inputs.nixpkgs-unstable {
-            inherit system;
-
-            config = {
-              allowUnfree = true;
-              allowBroken = true;
-            };
-          };
-          names = lib.my.string.mkNixNamesFromDir ./shells;
-          mkShellAttrs = name: {
-            inherit name;
-            value = pkgs.callPackage (./shells + "/${name}.nix") { unstable = shellPkgs; };
-          };
-          shells = builtins.listToAttrs (builtins.map mkShellAttrs names);
-        in
-        shells;
     in
     {
       lib = lib.my;
 
-      nixosConfigurations =
-        let
-          inherit (lib.attrsets) nameValuePair;
-          inherit (lib.my.hosts) mkHost;
-          inherit (lib.lists) flatten;
-
-          hosts = builtins.attrNames (builtins.readDir ./hosts);
-          desktopHosts = lib.my.string.mkNixNamesFromDir ./modules/desktop/wm;
-
-          finalHosts = (flatten (builtins.map (x: builtins.map (d: "${x}-${d}") desktopHosts) hosts)) ++ hosts;
-
-          devHosts = builtins.listToAttrs (builtins.map
-            (n:
-              let devName = "${n}-dev";
-              in
-              nameValuePair (devName) (mkHost {
-                name = devName;
-                isDevMode = true;
-              }))
-            finalHosts);
-
-          normalHosts = builtins.listToAttrs (builtins.map
-            (name: {
-              inherit name;
-              value = mkHost { inherit name; };
-            })
-            finalHosts);
-        in
-        normalHosts // devHosts;
-
+      nixosConfigurations = import ./nixos-configs.nix { inherit lib; };
       overlays.default = overlays.overlay;
-      devShells.${pkgs.system} = devShells;
+      devShells.${system} = import ./shells.nix { inherit inputs lib pkgs; };
       packages.${system} = privateRepo;
-      templates = builtins.listToAttrs templates;
+      templates = import ./templates.nix { inherit lib; };
     };
 }

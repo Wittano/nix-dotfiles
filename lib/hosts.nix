@@ -1,4 +1,4 @@
-{ lib, system, pkgs, unstable, privateRepo, inputs, dotfilesPath, secretDir, oldPkgs, ... }:
+{ lib, system, pkgs, unstable, privateRepo, inputs, dotfilesPath, secretDir, ... }:
 with lib;
 with lib.my;
 let
@@ -39,7 +39,7 @@ in
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo system hostname desktopName secretDir oldPkgs;
+        inherit pkgs unstable lib dotfiles isDevMode inputs privateRepo system hostname desktopName secretDir;
         templateDir = ./../templates;
       };
 

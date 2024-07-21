@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, secretDir, oldPkgs, ... }:
+{ pkgs, lib, unstable, secretDir, ... }:
 with lib;
 with lib.my;
 let
@@ -30,7 +30,7 @@ let
     '';
 
   mkDesktopApp = config: dotfiles: name: desktopName: import (./../modules/desktop/submodules + "/${name}.nix") {
-    inherit pkgs dotfiles config unstable lib desktopName secretDir oldPkgs;
+    inherit pkgs dotfiles config unstable lib desktopName secretDir;
   };
 in
 {
