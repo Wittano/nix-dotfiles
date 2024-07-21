@@ -80,7 +80,8 @@ in
             "file:///home/wittano/Downloads"
             "file:///home/wittano/projects/own Projects"
             "file:///home/wittano/.config Config files"
-            "file://${config.environment.variables.NIX_DOTFILES} Nix dotfiles"
+            "file://${config.environment.variables.NIX_DOTFILES} Nix configuration"
+            "file://${config.environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
           ];
         };
         gtk4.extraConfig = gtkSettings;
