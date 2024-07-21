@@ -1,5 +1,5 @@
-{ inputs, lib, pkgs, ... }: with lib;
-with lib.my; let
+{ inputs, lib, pkgs, system, ... }:
+let
   shellPkgs = import inputs.nixpkgs-unstable {
     inherit system;
 

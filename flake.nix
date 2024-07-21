@@ -62,7 +62,7 @@
 
       nixosConfigurations = import ./nixos-configs.nix { inherit lib; };
       overlays.default = overlays.overlay;
-      devShells.${system} = import ./shells.nix { inherit inputs lib pkgs; };
+      devShells.${system} = import ./shells.nix { inherit inputs lib system pkgs; };
       packages.${system} = privateRepo;
       templates = import ./templates.nix { inherit lib; };
     };
