@@ -1,19 +1,6 @@
 { config, isDevMode, lib, dotfiles, hostname, pkgs, unstable, ... }:
 with lib;
 with lib.my;
-let
-  haskellPackages = unstable.haskellPackages.extend (self: super: {
-    xmonad = self.callHackage "xmonad" "0.18.0" { };
-    xmonad-contrib = assert unstable.haskellPackages.xmonad-contrib.version == "0.18.0";
-      (self.callHackage "xmonad-contrib" "0.18.0" { }).overrideAttrs {
-        patches = [ ./../patches/xmonad-contrib.patch ];
-      };
-    xmonad-extras = assert unstable.haskellPackages.xmonad-extras.version == "0.17.1";
-      (self.callHackage "xmonad-extras" "0.17.1" { }).overrideAttrs {
-        patches = [ ./../patches/xmonad-extras.patch ];
-      };
-  });
-in
 desktop.mkDesktopModule {
   inherit config isDevMode hostname dotfiles;
 
@@ -53,11 +40,9 @@ desktop.mkDesktopModule {
       };
 
       xsession.windowManager.xmonad = {
-        inherit haskellPackages;
-
         enable = true;
         enableContribAndExtras = true;
-        # extraPackages = self: [ self.containers_0_7 ];
+        haskellPackages = unstable.haskellPackages;
         config = dotfiles.xmonad.src."Main.hs".source;
         libFiles = trivial.pipe dotfiles.xmonad.src [
           (attrsets.filterAttrs (n: v: builtins.typeOf v == "set" && strings.hasPrefix "Main" n == false))
@@ -65,8 +50,6 @@ desktop.mkDesktopModule {
         ];
       };
     };
-
-    environment.systemPackages = with pkgs; [ cabal-install ];
 
     modules.dev.lang.ides = [ "haskell" ];
   };

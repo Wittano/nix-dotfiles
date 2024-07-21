@@ -31,20 +31,20 @@
     nixvim.url = "github:nix-community/nixvim/nixos-24.05";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin.url = "github:catppuccin/nix";
+    xmonad-contrib.url = "github:xmonad/xmonad-contrib";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
-      wittanoOverlay = _: _: privateRepo;
-
+      overlays = import ./overlays.nix { inherit lib inputs; };
       mkPkgs = p:
         import p {
           inherit system;
 
           config.allowUnfree = true;
-          overlays = [ wittanoOverlay ];
+          overlays = overlays.systemOverlays;
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
@@ -123,7 +123,7 @@
         in
         normalHosts // devHosts;
 
-      overlays.default = wittanoOverlay;
+      overlays.default = overlays.overlay;
       devShells.${pkgs.system} = devShells;
       packages.${system} = privateRepo;
       templates = builtins.listToAttrs templates;
