@@ -1,0 +1,15 @@
+diff --git a/XMonad/Prompt/MPD.hs b/XMonad/Prompt/MPD.hs
+index b2d5432..356c906 100644
+--- a/XMonad/Prompt/MPD.hs
++++ b/XMonad/Prompt/MPD.hs
+@@ -185,7 +185,9 @@ loadPlaylist = loadPlaylistWith isPrefixOf
+ -- @since 0.13.2
+ addAndPlayAny :: RunMPD -> XPConfig -> [Metadata] -> X ()
+ addAndPlayAny runMPD xp metas = do
+-#if MIN_VERSION_xmonad_contrib(0,16,9)
++#if MIN_VERSION_xmonad_contrib(0,18,0)
++  hist <- historyCompletionP xp (showXPrompt (MPDPrompt "Search: ") ==)
++#elif MIN_VERSION_xmonad_contrib(0,16,9)
+   hist <- historyCompletionP (showXPrompt (MPDPrompt "Search: ") ==)
+ #else
+   let hist = historyCompletionP (showXPrompt (MPDPrompt "Search: ") ==)

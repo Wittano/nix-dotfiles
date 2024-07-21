@@ -15,9 +15,10 @@ executable xmonad-x86_64-linux
 
     build-depends:
         base >=4.17.2.1,
-        xmonad >=0.17.0 && <0.18.0,
-        xmonad-contrib >=0.17.0 && <0.18.0,
-        xmonad-extras >=0.17.0 && <0.18.0
+        xmonad >=0.18.0,
+        xmonad-contrib >=0.18.0,
+        xmonad-extras >=0.17.0,
+        containers >=0.7 && <0.8
 
     hs-source-dirs:   src
 

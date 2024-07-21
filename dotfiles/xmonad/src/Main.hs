@@ -1,3 +1,4 @@
+
 module Main (main) where
 
 import Const qualified as C
@@ -7,10 +8,13 @@ import Startup qualified as S
 import Workspace qualified as W
 import XMonad
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.WindowSwallowing (swallowEventHook)
+import XMonad.Prelude
+import XMonad.StackSet qualified as W
 import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Hacks (trayerPaddingXmobarEventHook, windowedFullscreenFixEventHook)
+import XMonad.Util.Hacks (fixSteamFlicker, trayerPaddingXmobarEventHook, windowedFullscreenFixEventHook)
 import Xmobar qualified as S
 
 main :: IO ()
@@ -27,6 +31,6 @@ myConfig =
       manageHook = W.rules,
       startupHook = S.hook,
       workspaces = W.desktopWorkspaces,
-      handleEventHook = windowedFullscreenFixEventHook <> swallowEventHook (className =? "kitty") (return True) <> trayerPaddingXmobarEventHook
+      handleEventHook = fixSteamFlicker <> windowedFullscreenFixEventHook <> swallowEventHook (className =? "kitty") (return True) <> trayerPaddingXmobarEventHook
     }
     `additionalKeysP` K.keybinds
