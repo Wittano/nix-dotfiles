@@ -47,7 +47,7 @@ in
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        cinnamon.nemo # File explorer
+        krusader # Total Commander explorer
 
         # Apps
         spotify
@@ -64,9 +64,10 @@ in
 
         # Communicator
         telegram-desktop
-        fixedSignal
+        fixedSignal # Signal desktop
         element-desktop # matrix communicator
         unstable.discord
+        irssi # IRC chat
       ];
     };
   };
