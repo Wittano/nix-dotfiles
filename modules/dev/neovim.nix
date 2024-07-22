@@ -36,7 +36,7 @@ in
       enableMan = true;
       viAlias = true;
 
-      extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence nvim-comment ];
+      extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence nvim-comment nvim-treesitter-parsers.haskell ];
 
       extraConfigLua = /*lua*/
         ''
@@ -133,8 +133,10 @@ in
               enable = true; # Nix
               settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
             };
-            hls.enable = config.modules.desktop.xmonad.enable
-              || ((lists.findFirst (x: x == "haskell") null config.modules.dev.lang.ides) != null);
+            hls = {
+              enable = true;
+              package = pkgs.haskell-language-server;
+            };
             dockerls.enable = true;
             ansiblels.enable = true;
             lua-ls.enable = true;
@@ -142,10 +144,12 @@ in
           };
         };
 
+        treesitter.enable = true;
+
+        luasnip.enable = true;
         cmp-nvim-lua.enable = true;
         cmp-nvim-lsp.enable = true;
         cmp-path.enable = true;
-        cmp-snippy.enable = true;
         cmp-buffer.enable = true;
         cmp-spell.enable = true;
         cmp-vim-lsp.enable = true;
@@ -155,13 +159,16 @@ in
             sources = [
               { name = "nvim_lsp"; }
               { name = "path"; }
-              { name = "snippy"; }
               { name = "spell"; }
               { name = "buffer"; }
               { name = "vim_lsp"; }
               { name = "nvim_lua"; }
             ];
-            snippet.expand = "luasnip";
+            snippet.expand = ''
+              function(args)
+                require('luasnip').lsp_expand(args.body)
+              end
+            '';
             mapping.__raw = ''
               cmp.mapping.preset.insert({
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
