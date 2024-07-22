@@ -105,7 +105,7 @@ in
             let
               host = (strings.removeSuffix "-dev" hostname) +
                 (strings.optionalString (desktopName != "") "-${desktopName}");
-                
+
               templatesAliases = attrsets.mapAttrs'
                 (n: v: {
                   name = "t${n}";
@@ -153,8 +153,8 @@ in
               py = "nix run nixpkgs#python3";
 
               # Projects
-              pnix = "cd $NIX_DOTFILES";
-              plab = "cd $HOME/projects/config/home-lab";
+              pnix = "cd $HOME/nix-dotfiles";
+              plab = "cd $HOME/projects/server/home-lab";
 
               # Nix
               nfu = "nix flake update";

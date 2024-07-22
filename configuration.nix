@@ -4,6 +4,7 @@
 , desktopName
 , hostname
 , inputs
+, config
 , ...
 }:
 with lib; rec {
@@ -73,12 +74,12 @@ with lib; rec {
     systemPackages = with pkgs; [ vim htop bash ];
     variables =
       let
-        projectConfigDir = "/home/wittano/projects/config";
+        homeDir = config.home-manager.users.wittano.home.homeDirectory;
       in
       {
         EDITOR = "vim";
-        DOTFILES = "${projectConfigDir}/nix-dotfiles/dotfiles";
-        NIX_DOTFILES = "${projectConfigDir}/nix-dotfiles";
+        DOTFILES = "${homeDir}/nix-dotfiles/dotfiles";
+        NIX_DOTFILES = "${homeDir}/nix-dotfiles";
       };
 
     shells = with pkgs; [ bash ];

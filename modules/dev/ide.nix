@@ -5,13 +5,13 @@ let
   cfg = config.modules.dev.lang;
 
   homeDir = config.home-manager.users.wittano.home.homeDirectory;
-  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/own/${n}"; }) attr;
+  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/${n}"; }) attr;
 
   avaiableIde =
     let
       mkExtraConfig = ide: mkMerge [
         {
-          home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+          home-manager.users.wittano.home.packages = [ ide.package ];
         }
         (ide.extraConfig or { })
       ];
