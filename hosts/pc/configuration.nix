@@ -30,7 +30,6 @@
       steam = {
         enable = true;
         enableScripts = true;
-        enableXSession = true;
       };
       games.enable = true;
       mihoyo.enable = true;

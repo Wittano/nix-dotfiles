@@ -48,21 +48,9 @@ in
   options.modules.desktop.gaming.steam = {
     enable = mkEnableOption "Enable steam and scripts for games installed via Steam";
     enableScripts = mkEnableOption "Install custom script to fix games e.g. Age of Empier, Steam systray icon or Darksider 1";
-    enableXSession = mkEnableOption "Create xsession application for steam in BigPicture mode";
   };
 
-  config = mkIf (cfg.enable && gamingCfg.enable) rec {
-    services.xserver = {
-      enable = true;
-      windowManager.session = [{
-        name = "steam";
-        start = ''
-          systemd-cat -t xmonad -- ${meta.getExe programs.steam.package} -bigpicture &
-          waitPID=$!
-        '';
-      }];
-    };
-
+  config = mkIf (cfg.enable && gamingCfg.enable) {
     programs.steam = {
       enable = true;
       package = unstable.steam;
