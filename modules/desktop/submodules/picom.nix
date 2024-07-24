@@ -15,7 +15,6 @@ with lib;
             systemctl --user start picom.service
             break
           fi
-          sleep 1
 
           if systemctl --user is-active picom.service > /dev/null; then
             systemctl --user stop picom.service
