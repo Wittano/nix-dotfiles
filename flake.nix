@@ -22,6 +22,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "nixpkgs/master";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     filebot.url = "github:Wittano/filebot";
     aagl = {
@@ -49,12 +50,13 @@
 
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
+      master = mkPkgs inputs.nixpkgs-master;
 
       privateRepo = lib.my.pkgs.importPkgs ./pkgs;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
+        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo master; };
       });
     in
     {

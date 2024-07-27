@@ -399,6 +399,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1722102829,
+        "narHash": "sha256-U8IKw1m4/QKrQf6TFse5TQQUPQ3ERmi2nq8Dg8C+wnM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3d3c0f4d34f218e1a30f280dfa635cfe4e8111b1",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "master",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1721924956,
@@ -494,8 +509,8 @@
     "nixpkgs_7": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-nw/BnNzATDPfzpJVTnY8mcSKKsz6BJMEFRkJ332QSN0=",
-        "path": "/nix/store/114462g9fhfa5ck1ssribfdh7wlk9m1s-source",
+        "narHash": "sha256-DID446r8KsmJhbCzx4el8d9SnPiE8qa6+eEQOJ40vR0=",
+        "path": "/nix/store/19l2iplgd8kw8b1il0sl8wv9cv725w4f-source",
         "type": "path"
       },
       "original": {
@@ -520,8 +535,8 @@
     "nixpkgs_9": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-nw/BnNzATDPfzpJVTnY8mcSKKsz6BJMEFRkJ332QSN0=",
-        "path": "/nix/store/114462g9fhfa5ck1ssribfdh7wlk9m1s-source",
+        "narHash": "sha256-DID446r8KsmJhbCzx4el8d9SnPiE8qa6+eEQOJ40vR0=",
+        "path": "/nix/store/19l2iplgd8kw8b1il0sl8wv9cv725w4f-source",
         "type": "path"
       },
       "original": {
@@ -563,6 +578,7 @@
         "home-manager": "home-manager",
         "honkai-railway-grub-theme": "honkai-railway-grub-theme",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "xmonad-contrib": "xmonad-contrib"

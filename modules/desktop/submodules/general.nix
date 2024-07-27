@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ pkgs, lib, unstable, master, ... }:
 with lib;
 with lib.my;
 let
@@ -8,6 +8,11 @@ let
       --replace "$out/bin/${oldAttrs.pname}" "$out/bin/${oldAttrs.pname} --use-tray-icon"
     '';
   });
+  # workaround to skip wating for put freetube's update into unstable branch
+  fixedFreetube =
+    if unstable.freetube.version == "0.21.1"
+    then master.freetube
+    else unstable.freetube;
 in
 {
   autostart = [
@@ -51,7 +56,7 @@ in
 
         # Apps
         spotify
-        unstable.freetube # Youtube desktop
+        fixedFreetube # Youtube desktop
         unstable.joplin-desktop # Notebook
         unstable.vscodium # VS code
         minder # Mind maps
