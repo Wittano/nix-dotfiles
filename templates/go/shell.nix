@@ -1,4 +1,10 @@
-{ mkShell, go, gotools, act, nixd, nixpkgs-fmt }: mkShell {
+{ mkShell
+, go
+, gotools
+, act
+, nixd
+, nixpkgs-fmt
+}: mkShell {
   hardeningDisable = [ "all" ];
 
   GOROOT = "${go}/share/go";
