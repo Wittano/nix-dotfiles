@@ -1,4 +1,6 @@
-{ system, inputs, ... }:
+{ lib, system, inputs, ... }:
+with lib;
+with lib.my;
 {
 
   imports = [ ./hardware.nix ];
@@ -38,9 +40,9 @@
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;
-      virtualization = {
-        enable = !grub.enableMultiBoot;
-        enableWindowsVM = !grub.enableMultiBoot;
+      virtualization = mkIf (!grub.enableMultiBoot) {
+        enable = true;
+        enableWindowsVM = true;
       };
       grub = {
         enable = true;
