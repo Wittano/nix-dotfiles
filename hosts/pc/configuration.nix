@@ -34,7 +34,7 @@
       games.enable = true;
       mihoyo.enable = true;
     };
-    dev.lang.ides = [ "go" "sql" "fork" ];
+    dev.lang.ides = [ "go" "fork" ];
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;

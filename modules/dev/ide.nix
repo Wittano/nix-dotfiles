@@ -19,6 +19,7 @@ let
     addProjectDirField (with unstable.jetbrains; rec {
       python.package = pycharm-professional;
       cpp.package = clion;
+      zig = cpp;
       go.package = goland;
       dotnet.package = rider;
       rust.package = rust-rover;
@@ -29,20 +30,9 @@ let
       haskell.extraConfig = {
         home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
       };
-      fork.extraConfig =
-        let
-          jvmConfig = mkExtraConfig jvm;
-          cppConfig = mkExtraConfig cpp;
-          rustConfig = mkExtraConfig rust;
-        in
-        mkMerge [
-          jvmConfig
-          cppConfig
-          rustConfig
-          {
-            home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
-          }
-        ];
+      fork.extraConfig = {
+        home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+      };
     });
 
   installedIDEs = trivial.pipe cfg.ides [
