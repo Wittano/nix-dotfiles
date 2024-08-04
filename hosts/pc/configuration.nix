@@ -35,6 +35,7 @@ with lib.my;
       };
       games.enable = true;
       mihoyo.enable = true;
+      minecraft.enable = true;
     };
     dev.lang.ides = [ "go" "fork" "python" ];
     hardware = rec {
