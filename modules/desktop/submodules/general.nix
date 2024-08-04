@@ -57,7 +57,7 @@ in
         minder # Mind maps
         insomnia # REST API Client
         gnome.pomodoro
-        figma-linux # Figma
+        unstable.figma-linux # Figma
 
         # Security
         bitwarden
