@@ -11,13 +11,16 @@ let
     let
       mkExtraConfig = ide: mkMerge [
         {
-          home-manager.users.wittano.home.packages = [ ide.package ];
+          home-manager.users.wittano.home.packages = mkIf (ide ? package) [ ide.package ];
         }
         (ide.extraConfig or { })
       ];
     in
     addProjectDirField (with unstable.jetbrains; rec {
-      python.package = pycharm-professional;
+      python = let forkConfig = mkExtraConfig fork; in {
+        package = pycharm-professional;
+        extraConfig = forkConfig;
+      };
       cpp.package = clion;
       zig = cpp;
       go.package = goland;

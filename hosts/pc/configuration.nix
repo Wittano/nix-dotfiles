@@ -36,7 +36,7 @@ with lib.my;
       games.enable = true;
       mihoyo.enable = true;
     };
-    dev.lang.ides = [ "go" "fork" ];
+    dev.lang.ides = [ "go" "fork" "python" ];
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;
