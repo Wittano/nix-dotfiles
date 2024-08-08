@@ -104,7 +104,10 @@ with lib; rec {
     };
   };
 
-  hardware.trackpoint.emulateWheel = true;
+  hardware = {
+    trackpoint.emulateWheel = true;
+    keyboard.zsa.enable = true;
+  };
 
   # Network
   networking = {
