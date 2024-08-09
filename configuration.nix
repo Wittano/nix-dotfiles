@@ -132,6 +132,9 @@ with lib; rec {
     users.wittano = {
       imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
       home.stateVersion = system.stateVersion;
+
+      home.packages = with pkgs; [ sshs ];
+
       services.home-manager.autoUpgrade = {
         enable = true;
         frequency = "daily";
