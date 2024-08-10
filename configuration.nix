@@ -71,7 +71,7 @@ with lib; rec {
 
   # Global packages
   environment = {
-    systemPackages = with pkgs; [ vim htop bash ];
+    systemPackages = with pkgs; [ vim htop bash keymapp wally-cli ];
     variables =
       let
         homeDir = config.home-manager.users.wittano.home.homeDirectory;
