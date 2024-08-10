@@ -11,11 +11,9 @@ from libqtile.core.manager import Qtile
 from libqtile.log_utils import logger
 
 import groups
-from groups import games_staff
+from layout import layouts
 from binds import keyboard, mouse
-from const import DEFAULT_THEME
 from layout.floating import FLOATING_LAYOUT
-from layout.layouts import LayoutsCollection
 from scripts import monitors
 from theme.screen import PRIMARY_SCREEN
 
@@ -23,11 +21,10 @@ QTILE: Qtile = libqtile.qtile
 
 groups: List[Group] = groups.get_default_groups()
 keys: List[Key] = keyboard.get_keybindings(groups)
-layout_collection = LayoutsCollection(DEFAULT_THEME)
 
 layouts = [
-    layout_collection.max_layout,
-    layout_collection.monad_tall_layout
+    layouts.MAX,
+    layouts.MONAD_TALL
 ]
 
 widget_defaults = dict(
@@ -79,14 +76,14 @@ async def move_non_games_from_game_workspace(_: Window):
         try:
             games_regex.append(re.compile(rex))
         except re.error as err:
-            libqtile.log_utils.logger.error(f"Failed compile regex '{rex}', cause: {err}")
+            logger.error(f"Failed compile regex '{rex}', cause: {err}")
 
     windows: List[Window] = list(
         filter(lambda window: True not in [bool(x.search(window.get_wm_class()[0])) for x in games_regex],
                QTILE.groups_map["5"].windows))
 
     if len(windows) == len(QTILE.groups_map["5"].windows):
-        libqtile.log_utils.logger.warning("No found any non-game window on gaming workspace")
+        logger.warning("No found any non-game window on gaming workspace")
         return
 
     for win in windows:

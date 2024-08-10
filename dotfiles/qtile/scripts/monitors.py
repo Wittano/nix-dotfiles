@@ -2,14 +2,14 @@ import os
 import subprocess
 from typing import List, Optional
 
-import libqtile.log_utils
-from libqtile.command import lazy
+from libqtile.log_utils import logger
+from libqtile.lazy import lazy
 from libqtile.core.manager import Qtile
 
 WACOM_SCRIPT_PATH: str = f"{os.environ['HOME']}/projects/config/system/scripts/wacom-multi-monitor.sh"
 
 
-def _map_to_output(selected_monitor: str) -> bytes:
+def _map_to_output(selected_monitor: Optional[str]) -> bytes:
     return subprocess.Popen([
         "bash",
         WACOM_SCRIPT_PATH,
@@ -19,7 +19,7 @@ def _map_to_output(selected_monitor: str) -> bytes:
 
 def map_wacom_to_one_monitor(screen_index: int):
     monitors = _get_monitors_name()
-    error = _map_to_output(monitors[screen_index])
+    error = _map_to_output(monitors[screen_index] if monitors is not None else None)
 
     if error:
         new_monitors = [f"HEAD-{i}" for i in range(len(monitors))]
@@ -27,7 +27,7 @@ def map_wacom_to_one_monitor(screen_index: int):
         error = _map_to_output(new_monitors[screen_index])
 
         if error:
-            libqtile.log_utils.logger.warning(
+            logger.warning(
                 f"Script {WACOM_SCRIPT_PATH} was ended failure by cause: {bytes.decode(error)}")
 
 
@@ -39,7 +39,7 @@ def _get_monitors_name() -> Optional[List[str]]:
     monitors_list = bytes.decode(monitors_output).split("\n")[1:]
 
     if error:
-        libqtile.log_utils.logger.warning(f"Getting monitor failed: {error}")
+        logger.warning(f"Getting monitor failed: {error}")
         return None
 
     return [monitor for monitor in map(get_monitor, monitors_list) if monitor]
@@ -60,7 +60,7 @@ def get_monitors_count() -> int:
 
         return len(list(filter(lambda x: x.strip() != '', monitors)))
     except Exception as error:
-        libqtile.log_utils.logger.warning(error)
+        logger.warning(error)
         return 1
 
 
