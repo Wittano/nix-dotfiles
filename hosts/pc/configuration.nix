@@ -37,7 +37,7 @@ with lib.my;
       mihoyo.enable = true;
       minecraft.enable = true;
     };
-    dev.lang.ides = [ "go" "fork" "python" "dotnet" ];
+    dev.lang.ides = [ "go" "fork" "python" "dotnet" "jvm" ];
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;
