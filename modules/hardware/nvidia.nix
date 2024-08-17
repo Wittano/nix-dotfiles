@@ -16,10 +16,7 @@ in
 
     services.xserver.videoDrivers = mkIf config.services.xserver.enable [ "nvidia" ];
 
-    boot = {
-      blacklistedKernelModules = [ "nouveau" ];
-      kernelPackages = mkForce pkgs.linuxPackages;
-    };
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
     environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
