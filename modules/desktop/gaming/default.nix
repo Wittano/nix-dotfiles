@@ -22,7 +22,6 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.wittano.gtk.gtk3.bookmarks = mkIf cfg.disk.enable [ "file://${steamGamingDir} Gaming" ];
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
     fileSystems = mkIf cfg.disk.enable {
       "${steamGamingDir}" = {
