@@ -121,7 +121,7 @@ with lib; rec {
   #User settings
   users.users.wittano = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "plugdev" ];
+    extraGroups = [ "wheel" ];
   };
 
   # Home-manager

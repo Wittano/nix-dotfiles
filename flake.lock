@@ -24,11 +24,11 @@
     },
     "catppuccin": {
       "locked": {
-        "lastModified": 1724156255,
-        "narHash": "sha256-rpUCeS/QZwQdJmDrvCm0hRi8bFvQNQKAnIMK5ZDBfpM=",
+        "lastModified": 1724415638,
+        "narHash": "sha256-TF8+jAkP/FiliuJmhikdtvdYgEHMz6M5uvwo5eLmzRg=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "8886a68edadb1d93c7101337f995ffce4b410ff2",
+        "rev": "fd0902e67a84d13a1d6b1a754170e72a26766020",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1724362211,
-        "narHash": "sha256-BkFz3Y10+oJDyuhKLp617Qlh8nGlEvNl8xqHTB2RQXo=",
+        "lastModified": 1724430304,
+        "narHash": "sha256-u29tWtLD+OQQqtfWuZ4N9P4FPhrQzDQgSuXePGBAT3U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4a1c8b8257524ef1ca0eb00f4a0f1b293790e8d9",
+        "rev": "d87e96e5cd2dbe3bde2bc422b5b064eac06299f0",
         "type": "github"
       },
       "original": {
@@ -444,11 +444,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1724242322,
-        "narHash": "sha256-HMpK7hNjhEk4z5SFg5UtxEio9OWFocHdaQzCfW1pE7w=",
+        "lastModified": 1724316499,
+        "narHash": "sha256-Qb9MhKBUTCfWg/wqqaxt89Xfi6qTD3XpTzQ9eXi3JmE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "224042e9a3039291f22f4f2ded12af95a616cca0",
+        "rev": "797f7dc49e0bc7fab4b57c021cdf68f595e47841",
         "type": "github"
       },
       "original": {
@@ -490,8 +490,8 @@
     "nixpkgs_7": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-HMpK7hNjhEk4z5SFg5UtxEio9OWFocHdaQzCfW1pE7w=",
-        "path": "/nix/store/rc7vhx0w0hxz170r88i0s04n5b9rwqa9-source",
+        "narHash": "sha256-Qb9MhKBUTCfWg/wqqaxt89Xfi6qTD3XpTzQ9eXi3JmE=",
+        "path": "/nix/store/5z81la6av4j0ckp0w1949lxiwjyyykks-source",
         "type": "path"
       },
       "original": {
@@ -516,8 +516,8 @@
     "nixpkgs_9": {
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-HMpK7hNjhEk4z5SFg5UtxEio9OWFocHdaQzCfW1pE7w=",
-        "path": "/nix/store/rc7vhx0w0hxz170r88i0s04n5b9rwqa9-source",
+        "narHash": "sha256-Qb9MhKBUTCfWg/wqqaxt89Xfi6qTD3XpTzQ9eXi3JmE=",
+        "path": "/nix/store/5z81la6av4j0ckp0w1949lxiwjyyykks-source",
         "type": "path"
       },
       "original": {

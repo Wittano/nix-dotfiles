@@ -34,7 +34,10 @@ with lib.my;
         enableScripts = true;
       };
       games.enable = true;
-      mihoyo.enable = true;
+      mihoyo = {
+        enable = true;
+        games = [ "honkai-railway" ];
+      };
       minecraft.enable = true;
     };
     dev.lang.ides = [ "go" "fork" "python" "dotnet" "jvm" ];
