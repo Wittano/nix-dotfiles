@@ -14,7 +14,6 @@ desktop.mkDesktopModule {
     "gtk"
     "qt"
     "dunst"
-    "picom"
     "tmux"
     "superfile"
     "kitty"
