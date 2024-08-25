@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.modules.desktop.gaming;
@@ -23,10 +23,13 @@ in
   config = mkIf cfg.enable {
     home-manager.users.wittano.gtk.gtk3.bookmarks = mkIf cfg.disk.enable [ "file://${steamGamingDir} Gaming" ];
 
+    boot.supportedFilesystems.ntfs = mkForce cfg.disk.enable;
+
     fileSystems = mkIf cfg.disk.enable {
       "${steamGamingDir}" = {
         device = "/dev/disk/by-label/GAMING";
-        fsType = "ext4";
+        fsType = "ntfs-3g";
+        options = [ "rw" "uid=1000" ];
       };
     };
   };
