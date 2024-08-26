@@ -12,7 +12,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable && gamingCfg.enable) {
+  config = mkIf (cfg.enable && gamingCfg.enable) rec {
     home-manager.users.wittano.home.packages = with unstable; [
       # Lutris
       lutris
@@ -25,6 +25,11 @@ in
 
       # FSH
       steam-run
+    ];
+
+    modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
+      "wine"
+      "exe$"
     ];
   };
 }

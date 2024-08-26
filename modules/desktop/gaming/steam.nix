@@ -50,11 +50,15 @@ in
     enableScripts = mkEnableOption "Install custom script to fix games e.g. Age of Empier, Steam systray icon or Darksider 1";
   };
 
-  config = mkIf (cfg.enable && gamingCfg.enable) {
+  config = mkIf (cfg.enable && gamingCfg.enable) rec {
     programs.steam = {
       enable = true;
       package = unstable.steam;
     };
+
+    modules.desktop.gaming.games.installed = [
+      programs.steam.package
+    ];
 
     modules.shell.fish.completions."mf-fix" = ''
       complete -c mf-fix -s v -l verbose --no-files

@@ -29,5 +29,9 @@ in
 
     # Honkai Railway
     programs.honkers-railway-launcher.enable = findGame "honkai-railway";
+    modules.desktop.gaming.games.installed = [
+      config.programs.anime-game-launcher.package
+      config.programs.honkers-railway-launcher.package
+    ];
   };
 }

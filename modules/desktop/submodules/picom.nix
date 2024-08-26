@@ -1,6 +1,10 @@
 { pkgs, lib, config, ... }:
-let guardName = "gaming-picom-guard"; in
 with lib;
+with lib.my;
+let
+  guardName = "gaming-picom-guard";
+  gameStaff = bash.mkBashArray (builtins.map (x: x.pname or x.name or x) config.modules.desktop.gaming.games.installed);
+in
 {
   config = {
     systemd.user.services.${guardName} = {
@@ -9,22 +13,36 @@ with lib;
       partOf = [ "graphical-session.target" ];
       after = [ "picom.service" ];
       path = with pkgs; [ systemd toybox ];
-      script = ''
-        while true; do
-          if ! pgrep --ignore-case steam > /dev/null; then
-            systemctl --user start picom.service
-            break
-          fi
+      script = /*bash*/''
+        arr=(${gameStaff})
 
-          if systemctl --user is-active picom.service > /dev/null; then
-            systemctl --user stop picom.service
+        while true; do
+          for g in "''${arr[@]}"; do
+            if pgrep --ignore-case "''$g" > /dev/null; then
+              systemctl --user stop picom.service
+              exit
+            fi
+          done
+
+          if ! systemctl --user is-active picom.service > /dev/null; then
+            systemctl --user start picom.service
           fi
         done
       '';
-      postStop = "systemctl --user start picom.service";
       startAt = "*-*-* *:*:00";
 
-      serviceConfig.ExecCondition = "${pkgs.toybox}/bin/pgrep --ignore-case steam";
+      serviceConfig.ExecCondition = meta.getExe (pkgs.writeShellApplication {
+        name = "check-games-staff";
+        runtimeInputs = with pkgs; [ toybox ];
+        text = ''
+          arr=(${gameStaff})
+            for g in "''${arr[@]}"; do
+              if pgrep --ignore-case "''$g"; then
+                exit 0
+              fi
+            done
+        '';
+      });
     };
 
     services.picom = {

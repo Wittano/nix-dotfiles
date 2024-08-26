@@ -13,10 +13,15 @@ in
     };
   };
 
-  config = mkIf (cfg.enable && gamingCfg.enable) {
+  config = mkIf (cfg.enable && gamingCfg.enable) rec {
     # Minecraft launcher
     home-manager.users.wittano.home.packages = with unstable; [
       prismlauncher
+    ];
+
+    modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
+      "minecraft"
+      "prismlauncher"
     ];
 
     modules.hardware.virtualization.stopServices = mkIf (cfg.enableMapRender) [{

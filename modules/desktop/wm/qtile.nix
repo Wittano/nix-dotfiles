@@ -18,6 +18,7 @@ desktop.mkDesktopModule {
     "superfile"
     "kitty"
     "rofi"
+    "picom"
   ];
   extraConfig = {
     fonts.packages = with pkgs; [ nerdfonts jetbrains-mono ];

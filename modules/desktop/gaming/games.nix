@@ -21,11 +21,21 @@ in
   options = {
     modules.desktop.gaming.games = {
       enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
+      installed = mkOption {
+        type = with types; listOf (either str package);
+        default = [ ];
+        description = "List of installed games or games related staff";
+      };
     };
   };
 
   config = mkIf (cfg.enable && gamingCfg.enable) {
     home-manager.users.wittano.home.packages = games;
+
+    modules.desktop.gaming.games.installed = games ++ [
+      "exe$"
+      "XIVlauncher.Core"
+    ];
 
     # Install wacom drivers if osu-lazor is installed
     modules.hardware.wacom.enable = lists.any (x: strings.hasPrefix "osu" x.name) games;
