@@ -29,7 +29,7 @@ in
 
     modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
       "wine"
-      "exe$"
+      "\.exe$"
     ];
   };
 }

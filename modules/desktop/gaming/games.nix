@@ -33,7 +33,7 @@ in
     home-manager.users.wittano.home.packages = games;
 
     modules.desktop.gaming.games.installed = games ++ [
-      "exe$"
+      "\.exe$"
       "XIVlauncher.Core"
     ];
 
