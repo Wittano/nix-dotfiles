@@ -40,7 +40,7 @@ with lib.my;
       };
       minecraft.enable = true;
     };
-    dev.lang.ides = [ "go" "fork" "python" "dotnet" "jvm" ];
+    dev.lang.ides = [ "go" "fork" "python" ];
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;
