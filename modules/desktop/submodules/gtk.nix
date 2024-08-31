@@ -78,7 +78,6 @@ in
             "file:///home/wittano/Pictures"
             "file:///home/wittano/Videos"
             "file:///home/wittano/Downloads"
-            "file:///home/wittano/projects/own Projects"
             "file:///home/wittano/.config Config files"
             "file://${config.environment.variables.NIX_DOTFILES} Nix configuration"
             "file://${config.environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"

@@ -4,8 +4,8 @@ with lib.my;
 let
   cfg = config.modules.dev.lang;
 
-  homeDir = config.home-manager.users.wittano.home.homeDirectory;
-  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${homeDir}/projects/${n}"; }) attr;
+  projectDir = "${config.home-manager.users.wittano.home.homeDirectory}/projects";
+  addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${projectDir}/${n}"; }) attr;
 
   avaiableIde =
     let
@@ -121,6 +121,9 @@ in
       modules.shell.fish.completions = cmdCompletions;
 
       home-manager.users.wittano = {
+        gtk.gtk3.bookmarks = [
+          "file://${projectDir} Projects"
+        ];
         home = {
           packages = installedIDEs;
           activation.createProjectsDir =
