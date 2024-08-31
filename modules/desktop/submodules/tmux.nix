@@ -36,7 +36,7 @@ with lib.my; {
         ];
         shell = "${pkgs.fish}/bin/fish";
         resizeAmount = 3;
-        prefix = "C-Space";
+        prefix = "C-n";
         baseIndex = 1;
         keyMode = "vi";
         extraConfig = ''
