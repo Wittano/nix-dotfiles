@@ -47,7 +47,8 @@ in
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        krusader # Total Commander explorer
+        # krusader # Total Commander explorer
+        cinnamon.nemo
 
         # Apps
         spotify
@@ -55,7 +56,7 @@ in
         unstable.joplin-desktop # Notebook
         unstable.vscodium # VS code
         minder # Mind maps
-        insomnia # REST API Client
+        # insomnia # REST API Client
         gnome.pomodoro
         unstable.figma-linux # Figma
 
@@ -66,9 +67,9 @@ in
         # Communicator
         telegram-desktop
         fixedSignal # Signal desktop
-        element-desktop # matrix communicator
+        # element-desktop # matrix communicator
         unstable.discord
-        irssi # IRC chat
+        # irssi # IRC chat
       ];
     };
   };

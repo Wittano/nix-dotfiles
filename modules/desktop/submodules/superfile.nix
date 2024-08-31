@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ master, ... }:
 {
   config = {
-    environment.systemPackages = with pkgs; [ superfile ];
+    environment.systemPackages = with master; [ superfile ];
 
     home-manager.users.wittano.programs.fish.shellAliases.ra = "superfile .";
   };
