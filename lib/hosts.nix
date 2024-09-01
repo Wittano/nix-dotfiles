@@ -51,6 +51,7 @@ in
           ./../configuration.nix
           ./../hosts/${hostnameNoDev}/configuration.nix
 
+          inputs.catppuccin.nixosModules.catppuccin
           inputs.home-manager.nixosModules.home-manager
         ] ++ (importModulesPath ./../modules);
     };

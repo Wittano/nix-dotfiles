@@ -22,12 +22,12 @@ let
     "gtk-application-prefer-dark-theme" = true;
   };
   catppuccinTheme = pkgs.catppuccin-gtk.override {
-    accents = [ "blue" ];
+    accents = [ config.catppuccin.accent ];
     size = "standard";
     tweaks = [ "normal" ];
-    variant = "frappe";
+    variant = config.catppuccin.flavor;
   };
-  catppuccinThemeName = "catppuccin-frappe-blue-standard+normal";
+  catppuccinThemeName = "catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}-standard+normal";
   cursorTheme = {
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
@@ -50,7 +50,7 @@ in
 
       i18n.inputMethod.fcitx5.catppuccin = {
         enable = true;
-        flavor = "frappe";
+        flavor = config.catppuccin.flavor;
       };
       gtk = {
         inherit cursorTheme;
@@ -62,7 +62,7 @@ in
           package = pkgs.jetbrains-mono;
         };
         iconTheme = {
-          name = "Colloid-${colloidSchemaVariant}-dark";
+          name = "Colloid-${colloidSchemaVariant}-light";
           package = colloidIconTheme;
         };
         theme = {

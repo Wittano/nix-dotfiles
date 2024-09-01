@@ -7,8 +7,33 @@ from theme.widgets import GroupBoxWidget, ClockWidget, LogoWidget, TitlebarWidge
     VolumeWidget, CurveSeparator, SepLineSeparator, RoundedSeparator, SysTrayWidget, SearchWidget, NetWidget
 
 theme = DEFAULT_THEME
-SPACER = Spacer(length=10, background=theme["brightness_background"])
+SPACER = Spacer(length=10, background=theme["background"])
 BLACK_SPACER = Spacer(length=10, background=theme["background"])
+
+LIGHT_THEME_SCREEN = Screen(
+    top=bar.Bar([
+        LogoWidget(theme),
+        GroupBoxWidget(theme),
+        RoundedSeparator(theme, isLeft=False),
+        TitlebarWidget(theme),
+        RoundedSeparator(theme),
+        SysTrayWidget(theme),
+        SPACER,
+        SPACER,
+        VolumeWidget(theme),
+        SPACER,
+        SPACER,
+        NetWidget(theme),
+        SPACER,
+        SPACER,
+        MemoryWidget(theme),
+        ClockWidget(theme),
+    ],
+        size=32,
+        background=theme["background"],
+        border_color=theme["background"],
+        margin=[15, 60, 6, 60])
+)
 
 PRIMARY_SCREEN = Screen(
     top=bar.Bar([

@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, master, ... }:
+{ config, pkgs, lib, unstable, master, ... }:
 with lib;
 with lib.my;
 let
@@ -13,7 +13,7 @@ in
   autostart = [
     "vivaldi"
     "telegram-desktop"
-    "discord"
+    "vesktop"
     "spotify"
     "freetube"
     "gnome-pomodoro"
@@ -30,7 +30,10 @@ in
 
       programs.mpv = {
         enable = true;
-        catppuccin.enable = true;
+        catppuccin = {
+          enable = true;
+          flavor = config.catppuccin.flavor;
+        };
       };
 
       home.packages = with pkgs; [
@@ -68,7 +71,7 @@ in
         telegram-desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        unstable.discord
+        unstable.vesktop
         # irssi # IRC chat
       ];
     };

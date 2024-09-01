@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 {
@@ -25,8 +25,8 @@ with lib.my;
           name = "kvantum";
           catppuccin = {
             enable = true;
-            accent = "sky";
-            flavor = "frappe";
+            flavor = config.catppuccin.flavor;
+            accent = config.catppuccin.accent;
           };
         };
       };

@@ -6,7 +6,7 @@
       configFile = "${config.home-manager.users.wittano.xdg.configHome}/dunst/dunstrc.d/${catppuccin.prefix}-catppuccin.conf";
       catppuccin = {
         enable = true;
-        flavor = "macchiato";
+        flavor = config.catppuccin.flavor;
         prefix = "01";
       };
     };

@@ -1,4 +1,4 @@
-{ pkgs, lib, desktopName, ... }:
+{ config, pkgs, lib, desktopName, ... }:
 with lib;
 with lib.my;
 let
@@ -48,7 +48,7 @@ in
         enable = true;
         catppuccin = {
           enable = true;
-          flavor = "macchiato";
+          flavor = config.catppuccin.flavor;
         };
         terminal = meta.getExe pkgs.kitty;
         extraConfig = {

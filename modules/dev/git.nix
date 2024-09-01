@@ -36,7 +36,8 @@ in
           enable = true;
           catppuccin = {
             enable = true;
-            flavor = "macchiato";
+            flavor = config.catppuccin.flavor;
+            accent = config.catppuccin.accent;
           };
         };
 

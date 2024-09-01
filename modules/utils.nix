@@ -29,7 +29,10 @@ in
 
       programs.btop = {
         enable = cfg.enable;
-        catppuccin.enable = true;
+        catppuccin = {
+          enable = true;
+          flavor = config.catppuccin.flavor;
+        };
       };
     };
   };

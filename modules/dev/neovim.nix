@@ -74,7 +74,7 @@ in
             comments = [ "italic" ];
             functions = [ "italic" ];
           };
-          flavour = "macchiato";
+          flavour = config.catppuccin.flavor;
           integrations = {
             native_lsp.enabled = true;
             telescope.enabled = true;

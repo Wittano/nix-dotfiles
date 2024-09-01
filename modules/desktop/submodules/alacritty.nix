@@ -7,7 +7,10 @@ with lib.my;
 
     home-manager.users.wittano.programs.alacritty = {
       enable = true;
-      catppuccin.enable = true;
+      catppuccin = {
+        enable = true;
+        flavor = config.catppuccin.flavor;
+      };
       settings = {
         general = {
           shell = "${pkgs.fish}/bin/fish";

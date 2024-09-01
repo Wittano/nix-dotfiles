@@ -124,6 +124,12 @@ with lib; rec {
     extraGroups = [ "wheel" ];
   };
 
+  catppuccin = {
+    enable = mkForce false;
+    accent = "mauve";
+    flavor = "latte";
+  };
+
   # Home-manager
   home-manager = {
     extraSpecialArgs = { inherit pkgs unstable lib; };

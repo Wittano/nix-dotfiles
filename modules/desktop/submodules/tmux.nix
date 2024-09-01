@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my; {
   config = {
@@ -27,7 +27,10 @@ with lib.my; {
         enable = true;
         mouse = true;
         newSession = false;
-        catppuccin.enable = true;
+        catppuccin = {
+          enable = true;
+          flavor = config.catppuccin.flavor;
+        };
         plugins = with pkgs.tmuxPlugins; [
           tmux-fzf
           sensible
