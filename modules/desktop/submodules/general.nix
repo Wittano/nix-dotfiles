@@ -14,6 +14,7 @@ in
     "vivaldi"
     "telegram-desktop"
     "vesktop"
+    "joplin-desktop"
     "spotify"
     "freetube"
     "gnome-pomodoro"
