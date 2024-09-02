@@ -72,7 +72,7 @@ in
         telegram-desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        unstable.vesktop
+        master.vesktop
         # irssi # IRC chat
       ];
     };
