@@ -1,4 +1,4 @@
-{ config, pkgs, lib, desktopName, ... }:
+{ pkgs, lib, desktopName, ... }:
 with lib;
 with lib.my;
 let
@@ -46,10 +46,6 @@ in
 
       programs.rofi = {
         enable = true;
-        catppuccin = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-        };
         terminal = meta.getExe pkgs.kitty;
         extraConfig = {
           disable-history = false;

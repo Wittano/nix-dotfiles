@@ -27,13 +27,7 @@ in
     home-manager.users.wittano = {
       home.packages = mkIf (cfg.enable) [ patcherDir ];
 
-      programs.btop = {
-        enable = cfg.enable;
-        catppuccin = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-        };
-      };
+      programs.btop.enable = cfg.enable;
     };
   };
 }

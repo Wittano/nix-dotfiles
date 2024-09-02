@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, master, ... }:
+{ pkgs, lib, unstable, master, ... }:
 with lib;
 with lib.my;
 let
@@ -29,14 +29,7 @@ in
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";
 
-      programs.mpv = {
-        enable = true;
-        catppuccin = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-        };
-      };
-
+      programs.mpv.enable = true;
       home.packages = with pkgs; [
         # Utils
         flameshot

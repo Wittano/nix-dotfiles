@@ -1,10 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 with lib;
 with lib.my; {
   config = {
     home-manager.users.wittano.programs = {
       fzf = {
         enable = true;
+        catppuccin.enable = false;
         enableFishIntegration = true;
         colors = {
           fg = "-1";
@@ -27,10 +28,6 @@ with lib.my; {
         enable = true;
         mouse = true;
         newSession = false;
-        catppuccin = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-        };
         plugins = with pkgs.tmuxPlugins; [
           tmux-fzf
           sensible

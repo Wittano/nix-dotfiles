@@ -141,6 +141,12 @@ with lib; rec {
 
       home.packages = with pkgs; [ sshs ];
 
+      catppuccin = {
+        enable = true;
+        accent = catppuccin.accent;
+        flavor = catppuccin.flavor;
+      };
+
       services.home-manager.autoUpgrade = {
         enable = true;
         frequency = "daily";

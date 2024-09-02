@@ -32,14 +32,7 @@ in
           };
         };
 
-        lazygit = {
-          enable = true;
-          catppuccin = {
-            enable = true;
-            flavor = config.catppuccin.flavor;
-            accent = config.catppuccin.accent;
-          };
-        };
+        lazygit.enable = true;
 
         gpg.enable = true;
 

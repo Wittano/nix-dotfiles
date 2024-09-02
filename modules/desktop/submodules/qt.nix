@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 with lib;
 with lib.my;
 {
@@ -21,14 +21,7 @@ with lib.my;
       qt = {
         enable = true;
         platformTheme.name = "kvantum";
-        style = {
-          name = "kvantum";
-          catppuccin = {
-            enable = true;
-            flavor = config.catppuccin.flavor;
-            accent = config.catppuccin.accent;
-          };
-        };
+        style.name = "kvantum";
       };
     };
 
