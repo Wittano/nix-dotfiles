@@ -38,7 +38,7 @@ in
         gnome.zenity
 
         # Web browser
-        unstable.vivaldi
+        vivaldi
 
         # Utils 
         thunderbird # Mail
