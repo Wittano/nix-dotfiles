@@ -6,9 +6,9 @@ let
   gameStaff = bash.mkBashArray (builtins.map (x: x.pname or x.name or x) config.modules.desktop.gaming.games.installed);
 in
 {
-  config = {
+  config = rec {
     systemd.user.services.${guardName} = {
-      enable = config.modules.desktop.gaming.steam.enable;
+      enable = config.services.picom.package != pkgs.picom;
       wantedBy = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
       after = [ "picom.service" ];
@@ -47,7 +47,6 @@ in
 
     services.picom = {
       enable = true;
-      package = pkgs.picom-allusive;
       backend = "glx";
       fade = true;
       fadeDelta = 4;
