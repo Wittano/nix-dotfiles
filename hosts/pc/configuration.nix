@@ -23,6 +23,8 @@ with lib.my;
     }
   ];
 
+  boot.supportedFilesystems.nfs = true;
+
   programs.droidcam.enable = true;
 
   modules = {
