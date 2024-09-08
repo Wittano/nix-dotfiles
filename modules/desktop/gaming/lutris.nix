@@ -18,7 +18,6 @@ in
       lutris
       xdelta
       xterm
-      gnome.zenity
 
       # Wine
       wineWowPackages.full
@@ -26,6 +25,13 @@ in
       # FSH
       steam-run
     ];
+
+    networking.mihoyo-telemetry.block = !gamingCfg.mihoyo.enable;
+
+    networking.extraHosts = mkIf (gamingCfg.mihoyo.enable) ''
+      0.0.0.0 globaldp-prod-os01.zenlesszonezero.com
+      0.0.0.0 apm-log-upload.mihoyo.com
+    '';
 
     modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
       "wine"

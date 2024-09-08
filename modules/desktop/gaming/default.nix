@@ -42,8 +42,7 @@ in
     fileSystems = mkIf cfg.disk.enable {
       "${steamGamingDir}" = {
         device = gamingDisk;
-        fsType = "ntfs-3g";
-        options = [ "rw" "uid=1000" ];
+        fsType = "ext4";
       };
     };
   };

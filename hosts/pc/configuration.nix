@@ -35,6 +35,7 @@ with lib.my;
         enable = true;
         enableScripts = true;
       };
+      lutris.enable = true;
       games.enable = true;
       mihoyo = {
         enable = true;

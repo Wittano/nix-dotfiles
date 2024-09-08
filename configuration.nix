@@ -121,6 +121,7 @@ with lib; rec {
   #User settings
   users.users.wittano = {
     isNormalUser = true;
+    uid = mkDefault 1000;
     extraGroups = [ "wheel" ];
   };
 

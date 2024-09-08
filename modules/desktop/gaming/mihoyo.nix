@@ -27,6 +27,7 @@ in
     # Genshin Impact
     programs.anime-game-launcher.enable = findGame "genshin";
 
+    networking.mihoyo-telemetry.block = mkForce true;
     # Honkai Railway
     programs.honkers-railway-launcher.enable = findGame "honkai-railway";
     modules.desktop.gaming.games.installed = [
