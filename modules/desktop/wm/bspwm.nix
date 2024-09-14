@@ -9,13 +9,13 @@ desktop.mkDesktopModule {
     "nitrogen"
     "picom"
     "gtk"
-    "alacritty"
+    "kitty"
     "tmux"
     "bluetooth"
     "dunst"
     "rofi"
-    "ranger"
     "polybar"
+    "feh"
   ];
   installAutostartFile = false;
   autostart = [ "wmname compiz" ];
@@ -34,8 +34,8 @@ desktop.mkDesktopModule {
 
           alwaysResetDesktops = isDevMode;
           monitors = {
-            "DVI-D-0" = [ "dev" "www" "sys" ];
-            "HDMI-0" = [ "chat" "www" "doc" ];
+            "DVI-D-0" = [ "I" "II" "III" ];
+            "HDMI-0" = [ "IV" "V" ];
           };
           settings = {
             "border_width" = 2;
@@ -52,8 +52,8 @@ desktop.mkDesktopModule {
               DEV_WORKSPACE = "^1";
               WEB_BROWSER_WORKSPACE = "^2";
               TERMINAL_WORKSPACE = "^3";
-              MUSIC_WORKSPACE = "^6";
-              DISCORD_WORKSPACE = "^4";
+              MUSIC_WORKSPACE = "^4";
+              DISCORD_WORKSPACE = "^5";
             in
             {
               # Dev tools
@@ -112,7 +112,7 @@ desktop.mkDesktopModule {
           enable = true;
           keybindings = {
             # Terminal
-            "super + Return" = "alacritty";
+            "super + Return" = "kitty";
 
             # Rofi
             "super + e" = "rofi -show drun";
@@ -121,39 +121,28 @@ desktop.mkDesktopModule {
 
             # Audio
             "super + m" = "amixer sset Master toggle";
-            "super + p" = "amixer sset Master 1%+";
-            "super + o" = "amixer sset Master 1%-";
+            "super + p" = "amixer sset Master 5%+";
+            "super + o" = "amixer sset Master 5%-";
 
             # Utilites
             "super + shift + p" = "flameshot gui";
+            "super + r" = "rollWallpaper";
 
             # bspwm hotkeys
             "super + alt + r" = "bspc wm -r";
             "super + {_,shift + }q" = "bspc node -{c,k}";
             "super + Tab" = "bspc desktop -l next";
             "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
-            "super + g" = "bspc node -s biggest";
+            "super + space" = "bspc node -s biggest";
 
             # state/flags
             "super + {t,shift + t,s,f}" = "bspc node -t {tiled ,pseudo_tiled ,floating ,fullscreen }";
 
-            # set the node flags
-            "super + ctrl + {m,x,y,z}" = "bspc node -g {marked,locked,sticky,private}";
-
             # focus/swap
             "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
-            "super + {p,b,comma,period}" = "bspc node -f @{parent,brother,first,second}";
-            "super + {_,shift + }c" = "bspc node -f {next,prev}.local";
             "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
             "super + {grave,Tab}" = "bspc {node,desktop} -f last";
-            "super + {o,i}" = "bspc wm -h off; bspc node {older,newer} -f; bspc wm -h on";
-            "super + {_,shift + }{1-6,8,9,0}" = "bspc {desktop -f,node -d} '^{1-6,4,5,6}'";
-
-            # preselect
-            "super + ctrl + {h,j,k,l}" = "bspc node -p {west,south,north,east}";
-            "super + ctrl + {1-9}" = "bspc node -o 0.{1-9}";
-            "super + ctrl + space" = "bspc node -p cancel";
-            "super + ctrl + shift + space" = "bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel";
+            "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
 
             # move/resize
             "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
