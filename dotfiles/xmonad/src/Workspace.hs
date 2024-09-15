@@ -62,6 +62,7 @@ freeTubeRegex = "[Ff](ree)[Tt](ube)"
 chatStaff :: [String]
 chatStaff =
   [ "[dD]iscord",
+    "[Vv]desktop",
     "^[sS]ignal*",
     "[eE]lement",
     "[Tt]elegram[dD]esktop",

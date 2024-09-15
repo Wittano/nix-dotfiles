@@ -32,6 +32,10 @@
     nixvim.url = "github:nix-community/nixvim/nixos-24.05";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin.url = "github:catppuccin/nix";
+    catppuccin-dunst = {
+      url = "github:catppuccin/dunst";
+      flake = false;
+    };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
   };
 

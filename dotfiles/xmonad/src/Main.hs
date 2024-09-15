@@ -18,7 +18,7 @@ import XMonad.Util.Hacks (fixSteamFlicker, trayerPaddingXmobarEventHook, windowe
 import Xmobar qualified as S
 
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh . withEasySB (statusBarProp "xmobar ~/.config/xmonad/xmobarrc" (pure S.bar)) defToggleStrutsKey $ myConfig
+main = xmonad . ewmhFullscreen . ewmh $ myConfig
 
 myConfig =
   def

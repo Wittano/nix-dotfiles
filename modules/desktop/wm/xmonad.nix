@@ -16,10 +16,8 @@ desktop.mkDesktopModule {
     "kitty"
     "superfile"
     "rofi"
+    "notify"
   ];
-  mutableSources = {
-    ".config/xmonad/xmobarrc" = dotfiles.xmonad.xmobarrc.source;
-  };
   extraConfig = {
     services.xserver = {
       enable = true;

@@ -24,6 +24,7 @@ customKeybinds =
     ("M-w", spawn "rofi -show window"),
     ("M-S-p", unGrab *> spawn "flameshot gui"),
     ("M-S-q", spawn "switch-off"),
+    ("M-n", spawn "time-notify"),
     ("M-p", unGrab *> spawn "amixer sset Master 5%+"),
     ("M-o", unGrab *> spawn "amixer sset Master 5%-"),
     ("M-m", unGrab *> spawn "amixer sset Master toggle"),
