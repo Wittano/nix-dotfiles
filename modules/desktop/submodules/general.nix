@@ -16,7 +16,7 @@ in
     "vesktop"
     "joplin-desktop"
     "spotify"
-    "freetube"
+    # "freetube"
     "gnome-pomodoro"
     "thunderbird"
     "signal-desktop --use-tray-icon --no-sandbox"
@@ -49,7 +49,7 @@ in
 
         # Apps
         spotify
-        master.freetube # Youtube desktop
+        # master.freetube # Youtube desktop
         unstable.joplin-desktop # Notebook
         unstable.vscodium # VS code
         minder # Mind maps
