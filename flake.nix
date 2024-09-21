@@ -37,6 +37,8 @@
       flake = false;
     };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -49,7 +51,7 @@
           inherit system;
 
           config.allowUnfree = true;
-          overlays = overlays.systemOverlays;
+          overlays = overlays.systemOverlays ++ [ inputs.emacs-overlay.overlays.emacs ];
         };
 
       pkgs = mkPkgs inputs.nixpkgs;

@@ -179,10 +179,7 @@ with lib; rec {
         enable = true;
         enableGlobalUtils = true;
       };
-      dev = {
-        git.enable = true;
-        neovim.enable = true;
-      };
+      dev.git.enable = true;
       shell.fish = {
         enable = true;
         enableDirenv = true;

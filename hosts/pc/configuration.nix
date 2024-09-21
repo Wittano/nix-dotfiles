@@ -43,7 +43,10 @@ with lib.my;
       };
       minecraft.enable = true;
     };
-    dev.lang.ides = [ "go" "fork" "python" ];
+    dev = {
+      lang.ides = [ "go" "fork" "python" ];
+      neovim.enable = true;
+    };
     hardware = rec {
       grub.enableMultiBoot = true;
       sound.enable = true;
