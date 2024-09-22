@@ -83,6 +83,30 @@ in
       };
 
       plugins = {
+        nvim-tree = {
+          enable = true;
+          autoClose = true;
+          autoReloadOnWrite = true;
+          actions = {
+            useSystemClipboard = true;
+            openFile = {
+              quitOnOpen = true;
+              resizeWindow = true;
+            };
+            windowPicker.enable = true;
+          };
+          git = {
+            enable = true;
+            ignore = false;
+          };
+          liveFilter.alwaysShowFolders = true;
+          updateFocusedFile.enable = true;
+          view = {
+            number = true;
+            relativenumber = true;
+          };
+        };
+
         undotree = {
           enable = true;
           settings = {
@@ -209,7 +233,7 @@ in
             "<leader>ff" = "find_files";
             "<leader>fg" = "git_files";
             "<leader>gg" = "live_grep";
-            "<leader>bf" = "buffers";
+            "<leader>bb" = "buffers";
             "<C-p>" = "lsp_definitions";
           };
         };
@@ -224,41 +248,6 @@ in
       };
 
       keymaps = [
-        # Custom
-        {
-          action = "<cmd> Explore<CR>";
-          key = "<leader>fe";
-        }
-        {
-          action.__raw = # lua
-            ''
-              function()
-                local newFileName = vim.fn.input("Enter new file name: ", "", "dir")
-                local newFilePath = os.getenv("PWD") .. '/' .. newFileName
-
-                if newFilePath:sub(-string.len(newFilePath)) == "/" then
-                  vim.fn.mkdir(vim.fs.dirname(newFilePath), 'p')
-                  return
-                end
-
-                vim.cmd('edit ' .. newFilePath)
-              end
-            '';
-          key = "<leader>fc";
-        }
-        {
-          action.__raw = # lua
-            ''
-              function()
-                local newDirectoryName = vim.fn.input("Enter new directory name: ", "", "dir")
-                local newDirectoryPath = os.getenv("PWD") .. '/' .. newDirectoryName
-
-                vim.fn.mkdir(newDirectoryPath, 'p')
-                print("Created new directory: " .. newDirectoryPath)
-              end
-            '';
-          key = "<leader>fd";
-        }
         # TmuxNavigate
         {
           action = "<cmd> TmuxNavifateLeft<CR>";
@@ -280,6 +269,11 @@ in
         {
           action = "<cmd> UndotreeToggle<CR>";
           key = "U";
+        }
+        # nvim-tree.lua
+        {
+          action = "<cmd> NvimTreeToggle<CR>";
+          key = "<leader>te";
         }
       ];
     };
