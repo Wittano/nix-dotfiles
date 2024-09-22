@@ -21,6 +21,7 @@ in
   options = {
     modules.desktop.gaming.games = {
       enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
+      enableDev = mkEnableOption "Enable developer tools to moddling games";
       installed = mkOption {
         type = with types; listOf (either str package);
         default = [ ];
@@ -36,6 +37,8 @@ in
       "\.exe$"
       "XIVlauncher.Core"
     ];
+
+    modules.dev.lang.ides = mkIf cfg.enableDev [ "dotnet" ];
 
     # Install wacom drivers if osu-lazor is installed
     modules.hardware.wacom.enable = lists.any (x: strings.hasPrefix "osu" x.name) games;

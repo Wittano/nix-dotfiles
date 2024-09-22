@@ -48,6 +48,7 @@ in
   options.modules.desktop.gaming.steam = {
     enable = mkEnableOption "Enable steam and scripts for games installed via Steam";
     enableScripts = mkEnableOption "Install custom script to fix games e.g. Age of Empier, Steam systray icon or Darksider 1";
+    enableDev = mkEnableOption "Enable developer tools to moddling games";
   };
 
   config = mkIf (cfg.enable && gamingCfg.enable) rec {
@@ -67,7 +68,15 @@ in
       complete -c mf-fix -s n -l noconfirm --no-files
     '';
 
-    home-manager.users.wittano.home.packages = [ fixDarksiders fixAge2Sync fixSteamSystemTray ];
+    home-manager.users.wittano.home.packages = with unstable; [
+      # Games scripts
+      fixDarksiders
+      fixAge2Sync
+      fixSteamSystemTray
+
+      # Steam staff
+      gamescope
+    ];
 
     programs.nix-ld = {
       enable = true;
@@ -77,7 +86,7 @@ in
     };
 
     # Modding and game staff tool
-    modules.dev.lang.ides = [ "dotnet" ];
+    modules.dev.lang.ides = mkIf cfg.enableDev [ "dotnet" ];
   };
 
 }

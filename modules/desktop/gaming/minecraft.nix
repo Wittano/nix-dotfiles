@@ -10,6 +10,7 @@ in
     modules.desktop.gaming.minecraft = {
       enable = mkEnableOption "Install Minecraft staff";
       enableMapRender = mkEnableOption "Enable BlueMap - Minecraft map render with Web UI";
+      enableDev = mkEnableOption "Enable developer tools to moddling games";
     };
   };
 
@@ -30,7 +31,7 @@ in
     }];
 
     # Minecraft development kit
-    modules.dev.lang.ides = [ "jvm" ];
+    modules.dev.lang.ides = mkIf cfg.enableDev [ "jvm" ];
 
     # Minecraft map render
     services.bluemap = {
