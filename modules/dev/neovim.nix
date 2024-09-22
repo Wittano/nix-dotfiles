@@ -99,6 +99,7 @@ in
             diagnostic = {
               "<leader>j" = "goto_next";
               "<leader>k" = "goto_prev";
+              "<leader>q" = "open_float";
             };
             lspBuf = {
               K = "hover";
@@ -116,7 +117,7 @@ in
               package = pkgs.nodePackages.bash-language-server;
             };
             jsonls.enable = true;
-            taplo.enable = true;
+            taplo.enable = true; # TOML
             pylsp = {
               enable = true;
               settings.plugins = {
@@ -140,7 +141,6 @@ in
             dockerls.enable = true;
             ansiblels.enable = true;
             lua-ls.enable = true;
-            cmake.enable = true;
           };
         };
 
