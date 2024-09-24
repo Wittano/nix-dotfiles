@@ -12,7 +12,7 @@ in
 {
   autostart = [
     "vivaldi"
-    "telegram-desktop"
+    # "telegram-desktop"
     "vesktop"
     "joplin-desktop"
     "spotify"
@@ -62,7 +62,7 @@ in
         keepassxc
 
         # Communicator
-        telegram-desktop
+        # telegram-desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
         master.vesktop
