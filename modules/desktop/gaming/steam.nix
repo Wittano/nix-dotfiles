@@ -76,6 +76,7 @@ in
 
       # Steam staff
       gamescope
+      gamemode
     ];
 
     programs.nix-ld = {
