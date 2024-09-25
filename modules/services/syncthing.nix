@@ -21,6 +21,14 @@ in
       user = "wittano";
       settings = {
         folders = {
+          projects = {
+            id = "pwxg9-eq2rf";
+            label = "Programming projects";
+            path = "~/projects";
+            devices = [
+              "TrueNAS"
+            ];
+          };
           password = {
             id = "xm73k-khame";
             label = "Keepass files";
@@ -46,49 +54,6 @@ in
               "Phone"
               "TrueNAS"
               "Win10VM"
-            ];
-          };
-          backup = {
-            id = "ds5nq-igpwj";
-            label = "TrueNAS backup";
-            path = "/mnt/backup/server";
-            type = "receiveonly";
-            versioning = {
-              type = "trashcan";
-              params = {
-                keep = "5";
-                cleanoutDays = "356";
-              };
-              devices = [
-                "TrueNAS"
-              ];
-            };
-          };
-          tf2conf = {
-            id = "dcddt-eq7ot";
-            path = "/mnt/gaming/steamapps/common/Team Fortress 2/tf/custom";
-            label = "Team Fortress 2 - plugins and mods";
-            type = "sendonly";
-            devices = [
-              "TrueNAS"
-            ];
-          };
-          tf2mods = {
-            id = "yt7jq-qbv5a";
-            path = "/mnt/gaming/steamapps/common/Team Fortress 2/tf/cfg";
-            label = "Team Fortress 2 - configuration";
-            type = "sendonly";
-            devices = [
-              "TrueNAS"
-            ];
-          };
-          nixosBackup = {
-            id = "pt6ox-tibym";
-            path = "/mnt/backup/wittano.nixos";
-            label = "NixOS - backup";
-            type = "sendonly";
-            devices = [
-              "TrueNAS"
             ];
           };
           openttd = {
