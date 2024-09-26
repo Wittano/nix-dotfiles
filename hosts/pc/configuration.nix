@@ -65,6 +65,7 @@ with lib.my;
       boinc.enable = true;
       backup.enable = true;
       rss.enable = true;
+      printer.enable = true;
       syncthing.enable = true;
       redshift.enable = true;
       filebot.enable = true;
