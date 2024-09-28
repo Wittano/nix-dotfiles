@@ -1,7 +1,25 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, system, inputs, secretDir, ... }:
 with lib;
 with lib.my;
+let
+  secrets = builtins.readDir secretDir;
+  identityPaths = trivial.pipe secrets [
+    builtins.attrNames
+    (builtins.filter (x: strings.hasSuffix ".age" x))
+    (builtins.map (x: "/etc/ssh/${x}"))
+  ];
+in
 {
+  environment.systemPackages = [ inputs.agenix.packages."${system}".default ];
+  age = {
+    inherit identityPaths;
+    secrets.samba = {
+      file = secretDir + "/samba.age";
+      owner = "root";
+      group = "root";
+    };
+  };
+
   services.openssh = mkIf (!config.modules.services.ssh.enable) {
     enable = mkForce true;
     openFirewall = false;

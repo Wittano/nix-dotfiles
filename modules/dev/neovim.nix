@@ -36,7 +36,7 @@ in
       enableMan = true;
       viAlias = true;
 
-      extraPlugins = with pkgs.vimPlugins; [ vim-wakatime vimsence nvim-comment nvim-treesitter-parsers.haskell ];
+      extraPlugins = with pkgs.vimPlugins; [ vimsence nvim-comment nvim-treesitter-parsers.haskell ];
 
       extraConfigLua = /*lua*/
         ''

@@ -60,6 +60,7 @@ with lib.my;
       };
       nvidia.enable = true;
       docker.enable = true;
+      samba.enable = true;
     };
     services = {
       boinc.enable = true;

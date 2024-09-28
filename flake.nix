@@ -39,6 +39,7 @@
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

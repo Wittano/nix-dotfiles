@@ -8,7 +8,6 @@ let
       name = x;
       src = pkgs.fishPlugins.${x};
     }) [
-    "wakatime-fish"
     "plugin-git"
     "autopair"
     "fzf-fish"

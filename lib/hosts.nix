@@ -53,6 +53,7 @@ in
 
           inputs.catppuccin.nixosModules.catppuccin
           inputs.home-manager.nixosModules.home-manager
+          inputs.agenix.nixosModules.default
         ] ++ (importModulesPath ./../modules);
     };
 }

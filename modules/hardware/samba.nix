@@ -1,0 +1,34 @@
+{ config, pkgs, lib, ... }:
+with lib;
+with lib.my;
+let
+  cfg = config.modules.hardware.samba;
+in
+{
+
+  options = {
+    modules.hardware.samba = {
+      enable = mkEnableOption "Mount Samba device to system";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    services.gvfs.enable = true;
+    environment.systemPackages = with pkgs; [ cifs-utils ];
+    fileSystems."/mnt/samba" = {
+      device = "//192.168.1.5/share/wittano";
+      fsType = "cifs";
+      options = [
+        "credentials=${config.age.secrets.samba.path}"
+        "uid=${builtins.toString config.users.users.wittano.uid}"
+        "x-systemd.automount"
+        "noauto"
+        "x-systemd.idle-timeout=60"
+        "x-systemd.device-timeout=5s"
+        "x-systemd.mount-timeout=5s"
+        "user"
+        "users"
+      ];
+    };
+  };
+}
