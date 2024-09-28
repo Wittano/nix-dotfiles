@@ -14,7 +14,13 @@ in
 
   config = mkIf cfg.enable {
     services.gvfs.enable = true;
+
     environment.systemPackages = with pkgs; [ cifs-utils ];
+
+    home-manager.users.wittano.gtk.gtk3.bookmarks = [
+      "file:///mnt/samba Remote Home"
+    ];
+
     fileSystems."/mnt/samba" = {
       device = "//192.168.1.5/share/wittano";
       fsType = "cifs";
