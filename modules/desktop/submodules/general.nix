@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, master, ... }:
+{ pkgs, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -14,7 +14,7 @@ in
     "vivaldi"
     # "telegram-desktop"
     # "vesktop"
-    "joplin-desktop"
+    # "joplin-desktop"
     "spotify"
     # "freetube"
     "gnome-pomodoro"
@@ -26,6 +26,9 @@ in
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
 
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-27.3.11"
+    ];
 
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";
@@ -50,7 +53,7 @@ in
         # Apps
         spotify
         # master.freetube # Youtube desktop
-        unstable.joplin-desktop # Notebook
+        # unstable.joplin-desktop # Notebook
         unstable.vscodium # VS code
         minder # Mind maps
         # insomnia # REST API Client
@@ -67,6 +70,7 @@ in
         # element-desktop # matrix communicator
         # master.vesktop
         # irssi # IRC chat
+        logseq
       ];
     };
   };

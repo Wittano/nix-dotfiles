@@ -51,7 +51,13 @@
         import p {
           inherit system;
 
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              "electron-27.3.11"
+            ];
+          };
+
           overlays = overlays.systemOverlays ++ [ inputs.emacs-overlay.overlays.emacs ];
         };
 

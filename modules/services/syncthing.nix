@@ -56,6 +56,13 @@ in
               "Win10VM"
             ];
           };
+          notes = {
+            id = "dc4rh-q4bvw";
+            path = "/mnt/samba/Notebook";
+            devices = [
+              "Phone"
+            ];
+          };
           openttd = {
             id = "dmzkg-75il2";
             path = "~/.local/share/openttd/save/multi";
