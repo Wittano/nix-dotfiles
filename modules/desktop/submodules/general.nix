@@ -13,7 +13,7 @@ in
   autostart = [
     "vivaldi"
     # "telegram-desktop"
-    "vesktop"
+    # "vesktop"
     "joplin-desktop"
     "spotify"
     # "freetube"
@@ -25,6 +25,7 @@ in
   config = {
     programs.file-roller.enable = true; # Archive explorer
     programs.evince.enable = true; # PDF viever
+
 
     home-manager.users.wittano = {
       programs.fish.shellAliases.open = "xdg-open";
@@ -44,7 +45,6 @@ in
         thunderbird # Mail
         gnome.eog # Image viewer
         onlyoffice-bin # Office staff
-        # krusader # Total Commander explorer
         cinnamon.nemo
 
         # Apps
@@ -65,7 +65,7 @@ in
         # telegram-desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        master.vesktop
+        # master.vesktop
         # irssi # IRC chat
       ];
     };
