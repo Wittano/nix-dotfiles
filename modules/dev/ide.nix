@@ -12,6 +12,7 @@ let
       mkExtraConfig = ide: mkMerge [
         {
           home-manager.users.wittano.home.packages = mkIf (ide ? package) [ ide.package ];
+          home-manager.users.wittano.home.file.".ideavimrc".text = "set rnu nu";
         }
         (ide.extraConfig or { })
       ];
