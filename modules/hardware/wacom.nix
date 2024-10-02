@@ -13,6 +13,9 @@ let
 
       for d in $devices; do
         xsetwacom --set "$d" MapToOutput HEAD-0
+        # Enable scrolling on middle(lower) button
+        xsetwacom --set "$d" Button 2 "button +2 pan"
+        xsetwacom --set "$d" PanScrollThreshold 150
       done
     '';
   };
@@ -29,6 +32,13 @@ in
 
     # Development fixs and features for drivers
     modules.dev.lang.ides = [ "cpp" ];
+
+    services.udev = {
+      enable = mkForce true;
+      extraRules = ''
+        ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="056a", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="${name}.service"
+      '';
+    };
 
     home-manager.users.wittano = {
       home.packages = with pkgs; [ krita setupWacom ];
