@@ -1,4 +1,4 @@
-{ lib, config, unstable, master, ... }:
+{ lib, config, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -11,7 +11,7 @@ let
 
   games = with unstable; [
     # Games
-    master.osu-lazer # osu!lazer
+    osu-lazer # osu!lazer
     airshipper # Veloren
     fixedMindustry # Mindustry
     xivlauncher # FF XIV
