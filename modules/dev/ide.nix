@@ -43,7 +43,7 @@ let
         home-manager.users.wittano.home.packages = with unstable; [ zed-editor ];
       };
       fork.extraConfig = {
-        home-manager.users.wittano.home.packages = with unstable; [ vscodium ];
+        modules.dev.neovim.enable = true;
       };
     });
 

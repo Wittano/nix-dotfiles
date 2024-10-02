@@ -54,7 +54,7 @@ in
         spotify
         # master.freetube # Youtube desktop
         # unstable.joplin-desktop # Notebook
-        unstable.vscodium # VS code
+        # unstable.vscodium # VS code
         minder # Mind maps
         # insomnia # REST API Client
         gnome.pomodoro
