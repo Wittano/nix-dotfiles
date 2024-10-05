@@ -14,8 +14,9 @@ let
       for d in $devices; do
         xsetwacom --set "$d" MapToOutput HEAD-0
         # Enable scrolling on middle(lower) button
-        xsetwacom --set "$d" Button 2 "button +2 pan"
+        xsetwacom --set "$d" Button 2 "pan"
         xsetwacom --set "$d" PanScrollThreshold 150
+        xsetwacom --set "$d" Rotate half
       done
     '';
   };
