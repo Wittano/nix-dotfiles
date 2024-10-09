@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ pkgs, lib, unstable, master, ... }:
 with lib;
 with lib.my;
 let
@@ -68,7 +68,7 @@ in
         # telegram-desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        # master.vesktop
+        master.vesktop
         # irssi # IRC chat
         logseq
       ];
