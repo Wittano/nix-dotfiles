@@ -29,23 +29,6 @@ in
               "TrueNAS"
             ];
           };
-          password = {
-            id = "xm73k-khame";
-            label = "Keepass files";
-            path = "~/.keepass";
-            devices = [
-              "Phone"
-              "TrueNAS"
-            ];
-          };
-          pictures = {
-            id = "mrd-lx1_e3sw-photos";
-            label = "Photos";
-            path = "~/Pictures";
-            devices = [
-              "Phone"
-            ];
-          };
           sync = {
             id = "default";
             label = "Sync folder";
@@ -54,13 +37,6 @@ in
               "Phone"
               "TrueNAS"
               "Win10VM"
-            ];
-          };
-          notes = {
-            id = "dc4rh-q4bvw";
-            path = "/mnt/samba/Notebook";
-            devices = [
-              "Phone"
             ];
           };
           openttd = {
