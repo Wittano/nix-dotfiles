@@ -135,23 +135,9 @@ in
             };
           };
           servers = {
-            yamlls.enable = true;
             bashls = {
               enable = true;
               package = pkgs.nodePackages.bash-language-server;
-            };
-            jsonls.enable = true;
-            taplo.enable = true; # TOML
-            pylsp = {
-              enable = true;
-              settings.plugins = {
-                rope.enabled = true;
-                pylsp_mypy.enabled = true;
-                pylint.enabled = true;
-                isort.enabled = true;
-                flake8.enabled = true;
-                black.enabled = true;
-              };
             };
             terraformls.enable = true;
             nil-ls = {
@@ -164,7 +150,6 @@ in
             };
             dockerls.enable = true;
             ansiblels.enable = true;
-            lua-ls.enable = true;
           };
         };
 
