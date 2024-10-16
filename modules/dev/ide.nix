@@ -4,8 +4,39 @@ with lib.my;
 let
   cfg = config.modules.dev.lang;
 
-  projectDir = "${config.home-manager.users.wittano.home.homeDirectory}/projects";
+  homeDir = config.home-manager.users.wittano.home.homeDirectory;
+  projectDir = "${homeDir}/projects";
   addProjectDirField = attr: builtins.mapAttrs (n: v: v // { projectDir = "${projectDir}/${n}"; }) attr;
+
+  mkCmdCompletion = path: assert builtins.typeOf path == "string";
+    let
+      basename = builtins.baseNameOf path;
+      name = "p${basename}";
+      funcName = "get_${name}_projects_dir";
+    in
+    ''
+      function ${funcName}
+        ls ${path} || echo ""
+      end
+
+      for project in (${funcName})
+        complete -c ${name} -f -a "$project"
+      end
+    '';
+
+  mkCmdCommand = path: assert builtins.typeOf path == "string"; {
+    body = /*fish*/ ''
+      mkdir -p ${path}
+
+      set -l args_len $(count $argv)
+
+      if test "$args_len" -eq 0
+        cd ${path}
+      else
+        cd ${path}/$argv
+      end
+    '';
+  };
 
   avaiableIde =
     let
@@ -52,57 +83,40 @@ let
     (builtins.filter (x: x != null))
   ];
 
-  cmdCompletions = trivial.pipe cfg.ides [
-    (builtins.map
-      (x:
-        let
-          path = avaiableIde."${x}".projectDir;
-        in
-        rec {
-          name = "p${x}";
-          value = ''
-            function get_projects_dir
-              ls ${path} || echo ""
-            end
+  cmdCompletions = builtins.map
+    (x: {
+      name = "p${x}";
+      value = mkCmdCompletion avaiableIde."${x}".projectDir;
+    })
+    cfg.ides;
 
-            for project in (get_projects_dir)
-              complete -c ${name} -f -a "$project"
-            end
-          '';
-        }))
-    builtins.listToAttrs
-  ];
-
-  commands = trivial.pipe cfg.ides [
-    (builtins.map
-      (x:
-        let
-          path = avaiableIde."${x}".projectDir;
-        in
-        {
-          name = "p${x}";
-          value = {
-            body = /*fish*/ ''
-              mkdir -p ${path}
-
-              set -l args_len $(count $argv)
-
-              if test "$args_len" -eq 0
-                cd ${path}
-              else
-                cd ${path}/$argv
-              end
-            '';
-          };
-        })
+  commands = builtins.map
+    (x:
+      {
+        name = "p${x}";
+        value = mkCmdCommand avaiableIde."${x}".projectDir;
+      }
     )
-    builtins.listToAttrs
-  ];
+    cfg.ides;
 
   ideNames = builtins.attrNames avaiableIde;
   extraConfigs = trivial.pipe ideNames [
     (builtins.map (x: avaiableIde.${x}.extraConfig or { }))
     mkMerge
+  ];
+
+  serverPath = "${homeDir}/projects/server";
+  extraCommands = [
+    {
+      name = "pserver";
+      value = mkCmdCommand serverPath;
+    }
+  ];
+  extraCompletions = [
+    {
+      name = "pserver";
+      value = mkCmdCompletion serverPath;
+    }
   ];
 in
 {
@@ -119,7 +133,7 @@ in
   config = mkIf ((builtins.length cfg.ides) != 0) (mkMerge [
     extraConfigs
     {
-      modules.shell.fish.completions = cmdCompletions;
+      modules.shell.fish.completions = builtins.listToAttrs (cmdCompletions ++ extraCompletions);
 
       home-manager.users.wittano = {
         gtk.gtk3.bookmarks = [
@@ -130,7 +144,7 @@ in
           activation.createProjectsDir =
             let
               idesDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.ides;
-              bashArray = bash.mkBashArray (idesDirs);
+              bashArray = bash.mkBashArray idesDirs;
             in
             lib.hm.dag.entryBefore [ "writeBoundary" ] /*bash*/''
               projectDirs=(${bashArray})
@@ -141,7 +155,7 @@ in
             '';
         };
 
-        programs.fish.functions = commands;
+        programs.fish.functions = builtins.listToAttrs (commands ++ extraCommands);
       };
     }
   ]);
