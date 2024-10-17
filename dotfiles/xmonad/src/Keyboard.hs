@@ -27,6 +27,7 @@ customKeybinds =
     ("M-n", spawn "time-notify"),
     ("M-p", unGrab *> spawn "amixer sset Master 5%+"),
     ("M-o", unGrab *> spawn "amixer sset Master 5%-"),
+    ("M-S-o", unGrab *> spawn "show-volume"),
     ("M-m", unGrab *> spawn "amixer sset Master toggle"),
     ("M-r", unGrab *> spawn "rollWallpaper"),
     ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
