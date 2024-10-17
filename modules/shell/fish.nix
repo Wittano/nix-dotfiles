@@ -91,6 +91,10 @@ in
         fish = {
           enable = true;
           plugins = officialPlugins ++ customePlugins;
+          shellInit = /*fish*/''
+            bind \cy backward-kill-line
+            bind \cw backward-kill-bigword
+          '';
           shellAliases =
             let
               host = (strings.removeSuffix "-dev" hostname) +
