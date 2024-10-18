@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 {
 
-  imports = [ ./hardware.nix ];
+  imports = [ ./hardware.nix ./networking.nix ];
 
   services.xserver.xrandrHeads = [
     {
