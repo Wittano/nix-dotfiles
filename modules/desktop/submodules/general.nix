@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ pkgs, lib, unstable, master, ... }:
 with lib;
 with lib.my;
 let
@@ -30,10 +30,10 @@ in
       "electron-27.3.11"
     ];
 
-    home-manager.users.wittano = {
+    home-manager.users.wittano = rec {
       programs.fish.shellAliases.open = "xdg-open";
 
-      programs.mpv.enable = true;
+      programs.mpv.enable = lists.any (x: strings.hasPrefix "streamlink-twitch-gui-bin" (x.name or "")) home.packages;
       home.packages = with pkgs; [
         # Utils
         flameshot
@@ -52,7 +52,7 @@ in
 
         # Apps
         spotify
-        # master.freetube # Youtube desktop
+        logseq
         # unstable.joplin-desktop # Notebook
         # unstable.vscodium # VS code
         minder # Mind maps
@@ -64,13 +64,14 @@ in
         bitwarden
         keepassxc
 
-        # Communicator
+        # Social media
         # telegram-desktop
+        master.freetube # Youtube desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        # master.vesktop
+        vesktop
         # irssi # IRC chat
-        logseq
+        unstable.streamlink-twitch-gui-bin
       ];
     };
   };
