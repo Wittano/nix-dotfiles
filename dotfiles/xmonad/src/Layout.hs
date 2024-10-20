@@ -11,7 +11,7 @@ import XMonad.Layout.Spacing (spacing)
 import XMonad.Layout.ToggleLayouts (toggleLayouts)
 import XMonad.Layout.WindowArranger (windowArrange)
 
-layout = tall ||| Mirror tall ||| maxLayout
+layout = maxLayout ||| tall ||| Mirror tall
   where
     tall =
       toggleLayouts floats $
@@ -19,8 +19,8 @@ layout = tall ||| Mirror tall ||| maxLayout
           avoidStruts $
             limitWindows 4 $
               spacing 20 $
-                magnifiercz 1.5 $
-                  Tall nmaster delta ratio
+                -- magnifiercz 1.5 $
+                Tall nmaster delta ratio
     maxLayout = noBorders Full
     floats = renamed [Replace "floats"] $ smartBorders simplestFloat
     nmaster = 1
