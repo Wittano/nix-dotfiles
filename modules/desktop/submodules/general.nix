@@ -69,7 +69,8 @@ in
         master.freetube # Youtube desktop
         fixedSignal # Signal desktop
         # element-desktop # matrix communicator
-        vesktop
+        # vesktop
+        unstable.discord
         # irssi # IRC chat
         unstable.streamlink-twitch-gui-bin
       ];
