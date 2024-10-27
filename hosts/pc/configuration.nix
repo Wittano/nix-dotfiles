@@ -44,7 +44,7 @@ with lib.my;
       minecraft.enable = true;
     };
     dev = {
-      lang.ides = [ "go" "fork" "python" "dotnet" ];
+      lang.ides = [ "go" "fork" "python" ];
       neovim.enable = true;
     };
     hardware = rec {
