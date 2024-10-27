@@ -12,7 +12,7 @@ let
   games = with unstable; [
     # Games
     osu-lazer # osu!lazer
-    airshipper # Veloren
+    # airshipper # Veloren
     fixedMindustry # Mindustry
     xivlauncher # FF XIV
   ];
