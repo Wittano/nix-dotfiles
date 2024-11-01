@@ -22,10 +22,10 @@ in
     modules.desktop.gaming.games = {
       enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
       enableDev = mkEnableOption "Enable developer tools to moddling games";
-      installed = mkOption {
+      picomExceptions = mkOption {
         type = with types; listOf (either str package);
         default = [ ];
-        description = "List of installed games or games related staff";
+        description = "List of installed games or games related staff, which picom should avoid override window properties e.g. rounded corners, window transparency";
       };
     };
   };
@@ -33,7 +33,7 @@ in
   config = mkIf (cfg.enable && gamingCfg.enable) {
     home-manager.users.wittano.home.packages = games;
 
-    modules.desktop.gaming.games.installed = games ++ [
+    modules.desktop.gaming.games.picomExceptions = games ++ [
       "\.exe$"
       "XIVlauncher.Core"
     ];

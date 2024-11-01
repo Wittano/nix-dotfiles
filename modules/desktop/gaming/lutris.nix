@@ -33,7 +33,7 @@ in
       0.0.0.0 apm-log-upload.mihoyo.com
     '';
 
-    modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
+    modules.desktop.gaming.games.picomExceptions = home-manager.users.wittano.home.packages ++ [
       "wine"
       "\.exe$"
     ];

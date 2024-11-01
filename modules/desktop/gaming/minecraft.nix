@@ -20,7 +20,7 @@ in
       prismlauncher
     ];
 
-    modules.desktop.gaming.games.installed = home-manager.users.wittano.home.packages ++ [
+    modules.desktop.gaming.games.picomExceptions = home-manager.users.wittano.home.packages ++ [
       "minecraft"
       "prismlauncher"
     ];

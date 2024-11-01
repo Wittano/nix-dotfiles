@@ -57,7 +57,7 @@ in
       package = unstable.steam;
     };
 
-    modules.desktop.gaming.games.installed = [
+    modules.desktop.gaming.games.picomExceptions = [
       programs.steam.package
     ];
 

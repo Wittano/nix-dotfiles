@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   guardName = "gaming-picom-guard";
-  gameStaff = bash.mkBashArray (builtins.map (x: x.pname or x.name or x) config.modules.desktop.gaming.games.installed);
+  gameStaff = bash.mkBashArray (builtins.map (x: x.pname or x.name or x) config.modules.desktop.gaming.games.picomExceptions);
 in
 {
   config = rec {
