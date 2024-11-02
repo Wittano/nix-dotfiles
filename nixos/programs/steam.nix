@@ -35,6 +35,13 @@ in
         wineWowPackages.full
       ];
     };
+
+    fileSystems = {
+      "/mnt/gaming" = {
+        device = "/dev/disk/by-label/GAMING";
+        fsType = "ext4";
+      };
+    };
   };
 
 }

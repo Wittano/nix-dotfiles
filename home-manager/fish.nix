@@ -52,16 +52,6 @@ in
   options.programs.fish.wittano = {
     enable = mkEnableOption "Enable custom fish shell config";
     enableDirenv = mkEnableOption "Enable direnv";
-    systemConfigPath = mkOption {
-      type = with types; nullOr str;
-      description = "Location to nix-dotfiles directory";
-      default = null;
-    };
-    profileName = mkOption {
-      type = with types; nullOr str;
-      description = "System profile name";
-      default = null;
-    };
     completions = mkOption {
       type = with types; attrsOf (either str path);
       default = { };
@@ -106,7 +96,6 @@ in
           in
           {
             xc = "xprop | grep CLASS";
-            re = mkIf (cfg.systemConfigPath != null && cfg.profileName != null) "sudo nixos-rebuild switch --flake ${cfg.systemConfigPath}#${profileName}";
 
             # Programs
             neofetch = "nix run nixpkgs#neofetch";

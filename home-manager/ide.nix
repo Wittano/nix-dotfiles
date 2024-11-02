@@ -1,4 +1,4 @@
-{ config, lib, unstable, pkgs, ... }:
+{ config, lib, unstable ? pkgs, pkgs, ... }:
 with lib;
 with lib.my;
 let
@@ -55,24 +55,27 @@ let
       };
       cpp.package = clion;
       zig = cpp;
-      go.package = goland.overrideAttrs (attrs: {
-        postFixup = (attrs.postFixup or "") + lib.optionalString pkgs.stdenv.isLinux ''
-          if [ -f $out/goland/plugins/go-plugin/lib/dlv/linux/dlv ]; then
-            rm $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-          fi
+      go = {
+        package = goland.overrideAttrs (attrs: {
+          postFixup = (attrs.postFixup or "") + lib.optionalString pkgs.stdenv.isLinux ''
+            if [ -f $out/goland/plugins/go-plugin/lib/dlv/linux/dlv ]; then
+              rm $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
+            fi
 
-          ln -s ${unstable.delve}/bin/dlv $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-        '';
-      });
+            ln -s ${unstable.delve}/bin/dlv $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
+          '';
+        });
+        extraConfig = {
+          home.packages = with pkgs; [ golangci-lint ];
+        };
+      };
       dotnet.package = rider;
       rust.package = rust-rover;
       jvm.package = idea-ultimate;
       sql.package = datagrip;
       web.package = webstorm;
       andorid.package = unstable.andorid-studio;
-      haskell.extraConfig = {
-        programs.nixvim.enable = true;
-      };
+      haskell.extraConfig = fork.extraConfig;
       fork.extraConfig = {
         programs.nixvim.enable = true;
       };

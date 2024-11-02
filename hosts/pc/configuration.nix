@@ -17,6 +17,13 @@ let
       notify-send -t 2000 "Volume: $(amixer sget Master | awk -F"[][]" '/Left:/ { print $2 }')";
     '';
   };
+
+  fixedSignal = pkgs.signal-desktop.overrideAttrs (oldAttrs: {
+    preFixup = oldAttrs.preFixup + ''
+      substituteInPlace $out/share/applications/${oldAttrs.pname}.desktop \
+      --replace "$out/bin/${oldAttrs.pname}" "$out/bin/${oldAttrs.pname} --use-tray-icon"
+    '';
+  });
 in
 rec {
 
@@ -67,7 +74,6 @@ rec {
     keyMap = services.xserver.xkb.layout;
   };
 
-  services.xserver.xkb.layout = "pl";
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -100,14 +106,23 @@ rec {
 
   # Linux Kernel settings
   boot = {
-    supportedFilesystems.ntfs = true;
+    supportedFilesystems = {
+      ntfs = true;
+      nfs = true;
+    };
     initrd.availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
 
     tmp.cleanOnBoot = true;
 
-    loader.efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";
+    loader = {
+      grub.wittano = {
+        enable = true;
+        enableMultiBoot = true;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
     };
 
     plymouth = {
@@ -130,6 +145,7 @@ rec {
     nvidia.enable = true;
     samba.enable = true;
     printers.wittano.enable = true;
+    bluetooth.wittano.enable = true;
   };
 
   # Network
@@ -149,19 +165,6 @@ rec {
       extraGroups = [ "wheel" ];
       shell = pkgs.fish;
     };
-
-    femttano = {
-      isNormalUser = true;
-      uid = mkDefault 2137;
-      shell = pkgs.fish;
-      extraGroups = [ "gaming" ];
-    };
-
-    labottano = {
-      isNormalUser = true;
-      shell = pkgs.fish;
-      uid = mkDefault 1003;
-    };
   };
 
   catppuccin = {
@@ -170,7 +173,17 @@ rec {
     flavor = "frappe";
   };
 
-  programs.fish.enable = true;
+  programs = {
+    fish.enable = true;
+    file-roller.enable = true; # Archive explorer
+    evince.enable = true; # PDF viever
+    droidcam.enable = true;
+    steam.wittano.enable = true;
+    mihoyo = {
+      enable = true;
+      games = [ "honkai-railway" ];
+    };
+  };
 
   # Home-manager
   home-manager =
@@ -191,7 +204,11 @@ rec {
             enable = true;
             enableDirenv = true;
           };
+
+          fish.shellAliases.open = "xdg-open";
+          mpv.enable = true;
         };
+
         qt.wittano.enable = true;
         gtk.wittano.enable = true;
 
@@ -210,55 +227,119 @@ rec {
             frequency = "daily";
           };
         };
+
+        home.packages = with pkgs; [
+          # Utils
+          flameshot
+
+          # Folder Dialog menu
+          gnome.zenity
+
+          # Web browser
+          vivaldi
+
+          # Utils 
+          thunderbird # Mail
+          gnome.eog # Image viewer
+          onlyoffice-bin # Office staff
+          cinnamon.nemo
+
+          # Apps
+          spotify
+          logseq
+          # unstable.joplin-desktop # Notebook
+          # unstable.vscodium # VS code
+          minder # Mind maps
+          # insomnia # REST API Client
+          gnome.pomodoro
+          unstable.figma-linux # Figma
+
+          # Security
+          bitwarden
+        ];
       };
     in
     {
       extraSpecialArgs = { inherit pkgs unstable lib inputs; };
       useUserPackages = true;
       backupFileExtension = "backup";
-      users.wittano = {
-        programs = {
-          jetbrains.ides = [ "go" "fork" "python" "cpp" "jvm" ];
-          git.wittano.enable = true;
-          tmux.wittano.enable = true;
-          neovim.wittano.enable = true;
-          fish.wittano = {
-            systemConfigPath = environment.variables.NIX_DOTFILES;
-            profileName = hostName;
+      users.wittano = mkMerge [
+        {
+          programs = {
+            jetbrains.ides = [ "go" "fork" "python" "cpp" "jvm" ];
+            git.wittano.enable = true;
+            rofi.wittano.enable = true;
+
+            games.enable = true;
+            lutris.enable = true;
+
+            tmux.wittano.enable = true;
+            neovim.wittano.enable = true;
+
+            fish.shellAliases = {
+              re = "sudo nixos-rebuild switch --flake ${environment.variables.NIX_DOTFILES}#${hostname}";
+              # Projects
+              pnix = "cd $HOME/nix-dotfiles";
+              plab = "cd $HOME/projects/server/home-lab";
+
+              # Nix
+              nfu = "nix flake update";
+              nfc = "nix flake check";
+              repl = "nix repl -f '<nixpkgs>'";
+
+              # systemd
+              scs = "sudo systemctl status";
+              scst = "sudo systemctl stop";
+              scsta = "sudo systemctl start";
+              sce = "sudo systemctl enable --now";
+              scr = "sudo systemctl restart";
+              sdb = "systemd-analyze blame";
+            };
           };
-        };
 
-        desktop.autostart.desktopName = "xmonad";
+          desktop.autostart = {
+            desktopName = "openbox";
+            scriptPath = ".config/openbox/autostart";
+            programs = [
+              "vivaldi"
+              "spotify"
+            ];
+          };
 
-        gtk.gtk3.bookmarks = [
-          "file://${environment.variables.NIX_DOTFILES} Nix configuration"
-          "file://${environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
-        ];
-        home.packages = with pkgs; [ sshs timeNotify showVolume ];
-      } // commonConfig;
-      users.femttano = {
-        programs = {
-          games.enable = true;
-          lutris.wittano.enable = true;
-        };
-        desktop.autostart.desktopName = "openbox";
-        services.picom.wittano.exceptions = [
-          config.programs.steam.package
-        ];
-      } // commonConfig;
-      users.labottano = {
-        home.packages = with pkgs; [ teams ];
-        desktop.autostart.desktopName = "openbox";
-      } // commonConfig;
+          gtk.gtk3.bookmarks = [
+            "file://${environment.variables.NIX_DOTFILES} Nix configuration"
+            "file://${environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
+          ];
+
+          home.packages = with pkgs; [
+            # Utilities
+            sshs
+
+            # Tilling WM
+            timeNotify
+            showVolume
+
+            # Apps
+            unstable.figma-linux # Figma
+            # Web browser
+            vivaldi
+
+            # Apps
+            gnome.pomodoro
+
+            # Social media
+            # telegram-desktop
+            unstable.freetube # Youtube desktop
+            fixedSignal # Signal desktop
+            # element-desktop # matrix communicator
+            vesktop
+            # irssi # IRC chat
+            unstable.streamlink-twitch-gui-bin
+          ];
+        }
+        commonConfig
+      ];
     };
-
-  services.udisks2 = {
-    enable = true;
-    mountOnMedia = true;
-  };
-
-  services.devmon.enable = true;
-  services.gvfs.enable = true;
 
   # Programs
   services.locate = {
@@ -266,15 +347,9 @@ rec {
     interval = "21:37";
   };
 
-  desktop = {
-    xmonad = {
-      enable = true;
-      users = [ "wittano" ];
-    };
-    openbox = {
-      enable = true;
-      users = [ "femttano" "labottano" ];
-    };
+  desktop.openbox = {
+    enable = true;
+    users = [ "wittano" ];
   };
 
   # System
@@ -287,47 +362,46 @@ rec {
     };
   };
 
-  services.xserver.xrandrHeads = [
-    {
-      primary = true;
-      output = "DVI-D-0";
-      monitorConfig = ''
-        Option "PreferredMode" "1920x1080"
-      '';
-    }
-    {
-      primary = false;
-      output = "HDMI-0";
-      monitorConfig = ''
-        Option "PreferredMode" "1920x1080"
-        Option "RightOf" "DVI-D-0"
-      '';
-    }
-  ];
-
-  boot.supportedFilesystems.nfs = true;
-
-  programs = {
-    droidcam.enable = true;
-    steam.wittano.enable = true;
-    mihoyo = {
-      enable = true;
-      games = [ "honkai-railway" ];
-    };
-  };
-
-  boot.loader.grub.wittano = {
-    enable = true;
-    theme = inputs.honkai-railway-grub-theme.packages.${system}.dr_ratio-grub-theme;
-    enableMultiBoot = true;
-  };
-
   virtualisation.docker.wittano.enable = true;
+
   services = {
+    udisks2 = {
+      enable = true;
+      mountOnMedia = true;
+    };
+
+    devmon.enable = true;
+    gvfs.enable = true;
+    xserver = {
+      xkb.layout = "pl";
+      xrandrHeads = [
+        {
+          primary = true;
+          output = "DVI-D-0";
+          monitorConfig = ''
+            Option "PreferredMode" "1920x1080"
+          '';
+        }
+        {
+          primary = false;
+          output = "HDMI-0";
+          monitorConfig = ''
+            Option "PreferredMode" "1920x1080"
+            Option "RightOf" "DVI-D-0"
+          '';
+        }
+      ];
+      wacom.wittano.enable = true;
+    };
+
     boinc.wittano.enable = true;
     backup.enable = true;
     rss.enable = true;
     syncthing.wittano.enable = true;
     filebot.wittano.enable = true;
+    displayManager.sddm.wittano = {
+      enable = true;
+      package = pkgs.catppuccin-sddm-corners;
+    };
   };
 }

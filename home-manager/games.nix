@@ -22,7 +22,7 @@ let
     runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
     text = builtins.readFile ./scripts/fixAge2Sync.sh;
     runtimeEnv = {
-      STEAM_GAME_DIR = gamingCfg.disk.path;
+      STEAM_GAME_DIR = "/mnt/gaming/SteamLibrary";
     };
   };
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
@@ -59,11 +59,6 @@ in
   options.programs.games = {
     enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
     enableDev = mkEnableOption "Enable developer tools to moddling games";
-    picomExceptions = mkOption {
-      type = with types; listOf (either str package);
-      default = [ ];
-      description = "List of installed games or games related staff, which picom should avoid override window properties e.g. rounded corners, window transparency";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -77,10 +72,5 @@ in
       "\.exe$"
       "XIVlauncher.Core"
     ];
-
-    programs.jetbrains.ides = mkIf cfg.enableDev [ "dotnet" ];
-
-    # Install wacom drivers if osu-lazor is installed
-    # modules.hardware.wacom.enable = lists.any (x: strings.hasPrefix "osu" x.name) games;
   };
 }

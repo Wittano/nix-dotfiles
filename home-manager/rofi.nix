@@ -1,7 +1,7 @@
-{ config, pkgs, lib, desktopName, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
-with lib.my;
 let
+  cfg = config.programs.rofi.wittano;
   toybox = pkgs.toybox;
   systemd = pkgs.systemd;
 
@@ -20,9 +20,9 @@ let
         ${systemd}/bin/poweroff
         ;;
       "$LOGOUT")
-        DESKTOP=$(${toybox}/bin/pgrep ${desktopName})
+        DESKTOP=$(${toybox}/bin/pgrep ${cfg.desktopName})
         if [ -n "$DESKTOP" ]; then
-          echo "Kill ${desktopName} $DESKTOP"
+          echo "Kill ${cfg.desktopName} $DESKTOP"
           kill -9 "$DESKTOP"
         fi 
         ;;
@@ -38,12 +38,25 @@ let
   };
 in
 {
-  options.programs.rofi.wittano.enable = mkEnableOption "Enable custom rofi config";
+  options.programs.rofi.wittano = {
+    enable = mkEnableOption "Enable custom rofi config";
+    desktopName = mkOption {
+      type = with types; nullOr str;
+      default = null;
+    };
+  };
 
-  config = mkIf config.programs.rofi.wittano.enable {
+  config = mkIf cfg.enable {
     fonts.fontconfig.enable = true;
 
-    home.packages = with pkgs; [ nerdfonts switchOffScript oranchelo-icon-theme ];
+    home.packages =
+      let
+        script =
+          if cfg.desktopName != null
+          then [ switchOffScript ]
+          else [ ];
+      in
+      with pkgs; [ nerdfonts oranchelo-icon-theme ] ++ script;
 
     programs.rofi = {
       enable = true;

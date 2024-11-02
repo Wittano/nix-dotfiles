@@ -11,6 +11,8 @@ in
     services.syncthing = {
       enable = cfg.enable;
       systemService = true;
+      dataDir = "/home/wittano/.cache/syncthing";
+      configDir = "/home/wittano/.config/syncthing";
       user = "wittano";
       settings = {
         folders = {

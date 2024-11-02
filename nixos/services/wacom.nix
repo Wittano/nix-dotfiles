@@ -36,19 +36,16 @@ in
     environment.systemPackages = [ setupWacom ];
 
     systemd.user.services.${name} = {
-      unit = {
-        Description = "Map tablet to primary display";
-        After = [ "graphical-session-pre.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
+      description = "Map tablet to primary display";
+      after = [ "graphical-session-pre.target" ];
+      partOf = [ "graphical-session.target" ];
 
-      service = {
-        Type = "oneshot";
-        ExecStart = meta.getExe setupWacom;
-        Environment = [ ''DISPLAY=":0"'' ];
+      environment = {
+        DISPLAY = ''":0"'';
       };
+      script = meta.getExe setupWacom;
 
-      install.WantedBy = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
     };
   };
 }

@@ -41,8 +41,8 @@ in
         config = ./src/Main.hs;
         libFiles = trivial.pipe ./src [
           builtins.readDir
-          (attrsets.filterAttrs (n: v: builtins.typeOf v == "set" && strings.hasPrefix "Main" n == false))
-          (builtins.mapAttrs (n: v: pkgs.writeText n (builtins.readFile v.source)))
+          (attrsets.filterAttrs (n: v: strings.hasPrefix "Main" n == false))
+          (builtins.mapAttrs (n: v: pkgs.writeText n (builtins.readFile (./src + "/${n}"))))
         ];
       };
     };
