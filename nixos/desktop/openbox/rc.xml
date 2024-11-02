@@ -132,21 +132,21 @@
         <wrap>no</wrap>
       </action>
     </keybind>
+    <keybind key="W-S-l">
+      <action name="SendToDesktop">
+        <to>left</to>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
     <keybind key="S-A-Right">
       <action name="SendToDesktop">
         <to>right</to>
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="S-A-Up">
+    <keybind key="W-S-h">
       <action name="SendToDesktop">
-        <to>up</to>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
-    <keybind key="S-A-Down">
-      <action name="SendToDesktop">
-        <to>down</to>
+        <to>right</to>
         <wrap>no</wrap>
       </action>
     </keybind>
@@ -180,7 +180,17 @@
         <direction>both</direction>
       </action>
     </keybind>
+    <keybind key="C-s">
+      <action name="ToggleMaximize">
+        <direction>both</direction>
+      </action>
+    </keybind>
     <!-- Keybindings for window switching -->
+    <keybind key="W-space">
+        <action name="MoveResizeTo">
+            <monitor>2</monitor>
+        </action>
+    </keybind>
     <keybind key="A-Tab">
       <action name="NextWindow">
         <finalactions>
@@ -190,7 +200,16 @@
         </finalactions>
       </action>
     </keybind>
-    <keybind key="A-S-Tab">
+    <keybind key="W-k">
+      <action name="NextWindow">
+        <finalactions>
+          <action name="Focus"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
+        </finalactions>
+      </action>
+    </keybind>
+    <keybind key="W-j">
       <action name="PreviousWindow">
         <finalactions>
           <action name="Focus"/>
