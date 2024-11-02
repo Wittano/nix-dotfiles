@@ -1,0 +1,86 @@
+{ lib, config, pkgs, unstable ? pkgs, ... }:
+with lib;
+with lib.my;
+let
+  cfg = config.programs.games;
+
+  fixedMindustry = unstable.mindustry.override {
+    gradle = unstable.gradle_7;
+  };
+
+  games = with unstable; [
+    # Games
+    osu-lazer # osu!lazer
+    # airshipper # Veloren
+    fixedMindustry # Mindustry
+    xivlauncher # FF XIV
+    prismlauncher
+  ];
+
+  fixAge2Sync = pkgs.writeShellApplication {
+    name = "fixAge2Sync";
+    runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
+    text = builtins.readFile ./scripts/fixAge2Sync.sh;
+    runtimeEnv = {
+      STEAM_GAME_DIR = gamingCfg.disk.path;
+    };
+  };
+  fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
+    "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+
+  fixDarksiders =
+    let
+      repo = pkgs.srcOnly {
+        name = "mf-installcab_steamdeck";
+        version = "08-11-2023";
+        src = pkgs.fetchFromGitLab {
+          repo = "mf-installcab_steamdeck";
+          owner = "steevyp";
+          rev = "c7b89af844d056eb0d5d700ae702b9581094d017";
+          sha256 = "sha256-8UlZcELv0JLmjymucYV/Wq/2C+M+PT6ETKa6EZssJpU=";
+        };
+
+        patches = [ ./patches/fix-darksiders.patch ];
+      };
+    in
+    pkgs.writeShellApplication {
+      name = "fix-darksiders";
+      runtimeInputs = with pkgs; [ python3 coreutils toybox cabextract wget ];
+      runtimeEnv = {
+        PROTON = "/mnt/gaming/SteamLibrary/steamapps/common/Proton 8.0";
+        WINEPREFIX = "/mnt/gaming/SteamLibrary/steamapps/compatdata/462780/pfx";
+        SCRIPTDIR = builtins.toString repo;
+        GAME_EXE = "/mnt/gaming/SteamLibrary/steamapps/common/Darksiders Warmastered Edition";
+      };
+      text = builtins.readFile (repo + "/install-mf-64.sh");
+    };
+in
+{
+  options.programs.games = {
+    enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
+    enableDev = mkEnableOption "Enable developer tools to moddling games";
+    picomExceptions = mkOption {
+      type = with types; listOf (either str package);
+      default = [ ];
+      description = "List of installed games or games related staff, which picom should avoid override window properties e.g. rounded corners, window transparency";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    home.packages = games ++ [
+      fixDarksiders
+      fixAge2Sync
+      fixSteamSystemTray
+    ];
+
+    services.picom.wittano.exceptions = games ++ [
+      "\.exe$"
+      "XIVlauncher.Core"
+    ];
+
+    programs.jetbrains.ides = mkIf cfg.enableDev [ "dotnet" ];
+
+    # Install wacom drivers if osu-lazor is installed
+    # modules.hardware.wacom.enable = lists.any (x: strings.hasPrefix "osu" x.name) games;
+  };
+}

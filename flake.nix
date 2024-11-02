@@ -22,7 +22,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "nixpkgs/master";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     filebot.url = "github:Wittano/filebot";
     aagl = {
@@ -37,8 +36,6 @@
       flake = false;
     };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
     agenix.url = "github:ryantm/agenix";
   };
 
@@ -58,26 +55,25 @@
             ];
           };
 
-          overlays = overlays.systemOverlays ++ [ inputs.emacs-overlay.overlays.emacs ];
+          overlays = overlays.systemOverlays;
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
-      master = mkPkgs inputs.nixpkgs-master;
 
       privateRepo = lib.my.pkgs.importPkgs ./pkgs;
 
       lib = nixpkgs.lib.extend (sefl: super: {
         hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo master; };
+        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
       });
     in
     {
       lib = lib.my;
 
-      nixosConfigurations = import ./nixos-configs.nix { inherit lib; };
+      nixosConfigurations.pc = lib.my.hosts.mkHost "pc";
       overlays.default = overlays.overlay;
-      devShells.${system} = import ./shells.nix { inherit inputs lib system pkgs; };
+      devShells.${system}.default = unstable.callPackage ./shell.nix { };
       packages.${system} = privateRepo;
       templates = import ./templates.nix { inherit lib; };
     };
