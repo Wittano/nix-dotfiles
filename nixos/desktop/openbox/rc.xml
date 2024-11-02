@@ -19,19 +19,19 @@
     <primaryMonitor>Active</primaryMonitor>
   </placement>
   <theme>
-    <name>Catppuccin-Macchiato</name>
+    <name>Catppuccin-Frappe</name>
     <titleLayout>LDIMC</titleLayout>
     <keepBorder>yes</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
       <name>sans</name>
-      <size>11</size>
+      <size>14</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
       <name>sans</name>
-      <size>11</size>
+      <size>14</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
@@ -49,13 +49,13 @@
     </font>
     <font place="ActiveOnScreenDisplay">
       <name>sans</name>
-      <size>11</size>
+      <size>14</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
       <name>sans</name>
-      <size>11</size>
+      <size>14</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
@@ -150,31 +150,14 @@
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="W-F1">
-      <action name="GoToDesktop">
-        <to>1</to>
-      </action>
-    </keybind>
-    <keybind key="W-F2">
-      <action name="GoToDesktop">
-        <to>2</to>
-      </action>
-    </keybind>
-    <keybind key="W-F3">
-      <action name="GoToDesktop">
-        <to>3</to>
-      </action>
-    </keybind>
-    <keybind key="W-F4">
-      <action name="GoToDesktop">
-        <to>4</to>
-      </action>
-    </keybind>
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4">
+      <action name="Close"/>
+    </keybind>
+    <keybind key="W-q">
       <action name="Close"/>
     </keybind>
     <keybind key="A-Escape">
@@ -257,11 +240,6 @@
         <command>xautolock -locknow</command>
       </action>
     </keybind>
-    <keybind key="W-a">
-      <action name="Execute">
-        <command>emacsclient -c -a emacs</command>
-      </action>
-    </keybind>
     <keybind key="W-w">
       <action name="Execute">
         <startupnotify>
@@ -286,9 +264,7 @@
         <command>flameshot gui</command>
       </action>
     </keybind>
-    <keybind key="W-q">
-      <action name="Close"/>
-    </keybind>
+    
     <!-- Switch desktop from keyboard -->
     <keybind key="W-1">
       <action name="GoToDesktop">
@@ -394,12 +370,12 @@
     <!-- Volume keybinds -->
     <keybind key="W-p">
       <action name="Execute">
-        <command>amixer set Master 1%+</command>
+        <command>amixer set Master 5%+</command>
       </action>
     </keybind>
     <keybind key="W-o">
       <action name="Execute">
-        <command>amixer set Master 1%-</command>
+        <command>amixer set Master 5%-</command>
       </action>
     </keybind>
     <keybind key="W-m">
@@ -416,13 +392,12 @@
     <!-- Launch nautilus-->
     <keybind key="W-i">
       <action name="Execute">
-        <command>nautilus</command>
+        <command>neno</command>
       </action>
     </keybind>
     <!--    Toggle Maximaize/Fullscreen mode-->
     <keybind key="W-s">
-      <action name="ToggleFullscreen">
-            </action>
+      <action name="ToggleFullscreen"></action>
     </keybind>
   </keyboard>
   <mouse>
@@ -431,7 +406,7 @@
     <screenEdgeWarpTime>400</screenEdgeWarpTime>
     <screenEdgeWarpMouse>false</screenEdgeWarpMouse>
     <context name="Frame">
-      <mousebind button="A-Left" action="Press">
+      <mousebind button="W-Left" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
       </mousebind>
@@ -446,7 +421,7 @@
         <action name="Raise"/>
         <action name="Unshade"/>
       </mousebind>
-      <mousebind button="A-Right" action="Drag">
+      <mousebind button="W-Right" action="Drag">
         <action name="Resize"/>
       </mousebind>
       <mousebind button="A-Middle" action="Press">
