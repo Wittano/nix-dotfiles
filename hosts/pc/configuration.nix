@@ -37,7 +37,7 @@ rec {
       auto-optimise-store = true;
     };
     gc = {
-      automatic = true;
+      automatic = !programs.nh.enable;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
@@ -174,6 +174,13 @@ rec {
   };
 
   programs = {
+    nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        extraArgs = nix.gc.options;
+      };
+    };
     fish.enable = true;
     file-roller.enable = true; # Archive explorer
     evince.enable = true; # PDF viever
@@ -277,7 +284,7 @@ rec {
             neovim.wittano.enable = true;
 
             fish.shellAliases = {
-              re = "sudo nixos-rebuild switch --flake ${environment.variables.NIX_DOTFILES}#${hostname}";
+              re = "nh os switch ${environment.variables.NIX_DOTFILES}";
               # Projects
               pnix = "cd $HOME/nix-dotfiles";
               plab = "cd $HOME/projects/server/home-lab";
