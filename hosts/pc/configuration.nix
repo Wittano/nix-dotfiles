@@ -284,7 +284,6 @@ rec {
             neovim.wittano.enable = true;
 
             fish.shellAliases = {
-              re = "nh os switch ${environment.variables.NIX_DOTFILES}";
               # Projects
               pnix = "cd $HOME/nix-dotfiles";
               plab = "cd $HOME/projects/server/home-lab";
@@ -310,6 +309,9 @@ rec {
             programs = [
               "vivaldi"
               "spotify"
+              "vesktop"
+              "thunderbird"
+              "steam"
             ];
           };
 
