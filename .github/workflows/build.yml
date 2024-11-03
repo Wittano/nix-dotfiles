@@ -27,7 +27,6 @@ jobs:
       matrix:
         packages: [
             nixos-blur-playmouth,
-            picom-allusive
           ]
     runs-on: ubuntu-latest
     steps:
