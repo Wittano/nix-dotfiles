@@ -312,6 +312,7 @@ rec {
               "vesktop"
               "thunderbird"
               "steam"
+              "signal-desktop --use-tray-icon --no-sandbox"
             ];
           };
 
