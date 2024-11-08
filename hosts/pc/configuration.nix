@@ -254,6 +254,8 @@ rec {
           # Apps
           spotify
           logseq
+          keepassxc
+          krita
           # unstable.joplin-desktop # Notebook
           # unstable.vscodium # VS code
           minder # Mind maps
