@@ -213,7 +213,6 @@ rec {
           };
 
           fish.shellAliases.open = "xdg-open";
-          mpv.enable = true;
         };
 
         qt.wittano.enable = true;
@@ -256,6 +255,7 @@ rec {
           logseq
           keepassxc
           krita
+          vlc
           # unstable.joplin-desktop # Notebook
           # unstable.vscodium # VS code
           minder # Mind maps
