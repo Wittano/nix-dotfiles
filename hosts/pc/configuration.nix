@@ -134,13 +134,14 @@ rec {
 
   sound.wittano.enable = true;
 
+  virtualisation.docker.wittano.enable = true;
   hardware = {
     trackpoint.emulateWheel = true;
     keyboard.zsa.enable = true;
 
-    virtualization.wittano = mkIf (!boot.loader.grub.wittano.enableMultiBoot) {
+    virtualization.wittano = {
       enable = true;
-      enableWindowsVM = true;
+      enableWindowsVM = false;
     };
     nvidia.enable = true;
     samba.enable = true;
@@ -193,9 +194,13 @@ rec {
   };
 
   # Home-manager
-  home-manager =
-    let
-      commonConfig = {
+  home-manager = {
+    extraSpecialArgs = { inherit pkgs unstable lib inputs; };
+    useUserPackages = true;
+    backupFileExtension = "backup";
+    users.wittano = mkMerge [
+      # Common modules
+      {
         imports = [
           inputs.catppuccin.homeManagerModules.catppuccin
           inputs.nixvim.homeManagerModules.nixvim
@@ -266,92 +271,86 @@ rec {
           # Security
           bitwarden
         ];
-      };
-    in
-    {
-      extraSpecialArgs = { inherit pkgs unstable lib inputs; };
-      useUserPackages = true;
-      backupFileExtension = "backup";
-      users.wittano = mkMerge [
-        {
-          programs = {
-            jetbrains.ides = [ "go" "fork" "python" "cpp" "jvm" ];
-            git.wittano.enable = true;
-            rofi.wittano.enable = true;
+      }
+      # Wittano configuration
+      {
+        programs = {
+          jetbrains.ides = [ "go" "fork" "python" "cpp" "jvm" ];
+          git.wittano.enable = true;
+          rofi.wittano.enable = true;
 
-            games.enable = true;
-            lutris.enable = true;
+          games.enable = true;
+          lutris.enable = true;
 
-            tmux.wittano.enable = true;
-            neovim.wittano.enable = true;
+          tmux.wittano.enable = true;
+          neovim.wittano.enable = true;
 
-            fish.shellAliases = {
-              # Projects
-              pnix = "cd $HOME/nix-dotfiles";
-              plab = "cd $HOME/projects/server/home-lab";
+          fish.shellAliases = {
+            # Projects
+            pnix = "cd $HOME/nix-dotfiles";
+            plab = "cd $HOME/projects/server/home-lab";
 
-              # Nix
-              nfu = "nix flake update";
-              nfc = "nix flake check";
-              repl = "nix repl -f '<nixpkgs>'";
+            # Nix
+            nfu = "nix flake update";
+            nfc = "nix flake check";
+            repl = "nix repl -f '<nixpkgs>'";
 
-              # systemd
-              scs = "sudo systemctl status";
-              scst = "sudo systemctl stop";
-              scsta = "sudo systemctl start";
-              sce = "sudo systemctl enable --now";
-              scr = "sudo systemctl restart";
-              sdb = "systemd-analyze blame";
-            };
+            # systemd
+            scs = "sudo systemctl status";
+            scst = "sudo systemctl stop";
+            scsta = "sudo systemctl start";
+            sce = "sudo systemctl enable --now";
+            scr = "sudo systemctl restart";
+            sdb = "systemd-analyze blame";
           };
+        };
 
-          desktop.autostart = {
-            desktopName = "openbox";
-            scriptPath = ".config/openbox/autostart";
-            programs = [
-              "vivaldi"
-              "spotify"
-              "vesktop"
-              "thunderbird"
-              "steam"
-              "signal-desktop --use-tray-icon --no-sandbox"
-            ];
-          };
-
-          gtk.gtk3.bookmarks = [
-            "file://${environment.variables.NIX_DOTFILES} Nix configuration"
-            "file://${environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
+        desktop.autostart = {
+          desktopName = "openbox";
+          scriptPath = ".config/openbox/autostart";
+          programs = [
+            "vivaldi"
+            "spotify"
+            "vesktop"
+            "thunderbird"
+            "steam"
+            "signal-desktop --use-tray-icon --no-sandbox"
           ];
+        };
 
-          home.packages = with pkgs; [
-            # Utilities
-            sshs
+        gtk.gtk3.bookmarks = [
+          "file://${environment.variables.NIX_DOTFILES} Nix configuration"
+          "file://${environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
+        ];
 
-            # Tilling WM
-            timeNotify
-            showVolume
+        home.packages = with pkgs; [
+          # Utilities
+          sshs
 
-            # Apps
-            unstable.figma-linux # Figma
-            # Web browser
-            vivaldi
+          # Tilling WM
+          timeNotify
+          showVolume
 
-            # Apps
-            gnome.pomodoro
+          # Apps
+          unstable.figma-linux # Figma
+          # Web browser
+          vivaldi
 
-            # Social media
-            # telegram-desktop
-            unstable.freetube # Youtube desktop
-            fixedSignal # Signal desktop
-            # element-desktop # matrix communicator
-            vesktop
-            # irssi # IRC chat
-            unstable.streamlink-twitch-gui-bin
-          ];
-        }
-        commonConfig
-      ];
-    };
+          # Apps
+          gnome.pomodoro
+
+          # Social media
+          # telegram-desktop
+          unstable.freetube # Youtube desktop
+          fixedSignal # Signal desktop
+          # element-desktop # matrix communicator
+          vesktop
+          # irssi # IRC chat
+          unstable.streamlink-twitch-gui-bin
+        ];
+      }
+    ];
+  };
 
   # Programs
   services.locate = {
@@ -374,7 +373,6 @@ rec {
     };
   };
 
-  virtualisation.docker.wittano.enable = true;
 
   services = {
     udisks2 = {
@@ -416,4 +414,5 @@ rec {
       package = pkgs.catppuccin-sddm-corners;
     };
   };
+
 }
