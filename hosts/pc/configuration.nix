@@ -186,9 +186,9 @@ rec {
     file-roller.enable = true; # Archive explorer
     evince.enable = true; # PDF viever
     droidcam.enable = true;
-    steam.wittano.enable = true;
+    steam.wittano.enable = false;
     mihoyo = {
-      enable = true;
+      enable = false;
       games = [ "honkai-railway" ];
     };
   };
@@ -279,8 +279,8 @@ rec {
           git.wittano.enable = true;
           rofi.wittano.enable = true;
 
-          games.enable = true;
-          lutris.enable = true;
+          games.enable = false;
+          lutris.enable = false;
 
           tmux.wittano.enable = true;
           neovim.wittano.enable = true;
@@ -313,7 +313,6 @@ rec {
             "spotify"
             "vesktop"
             "thunderbird"
-            "steam"
             "signal-desktop --use-tray-icon --no-sandbox"
           ];
         };
