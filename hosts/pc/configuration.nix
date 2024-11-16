@@ -141,7 +141,7 @@ rec {
 
     virtualization.wittano = {
       enable = true;
-      enableWindowsVM = false;
+      enableWindowsVM = true;
     };
     nvidia.enable = true;
     samba.enable = true;
