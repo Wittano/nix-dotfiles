@@ -339,7 +339,7 @@ rec {
           gnome.pomodoro
 
           # Social media
-          # telegram-desktop
+          telegram-desktop
           unstable.freetube # Youtube desktop
           fixedSignal # Signal desktop
           # element-desktop # matrix communicator
