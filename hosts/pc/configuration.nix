@@ -117,7 +117,7 @@ rec {
     loader = {
       grub.wittano = {
         enable = true;
-        enableMultiBoot = true;
+        enableMultiBoot = false;
       };
       efi = {
         canTouchEfiVariables = true;
@@ -366,7 +366,7 @@ rec {
   system = {
     stateVersion = "24.05";
     autoUpgrade = {
-      enable = true;
+      enable = false;
       flake = "github:wittano/nix-dotfiles#${hostname}";
       dates = "daily";
     };

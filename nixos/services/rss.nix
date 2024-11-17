@@ -7,6 +7,15 @@ with lib.my;
   config = mkIf config.services.rss.enable {
     services.commafeed.enable = true;
 
+    hardware.virtualization.wittano.stopServices = [
+      {
+        name = "win10";
+        services = [
+          config.systemd.services.commafeed.name
+        ];
+      }
+    ];
+
     networking.firewall.allowedTCPPorts = [ 8082 ];
   };
 }
