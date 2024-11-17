@@ -403,7 +403,7 @@ rec {
       wacom.wittano.enable = true;
     };
 
-    boinc.wittano.enable = true;
+    boinc.wittano.enable = !hardware.virtualization.wittano.enableWindowsVM;
     backup.enable = true;
     rss.enable = true;
     syncthing.wittano.enable = true;
