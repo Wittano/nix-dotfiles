@@ -95,6 +95,24 @@ in
       };
     };
 
+    warnings = mkIf cfg.enableWindowsVM [ "Windows 10 VM will DISABLE all swap devices in configuration" ];
+
+    swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
+
+    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
+      name = "windows";
+      manage = "window";
+      start = "sudo virsh start win10";
+    }];
+
+    security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
+      users = [ "wittano" ];
+      commands = [{
+        command = "/run/current-system/sw/bin/virsh";
+        options = [ "NOPASSWD" ];
+      }];
+    }];
+
     users.users.wittano.extraGroups = [ "libvirtd" ];
 
     programs = {
