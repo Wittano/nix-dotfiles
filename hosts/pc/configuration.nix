@@ -253,13 +253,12 @@ rec {
           logseq
           keepassxc
           krita
-          vlc
+          # vlc
           # unstable.joplin-desktop # Notebook
           # unstable.vscodium # VS code
           minder # Mind maps
           # insomnia # REST API Client
           gnome.pomodoro
-          unstable.figma-linux # Figma
 
           # Security
           bitwarden
@@ -320,8 +319,8 @@ rec {
           sshs
 
           # Tilling WM
-          timeNotify
-          showVolume
+          # timeNotify
+          # showVolume
 
           # Apps
           unstable.figma-linux # Figma
@@ -333,12 +332,12 @@ rec {
 
           # Social media
           telegram-desktop
-          unstable.freetube # Youtube desktop
+          # unstable.freetube # Youtube desktop
           fixedSignal # Signal desktop
           # element-desktop # matrix communicator
           vesktop
           # irssi # IRC chat
-          unstable.streamlink-twitch-gui-bin
+          # unstable.streamlink-twitch-gui-bin
         ];
       }
     ];
