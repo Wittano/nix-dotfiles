@@ -4,8 +4,8 @@
 , shellcheck
 , shfmt
 , lib
-, nixos-rebuild
 , writeShellApplication
+, nh
 , python3
 , gst_all_1
 , pipenv
@@ -93,6 +93,7 @@ mkShell {
     # Nix
     nixpkgs-fmt
     nil
+    nh
 
     # Bash
     shellcheck

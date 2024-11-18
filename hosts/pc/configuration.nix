@@ -37,7 +37,7 @@ rec {
       auto-optimise-store = true;
     };
     gc = {
-      automatic = !programs.nh.enable;
+      automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
@@ -175,13 +175,6 @@ rec {
   };
 
   programs = {
-    nh = {
-      enable = true;
-      clean = {
-        enable = true;
-        extraArgs = nix.gc.options;
-      };
-    };
     fish.enable = true;
     file-roller.enable = true; # Archive explorer
     evince.enable = true; # PDF viever
