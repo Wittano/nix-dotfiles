@@ -120,7 +120,7 @@ in
       dconf.enable = true;
     };
 
-    environment.systemPackages = with pkgs; [ libguestfs ];
+    environment.systemPackages = with pkgs; [ libguestfs virtiofsd ];
 
     systemd = {
       services = {
