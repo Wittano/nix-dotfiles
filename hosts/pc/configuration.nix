@@ -178,7 +178,7 @@ rec {
     fish.enable = true;
     file-roller.enable = true; # Archive explorer
     evince.enable = true; # PDF viever
-    droidcam.enable = true;
+    # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
     steam.wittano.enable = false;
     mihoyo = {
       enable = false;
@@ -203,7 +203,7 @@ rec {
 
         programs = {
           btop.enable = true;
-          feh.wittano.enable = true;
+          nitrogen.wittano.enable = true;
           kitty.wittano.enable = true;
           fish.wittano = {
             enable = true;
@@ -331,11 +331,11 @@ rec {
           gnome.pomodoro
 
           # Social media
-          telegram-desktop
+          # telegram-desktop
           # unstable.freetube # Youtube desktop
-          fixedSignal # Signal desktop
+          # fixedSignal # Signal desktop
           # element-desktop # matrix communicator
-          vesktop
+          # vesktop
           # irssi # IRC chat
           # unstable.streamlink-twitch-gui-bin
         ];
