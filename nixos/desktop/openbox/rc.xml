@@ -180,7 +180,7 @@
         <direction>both</direction>
       </action>
     </keybind>
-    <keybind key="C-s">
+    <keybind key="A-s">
       <action name="ToggleMaximize">
         <direction>both</direction>
       </action>
