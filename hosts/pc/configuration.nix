@@ -267,7 +267,7 @@ rec {
       # Wittano configuration
       {
         programs = {
-          jetbrains.ides = [ "go" "fork" "python" "cpp" "jvm" ];
+          jetbrains.ides = [ "go" "fork" "python" "cpp" ];
           git.wittano.enable = true;
           rofi.wittano.enable = true;
 

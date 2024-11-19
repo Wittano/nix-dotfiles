@@ -49,9 +49,9 @@ let
       ];
     in
     addProjectDirField (with unstable.jetbrains; rec {
-      python = let forkConfig = mkExtraConfig fork; in {
+      python = {
         package = pycharm-professional;
-        extraConfig = forkConfig;
+        extraConfig = mkExtraConfig fork;
       };
       cpp.package = clion;
       zig = cpp;
