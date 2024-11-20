@@ -253,6 +253,7 @@ rec {
           logseq
           keepassxc
           krita
+          gromit-mpx
           # vlc
           # unstable.joplin-desktop # Notebook
           # unstable.vscodium # VS code
@@ -305,6 +306,7 @@ rec {
             "spotify"
             "vesktop"
             "thunderbird"
+            "gromit-mpx"
             "signal-desktop --use-tray-icon --no-sandbox"
           ];
         };
@@ -333,7 +335,7 @@ rec {
           # Social media
           # telegram-desktop
           # unstable.freetube # Youtube desktop
-          # fixedSignal # Signal desktop
+          fixedSignal # Signal desktop
           # element-desktop # matrix communicator
           # vesktop
           # irssi # IRC chat
