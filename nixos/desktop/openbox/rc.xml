@@ -180,11 +180,6 @@
         <direction>both</direction>
       </action>
     </keybind>
-    <keybind key="A-s">
-      <action name="ToggleMaximize">
-        <direction>both</direction>
-      </action>
-    </keybind>
     <!-- Keybindings for window switching -->
     <keybind key="W-space">
       <action name="MoveResizeTo">
