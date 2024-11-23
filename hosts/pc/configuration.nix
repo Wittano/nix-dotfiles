@@ -253,7 +253,6 @@ rec {
           logseq
           keepassxc
           krita
-          gromit-mpx
           # vlc
           # unstable.joplin-desktop # Notebook
           # unstable.vscodium # VS code
@@ -299,14 +298,12 @@ rec {
         };
 
         desktop.autostart = {
-          desktopName = "openbox";
-          scriptPath = ".config/openbox/autostart";
+          enable = false;
           programs = [
             "vivaldi"
             "spotify"
             "vesktop"
             "thunderbird"
-            "gromit-mpx"
             "signal-desktop --use-tray-icon --no-sandbox"
           ];
         };
@@ -333,11 +330,11 @@ rec {
           gnome.pomodoro
 
           # Social media
-          # telegram-desktop
+          telegram-desktop
           # unstable.freetube # Youtube desktop
           fixedSignal # Signal desktop
           # element-desktop # matrix communicator
-          # vesktop
+          vesktop
           # irssi # IRC chat
           # unstable.streamlink-twitch-gui-bin
         ];

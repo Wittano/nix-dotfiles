@@ -33,6 +33,7 @@ in
 {
   options = {
     desktop.autostart = {
+      enable = mkEnableOption "Generate autostart script";
       programs = mkOption {
         type = with types; listOf str;
         description = "List of programs used in autostart script";

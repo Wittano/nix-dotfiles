@@ -36,7 +36,11 @@ in
     assertions = desktop.mkDesktopAssertion config cfg.users;
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
-      desktop.autostart.programs = [ "tint2" "volumeicon" ];
+      desktop.autostart = {
+        desktopName = "openbox";
+        scriptPath = ".config/openbox/autostart";
+        programs = [ "tint2" "volumeicon" ];
+      };
       home = {
         packages = with pkgs; [
           openbox-menu

@@ -10,6 +10,10 @@ let
     lists.unique
   ];
 
+  isAutoscriptEnable = lists.any
+    (x: home-manager.users.${x}.desktop.autostart.enable or false)
+    (desktop.getNormalUsers config);
+
   mkQemuHook = vm: scripts:
     let
       installQemuScript = strings.optionalString cfg.enableWindowsVM ''
@@ -79,76 +83,77 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    virtualisation = {
-      spiceUSBRedirection.enable = true;
-      libvirtd = {
-        enable = true;
-        onBoot = "ignore";
-        onShutdown = "shutdown";
-        qemu = {
-          package = unstable.qemu;
-          ovmf.enable = true;
-          runAsRoot = true;
+  config = mkIf cfg.enable
+    {
+      virtualisation = {
+        spiceUSBRedirection.enable = true;
+        libvirtd = {
+          enable = true;
+          onBoot = "ignore";
+          onShutdown = "shutdown";
+          qemu = {
+            package = unstable.qemu;
+            ovmf.enable = true;
+            runAsRoot = true;
+          };
+          hooks.qemu = qemuHooks;
         };
-        hooks.qemu = qemuHooks;
       };
-    };
 
-    warnings = mkIf cfg.enableWindowsVM [ "Windows 10 VM will DISABLE all swap devices in configuration" ];
+      warnings = mkIf cfg.enableWindowsVM [ "Windows 10 VM will DISABLE all swap devices in configuration" ];
 
-    swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
+      swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
 
-    services.xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
-      name = "windows";
-      manage = "window";
-      start = "sudo virsh start win10";
-    }];
-
-    security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
-      users = [ "wittano" ];
-      commands = [{
-        command = "/run/current-system/sw/bin/virsh";
-        options = [ "NOPASSWD" ];
+      services.xserver.displayManager.session = mkIf (cfg.enableWindowsVM && isAutoscriptEnable) [{
+        name = "windows";
+        manage = "window";
+        start = "sudo virsh start win10";
       }];
-    }];
 
-    users.users.wittano.extraGroups = [ "libvirtd" ];
+      security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
+        users = [ "wittano" ];
+        commands = [{
+          command = "/run/current-system/sw/bin/virsh";
+          options = [ "NOPASSWD" ];
+        }];
+      }];
 
-    programs = {
-      virt-manager.enable = true;
-      dconf.enable = true;
-    };
+      users.users.wittano.extraGroups = [ "libvirtd" ];
 
-    environment.systemPackages = with pkgs; [ libguestfs virtiofsd ];
-
-    systemd = {
-      services = {
-        libvirtd.path = mkIf cfg.enableWindowsVM (with pkgs; [ bash libvirt kmod systemd ripgrep sd ]);
-        pcscd.enable = mkIf cfg.enableWindowsVM false;
+      programs = {
+        virt-manager.enable = true;
+        dconf.enable = true;
       };
 
-      sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
+      environment.systemPackages = with pkgs; [ libguestfs virtiofsd ];
+
+      systemd = {
+        services = {
+          libvirtd.path = mkIf cfg.enableWindowsVM (with pkgs; [ bash libvirt kmod systemd ripgrep sd ]);
+          pcscd.enable = mkIf cfg.enableWindowsVM false;
+        };
+
+        sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
+      };
+
+      system.activationScripts.installWindowsVMFiles = link.mkLinks [
+        {
+          src = virutalizationDir."vibios.rom".source;
+          dest = "/var/lib/libvirt/vbios/vibios.rom";
+          active = cfg.enableWindowsVM;
+        }
+        {
+          src = virutalizationDir.qemu.source;
+          dest = "/var/lib/libvirt/hooks/qemu";
+          active = cfg.enableWindowsVM;
+        }
+      ];
+
+      boot = {
+        kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+        kernelModules = [ "kvm-intel" "vifo-pci" ];
+      };
+
+      services.ssh.wittano.enable = true;
     };
-
-    system.activationScripts.installWindowsVMFiles = link.mkLinks [
-      {
-        src = virutalizationDir."vibios.rom".source;
-        dest = "/var/lib/libvirt/vbios/vibios.rom";
-        active = cfg.enableWindowsVM;
-      }
-      {
-        src = virutalizationDir.qemu.source;
-        dest = "/var/lib/libvirt/hooks/qemu";
-        active = cfg.enableWindowsVM;
-      }
-    ];
-
-    boot = {
-      kernelParams = [ "intel_iommu=on" "iommu=pt" ];
-      kernelModules = [ "kvm-intel" "vifo-pci" ];
-    };
-
-    services.ssh.wittano.enable = true;
-  };
 }
