@@ -171,7 +171,7 @@ rec {
   catppuccin = {
     enable = mkForce false;
     accent = "peach";
-    flavor = "frappe";
+    flavor = "latte";
   };
 
   programs = {
