@@ -41,7 +41,7 @@ in
       partOf = [ "graphical-session.target" ];
 
       environment = {
-        DISPLAY = ''":0"'';
+        DISPLAY = ":0";
       };
       script = meta.getExe setupWacom;
 
