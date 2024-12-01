@@ -51,7 +51,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     home.file = mkIf (cfg.scriptPath != null) {
       "${cfg.scriptPath}".source = mkAutostartScript cfg.desktopName cfg.programs;
     };

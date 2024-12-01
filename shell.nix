@@ -104,8 +104,8 @@ mkShell {
     testSddmTheme
 
     # Python
-    # python3
-    # pipenv
+     python3
+     pipenv
 
     # Haskell deps
     # haskell-language-server

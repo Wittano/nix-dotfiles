@@ -297,16 +297,7 @@ rec {
           };
         };
 
-        desktop.autostart = {
-          enable = false;
-          programs = [
-            "vivaldi"
-            "spotify"
-            "vesktop"
-            "thunderbird"
-            "signal-desktop --use-tray-icon --no-sandbox"
-          ];
-        };
+        desktop.autostart.enable = true;
 
         gtk.gtk3.bookmarks = [
           "file://${environment.variables.NIX_DOTFILES} Nix configuration"
@@ -330,12 +321,12 @@ rec {
           gnome.pomodoro
 
           # Social media
-          telegram-desktop
+          # telegram-desktop
           # unstable.freetube # Youtube desktop
-          fixedSignal # Signal desktop
+          # fixedSignal # Signal desktop
           # element-desktop # matrix communicator
-          vesktop
-          # irssi # IRC chat
+          # vesktop
+          irssi # IRC chat
           # unstable.streamlink-twitch-gui-bin
         ];
       }
@@ -348,7 +339,7 @@ rec {
     interval = "21:37";
   };
 
-  desktop.openbox = {
+  desktop.qtile = {
     enable = true;
     users = [ "wittano" ];
   };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, home-manager, ... }:
+{ config, lib, pkgs, unstable, ... }:
 with lib;
 with lib.my;
 let
