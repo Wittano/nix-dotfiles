@@ -3,7 +3,7 @@ import os.path
 from typing import Dict
 
 
-def get_theme(theme: str = "cappucin_macchiato") -> Dict[str, str]:
+def get_theme(theme: str = "catppuccin_macchiato") -> Dict[str, str]:
     dir = os.path.dirname(os.path.realpath(__file__))
     path = f"{dir}/colors/{theme}.json"
 
