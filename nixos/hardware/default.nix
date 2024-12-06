@@ -7,6 +7,6 @@
     ./printer.nix
     ./samba.nix
     ./sound.nix
-    ./virutalization.nix
+    ./virtualization
   ];
 }

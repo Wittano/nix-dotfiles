@@ -3,7 +3,6 @@ with lib;
 with lib.my;
 let
   cfg = config.hardware.virtualization.wittano;
-  virutalizationDir = mapper.mapDirToAttrs ./virtualization;
 
   vmNames = trivial.pipe cfg.stopServices [
     (builtins.map (x: x.name))
@@ -25,17 +24,36 @@ let
 
       name = "${vm}-stop-services";
       scriptFile = pkgs.writeShellScript name (builtins.concatStringsSep "\n" scripts);
+
     in
     pkgs.stdenv.mkDerivation {
       inherit name;
 
-      src = ./virtualization;
+      src = ./.;
 
       installPhase = ''
         mkdir -p $out/prepare/begin
         cp ${scriptFile} $out/prepare/begin/${name}.sh
       '' + installQemuScript;
     };
+
+  usbMountScript = pkgs.writeShellApplication {
+    name = "mount-usb-device";
+    runtimeInputs = with pkgs; [ coreutils usbutils toybox libvirt ];
+    text = trivial.pipe ./mount-usb.sh [
+      builtins.readFile
+      (builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ])
+    ];
+  };
+
+  unmountScript = pkgs.writeShellApplication {
+    name = "unmount-usb-device";
+    runtimeInputs = with pkgs; [ coreutils usbutils toybox libvirt ];
+    text = trivial.pipe ./unmount.sh [
+      builtins.readFile
+      (builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ])
+    ];
+  };
 
   qemuHooks = builtins.listToAttrs
     (builtins.map
@@ -138,12 +156,12 @@ in
 
       system.activationScripts.installWindowsVMFiles = link.mkLinks [
         {
-          src = virutalizationDir."vibios.rom".source;
+          src = ./vibios.rom;
           dest = "/var/lib/libvirt/vbios/vibios.rom";
           active = cfg.enableWindowsVM;
         }
         {
-          src = virutalizationDir.qemu.source;
+          src = ./qemu;
           dest = "/var/lib/libvirt/hooks/qemu";
           active = cfg.enableWindowsVM;
         }
@@ -155,5 +173,11 @@ in
       };
 
       services.ssh.wittano.enable = true;
+
+      services.udev.extraRules = mkIf cfg.enableWindowsVM ''
+        ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
+        ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
+      '';
     };
 }
+
