@@ -333,6 +333,7 @@ rec {
 
 
   services = {
+    prometheus.wittano.enable = true;
     pipewire.wittano.enable = true;
     udisks2 = {
       enable = true;
