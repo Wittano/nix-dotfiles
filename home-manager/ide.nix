@@ -56,15 +56,7 @@ let
       cpp.package = clion;
       zig = cpp;
       go = {
-        package = goland.overrideAttrs (attrs: {
-          postFixup = (attrs.postFixup or "") + lib.optionalString pkgs.stdenv.isLinux ''
-            if [ -f $out/goland/plugins/go-plugin/lib/dlv/linux/dlv ]; then
-              rm $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-            fi
-
-            ln -s ${unstable.delve}/bin/dlv $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-          '';
-        });
+        package = goland;
         extraConfig = {
           home.packages = with pkgs; [ golangci-lint ];
         };

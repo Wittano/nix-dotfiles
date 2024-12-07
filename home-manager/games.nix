@@ -4,10 +4,6 @@ with lib.my;
 let
   cfg = config.programs.games;
 
-  fixedMindustry = unstable.mindustry.override {
-    gradle = unstable.gradle_7;
-  };
-
   games = with unstable; [
     # Games
     osu-lazer # osu!lazer

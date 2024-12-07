@@ -1,30 +1,6 @@
 { config, lib, pkgs, hostname, inputs, unstable, ... }:
 with lib;
 with lib.my;
-let
-  commonInputs = with pkgs; [ libnotify coreutils ];
-  timeNotify = pkgs.writeShellApplication {
-    name = "time-notify";
-    runtimeInputs = commonInputs;
-    text = ''
-      notify-send -t 2000 "$(date)"
-    '';
-  };
-  showVolume = pkgs.writeShellApplication {
-    name = "show-volume";
-    runtimeInputs = commonInputs;
-    text = ''
-      notify-send -t 2000 "Volume: $(amixer sget Master | awk -F"[][]" '/Left:/ { print $2 }')";
-    '';
-  };
-
-  fixedSignal = pkgs.signal-desktop.overrideAttrs (oldAttrs: {
-    preFixup = oldAttrs.preFixup + ''
-      substituteInPlace $out/share/applications/${oldAttrs.pname}.desktop \
-      --replace "$out/bin/${oldAttrs.pname}" "$out/bin/${oldAttrs.pname} --use-tray-icon"
-    '';
-  });
-in
 rec {
 
   imports = [ ./hardware.nix ./networking.nix ];
