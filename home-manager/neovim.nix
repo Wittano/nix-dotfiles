@@ -126,12 +126,13 @@ with lib;
               package = pkgs.nodePackages.bash-language-server;
             };
             terraformls.enable = true;
-            nil-ls = {
+            nil_ls = {
               enable = true; # Nix
               settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
             };
             hls = {
               enable = true;
+              installGhc = true;
               package = pkgs.haskell-language-server;
             };
             dockerls.enable = true;
@@ -139,6 +140,7 @@ with lib;
           };
         };
 
+        web-devicons.enable = true;
         treesitter.enable = true;
 
         luasnip.enable = true;
@@ -187,10 +189,10 @@ with lib;
 
         lightline = {
           enable = true;
-          colorscheme = "catppuccin";
+          settings.colorscheme = "catppuccin";
         };
 
-        surround.enable = true;
+        vim-surround.enable = true;
         todo-comments.enable = true;
         fugitive.enable = true;
 

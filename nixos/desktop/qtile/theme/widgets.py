@@ -1,8 +1,9 @@
 import os
+import subprocess
 from typing import Dict
 
 from libqtile import widget
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 
 from const import TERMINAL, DEFAULT_THEME_NAME
 
@@ -149,12 +150,21 @@ class SepLineSeparator(widget.Image):
 
 class VolumeWidget(widget.Volume):
     def __init__(self, theme: Dict[str, str]):
+        command = "pactl get-sink-volume @DEFAULT_SINK@ | cut -f 6 -d ' '"
+        try:
+            exit_code, _ = subprocess.getstatusoutput("which amixer")
+            if exit_code == 0:
+                command = None
+        except subprocess.CalledProcessError:
+            pass
+
         super(VolumeWidget, self).__init__(
             fmt='  {}',
             fontsize=14,
             font="Hack NF Bold",
             background=theme["background"],
             foreground=theme["red"],
+            get_volume_command=command,
         )
 
 

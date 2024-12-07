@@ -4,6 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+qtile = "*"
+mypy = "*"
+black = "*"
 
 [dev-packages]
 

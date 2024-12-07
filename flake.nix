@@ -20,15 +20,15 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     filebot.url = "github:Wittano/filebot";
     aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix/release-24.05";
+      url = "github:ezKEa/aagl-gtk-on-nix/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim.url = "github:nix-community/nixvim/nixos-24.05";
+    nixvim.url = "github:nix-community/nixvim/nixos-24.11";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin-dunst = {

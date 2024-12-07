@@ -132,8 +132,6 @@ rec {
     };
   };
 
-  sound.wittano.enable = true;
-
   virtualisation.docker.wittano.enable = true;
   hardware = {
     trackpoint.emulateWheel = true;
@@ -237,16 +235,16 @@ rec {
           flameshot
 
           # Folder Dialog menu
-          gnome.zenity
+          zenity
 
           # Web browser
           vivaldi
 
           # Utils 
           thunderbird # Mail
-          gnome.eog # Image viewer
+          eog # Image viewer
           onlyoffice-bin # Office staff
-          cinnamon.nemo
+          nemo
 
           # Apps
           spotify
@@ -258,7 +256,7 @@ rec {
           # unstable.vscodium # VS code
           minder # Mind maps
           # insomnia # REST API Client
-          gnome.pomodoro
+          pomodoro
 
           # Security
           bitwarden
@@ -269,7 +267,10 @@ rec {
         programs = {
           jetbrains.ides = [ "go" "fork" "python" "cpp" ];
           git.wittano.enable = true;
-          rofi.wittano.enable = true;
+          rofi.wittano = {
+            enable = true;
+            desktopName = "qtile";
+          };
 
           games.enable = false;
           lutris.enable = false;
@@ -318,7 +319,7 @@ rec {
           vivaldi
 
           # Apps
-          gnome.pomodoro
+          pomodoro
 
           # Social media
           # telegram-desktop
@@ -346,7 +347,7 @@ rec {
 
   # System
   system = {
-    stateVersion = "24.05";
+    stateVersion = "24.11";
     autoUpgrade = {
       enable = false;
       flake = "github:wittano/nix-dotfiles#${hostname}";
@@ -356,6 +357,7 @@ rec {
 
 
   services = {
+    pipewire.wittano.enable = true;
     udisks2 = {
       enable = true;
       mountOnMedia = true;

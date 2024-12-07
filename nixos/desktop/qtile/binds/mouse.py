@@ -1,4 +1,4 @@
-from libqtile.config import Drag, Click
+from libqtile.config import Drag
 from libqtile.lazy import lazy
 
 from const import SUPER_KEY, CONTROL_KEY

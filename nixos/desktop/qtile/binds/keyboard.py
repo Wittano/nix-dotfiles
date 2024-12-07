@@ -1,3 +1,4 @@
+import subprocess
 from typing import List
 
 from libqtile.config import Group, Key
@@ -7,8 +8,28 @@ from const import (ALT_KEY, CONTROL_KEY, SHIFT_KEY, SUPER_KEY, TERMINAL,
                    VOLUME_PERCENT_RATIO)
 from scripts import monitors
 
+def __is_pipewire_installed() -> bool:
+    try:
+        exit_code, _ = subprocess.getstatusoutput("which amixer")
+        return exit_code != 0
+    except subprocess.CalledProcessError:
+        return True
+
+def __get_volume_change_command(vol_up: bool = True) -> str:
+    change_char = "+" if vol_up else "-"
+
+    if __is_pipewire_installed():
+        volume_suffix = f"{change_char}{VOLUME_PERCENT_RATIO}%"
+        command = "pactl set-sink-volume @DEFAULT_SINK@"
+    else:
+        command = "amixer sset Master"
+        volume_suffix = f"{VOLUME_PERCENT_RATIO}%{change_char}"
+
+    return f"{command} {volume_suffix}"
 
 def get_keybindings(groups: List[Group]) -> List[Key]:
+    volume_toogle_command = "pactl set-sink-mute @DEFAULT_SINK@ toggle" if __is_pipewire_installed() else "amixer sset Master toggle"
+
     binds = [
         Key([SUPER_KEY], "h", lazy.layout.left(), desc="Move focus to left"),
         Key([SUPER_KEY], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -76,19 +97,19 @@ def get_keybindings(groups: List[Group]) -> List[Key]:
         Key(
             [SUPER_KEY],
             "m",
-            lazy.spawn("amixer sset Master toggle"),
+            lazy.spawn(volume_toogle_command),
             desc="Toggle mute/unmute volume",
         ),
         Key(
             [SUPER_KEY],
             "p",
-            lazy.spawn(f"amixer sset Master {VOLUME_PERCENT_RATIO}%+"),
+            lazy.spawn(__get_volume_change_command()),
             desc="Increases volume",
         ),
         Key(
             [SUPER_KEY],
             "o",
-            lazy.spawn(f"amixer sset Master {VOLUME_PERCENT_RATIO}%-"),
+            lazy.spawn(__get_volume_change_command(False)),
             desc="Decreases volume",
         ),
         Key(

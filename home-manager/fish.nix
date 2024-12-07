@@ -90,7 +90,7 @@ in
             templatesAliases = attrsets.mapAttrs'
               (n: v: {
                 name = "t${n}";
-                value = "${pkgs.nixFlakes}/bin/nix flake init --template $NIX_DOTFILES#${n}";
+                value = "nix flake init --template $NIX_DOTFILES#${n}";
               })
               (builtins.readDir ./../templates);
           in

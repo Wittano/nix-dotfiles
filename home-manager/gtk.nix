@@ -2,9 +2,9 @@
 with lib;
 with lib.my;
 let
-  colloidSchemaVariant = "dracula";
+  colloidSchemaVariant = "Dracula";
   colloidIconTheme = pkgs.colloid-icon-theme.override {
-    schemeVariants = [ colloidSchemaVariant ];
+    schemeVariants = [ (strings.toLower colloidSchemaVariant) ];
     colorVariants = [ "default" ];
   };
   gtkSettings = {
@@ -62,10 +62,14 @@ in
         size = 12;
         package = pkgs.jetbrains-mono;
       };
-      iconTheme = {
-        name = "Colloid-${colloidSchemaVariant}-light";
-        package = colloidIconTheme;
-      };
+      iconTheme =
+        let
+          lightness = if config.catppuccin.flavor == "latte" then "Light" else "Dark";
+        in
+        {
+          name = "Colloid-${colloidSchemaVariant}-${lightness}";
+          package = colloidIconTheme;
+        };
       theme = {
         name = catppuccinThemeName;
         package = catppuccinTheme;

@@ -10,7 +10,7 @@ with lib;
       brscan4.enable = true;
     };
     users.users.wittano.extraGroups = [ "scanner" "lp" ];
-    environment.systemPackages = with pkgs; [ gnome.simple-scan ];
+    environment.systemPackages = with pkgs; [ simple-scan ];
 
     # Printer
     hardware.printers = rec{

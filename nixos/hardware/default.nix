@@ -6,7 +6,7 @@
     ./nvidia.nix
     ./printer.nix
     ./samba.nix
-    ./sound.nix
+    ./pipewire.nix
     ./virtualization
   ];
 }
