@@ -3,6 +3,11 @@ with lib;
 with lib.my;
 let
   cfg = config.services.syncthing.wittano;
+
+  laptop = "Debian - Laptop";
+  work = "Windows - Work";
+  trueNas = "TrueNAS - Server";
+  phone = "Android - Phone";
 in
 {
   options.services.syncthing.wittano.enable = mkEnableOption "Enable syncthing deamon";
@@ -21,7 +26,8 @@ in
             label = "Programming projects";
             path = "~/projects";
             devices = [
-              "TrueNAS"
+              trueNas
+              laptop
             ];
           };
           learning = {
@@ -29,7 +35,8 @@ in
             label = "Enterprice learning projects";
             path = "~/projects/learning";
             devices = [
-              "Work"
+              work
+              laptop
             ];
             versioning = {
               type = "trashcan";
@@ -44,31 +51,17 @@ in
             label = "Sync folder";
             path = "~/Sync";
             devices = [
-              "Phone"
-              "TrueNAS"
+              phone
+              trueNas
+              laptop
             ];
-          };
-          openttd = {
-            id = "dmzkg-75il2";
-            path = "~/.local/share/openttd/save/multi";
-            label = "OpenTTD - multiplayer saves";
-            devices = [
-              "Karol"
-            ];
-            versioning = {
-              type = "trashcan";
-              params = {
-                keep = "5";
-                cleanoutDays = "356";
-              };
-            };
           };
         };
         devices = {
-          Phone.id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
-          TrueNAS.id = "CIMVMQO-7RLKQAL-BXRS6Z3-XXFPRLB-PYHZUR3-KKH5HGX-PFWLY6S-C3KLEQ6";
-          Karol.id = "F7EH7MZ-N5VYRKT-IA2XWJG-I7SPGDP-RDVSZCU-WTCI534-NQPF7I2-KLE6IQL";
-          Work.id = "M3EUKVC-IYHSZZF-OFX75LZ-3E4WZAJ-PGUTYXD-FYDZSEW-GRBGRDZ-IBOHGQK";
+          ${phone}.id = "WOQUTMO-7NJ7ONW-TMJ27JC-ENUM6QN-WE35NQO-MEUP3VQ-FEMMI2E-TCT4LQ4";
+          ${trueNas}.id = "CIMVMQO-7RLKQAL-BXRS6Z3-XXFPRLB-PYHZUR3-KKH5HGX-PFWLY6S-C3KLEQ6";
+          ${work}.id = "M3EUKVC-IYHSZZF-OFX75LZ-3E4WZAJ-PGUTYXD-FYDZSEW-GRBGRDZ-IBOHGQK";
+          ${laptop}.id = "JAPRBPA-7KH7MCW-7TXX5WA-AYEKCC2-ACWEPAF-6SXEA3N-ELU2N7Q-TFSZ5QM";
         };
       };
     };
