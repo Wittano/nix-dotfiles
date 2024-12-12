@@ -241,7 +241,7 @@ rec {
       # Wittano configuration
       {
         programs = {
-          jetbrains.ides = [ "go" "fork" "python" "cpp" ];
+          jetbrains.ides = [ "go" "fork" "python" "cpp" "dotnet" "jvm" ];
           git.wittano.enable = true;
           rofi.wittano = {
             enable = true;
@@ -298,11 +298,11 @@ rec {
           pomodoro
 
           # Social media
-          # telegram-desktop
+          telegram-desktop
           # unstable.freetube # Youtube desktop
-          # fixedSignal # Signal desktop
-          # element-desktop # matrix communicator
-          # vesktop
+          signal-desktop # Signal desktop
+          element-desktop # matrix communicator
+          vesktop
           irssi # IRC chat
           # unstable.streamlink-twitch-gui-bin
         ];
