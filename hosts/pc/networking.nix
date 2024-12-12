@@ -8,7 +8,7 @@ with lib;
         prefixLength = 24;
       }
     ];
-    nameservers = [ "192.168.1.8" "1.1.1.1" ];
+    nameservers = [ "1.1.1.1" ];
     defaultGateway = mkIf config.hardware.virtualization.wittano.enableWindowsVM {
       address = "192.168.1.1";
       interface = "eno1";
