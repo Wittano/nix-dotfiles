@@ -156,8 +156,8 @@ in
 
       system.activationScripts.installWindowsVMFiles = link.mkLinks [
         {
-          src = ./vibios.rom;
-          dest = "/var/lib/libvirt/vbios/vibios.rom";
+          src = ./amd.vibios.rom;
+          dest = "/var/lib/libvirt/vbios/amd.vibios.rom";
           active = cfg.enableWindowsVM;
         }
         {
@@ -168,16 +168,20 @@ in
       ];
 
       boot = {
-        kernelParams = [ "intel_iommu=on" "iommu=pt" ];
-        kernelModules = [ "kvm-intel" "vifo-pci" ];
+        kernelParams = [ "amd_iommu=on" "iommu=pt" "iommu=1" ];
+        kernelModules = [ "vifo-pci" "vendor-reset" ];
+        extraModulePackages = with config.boot.kernelPackages; [ vendor-reset ];
       };
 
       services.ssh.wittano.enable = true;
 
-      services.udev.extraRules = mkIf cfg.enableWindowsVM ''
-        ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
-        ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
-      '';
+      services.udev = {
+        packages = with config.boot.kernelPackages; [ vendor-reset ];
+        extraRules = mkIf cfg.enableWindowsVM ''
+          ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
+          ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
+        '';
+      };
     };
 }
 

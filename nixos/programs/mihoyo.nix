@@ -1,4 +1,4 @@
-{ lib, config, inputs, ... }:
+{ lib, config, inputs, system, ... }:
 with lib;
 with lib.my;
 let
@@ -26,6 +26,9 @@ in
 
     networking.mihoyo-telemetry.block = mkForce true;
     # Honkai Railway
-    programs.honkers-railway-launcher.enable = findGame "honkai-railway";
+    programs.honkers-railway-launcher = {
+      enable = findGame "honkai-railway";
+      package = inputs.aagl.packages.${system}.honkers-railway-launcher;
+    };
   };
 }

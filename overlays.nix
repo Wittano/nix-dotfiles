@@ -40,10 +40,6 @@ let
       '';
     });
 
-    mindustry = prev.mindustry.override {
-      gradle = final.gradle_7;
-    };
-
     jetbrains = prev.jetbrains // {
       goland = prev.jetbrains.goland.overrideAttrs (attrs: {
         postFixup = (attrs.postFixup or "") + lib.optionalString final.stdenv.isLinux ''

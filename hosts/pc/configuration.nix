@@ -8,8 +8,8 @@ rec {
   # Nix configuration
   nix = {
     settings = {
-      max-jobs = 4;
-      cores = 4;
+      max-jobs = 24;
+      cores = 24;
       auto-optimise-store = true;
     };
     gc = {
@@ -114,10 +114,11 @@ rec {
     keyboard.zsa.enable = true;
 
     virtualization.wittano = {
-      enable = true;
-      enableWindowsVM = true;
+      enable = false;
+      enableWindowsVM = false;
     };
-    nvidia.enable = true;
+    # nvidia.enable = true;
+    amd.enable = true;
     samba.enable = true;
     printers.wittano.enable = true;
     bluetooth.wittano.enable = true;
@@ -153,9 +154,9 @@ rec {
     file-roller.enable = true; # Archive explorer
     evince.enable = true; # PDF viever
     # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
-    steam.wittano.enable = false;
+    steam.wittano.enable = true;
     mihoyo = {
-      enable = false;
+      enable = true;
       games = [ "honkai-railway" ];
     };
   };
@@ -248,8 +249,8 @@ rec {
             desktopName = "qtile";
           };
 
-          games.enable = false;
-          lutris.enable = false;
+          games.enable = true;
+          lutris.enable = true;
 
           tmux.wittano.enable = true;
           neovim.wittano.enable = true;
@@ -333,7 +334,7 @@ rec {
 
 
   services = {
-    prometheus.wittano.enable = true;
+    prometheus.wittano.enable = false;
     pipewire.wittano.enable = true;
     udisks2 = {
       enable = true;
@@ -365,7 +366,7 @@ rec {
     };
 
     boinc.wittano.enable = !hardware.virtualization.wittano.enableWindowsVM;
-    backup.enable = true;
+    # backup.enable = true;
     rss.enable = true;
     syncthing.wittano.enable = true;
     filebot.wittano.enable = true;

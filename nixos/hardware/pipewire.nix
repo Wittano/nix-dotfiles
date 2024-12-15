@@ -12,6 +12,7 @@ in
     environment.systemPackages = with pkgs; [ pulseaudio ];
 
     security.rtkit.enable = true;
+    hardware.enableAllFirmware = cfg.enable;
     services.pipewire = rec {
       enable = cfg.enable;
       alsa.enable = enable;

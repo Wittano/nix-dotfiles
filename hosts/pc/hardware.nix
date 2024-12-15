@@ -1,6 +1,4 @@
 { ... }: {
-  hardware.cpu.intel.updateMicrocode = true;
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/ROOT";
@@ -11,5 +9,4 @@
       fsType = "vfat";
     };
   };
-  swapDevices = [{ device = "/dev/disk/by-label/SWAP"; }];
 }

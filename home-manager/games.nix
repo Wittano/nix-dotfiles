@@ -8,7 +8,7 @@ let
     # Games
     osu-lazer # osu!lazer
     # airshipper # Veloren
-    fixedMindustry # Mindustry
+    mindustry # Mindustry
     xivlauncher # FF XIV
     prismlauncher
   ];
