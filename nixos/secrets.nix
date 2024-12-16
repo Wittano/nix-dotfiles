@@ -12,7 +12,9 @@ in
 {
   environment.systemPackages = [ inputs.agenix.packages."${system}".default ];
   age = {
-    inherit identityPaths;
+    identityPaths = [
+      "/home/wittano/.ssh/samba.key"
+    ];
     secrets.samba = {
       file = secretDir + "/samba.age";
       owner = "root";
@@ -40,6 +42,7 @@ in
       keys = builtins.map (x: x.path) config.services.openssh.hostKeys;
       keyArray = bash.mkBashArray keys;
     in
+    mkIf (config.services.backup.enable)
       /*bash*/ ''
       keys=(${keyArray})
       today=$(date +"%d-%b-%Y")
