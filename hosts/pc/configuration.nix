@@ -1,6 +1,135 @@
 { config, lib, pkgs, hostname, inputs, unstable, ... }:
 with lib;
 with lib.my;
+let
+  accent = "peach";
+  flavor = "frappe";
+
+  nixDotfilesPath = "${config.home-manager.users.wittano.home.homeDirectory}/nix-dotfiles";
+
+  systemVersion = "24.11";
+  homeManagerConfig = {
+    imports = [
+      inputs.catppuccin.homeManagerModules.catppuccin
+      inputs.nixvim.homeManagerModules.nixvim
+      ./../../home-manager
+    ];
+    home.stateVersion = systemVersion;
+
+    programs = {
+      btop.enable = true;
+      nitrogen.wittano.enable = true;
+      kitty.wittano.enable = true;
+      fish.wittano = {
+        enable = true;
+        enableDirenv = true;
+      };
+
+      fish.shellAliases.open = "xdg-open";
+      jetbrains.ides = [ "go" "fork" "python" "cpp" "dotnet" ];
+      git.wittano.enable = true;
+      rofi.wittano = {
+        enable = true;
+        desktopName = "qtile";
+      };
+
+      games.enable = true;
+      lutris.enable = true;
+
+      tmux.wittano.enable = true;
+      neovim.wittano.enable = true;
+
+      fish.shellAliases = {
+        # Projects
+        pnix = "cd $HOME/nix-dotfiles";
+        plab = "cd $HOME/projects/server/home-lab";
+
+        # Nix
+        nfu = "nix flake update";
+        nfc = "nix flake check";
+        repl = "nix repl -f '<nixpkgs>'";
+
+        # systemd
+        scs = "sudo systemctl status";
+        scst = "sudo systemctl stop";
+        scsta = "sudo systemctl start";
+        sce = "sudo systemctl enable --now";
+        scr = "sudo systemctl restart";
+        sdb = "systemd-analyze blame";
+      };
+    };
+
+    qt.wittano.enable = true;
+    gtk.wittano.enable = true;
+
+    catppuccin = {
+      inherit accent flavor;
+
+      enable = true;
+    };
+
+    services = {
+      redshift.wittano.enable = true;
+      picom.wittano.enable = true;
+      dunst.wittano.enable = true;
+      home-manager.autoUpgrade = {
+        enable = true;
+        frequency = "daily";
+      };
+    };
+
+    home.packages = with pkgs; [
+      # Utils
+      flameshot
+
+      # Folder Dialog menu
+      zenity
+
+      # Web browser
+      vivaldi
+
+      # Utils 
+      thunderbird # Mail
+      eog # Image viewer
+      onlyoffice-bin # Office staff
+      nemo
+      sshs
+
+      # Apps
+      spotify
+      logseq
+      keepassxc
+      krita
+      # vlc
+      # unstable.joplin-desktop # Notebook
+      # unstable.vscodium # VS code
+      minder # Mind maps
+      # insomnia # REST API Client
+      pomodoro
+      unstable.figma-linux # Figma
+      planify # ToDo app
+
+      # Security
+      bitwarden
+
+      # Social media
+      telegram-desktop
+      # unstable.freetube # Youtube desktop
+      signal-desktop # Signal desktop
+      element-desktop # matrix communicator
+      vesktop
+      irssi # IRC chat
+      # unstable.streamlink-twitch-gui-bin
+    ];
+
+    desktop.autostart.enable = true;
+
+    gtk.gtk3.bookmarks = [
+      "file://${nixDotfilesPath} Nix configuration"
+    ];
+  };
+
+in
 rec {
 
   imports = [ ./hardware.nix ./networking.nix ];
@@ -68,13 +197,9 @@ rec {
   environment = {
     systemPackages = with pkgs; [ vim htop bash keymapp wally-cli ];
     variables =
-      let
-        homeDir = config.home-manager.users.wittano.home.homeDirectory;
-      in
       {
         EDITOR = "vim";
-        DOTFILES = "${homeDir}/nix-dotfiles/dotfiles";
-        NIX_DOTFILES = "${homeDir}/nix-dotfiles";
+        NIX_DOTFILES = nixDotfilesPath;
       };
 
     shells = with pkgs; [ bash fish ];
@@ -144,9 +269,9 @@ rec {
   };
 
   catppuccin = {
+    inherit accent flavor;
+
     enable = mkForce false;
-    accent = "peach";
-    flavor = "frappe";
   };
 
   programs = {
@@ -166,149 +291,7 @@ rec {
     extraSpecialArgs = { inherit pkgs unstable lib inputs; };
     useUserPackages = true;
     backupFileExtension = "backup";
-    users.wittano = mkMerge [
-      # Common modules
-      {
-        imports = [
-          inputs.catppuccin.homeManagerModules.catppuccin
-          inputs.nixvim.homeManagerModules.nixvim
-          ./../../home-manager
-        ];
-        home.stateVersion = system.stateVersion;
-
-        programs = {
-          btop.enable = true;
-          nitrogen.wittano.enable = true;
-          kitty.wittano.enable = true;
-          fish.wittano = {
-            enable = true;
-            enableDirenv = true;
-          };
-
-          fish.shellAliases.open = "xdg-open";
-        };
-
-        qt.wittano.enable = true;
-        gtk.wittano.enable = true;
-
-        catppuccin = {
-          enable = true;
-          accent = catppuccin.accent;
-          flavor = catppuccin.flavor;
-        };
-
-        services = {
-          redshift.wittano.enable = true;
-          picom.wittano.enable = true;
-          dunst.wittano.enable = true;
-          home-manager.autoUpgrade = {
-            enable = true;
-            frequency = "daily";
-          };
-        };
-
-        home.packages = with pkgs; [
-          # Utils
-          flameshot
-
-          # Folder Dialog menu
-          zenity
-
-          # Web browser
-          vivaldi
-
-          # Utils 
-          thunderbird # Mail
-          eog # Image viewer
-          onlyoffice-bin # Office staff
-          nemo
-
-          # Apps
-          spotify
-          logseq
-          keepassxc
-          krita
-          # vlc
-          # unstable.joplin-desktop # Notebook
-          # unstable.vscodium # VS code
-          minder # Mind maps
-          # insomnia # REST API Client
-          pomodoro
-
-          # Security
-          bitwarden
-        ];
-      }
-      # Wittano configuration
-      {
-        programs = {
-          jetbrains.ides = [ "go" "fork" "python" "cpp" "dotnet" "jvm" ];
-          git.wittano.enable = true;
-          rofi.wittano = {
-            enable = true;
-            desktopName = "qtile";
-          };
-
-          games.enable = true;
-          lutris.enable = true;
-
-          tmux.wittano.enable = true;
-          neovim.wittano.enable = true;
-
-          fish.shellAliases = {
-            # Projects
-            pnix = "cd $HOME/nix-dotfiles";
-            plab = "cd $HOME/projects/server/home-lab";
-
-            # Nix
-            nfu = "nix flake update";
-            nfc = "nix flake check";
-            repl = "nix repl -f '<nixpkgs>'";
-
-            # systemd
-            scs = "sudo systemctl status";
-            scst = "sudo systemctl stop";
-            scsta = "sudo systemctl start";
-            sce = "sudo systemctl enable --now";
-            scr = "sudo systemctl restart";
-            sdb = "systemd-analyze blame";
-          };
-        };
-
-        desktop.autostart.enable = true;
-
-        gtk.gtk3.bookmarks = [
-          "file://${environment.variables.NIX_DOTFILES} Nix configuration"
-          "file://${environment.variables.NIX_DOTFILES}/dotfiles Dotfiles"
-        ];
-
-        home.packages = with pkgs; [
-          # Utilities
-          sshs
-
-          # Tilling WM
-          # timeNotify
-          # showVolume
-
-          # Apps
-          unstable.figma-linux # Figma
-          # Web browser
-          vivaldi
-
-          # Apps
-          pomodoro
-
-          # Social media
-          telegram-desktop
-          # unstable.freetube # Youtube desktop
-          signal-desktop # Signal desktop
-          element-desktop # matrix communicator
-          vesktop
-          irssi # IRC chat
-          # unstable.streamlink-twitch-gui-bin
-        ];
-      }
-    ];
+    users.wittano = homeManagerConfig;
   };
 
   # Programs
@@ -324,14 +307,14 @@ rec {
 
   # System
   system = {
-    stateVersion = "24.11";
+    stateVersion = systemVersion;
+
     autoUpgrade = {
       enable = false;
       flake = "github:wittano/nix-dotfiles#${hostname}";
       dates = "daily";
     };
   };
-
 
   services = {
     prometheus.wittano.enable = false;
