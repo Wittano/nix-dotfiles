@@ -107,7 +107,7 @@ let
       # insomnia # REST API Client
       pomodoro
       unstable.figma-linux # Figma
-      planify # ToDo app
+      todoist-electron # ToDo app
 
       # Security
       bitwarden
