@@ -10,7 +10,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    warnings = lists.optional (cfg.enableTpLink) [
+    warnings = lists.optional cfg.enableTpLink [
       "Module modules.hardware.wifi force change your kernel to stable version ${pkgs.linuxPackages.kernel.version}"
     ];
 

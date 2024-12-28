@@ -13,10 +13,10 @@ in
   config = {
     boot.loader.grub = rec {
       inherit theme;
+      inherit (cfg) enable;
 
       splashImage = "${theme}/background.png";
       efiSupport = enable;
-      enable = cfg.enable;
       device = "nodev";
       useOSProber = cfg.enableMultiBoot;
     };

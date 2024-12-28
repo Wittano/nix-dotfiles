@@ -39,8 +39,7 @@ in
           radius = 6;
           fixed-center = false;
 
-          background = colors.background;
-          foreground = colors.foreground;
+          inherit (colors) background foreground;
 
           line-size = 3;
           line-color = "#f00";
@@ -77,8 +76,7 @@ in
           radius = 6;
           fixed-center = false;
 
-          background = colors.background;
-          foreground = colors.foreground;
+          inherit (colors) background foreground;
 
           line-size = 3;
           line-color = "#f00";

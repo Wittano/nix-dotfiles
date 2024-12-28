@@ -19,6 +19,7 @@
 , cabal-install
 , kdePackages
 , haskellPackages
+, statix
 , ...
 }:
 with lib;
@@ -94,6 +95,7 @@ mkShell {
     nixpkgs-fmt
     nil
     nh
+    statix
 
     # Bash
     shellcheck
@@ -104,8 +106,8 @@ mkShell {
     testSddmTheme
 
     # Python
-     python3
-     pipenv
+    python3
+    pipenv
 
     # Haskell deps
     # haskell-language-server

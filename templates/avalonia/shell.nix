@@ -17,7 +17,7 @@
 }:
 with lib;
 let
-  sdk = dotnetCorePackages.dotnet_8.sdk;
+  inherit (dotnetCorePackages.dotnet_9) sdk;
 
   fetchDeps = (callPackage ./pkg.nix { }).fetch-deps;
   updateDeps = writeShellApplication {

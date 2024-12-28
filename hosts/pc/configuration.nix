@@ -25,7 +25,6 @@ let
         enableDirenv = true;
       };
 
-      fish.shellAliases.open = "xdg-open";
       jetbrains.ides = [ "go" "fork" "python" "cpp" "dotnet" ];
       git.wittano.enable = true;
       rofi.wittano = {
@@ -40,6 +39,8 @@ let
       neovim.wittano.enable = true;
 
       fish.shellAliases = {
+        open = "xdg-open";
+
         # Projects
         pnix = "cd $HOME/nix-dotfiles";
         plab = "cd $HOME/projects/server/home-lab";
@@ -105,8 +106,8 @@ let
       # unstable.vscodium # VS code
       minder # Mind maps
       # insomnia # REST API Client
-      pomodoro
-      unstable.figma-linux # Figma
+      gnome-pomodoro
+      # unstable.figma-linux # Figma
       todoist-electron # ToDo app
 
       # Security
@@ -352,7 +353,7 @@ rec {
     # backup.enable = true;
     rss.enable = true;
     syncthing.wittano.enable = true;
-    filebot.wittano.enable = true;
+    filebot.wittano.enable = false;
     displayManager.sddm.wittano = {
       enable = true;
       package = pkgs.catppuccin-sddm-corners;

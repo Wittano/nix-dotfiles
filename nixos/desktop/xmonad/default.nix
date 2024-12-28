@@ -35,13 +35,14 @@ in
       };
 
       xsession.windowManager.xmonad = {
+        inherit (unstable) haskellPackages;
+
         enable = true;
         enableContribAndExtras = true;
-        haskellPackages = unstable.haskellPackages;
         config = ./src/Main.hs;
         libFiles = trivial.pipe ./src [
           builtins.readDir
-          (attrsets.filterAttrs (n: v: strings.hasPrefix "Main" n == false))
+          (attrsets.filterAttrs (n: v: !(strings.hasPrefix "Main" n)))
           (builtins.mapAttrs (n: v: pkgs.writeText n (builtins.readFile (./src + "/${n}"))))
         ];
       };

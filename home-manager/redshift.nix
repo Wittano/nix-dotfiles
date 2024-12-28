@@ -5,7 +5,8 @@ with lib;
 
   config = {
     services.redshift = {
-      enable = config.services.redshift.wittano.enable;
+      inherit (config.services.redshift.wittano) enable;
+
       latitude = "50.50";
       longitude = "23.41";
       provider = "manual";

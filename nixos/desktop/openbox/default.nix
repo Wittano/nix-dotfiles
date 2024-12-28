@@ -3,8 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.desktop.openbox;
-in
-let
+
   catppuccin = pkgs.fetchFromGitHub {
     owner = "catppuccin";
     repo = "openbox";

@@ -14,7 +14,8 @@ in
     security.rtkit.enable = true;
     hardware.enableAllFirmware = cfg.enable;
     services.pipewire = rec {
-      enable = cfg.enable;
+      inherit (cfg) enable;
+
       alsa.enable = enable;
       alsa.support32Bit = enable;
       pulse.enable = enable;

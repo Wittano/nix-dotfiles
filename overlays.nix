@@ -1,8 +1,8 @@
-{ inputs, lib, ... }:
+{ inputs, lib, pkgs, ... }:
 with lib;
 with lib.my;
 let
-  privateRepo = pkgs.importPkgs ./pkgs;
+  privateRepo = import ./pkgs { inherit pkgs; };
 
   wittanoOverlay = _: _: privateRepo;
 

@@ -18,7 +18,8 @@ in
     home.packages = mkIf services.dunst.enable [ pkgs.jetbrains-mono ];
 
     services.dunst = {
-      enable = config.services.dunst.wittano.enable;
+      inherit (config.services.dunst.wittano) enable;
+
       catppuccin.enable = mkForce false;
       settings = mkMerge [
         (mkTheme config.catppuccin.flavor)

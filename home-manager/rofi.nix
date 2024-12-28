@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
+  inherit (pkgs) toybox systemd;
+
   cfg = config.programs.rofi.wittano;
-  toybox = pkgs.toybox;
-  systemd = pkgs.systemd;
 
   switchOffScript = pkgs.writeShellApplication {
     name = "switch-off";

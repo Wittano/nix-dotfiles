@@ -50,8 +50,9 @@ in
     };
 
     i18n.inputMethod.fcitx5.catppuccin = {
+      inherit (config.catppuccin) flavor;
+
       enable = true;
-      flavor = config.catppuccin.flavor;
     };
     gtk = {
       inherit cursorTheme;

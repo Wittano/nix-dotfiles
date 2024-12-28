@@ -1,14 +1,6 @@
 { config, lib, pkgs, system, inputs, secretDir, ... }:
 with lib;
 with lib.my;
-let
-  secrets = builtins.readDir secretDir;
-  identityPaths = trivial.pipe secrets [
-    builtins.attrNames
-    (builtins.filter (x: strings.hasSuffix ".age" x))
-    (builtins.map (x: "/etc/ssh/${x}"))
-  ];
-in
 {
   environment.systemPackages = [ inputs.agenix.packages."${system}".default ];
   age = {
@@ -42,7 +34,7 @@ in
       keys = builtins.map (x: x.path) config.services.openssh.hostKeys;
       keyArray = bash.mkBashArray keys;
     in
-    mkIf (config.services.backup.enable)
+    mkIf config.services.backup.enable
       /*bash*/ ''
       keys=(${keyArray})
       today=$(date +"%d-%b-%Y")

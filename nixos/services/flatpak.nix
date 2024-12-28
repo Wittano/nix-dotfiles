@@ -7,7 +7,7 @@ with lib;
     services.flatpak.enable = true;
     xdg.portal = {
       enable = true;
-      extraPortals = mkIf (config.services.xserver.desktopManager.gnome.enable == false)
+      extraPortals = mkIf (!config.services.xserver.desktopManager.gnome.enable)
         [ pkgs.xdg-desktop-portal-gtk ];
       config.common.default = "*";
     };

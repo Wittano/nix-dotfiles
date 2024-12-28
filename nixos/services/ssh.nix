@@ -5,7 +5,8 @@ with lib;
 
   config = {
     services.openssh = rec {
-      enable = config.services.ssh.wittano.enable;
+      inherit (config.services.ssh.wittano) enable;
+
       startWhenNeeded = enable;
       settings.PermitRootLogin = "no";
     };

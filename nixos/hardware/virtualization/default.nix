@@ -122,11 +122,7 @@ in
 
       swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
 
-      services.xserver.displayManager.session = mkIf (cfg.enableWindowsVM && isAutoscriptEnable) [{
-        name = "windows";
-        manage = "window";
-        start = "sudo virsh start win10";
-      }];
+
 
       security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
         users = [ "wittano" ];
@@ -173,14 +169,21 @@ in
         extraModulePackages = with config.boot.kernelPackages; [ vendor-reset ];
       };
 
-      services.ssh.wittano.enable = true;
+      services = {
+        ssh.wittano.enable = true;
+        xserver.displayManager.session = mkIf (cfg.enableWindowsVM && isAutoscriptEnable) [{
+          name = "windows";
+          manage = "window";
+          start = "sudo virsh start win10";
+        }];
 
-      services.udev = {
-        packages = with config.boot.kernelPackages; [ vendor-reset ];
-        extraRules = mkIf cfg.enableWindowsVM ''
-          ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
-          ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
-        '';
+        udev = {
+          packages = with config.boot.kernelPackages; [ vendor-reset ];
+          extraRules = mkIf cfg.enableWindowsVM ''
+            ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
+            ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
+          '';
+        };
       };
     };
 }

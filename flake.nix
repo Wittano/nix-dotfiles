@@ -43,7 +43,7 @@
     let
       system = "x86_64-linux";
 
-      overlays = import ./overlays.nix { inherit lib inputs; };
+      overlays = import ./overlays.nix { inherit lib inputs pkgs; };
       mkPkgs = p:
         import p {
           inherit system;
@@ -61,11 +61,10 @@
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
 
-      privateRepo = lib.my.pkgs.importPkgs ./pkgs;
-
       lib = nixpkgs.lib.extend (sefl: super: {
-        hm = home-manager.lib.hm;
-        my = import ./lib { inherit lib system inputs pkgs unstable privateRepo; };
+        inherit (home-manager.lib) hm;
+
+        my = import ./lib { inherit lib system inputs pkgs unstable; };
       });
     in
     {
@@ -74,7 +73,6 @@
       nixosConfigurations.pc = lib.my.hosts.mkHost "pc";
       overlays.default = overlays.overlay;
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
-      packages.${system} = privateRepo;
       templates = import ./templates.nix { inherit lib; };
     };
 }

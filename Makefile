@@ -6,3 +6,7 @@ ifeq (,$(windcard result))
 	unlink result
 endif
 	nh clean all
+
+check:
+	nix flake check
+	statix check

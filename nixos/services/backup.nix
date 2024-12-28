@@ -77,7 +77,8 @@ in
 
   config = mkIf cfg.enable {
     fileSystems."${cfg.location}" = {
-      device = cfg.device;
+      inherit (cfg) device;
+
       fsType = cfg.format;
     };
 
