@@ -120,6 +120,7 @@ with lib;
               };
             };
             servers = {
+              elixirls.enable = true;
               bashls = {
                 enable = true;
                 package = pkgs.nodePackages.bash-language-server;
@@ -140,7 +141,10 @@ with lib;
           };
 
           web-devicons.enable = true;
-          treesitter.enable = true;
+          treesitter = {
+            enable = true;
+            settings.highlight.enable = true;
+          };
 
           luasnip.enable = true;
           cmp-nvim-lua.enable = true;
