@@ -168,8 +168,8 @@ templates/**/*.lock
 # Xmonad
 *.o
 *.hi
-!dotfiles/xmonad/*.hs
-dotfiles/xmonad/dist-newstyle/
+!nixos/desktop/xmonad/*.hs
+nixos/desktop/xmonad/dist-newstyle/
 secrets/*.json
 
-dotfiles/xmonad/src/Main
+nixos/desktop/xmonad/src/Main

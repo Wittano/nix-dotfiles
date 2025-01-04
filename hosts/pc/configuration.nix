@@ -5,6 +5,8 @@ let
   accent = "peach";
   flavor = "frappe";
 
+  desktopName = "xmonad";
+
   nixDotfilesPath = "${config.home-manager.users.wittano.home.homeDirectory}/nix-dotfiles";
 
   systemVersion = "24.11";
@@ -28,8 +30,9 @@ let
       jetbrains.ides = [ "go" "fork" "python" "cpp" "dotnet" ];
       git.wittano.enable = true;
       rofi.wittano = {
+        inherit desktopName;
+
         enable = true;
-        desktopName = "qtile";
       };
 
       games.enable = true;
@@ -301,7 +304,7 @@ rec {
     interval = "21:37";
   };
 
-  desktop.qtile = {
+  desktop."${desktopName}" = {
     enable = true;
     users = [ "wittano" ];
   };

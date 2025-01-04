@@ -33,9 +33,9 @@ in
       script = "polybar wittano";
       config = {
         "bar/wittano" = {
-          monitor = "\${env:MONITOR:DVI-D-0}";
+          monitor = "\${env:MONITOR:HDMI-1}";
           width = "100%";
-          height = 27;
+          height = 32;
           radius = 6;
           fixed-center = false;
 
@@ -50,13 +50,13 @@ in
           module-margin-left = 1;
           module-margin-right = 2;
 
-          font-0 = "DejaVuSans:pixelsize=10:style=Regular";
-          font-1 = "fixed:pixelsize=10;1";
+          font-0 = "DejaVuSans:pixelsize=14:style=Regular";
+          font-1 = "fixed:pixelsize=14;1";
           font-2 = "unifont:fontformat=truetype:size=8:antialias=false;0";
-          font-3 = "siji:pixelsize=10;1";
-          font-4 = "all-the-icons:pixelsize=10";
-          font-5 = "Font Awesome 5 Brands:pixelsize=10";
-          font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=10";
+          font-3 = "siji:pixelsize=14;1";
+          font-4 = "all-the-icons:pixelsize=14";
+          font-5 = "Font Awesome 5 Brands:pixelsize=14";
+          font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=14";
 
           modules-left = [ "logo" "bspwm" "xwindow" ];
           modules-right = [ "kernel" "sep" "filesystem" "sep" "alsa" "sep" "memory" "sep" "cpu" "sep" "wlan" "sep" "date" ];

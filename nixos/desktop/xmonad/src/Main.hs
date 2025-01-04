@@ -1,4 +1,3 @@
-
 module Main (main) where
 
 import Const qualified as C
@@ -18,7 +17,7 @@ import XMonad.Util.Hacks (fixSteamFlicker, trayerPaddingXmobarEventHook, windowe
 import Xmobar qualified as S
 
 main :: IO ()
-main = xmonad . ewmhFullscreen . ewmh $ myConfig
+main = xmonad . ewmhFullscreen . ewmh . withEasySB (statusBarProp "xmobar ~/.config/xmobar/.xmobarrc" (pure S.bar)) defToggleStrutsKey $ myConfig
 
 myConfig =
   def

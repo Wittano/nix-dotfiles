@@ -19,7 +19,7 @@ let
       "$SHUTDOWN")
         ${systemd}/bin/poweroff
         ;;
-      "$LOGOUT")
+      "$LOGOUT")rofi
         DESKTOP=$(${toybox}/bin/pgrep ${cfg.desktopName})
         if [ -n "$DESKTOP" ]; then
           echo "Kill ${cfg.desktopName} $DESKTOP"
@@ -51,10 +51,7 @@ in
 
     home.packages =
       let
-        script =
-          if cfg.desktopName != null
-          then [ switchOffScript ]
-          else [ ];
+        script = lists.optional (cfg.desktopName != null) switchOffScript;
       in
       with pkgs; [ nerdfonts oranchelo-icon-theme ] ++ script;
 

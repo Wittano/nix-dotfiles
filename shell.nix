@@ -110,10 +110,10 @@ mkShell {
     pipenv
 
     # Haskell deps
-    # haskell-language-server
-    # cabal-install
+    haskell-language-server
+    cabal-install
 
     # Xmonad
-    # xmonadDevDeps
+    xmonadDevDeps
   ];
 }

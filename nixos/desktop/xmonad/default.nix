@@ -27,7 +27,11 @@ in
       }];
     };
 
+    environment.systemPackages = with pkgs; [ alsa-utils ];
+
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
+      desktop.autostart.desktopName = "xmonad";
+
       programs.xmobar = {
         enable = true;
         package = unstable.xmobar;
