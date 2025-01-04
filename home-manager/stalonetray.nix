@@ -1,11 +1,21 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 {
   options.services.stalonetray.wittano.enable = mkEnableOption "Custom stalonetray configuration";
 
-  config = {
+  config = mkIf config.services.stalonetray.wittano.enable {
+    systemd.user.targets.tray.Unit = rec {
+      Description = "System tray target";
+      Requires = [ "graphical-session.target" ];
+      After = Requires;
+    };
+
+    desktop.autostart.programs = [
+      "${pkgs.systemd}/bin/systemctl --user restart stalonetray.service"
+    ];
+
     services.stalonetray = {
-      enable = config.services.stalonetray.wittano.enable;
+      enable = true;
       config = {
         background = "#24273a";
         icon_size = 28;
