@@ -22,7 +22,9 @@ Config { overrideRedirect = False
                         ] 10
                     , Run Network "eno1" 
                         [ "-t"
-                        , "  <fc=#f5a97f>  <fn=2>\xf063</fn> <rx>kb  <fn=2>\xf062</fn> <tx>kb</fc>  "
+                        , "  <fc=#f5a97f>  <fn=2>\xf063</fn> <rx>  <fn=2>\xf062</fn> <tx></fc>  "
+                        , "-S"
+                        , "True"
                         ] 10
                     , Run Date "<fc=#eed49f>%H:%M</fc>  " "time"  10
                     , Run Date "  <fc=#eed49f><fn=2> </fn>%a %Y-%m-%d</fc> " "date" 10
