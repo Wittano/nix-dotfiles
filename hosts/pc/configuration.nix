@@ -42,25 +42,28 @@ let
       tmux.wittano.enable = true;
       neovim.wittano.enable = true;
 
-      fish.shellAliases = {
-        open = "xdg-open";
+      fish = {
+        functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${pkgs.yt-dlp}/bin/yt-dlp ::: $argv";
+        shellAliases = {
+          open = "xdg-open";
 
-        # Projects
-        pnix = "cd $HOME/nix-dotfiles";
-        plab = "cd $HOME/projects/server/home-lab";
+          # Projects
+          pnix = "cd $HOME/nix-dotfiles";
+          plab = "cd $HOME/projects/server/home-lab";
 
-        # Nix
-        nfu = "nix flake update";
-        nfc = "nix flake check";
-        repl = "nix repl -f '<nixpkgs>'";
+          # Nix
+          nfu = "nix flake update";
+          nfc = "nix flake check";
+          repl = "nix repl -f '<nixpkgs>'";
 
-        # systemd
-        scs = "sudo systemctl status";
-        scst = "sudo systemctl stop";
-        scsta = "sudo systemctl start";
-        sce = "sudo systemctl enable --now";
-        scr = "sudo systemctl restart";
-        sdb = "systemd-analyze blame";
+          # systemd
+          scs = "sudo systemctl status";
+          scst = "sudo systemctl stop";
+          scsta = "sudo systemctl start";
+          sce = "sudo systemctl enable --now";
+          scr = "sudo systemctl restart";
+          sdb = "systemd-analyze blame";
+        };
       };
     };
 
