@@ -19,7 +19,7 @@ let
       "$SHUTDOWN")
         ${systemd}/bin/poweroff
         ;;
-      "$LOGOUT")rofi
+      "$LOGOUT")
         DESKTOP=$(${toybox}/bin/pgrep ${cfg.desktopName})
         if [ -n "$DESKTOP" ]; then
           echo "Kill ${cfg.desktopName} $DESKTOP"
