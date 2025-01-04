@@ -19,6 +19,7 @@ let
     home.stateVersion = systemVersion;
 
     programs = {
+      mpv.enable = true;
       btop.enable = true;
       nitrogen.wittano.enable = true;
       kitty.wittano.enable = true;
