@@ -21,5 +21,6 @@
       ./redshift.nix
       ./rofi.nix
       ./tmux.nix
+      ./stalonetray.nix
     ];
 }
