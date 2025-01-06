@@ -9,4 +9,14 @@ _: {
       fsType = "vfat";
     };
   };
+
+  swapDevices = [
+    {
+      device = "/fileSwap";
+      size = 8192;
+    }
+    {
+      device = "/dev/disk/by-label/SLOW-SWAP";
+    }
+  ];
 }
