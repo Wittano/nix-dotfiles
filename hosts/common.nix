@@ -26,6 +26,7 @@ let
     home.stateVersion = systemVersion;
 
     programs = {
+      thunderbird.wittano.enable = true;
       mpv.enable = true;
       btop.enable = true;
       nitrogen.wittano.enable = true;
@@ -97,7 +98,6 @@ let
       vivaldi
 
       # Utils 
-      thunderbird # Mail
       eog # Image viewer
       onlyoffice-bin # Office staff
       nemo

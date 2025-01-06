@@ -22,5 +22,6 @@
       ./rofi.nix
       ./tmux.nix
       ./stalonetray.nix
+      ./thunderbird.nix
     ];
 }
