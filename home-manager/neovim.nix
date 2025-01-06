@@ -9,11 +9,15 @@ with lib;
     programs = {
       fish = {
         wittano.completions."tvi" = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
-        functions.tvi.body = /*fish*/ '' if test -d $argv cd $argv end
-        tmux new-session -d "nvim"
-        tmux new-window
-        tmux attach-session
-      '';
+        functions.tvi.body = /*fish*/ ''
+          if test -d $argv
+            cd $argv 
+          end
+
+          tmux new-session -d "nvim"
+          tmux new-window
+          tmux attach-session
+        '';
       };
 
       nixvim = {
