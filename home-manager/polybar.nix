@@ -22,7 +22,13 @@ let
   };
 in
 {
-  options.serivces.polybar.wittano.enable = mkEnableOption "Enable custom polybar config";
+  options.serivces.polybar.wittano = {
+    enable = mkEnableOption "Enable custom polybar config";
+    profile = mkOption {
+      type = types.enumOf [ "wittano" "laptop" ];
+      description = "Select polybar profile";
+    };
+  };
 
   config = mkIf config.serivces.polybar.wittano.enable {
     fonts.fontconfig.enable = true;
@@ -30,7 +36,7 @@ in
 
     services.polybar = {
       enable = true;
-      script = "polybar wittano";
+      script = "polybar ${cfg.profile}";
       config = {
         "bar/wittano" = {
           monitor = "\${env:MONITOR:HDMI-1}";

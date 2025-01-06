@@ -70,7 +70,10 @@
     {
       lib = lib.my;
 
-      nixosConfigurations.pc = lib.my.hosts.mkHost "pc";
+      nixosConfigurations = {
+        pc = lib.my.hosts.mkHost "pc";
+        laptop = lib.my.hosts.mkHost "laptop";
+      };
       overlays.default = overlays.overlay;
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };

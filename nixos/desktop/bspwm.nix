@@ -12,6 +12,10 @@ in
       description = "List of users that use desktop configuration";
       type = with types; listOf str;
     };
+    deviceType = mkOption {
+      type = with types; enumOf [ "pc" "laptop" ];
+      description = "Type of device which BSPWM configuration is launched. It's required information for polybar profile";
+    };
   };
 
   config = mkIf config.desktop.bspwm.enable {
@@ -19,14 +23,18 @@ in
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [ gsimplecal ];
 
-      desktop.autostart.programs = [ "wmname compiz" ];
+      desktop.autostart = {
+        desktopName = "bspwm";
+        programs = [ "wmname compiz" ];
+      };
+
+      serivces.polybar.wittano.profile = if cfg.deviceType == "pc" then "wittano" else "laptop";
 
       xsession.windowManager.bspwm = {
         inherit package;
 
         enable = true;
 
-        alwaysResetDesktops = isDevMode;
         monitors = {
           "DVI-D-0" = [ "I" "II" "III" ];
           "HDMI-0" = [ "IV" "V" ];
