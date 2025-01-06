@@ -11,7 +11,7 @@ with lib;
     };
 
     desktop.autostart.programs = [
-      "${pkgs.systemd}/bin/systemctl --user restart stalonetray.service"
+      "${pkgs.toybox}/bin/sleep 5 && ${pkgs.systemd}/bin/systemctl --user restart stalonetray.service"
     ];
 
     services.stalonetray = {
