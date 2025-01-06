@@ -68,6 +68,7 @@ let
       web.package = webstorm;
       andorid.package = unstable.andorid-studio;
       haskell.extraConfig = fork.extraConfig;
+      elixir = haskell;
       fork.extraConfig = {
         programs.nixvim.enable = true;
       };
