@@ -22,17 +22,22 @@ in
         Unit = {
           Description = "Thunderbird in headless mode";
           After = [ "network.target" ];
+          PartOf = [ "graphical-session.target" ];
         };
 
         Service = {
           ExecStart = "${thunderbird}/bin/thunderbird --headless";
           ExecCondition = "${pkgs.bash}/bin/bash -c '! ${pkgs.toybox}/bin/pgrep thunderbird'";
+          Restart = "on-failure";
         };
+
+        Install.WantedBy = [ "graphical-session.target" ];
       };
       timers.${serviceName} = {
         inherit (services.${serviceName}) Unit;
 
         Timer.OnCalendar = "*-*-* *:*:00";
+        Install.WantedBy = [ "graphical-session.target" ];
       };
     };
 

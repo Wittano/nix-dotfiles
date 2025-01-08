@@ -24,6 +24,7 @@ with lib;
       Unit = {
         Description = "Qbittorrent - torrent client in web-only version";
         After = [ "network.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
 
       Service = {
@@ -33,7 +34,7 @@ with lib;
         Type = "exec";
       };
 
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
     home.packages = mkIf cfg.installDesktop [ pkgs.qbittorrent ];
