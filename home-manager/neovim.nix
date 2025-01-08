@@ -123,7 +123,20 @@ with lib;
                 R = "rename";
               };
             };
-            servers = {
+            servers = rec {
+              html = {
+                enable = true;
+                filetypes = [ "html" "heex" "jsx" "tsx" ];
+              };
+              htmx = {
+                inherit (html) filetypes;
+
+                enable = true;
+              };
+              tailwindcss = {
+                enable = true;
+                filetypes = html.filetypes ++ [ "css" ];
+              };
               elixirls.enable = true;
               bashls = {
                 enable = true;
@@ -137,6 +150,7 @@ with lib;
               hls = {
                 enable = true;
                 installGhc = true;
+                filetypes = [ "haskell" "lhaskell" "cabal" ];
                 package = pkgs.haskell-language-server;
               };
               dockerls.enable = true;
