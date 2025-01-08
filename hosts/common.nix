@@ -83,6 +83,7 @@ let
 
     services = {
       redshift.wittano.enable = true;
+      qbittorrent.enable = true;
       picom.wittano.enable = true;
       dunst.wittano.enable = true;
     };
@@ -109,7 +110,6 @@ let
       logseq
       keepassxc
       krita
-      qbittorrent
       # vlc
       # unstable.joplin-desktop # Notebook
       # unstable.vscodium # VS code

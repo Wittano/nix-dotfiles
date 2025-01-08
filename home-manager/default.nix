@@ -23,5 +23,6 @@
       ./tmux.nix
       ./stalonetray.nix
       ./thunderbird.nix
+      ./qbittorrent.nix
     ];
 }
