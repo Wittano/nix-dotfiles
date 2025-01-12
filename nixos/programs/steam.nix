@@ -16,7 +16,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable rec {
+  config = mkIf cfg.enable {
     programs.steam = {
       enable = true;
       package = unstable.steam;
@@ -44,10 +44,6 @@ in
       "${cfg.disk.path}" = {
         device = "/dev/disk/by-label/GAMING";
         fsType = "ext4";
-        options = [
-          "gid=${builtins.toString users.groups.steam.gid}"
-          "uid=${builtins.toString config.users.users.wittano.uid}"
-        ];
       };
     };
   };
