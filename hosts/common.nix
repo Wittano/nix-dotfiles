@@ -17,40 +17,96 @@ let
   nixDotfilesPath = "${config.home-manager.users.wittano.home.homeDirectory}/nix-dotfiles";
 
   systemVersion = "24.11";
-  homeManagerConfig = {
+
+  commonHomeManager = {
     imports = [
       inputs.catppuccin.homeManagerModules.catppuccin
       inputs.nixvim.homeManagerModules.nixvim
       ./../home-manager
     ];
-    home.stateVersion = systemVersion;
+
+    home = {
+      stateVersion = systemVersion;
+      packages = with pkgs; [
+        # Utils
+        flameshot
+
+        # Folder Dialog menu
+        zenity
+
+        # Web browser
+        vivaldi
+
+        # Utils 
+        eog # Image viewer
+        onlyoffice-bin # Office staff
+        nemo # File explorer
+        pandoc # Text file converter
+
+        # Apps
+        keepassxc
+        gnome-pomodoro
+        todoist-electron # ToDo app
+
+        # Security
+        bitwarden
+      ];
+    };
 
     programs = {
-      thunderbird.wittano.enable = true;
-      mpv.enable = true;
-      btop.enable = true;
-      nitrogen.wittano.enable = true;
-      kitty.wittano.enable = true;
-      fish.wittano = {
-        enable = true;
-        enableDirenv = true;
-      };
-
-      jetbrains.ides = [ "go" "fork" "python" "cpp" "elixir" "haskell" ];
       git.wittano.enable = true;
+      btop.enable = true;
+      kitty.wittano.enable = true;
+      fish = {
+        wittano = {
+          enable = true;
+          enableDirenv = true;
+        };
+        shellAliases.open = "xdg-open";
+      };
+      nitrogen.wittano.enable = true;
       rofi.wittano = {
         inherit desktopName;
 
         enable = true;
       };
 
-      tmux.wittano.enable = true;
       neovim.wittano.enable = true;
 
-      fish = {
-        functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${pkgs.yt-dlp}/bin/yt-dlp ::: $argv";
-        shellAliases = {
-          open = "xdg-open";
+      mpv.enable = true;
+    };
+
+
+    qt.wittano.enable = true;
+    gtk.wittano.enable = true;
+
+    catppuccin = {
+      inherit accent flavor;
+
+      enable = true;
+    };
+
+    services = {
+      redshift.wittano.enable = true;
+      qbittorrent.enable = true;
+      picom.wittano.enable = true;
+      dunst.wittano.enable = true;
+    };
+
+    desktop.autostart = {
+      enable = true;
+      programs = [ "gnome-pomodoro" ];
+    };
+
+  };
+
+  programmingHomeManagerConfig = mkMerge [
+    commonHomeManager
+    {
+      programs = {
+        jetbrains.ides = [ "go" "fork" "python" "cpp" "elixir" "haskell" ];
+        tmux.wittano.enable = true;
+        fish.shellAliases = {
 
           # Projects
           pnix = "cd $HOME/nix-dotfiles";
@@ -70,74 +126,55 @@ let
           sdb = "systemd-analyze blame";
         };
       };
-    };
 
-    qt.wittano.enable = true;
-    gtk.wittano.enable = true;
+      gtk.gtk3.bookmarks = [
+        "file://${nixDotfilesPath} Nix configuration"
+      ];
 
-    catppuccin = {
-      inherit accent flavor;
+      home.packages = with pkgs; [
+        sshs
+        logseq
+        vscodium # VS code
+        insomnia # REST API Client
+        unstable.figma-linux # Figma
 
-      enable = true;
-    };
+        obs-studio
+      ];
+    }
+  ];
+  gamingHomeHamagerConfig = mkMerge [
+    commonHomeManager
+    {
+      programs.thunderbird.wittano.enable = true;
 
-    services = {
-      redshift.wittano.enable = true;
-      qbittorrent.enable = true;
-      picom.wittano.enable = true;
-      dunst.wittano.enable = true;
-    };
+      desktop.autostart.programs = [
+        "signal-desktop --start-in-tray"
+        "telegram-desktop -startintray"
+        "vesktop --start-minimized"
+        "spotify"
+        "vivaldi"
+        "todoist-electron"
+      ];
 
-    home.packages = with pkgs; [
-      # Utils
-      flameshot
+      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${pkgs.yt-dlp}/bin/yt-dlp ::: $argv";
 
-      # Folder Dialog menu
-      zenity
+      home.packages = with pkgs; [
+        spotify
+        keepassxc
+        vlc
+        krita
 
-      # Web browser
-      vivaldi
-
-      # Utils 
-      eog # Image viewer
-      onlyoffice-bin # Office staff
-      nemo
-      sshs
-      pandoc # Text file converter
-
-      # Apps
-      spotify
-      logseq
-      keepassxc
-      krita
-      # vlc
-      # unstable.joplin-desktop # Notebook
-      # unstable.vscodium # VS code
-      minder # Mind maps
-      # insomnia # REST API Client
-      gnome-pomodoro
-      # unstable.figma-linux # Figma
-      todoist-electron # ToDo app
-
-      # Security
-      bitwarden
-
-      # Social media
-      telegram-desktop
-      # unstable.freetube # Youtube desktop
-      signal-desktop # Signal desktop
-      element-desktop # matrix communicator
-      vesktop
-      irssi # IRC chat
-      # unstable.streamlink-twitch-gui-bin
-    ];
-
-    desktop.autostart.enable = true;
-
-    gtk.gtk3.bookmarks = [
-      "file://${nixDotfilesPath} Nix configuration"
-    ];
-  };
+        # Social media
+        telegram-desktop
+        unstable.freetube # Youtube desktop
+        signal-desktop # Signal desktop
+        element-desktop # matrix communicator
+        vesktop
+        irssi # IRC chat
+        unstable.streamlink-twitch-gui-bin
+      ];
+    }
+  ];
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
   hardwareModule = import (./. + "/${hostname}/hardware.nix") { };
@@ -267,6 +304,11 @@ mkMerge [
       wittano = {
         isNormalUser = true;
         uid = mkDefault 1000;
+        shell = pkgs.fish;
+      };
+      wito = {
+        isNormalUser = true;
+        uid = mkDefault 1001;
         extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
@@ -290,7 +332,10 @@ mkMerge [
       extraSpecialArgs = { inherit pkgs unstable lib inputs; };
       useUserPackages = true;
       backupFileExtension = "backup";
-      users.wittano = homeManagerConfig;
+      users = {
+        wittano = gamingHomeHamagerConfig;
+        wito = programmingHomeManagerConfig;
+      };
     };
 
     # Programs
@@ -301,7 +346,7 @@ mkMerge [
 
     desktop."${desktopName}" = {
       enable = true;
-      users = [ "wittano" ];
+      users = builtins.attrNames users.users;
     };
 
     # System

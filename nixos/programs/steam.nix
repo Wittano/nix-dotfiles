@@ -4,7 +4,6 @@ let
   cfg = config.programs.steam.wittano;
 in
 {
-
   options.programs.steam.wittano = {
     enable = mkEnableOption "steam and scripts for games installed via Steam";
     disk = {
@@ -17,7 +16,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable rec {
     programs.steam = {
       enable = true;
       package = unstable.steam;
@@ -36,10 +35,19 @@ in
       ];
     };
 
-    fileSystems = {
-      "/mnt/gaming" = {
+    users = rec {
+      groups.steam.gid = 2000;
+      users.wittano.extraGroups = builtins.attrNames groups;
+    };
+
+    fileSystems = mkIf cfg.disk.enable {
+      "${cfg.disk.path}" = {
         device = "/dev/disk/by-label/GAMING";
         fsType = "ext4";
+        options = [
+          "gid=${builtins.toString users.groups.steam.gid}"
+          "uid=${builtins.toString config.users.users.wittano.uid}"
+        ];
       };
     };
   };

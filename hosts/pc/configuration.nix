@@ -24,26 +24,17 @@ lib.mkMerge [
 
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
-      steam.wittano.enable = true;
+      steam.wittano = {
+        enable = true;
+        disk.enable = true;
+      };
       mihoyo = {
         enable = true;
         games = [ "honkai-railway" ];
       };
     };
 
-    # Programs
-    services.locate = {
-      enable = true;
-      interval = "21:37";
-    };
-
     services = {
-      pipewire.wittano.enable = true;
-      udisks2 = {
-        enable = true;
-        mountOnMedia = true;
-      };
-
       xserver.xrandrHeads = [
         {
           primary = true;

@@ -68,12 +68,7 @@ let
       web.package = webstorm;
       andorid.package = unstable.andorid-studio;
       haskell.extraConfig = fork.extraConfig;
-      elixir.extraConfig = mkMerge [
-        haskell.extraConfig
-        {
-          home.packages = with pkgs; [ vscodium ];
-        }
-      ];
+      elixir.extraConfig = haskell.extraConfig;
       fork.extraConfig = {
         programs.nixvim.enable = true;
       };

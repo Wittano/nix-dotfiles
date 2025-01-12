@@ -2,6 +2,8 @@
 with lib;
 with lib.my;
 let
+  homeDir = config.home.homeDirectory;
+
   colloidSchemaVariant = "Dracula";
   colloidIconTheme = pkgs.colloid-icon-theme.override {
     schemeVariants = [ (strings.toLower colloidSchemaVariant) ];
@@ -79,12 +81,12 @@ in
         extraConfig = gtkSettings;
         bookmarks = [
           "file:///tmp Temporary"
-          "file:///home/wittano/Documents"
-          "file:///home/wittano/Music"
-          "file:///home/wittano/Pictures"
-          "file:///home/wittano/Videos"
-          "file:///home/wittano/Downloads"
-          "file:///home/wittano/.config Config files"
+          "file://${homeDir}/Documents"
+          "file://${homeDir}/Music"
+          "file://${homeDir}/Pictures"
+          "file://${homeDir}/Videos"
+          "file://${homeDir}/Downloads"
+          "file://${homeDir}/.config Config files"
         ];
       };
       gtk4.extraConfig = gtkSettings;
