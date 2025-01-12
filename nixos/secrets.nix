@@ -5,7 +5,7 @@ with lib.my;
   environment.systemPackages = [ inputs.agenix.packages."${system}".default ];
   age = {
     identityPaths = [
-      "/home/wittano/.ssh/samba.key"
+      "/etc/ssh/samba.key"
     ];
     secrets.samba = {
       file = secretDir + "/samba.age";
