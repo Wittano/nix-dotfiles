@@ -1,10 +1,20 @@
 { lib, config, ... }:
 with lib;
 with lib.my;
+let
+  cfg = config.virtualisation.docker.wittano;
+in
 {
-  options.virtualisation.docker.wittano.enable = mkEnableOption "Enable Docker service";
+  options.virtualisation.docker.wittano = {
+    enable = mkEnableOption "Enable Docker service";
+    user = mkOption {
+      type = types.str;
+      default = "wittano";
+      description = "Add access to docker group for specified user";
+    };
+  };
 
-  config = mkIf config.virtualisation.docker.wittano.enable {
+  config = mkIf cfg.enable {
     hardware.virtualization.wittano.stopServices = [{
       name = "win10";
       services = [
@@ -20,11 +30,12 @@ with lib.my;
         dates = "daily";
       };
     };
-    users.users.wittano.extraGroups = [
+
+    users.users.${cfg.user}.extraGroups = [
       "docker"
     ];
 
-    home-manager.users.wittano.programs.fish.shellAliases.ds =
+    home-manager.users.${cfg.user}.programs.fish.shellAliases.ds =
       ''docker ps | cut -f 1 -d " " | tail -n +2 | xargs docker stop'';
   };
 }
