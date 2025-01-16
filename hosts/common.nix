@@ -105,7 +105,7 @@ let
     commonHomeManager
     {
       programs = {
-        jetbrains.ides = [ "go" "fork" "python" "cpp" "elixir" "haskell" ];
+        jetbrains.ides = [ "go" "fork" "python" "cpp" "elixir" "haskell" "sql" "dotnet" ];
         tmux.wittano.enable = true;
         fish.shellAliases = {
 
@@ -137,7 +137,6 @@ let
         logseq
         vscodium # VS code
         insomnia # REST API Client
-        unstable.figma-linux # Figma
 
         obs-studio
       ];
