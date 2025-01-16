@@ -1,6 +1,6 @@
-{ config, lib, pkgs, hostname, inputs, unstable, ... }:
+{ config, lib, pkgs, hostname, inputs, unstable, master, ... }:
 let
-  commonConfig = import ../common.nix { inherit config lib pkgs hostname inputs unstable; cores = 24; };
+  commonConfig = import ../common.nix { inherit config lib master pkgs hostname inputs unstable; cores = 24; };
 in
 lib.mkMerge [
   commonConfig

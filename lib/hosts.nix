@@ -1,4 +1,4 @@
-{ lib, system, pkgs, unstable, inputs, secretDir, ... }:
+{ lib, system, pkgs, unstable, master, inputs, secretDir, ... }:
 with lib;
 with lib.my;
 {
@@ -11,7 +11,7 @@ with lib.my;
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib inputs system hostname secretDir;
+        inherit pkgs unstable lib inputs system hostname secretDir master;
         templateDir = ./../templates;
       };
 

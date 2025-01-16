@@ -1,9 +1,9 @@
-{ config, lib, pkgs, hostname, inputs, unstable, ... }:
+{ config, lib, pkgs, hostname, inputs, unstable, master, ... }:
 with lib;
 with lib.my;
 let
   desktopName = "bspwm";
-  commonConfig = import ../common.nix { inherit desktopName config lib hostname pkgs unstable inputs; cores = 4; };
+  commonConfig = import ../common.nix { inherit desktopName master config lib hostname pkgs unstable inputs; cores = 4; };
 in
 mkMerge [
   commonConfig

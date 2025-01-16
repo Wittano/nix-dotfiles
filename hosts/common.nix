@@ -3,6 +3,7 @@
 , pkgs
 , inputs
 , unstable
+, master
 , hostname
 , desktopName ? "xmonad"
 , cores ? 24
@@ -156,7 +157,7 @@ let
         "todoist-electron"
       ];
 
-      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${pkgs.yt-dlp}/bin/yt-dlp ::: $argv";
+      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp ::: $argv";
 
       home.packages = with pkgs; [
         spotify
@@ -166,7 +167,7 @@ let
 
         # Social media
         telegram-desktop
-        unstable.freetube # Youtube desktop
+        master.freetube # Youtube desktop
         signal-desktop # Signal desktop
         element-desktop # matrix communicator
         vesktop
@@ -332,7 +333,7 @@ mkMerge [
 
     # Home-manager
     home-manager = {
-      extraSpecialArgs = { inherit pkgs unstable lib inputs; };
+      extraSpecialArgs = { inherit pkgs unstable lib inputs master; };
       useUserPackages = true;
       backupFileExtension = "backup";
       users = {
