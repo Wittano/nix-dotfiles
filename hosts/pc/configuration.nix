@@ -54,7 +54,6 @@ lib.mkMerge [
       ];
 
       boinc.wittano.enable = !hardware.virtualization.wittano.enableWindowsVM;
-      rss.enable = true;
     };
   }
 ]
