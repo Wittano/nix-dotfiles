@@ -15,7 +15,7 @@ let
   accent = "peach";
   flavor = "frappe";
 
-  nixDotfilesPath = "${config.home-manager.users.wittano.home.homeDirectory}/nix-dotfiles";
+  nixDotfilesPath = "${config.home-manager.users.wito.home.homeDirectory}/nix-dotfiles";
 
   systemVersion = "24.11";
 

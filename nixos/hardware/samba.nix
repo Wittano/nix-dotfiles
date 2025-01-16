@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 with lib;
+with lib.my;
 let
   cfg = config.hardware.samba;
 in
@@ -12,9 +13,11 @@ in
 
     environment.systemPackages = with pkgs; [ cifs-utils ];
 
-    home-manager.users.wittano.gtk.gtk3.bookmarks = [
-      "file:///mnt/samba Remote Home"
-    ];
+    home-manager.users = desktop.mkMultiUserHomeManager [ "wittano" "wito" ] {
+      gtk.gtk3.bookmarks = [
+        "file:///mnt/samba Remote Home"
+      ];
+    };
 
     fileSystems."/mnt/samba" = {
       device = "//192.168.1.5/share/wittano";
