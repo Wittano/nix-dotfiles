@@ -47,8 +47,9 @@ let
 
         # Apps
         keepassxc
-        gnome-pomodoro
+        gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
+        decibels # Audio player
 
         # Security
         bitwarden
