@@ -30,6 +30,7 @@ let
       packages = with pkgs; [
         # Utils
         flameshot
+        textsnatcher
 
         # Folder Dialog menu
         zenity

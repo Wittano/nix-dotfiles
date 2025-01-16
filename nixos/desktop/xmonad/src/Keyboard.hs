@@ -23,11 +23,10 @@ customKeybinds =
   [ ("M-e", spawn "rofi -show drun"),
     ("M-w", spawn "rofi -show window"),
     ("M-S-p", unGrab *> spawn "flameshot gui"),
+    ("M-S-o", unGrab *> spawn " com.github.rajsolai.textsnatcher"),
     ("M-S-q", spawn "switch-off"),
-    ("M-n", spawn "time-notify"),
     ("M-p", unGrab *> spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%"),
     ("M-o", unGrab *> spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%"),
-    ("M-S-o", unGrab *> spawn "show-volume"),
     ("M-m", unGrab *> spawn "amixer sset Master toggle"),
     ("M-r", unGrab *> spawn "rollWallpaper"),
     ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
