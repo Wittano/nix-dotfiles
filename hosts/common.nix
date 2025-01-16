@@ -32,6 +32,7 @@ let
         # Utils
         flameshot
         textsnatcher
+        czkawka # File duplication cleaner
 
         # Folder Dialog menu
         zenity
