@@ -20,7 +20,7 @@ in
     };
 
     fileSystems."/mnt/samba" = {
-      device = "//192.168.1.5/share/wittano";
+      device = "//192.168.1.5/samba/wittano";
       fsType = "cifs";
       options = [
         "credentials=${config.age.secrets.samba.path}"
