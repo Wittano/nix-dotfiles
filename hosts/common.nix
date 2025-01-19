@@ -51,6 +51,8 @@ let
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
         decibels # Audio player
+        logseq # Notebook
+        remmina # VNC client
 
         # Security
         bitwarden
@@ -103,6 +105,16 @@ let
     };
 
   };
+
+  workHomeManagerConfig = mkMerge [
+    commonHomeManager
+    {
+      home.packages = with pkgs; [
+        openfortivpn # VPN
+        teams-for-linux # Microsoft Teams
+      ];
+    }
+  ];
 
   programmingHomeManagerConfig = mkMerge [
     commonHomeManager
@@ -318,6 +330,11 @@ mkMerge [
         extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
+      work = {
+        isNormalUser = true;
+        uid = mkDefault 1002;
+        shell = pkgs.fish;
+      };
     };
 
     catppuccin = {
@@ -341,6 +358,7 @@ mkMerge [
       users = {
         wittano = gamingHomeHamagerConfig;
         wito = programmingHomeManagerConfig;
+        work = workHomeManagerConfig;
       };
     };
 
