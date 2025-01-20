@@ -94,7 +94,6 @@ let
 
     services = {
       redshift.wittano.enable = true;
-      qbittorrent.enable = true;
       picom.wittano.enable = true;
       dunst.wittano.enable = true;
     };
