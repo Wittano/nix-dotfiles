@@ -29,6 +29,8 @@ let
         _log_app "$app"
       done
     '';
+
+  autostartScript = mkAutostartScript "desktop" cfg.programs;
 in
 {
   options = {
@@ -39,22 +41,38 @@ in
         description = "List of programs used in autostart script";
         default = [ ];
       };
-      desktopName = mkOption {
-        type = with types; str;
-        description = "List of programs used in autostart script";
-      };
-      scriptPath = mkOption {
-        type = with types; nullOr str;
-        description = "Autostart script location. Default path is $HOME/.config/autostart.sh";
-        default = null;
+      paths = mkOption {
+        type = with types; listOf (nullOr str);
+        description = "List of locations of autostart script location. Default path is $HOME/.config/autostart.sh";
+        default = [ ];
       };
     };
   };
 
   config = mkIf cfg.enable {
-    home.file = mkIf (cfg.scriptPath != null) {
-      "${cfg.scriptPath}".source = mkAutostartScript cfg.desktopName cfg.programs;
-    };
-    xdg.configFile.${cfg.autostartPath or "autostart.sh"}.source = mkAutostartScript cfg.desktopName cfg.programs;
+    home.file = trivial.pipe cfg.paths [
+      (builtins.filter (x: x != null && x != ""))
+      (builtins.map (x: {
+        name = x;
+        value = {
+          source = autostartScript;
+        };
+      }))
+      builtins.listToAttrs
+    ];
+    xdg.configFile =
+      if (cfg.paths != [ ]) then
+        trivial.pipe cfg.paths [
+          (builtins.filter (x: x == null || x == ""))
+          (builtins.map (x: {
+            name = x;
+            value = {
+              source = autostartScript;
+            };
+          }))
+          builtins.listToAttrs
+        ] else {
+        "autostart.sh".source = autostartScript;
+      };
   };
 }

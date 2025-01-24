@@ -36,8 +36,8 @@ in
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       desktop.autostart = {
-        desktopName = "openbox";
-        scriptPath = ".config/openbox/autostart";
+        enable = true;
+        paths = [ ".config/openbox/autostart" ];
         programs = [ "tint2" "volumeicon" ];
       };
       home = {

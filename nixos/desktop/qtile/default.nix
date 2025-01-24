@@ -18,7 +18,9 @@ in
 
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
-      desktop.autostart.desktopName = "qtile";
+      desktop.autostart.desktop = [{
+        name = "qtile";
+      }];
 
       xdg.configFile."qtile".source = ./.;
     };

@@ -23,10 +23,7 @@ in
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [ gsimplecal ];
 
-      desktop.autostart = {
-        desktopName = "bspwm";
-        programs = [ "wmname compiz" ];
-      };
+      desktop.autostart.programs = [ "wmname compiz" ];
 
       serivces.polybar.wittano.profile = if cfg.deviceType == "pc" then "wittano" else "laptop";
 
