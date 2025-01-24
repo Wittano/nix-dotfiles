@@ -334,6 +334,7 @@ mkMerge [
       work = {
         isNormalUser = true;
         uid = mkDefault 1002;
+        extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
     };

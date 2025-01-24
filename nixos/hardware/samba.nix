@@ -3,6 +3,8 @@ with lib;
 with lib.my;
 let
   cfg = config.hardware.samba;
+
+  sambaGroupName = "samba";
 in
 {
 
@@ -19,18 +21,31 @@ in
       ];
     };
 
+    users = {
+      users = {
+        wittano.extraGroups = [ sambaGroupName ];
+        wito.extraGroups = [ sambaGroupName ];
+        work.extraGroups = [ sambaGroupName ];
+      };
+      groups.samba.gid = 988;
+    };
+
     fileSystems."/mnt/samba" = {
       device = "//192.168.1.5/samba/wittano";
       fsType = "cifs";
       options = [
         "credentials=${config.age.secrets.samba.path}"
         "uid=${builtins.toString config.users.users.wittano.uid}"
+        "gid=${sambaGroupName}"
         "x-systemd.automount"
         "noauto"
         "x-systemd.idle-timeout=60"
         "x-systemd.device-timeout=5s"
         "x-systemd.mount-timeout=5s"
         "user"
+        "file_mode=0774"
+        "dir_mode=0774"
+        "rw"
         "users"
       ];
     };
