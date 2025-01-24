@@ -47,7 +47,8 @@ let
         pandoc # Text file converter
 
         # Apps
-        keepassxc
+        keepassxc # Password manager
+        openfortivpn # VPN
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
         decibels # Audio player
@@ -109,7 +110,7 @@ let
     commonHomeManager
     {
       home.packages = with pkgs; [
-        openfortivpn # VPN
+        spotify
         teams-for-linux # Microsoft Teams
       ];
     }
@@ -147,12 +148,13 @@ let
       ];
 
       home.packages = with pkgs; [
-        sshs
-        logseq
+        sshs # SSH client
+        logseq # Notebook
         vscodium # VS code
-        insomnia # REST API Client
+        postman # REST API Client
+        jmeter # Stress API testing
 
-        obs-studio
+        obs-studio # OBS
       ];
     }
   ];
