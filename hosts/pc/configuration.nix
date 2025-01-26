@@ -35,24 +35,25 @@ lib.mkMerge [
     };
 
     services = {
-      xserver.xrandrHeads = [
-        {
-          primary = true;
-          output = "DVI-D-0";
-          monitorConfig = ''
-            Option "PreferredMode" "1920x1080"
-          '';
-        }
-        {
-          primary = false;
-          output = "HDMI-0";
-          monitorConfig = ''
-            Option "PreferredMode" "1920x1080"
-            Option "RightOf" "DVI-D-0"
-          '';
-        }
-      ];
-
+      xserver = {
+        exportConfiguration = true;
+        xrandrHeads = [
+          {
+            output = "HDMI-A-1";
+            monitorConfig = ''
+              Option "Rotate" "right"
+              Option "PreferredMode" "1920x1080"
+            '';
+          }
+          {
+            primary = true;
+            output = "HDMI-A-0";
+            monitorConfig = ''
+              Option "PreferredMode" "1920x1080"
+            '';
+          }
+        ];
+      };
       boinc.wittano.enable = !hardware.virtualization.wittano.enableWindowsVM;
     };
   }
