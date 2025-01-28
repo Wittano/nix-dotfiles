@@ -36,8 +36,6 @@ in
         extraConfig = builtins.readFile ./xmobarrc;
       };
 
-      services.stalonetray.wittano.enable = true;
-
       xsession.windowManager.xmonad = {
         inherit (unstable) haskellPackages;
 
