@@ -120,7 +120,7 @@ let
     commonHomeManager
     {
       programs = {
-        jetbrains.ides = [ "go" "fork" "python" "cpp" "elixir" "haskell" "sql" "dotnet" ];
+        jetbrains.ides = [ "go" "fork" "python" "cpp" "haskell" "sql" "dotnet" ];
         tmux.wittano.enable = true;
         fish.shellAliases = {
 
