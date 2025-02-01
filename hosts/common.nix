@@ -168,6 +168,7 @@ let
         "spotify"
         "vivaldi"
         "todoist-electron"
+        "element-desktop --hidden"
       ];
 
       programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp ::: $argv";
