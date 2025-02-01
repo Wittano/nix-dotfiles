@@ -369,15 +369,9 @@ mkMerge [
       interval = "21:37";
     };
 
-    desktop = {
-      openbox = {
-        enable = true;
-        users = [ "work" ];
-      };
-      "${desktopName}" = {
-        enable = true;
-        users = builtins.attrNames users.users;
-      };
+    desktop."${desktopName}" = {
+      enable = true;
+      users = builtins.attrNames users.users;
     };
 
     # System
