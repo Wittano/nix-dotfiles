@@ -48,7 +48,6 @@ let
 
         # Apps
         keepassxc # Password manager
-        openfortivpn # VPN
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
         decibels # Audio player

@@ -22,6 +22,8 @@ lib.mkMerge [
       lutris.enable = true;
     };
 
+    networking.networkmanager.wittano.enable = true;
+
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
       steam.wittano = {
