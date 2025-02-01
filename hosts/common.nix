@@ -52,6 +52,7 @@ let
         todoist-electron # ToDo app
         logseq # Notebook
         remmina # VNC client
+        spotify # Spotify
 
         # Security
         bitwarden
@@ -108,8 +109,11 @@ let
     commonHomeManager
     {
       home.packages = with pkgs; [
-        spotify
         teams-for-linux # Microsoft Teams
+      ];
+
+      desktop.autostart.programs = [
+        "teams-for-linux"
       ];
     }
   ];
