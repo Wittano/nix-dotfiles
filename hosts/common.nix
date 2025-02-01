@@ -30,8 +30,8 @@ let
       stateVersion = systemVersion;
       packages = with pkgs; [
         # Utils
-        flameshot
-        textsnatcher
+        flameshot # Screenshot
+        textsnatcher # Text extractor
         czkawka # File duplication cleaner
 
         # Folder Dialog menu
@@ -50,7 +50,6 @@ let
         keepassxc # Password manager
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
-        decibels # Audio player
         logseq # Notebook
         remmina # VNC client
 
