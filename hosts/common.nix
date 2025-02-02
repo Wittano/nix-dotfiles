@@ -155,6 +155,7 @@ let
         vscodium # VS code
         postman # REST API Client
         jmeter # Stress API testing
+        figma-linux # Figma
 
         obs-studio # OBS
       ];
@@ -173,6 +174,7 @@ let
         "vivaldi"
         "todoist-electron"
         "element-desktop --hidden"
+        "steam -silent"
       ];
 
       programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp ::: $argv";
