@@ -22,7 +22,7 @@ lib.mkMerge [
       lutris.enable = true;
     };
 
-    networking.networkmanager.wittano.enable = true;
+    environment.systemPackages = with pkgs; [ openfortivpn ];
 
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
