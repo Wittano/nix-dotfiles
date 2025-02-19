@@ -11,7 +11,7 @@ let
       devices=$(xsetwacom list devices | awk '{print $9}')
 
       for d in $devices; do
-        xsetwacom --set "$d" MapToOutput HDMI-1
+        xsetwacom --set "$d" MapToOutput HDMI-A-0
         # Enable scrolling on middle(lower) button
         xsetwacom --set "$d" Button 2 "pan"
         xsetwacom --set "$d" PanScrollThreshold 150
