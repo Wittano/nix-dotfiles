@@ -19,6 +19,10 @@ let
 
   systemVersion = "24.11";
 
+  programmingCommunicator = with pkgs; [
+    signal-desktop # Signal desktop
+  ];
+
   commonHomeManager = {
     imports = [
       inputs.catppuccin.homeManagerModules.catppuccin
@@ -156,9 +160,10 @@ let
         postman # REST API Client
         jmeter # Stress API testing
         figma-linux # Figma
+        signal-desktop # Signal communicator
 
         obs-studio # OBS
-      ];
+      ] ++ programmingCommunicator;
     }
   ];
   gamingHomeHamagerConfig = mkMerge [
@@ -188,12 +193,10 @@ let
         # Social media
         telegram-desktop
         master.freetube # Youtube desktop
-        signal-desktop # Signal desktop
         element-desktop # matrix communicator
         vesktop
         irssi # IRC chat
-        unstable.streamlink-twitch-gui-bin
-      ];
+      ] ++ programmingCommunicator;
     }
   ];
 
