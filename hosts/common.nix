@@ -158,6 +158,7 @@ let
         logseq # Notebook
         vscodium # VS code
         postman # REST API Client
+        insomnia # REST API Client
         jmeter # Stress API testing
         figma-linux # Figma
         signal-desktop # Signal communicator
