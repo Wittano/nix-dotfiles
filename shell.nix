@@ -12,7 +12,6 @@
 , coreutils
 , docker
 , act
-, libsForQt5
 , sddm
 , nix
 , haskell-language-server
@@ -42,46 +41,6 @@ let
         stop_docker
       '';
     };
-  testSddmTheme = writeShellApplication
-    {
-      name = "testSddmTheme";
-      runtimeInputs =
-        let
-          gstreamerDeps = with gst_all_1; [
-            gstreamer
-            gst-plugins-ugly
-            gst-plugins-bad
-            gst-plugins-good
-            gst-plugins-base
-            gst-libav
-          ];
-          plasmaDeps = with libsForQt5; [
-            plasma-framework
-            plasma-workspace
-            kdePackages.sddm
-          ];
-          qt5Deps = with libsForQt5.qt5; [
-            qtgraphicaleffects
-            qtquickcontrols2
-            qtbase
-            qtsvg
-            qtmultimedia
-            libsForQt5.phonon-backend-gstreamer
-          ];
-        in
-        [ coreutils sddm nix ] ++ qt5Deps ++ plasmaDeps ++ gstreamerDeps;
-      text = ''
-        THEME_DIR="./pkgs/sddm/theme/$1";
-
-        if [ ! -d "$THEME_DIR" ]; then
-          echo "SDDM theme $THEME_DIR wasn't found"
-          exit 1
-        fi
-
-        nix build "$NIX_DOTFILES#$1"
-        sddm-greeter --test-mode --theme "$NIX_DOTFILES/result/share/sddm/themes/$1"           
-      '';
-    };
   xmonadDevDeps = haskellPackages.ghcWithPackages (pkgs: with pkgs; [
     xmonad
     xmonad-contrib
@@ -103,7 +62,6 @@ mkShell {
 
     # Desktop
     testGithubActions
-    testSddmTheme
 
     # Python
     python3

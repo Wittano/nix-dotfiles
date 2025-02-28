@@ -193,10 +193,8 @@ let
 
         # Social media
         telegram-desktop
-        master.freetube # Youtube desktop
-        element-desktop # matrix communicator
+        master.freetube
         vesktop
-        irssi # IRC chat
       ] ++ programmingCommunicator;
     }
   ];
