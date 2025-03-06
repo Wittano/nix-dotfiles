@@ -1,7 +1,6 @@
 { config, lib, pkgs, hostname, inputs, unstable, master, ... }:
 let
-  # Reduce numbers of cores, because I don't have memory enougth to compile system without out-of-memory error 
-  commonConfig = import ../common.nix { inherit config lib master pkgs hostname inputs unstable; cores = 16; };
+  commonConfig = import ../common.nix { inherit config lib master pkgs hostname inputs unstable; cores = 24; };
 in
 lib.mkMerge [
   commonConfig
