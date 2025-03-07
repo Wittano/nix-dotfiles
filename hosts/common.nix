@@ -126,7 +126,7 @@ let
     commonHomeManager
     {
       programs = {
-        jetbrains.ides = [ "go" "fork" "python" "cpp" "haskell" "sql" "dotnet" ];
+        jetbrains.ides = [ "go" "fork" "cpp" "sql" ];
         tmux.wittano.enable = true;
         fish.shellAliases = {
 
@@ -160,10 +160,7 @@ let
         postman # REST API Client
         insomnia # REST API Client
         jmeter # Stress API testing
-        figma-linux # Figma
         signal-desktop # Signal communicator
-
-        obs-studio # OBS
       ] ++ programmingCommunicator;
     }
   ];
