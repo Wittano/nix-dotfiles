@@ -8,7 +8,8 @@ lib.mkMerge [
     hardware = {
       keyboard.zsa.enable = true;
       virtualization.wittano = {
-        enable = false;
+        enable = true;
+        users = [ "wittano" "wito" ];
         enableWindowsVM = false;
       };
       amd.enable = true; # AMD GPU
