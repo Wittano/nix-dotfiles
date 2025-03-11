@@ -34,7 +34,7 @@ in
       fish = mkIf config.programs.fish.wittano.enable {
         shellAliases.lg = "lazygit";
         shellAbbrs = {
-          gst = "git status";
+          gst = "git status -s";
           gc = "git commit -v";
           "gc!" = "git commit --amend";
           gaa = "git add .";
