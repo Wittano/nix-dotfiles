@@ -38,6 +38,7 @@ lib.mkMerge [
     };
 
     services = {
+      prometheus.wittano.enable = true;
       xserver = {
         exportConfiguration = true;
         xrandrHeads = [

@@ -2,13 +2,13 @@
 with lib;
 with lib.my;
 let
-  windowsExporterConfig = attrsets.optionalAttrs config.hardware.virtualization.wittano.enableWindowsVM
-    {
+  windowsExporterConfig = lists.optionals config.hardware.virtualization.wittano.enableWindowsVM
+    [{
       job_name = "windows_exporter";
       static_configs = [{
         targets = [ "192.168.122.110:9182" ];
       }];
-    };
+    }];
 in
 {
   options.services.prometheus.wittano.enable = mkEnableOption "prometheus service";
@@ -25,8 +25,7 @@ in
           job_name = "node";
           static_configs = [{ targets = [ "localhost:${builtins.toString exporters.node.port}" ]; }];
         }
-        windowsExporterConfig
-      ];
+      ] ++ windowsExporterConfig;
 
       exporters.node = {
         enable = true;
