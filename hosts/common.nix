@@ -282,9 +282,6 @@ mkMerge [
         nfs = true;
       };
       initrd.availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
-
-      tmp.cleanOnBoot = true;
-
       loader = {
         grub.wittano = {
           enable = true;
