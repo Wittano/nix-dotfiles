@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, unstable, ... }:
 with lib;
 with lib.my;
 let
@@ -18,6 +18,7 @@ in
 
     services.prometheus = rec {
       enable = true;
+      package = unstable.prometheus;
       port = 9090;
 
       scrapeConfigs = [
