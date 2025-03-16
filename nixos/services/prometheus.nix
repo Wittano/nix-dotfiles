@@ -13,12 +13,15 @@ in
 {
   options.services.prometheus.wittano.enable = mkEnableOption "prometheus service";
 
-  config = mkIf config.services.prometheus.wittano.enable {
-    networking.firewall.interfaces.eno1.allowedTCPPorts = [ 9090 9100 ];
+  config = mkIf config.services.prometheus.wittano.enable rec {
+    networking.firewall.interfaces.eno1.allowedTCPPorts = [ services.prometheus.port 9100 ];
 
     services.prometheus = rec {
       enable = true;
       package = unstable.prometheus;
+      extraFlags = [
+        "--storage.tsdb.retention.time=3d"
+      ];
       port = 9090;
 
       scrapeConfigs = [
