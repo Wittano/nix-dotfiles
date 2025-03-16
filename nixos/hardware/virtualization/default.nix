@@ -114,7 +114,7 @@ in
           onBoot = "ignore";
           onShutdown = "shutdown";
           qemu = {
-            package = unstable.qemu;
+            package = mkIf cfg.enableWindowsVM unstable.qemu;
             ovmf.enable = true;
             runAsRoot = true;
           };
