@@ -12,8 +12,8 @@
 with lib;
 with lib.my;
 let
-  accent = "peach";
-  flavor = "frappe";
+  accent = "pink";
+  flavor = "latte";
 
   nixDotfilesPath = "${config.home-manager.users.wito.home.homeDirectory}/nix-dotfiles";
 

@@ -33,7 +33,7 @@ in
       programs.xmobar = {
         enable = true;
         package = unstable.xmobar;
-        extraConfig = builtins.readFile ./xmobarrc;
+        extraConfig = builtins.readFile (./. + "/xmobarrc-${config.catppuccin.flavor}");
       };
 
       xsession.windowManager.xmonad = {
