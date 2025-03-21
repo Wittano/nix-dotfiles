@@ -157,8 +157,7 @@ let
         sshs # SSH client
         logseq # Notebook
         vscodium # VS code
-        postman # REST API Client
-        insomnia # REST API Client
+        unstable.postman # REST API Client
         jmeter # Stress API testing
         signal-desktop # Signal communicator
       ] ++ programmingCommunicator;
