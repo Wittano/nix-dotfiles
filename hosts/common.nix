@@ -179,7 +179,7 @@ let
         "steam -silent"
       ];
 
-      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp ::: $argv";
+      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/Movies --progress ::: $argv";
 
       home.packages = with pkgs; [
         spotify
