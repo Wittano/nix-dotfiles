@@ -38,6 +38,7 @@ lib.mkMerge [
     };
 
     services = {
+      redis.wittano.enable = true;
       prometheus.wittano.enable = true;
       xserver = {
         exportConfiguration = true;

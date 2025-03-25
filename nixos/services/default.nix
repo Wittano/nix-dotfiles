@@ -12,6 +12,7 @@
     ./ssh.nix
     ./syncthing.nix
     ./wacom.nix
+    ./redis.nix
   ];
 }
 
