@@ -54,7 +54,7 @@ let
         keepassxc # Password manager
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
-        logseq # Notebook
+        obsidian # Notebook
         remmina # VNC client
         spotify # Spotify
 
