@@ -46,7 +46,7 @@ let
 
         # Utils 
         eog # Image viewer
-        onlyoffice-bin # Office staff
+        libreoffice # Office staff
         nemo # File explorer
         pandoc # Text file converter
 
@@ -55,6 +55,7 @@ let
         gnome-pomodoro # Pomodoro
         todoist-electron # ToDo app
         joplin-desktop # Notebook
+        xournalpp # Handwritten notebook
         dropbox-cli
         remmina # VNC client
         spotify # Spotify
