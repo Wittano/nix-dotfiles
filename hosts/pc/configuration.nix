@@ -18,6 +18,8 @@ lib.mkMerge [
       bluetooth.wittano.enable = true;
     };
 
+    virtualisation.podman.wittano.enable = true;
+
     home-manager.users.wittano.programs = {
       games.enable = true;
       lutris.enable = true;

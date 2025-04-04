@@ -9,5 +9,6 @@
     ./samba.nix
     ./pipewire.nix
     ./virtualization
+    ./podman.nix
   ];
 }

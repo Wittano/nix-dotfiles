@@ -8,7 +8,7 @@ in
 mkMerge [
   commonConfig
   {
-    virtualisation.docker.wittano.enable = true;
+    virtualisation.podman.wittano.enable = true;
 
     desktop.bspwm.deviceType = "laptop";
 
