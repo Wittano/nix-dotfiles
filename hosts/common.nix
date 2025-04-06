@@ -173,7 +173,7 @@ let
       desktop.autostart.programs = [
         "signal-desktop --start-in-tray"
         "telegram-desktop -startintray"
-        "vesktop --start-minimized"
+        "discord --start-minimized"
         "spotify"
         "vivaldi"
         "todoist-electron"
@@ -192,7 +192,7 @@ let
         # Social media
         telegram-desktop
         master.freetube
-        vesktop
+        discord
       ] ++ programmingCommunicator;
     }
   ];
