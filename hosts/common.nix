@@ -128,7 +128,7 @@ let
     commonHomeManager
     {
       programs = {
-        jetbrains.ides = [ "go" "fork" "cpp" "sql" "jvm" "dotnet" ];
+        jetbrains.ides = [ "go" "cpp" "sql" "elixir" ];
         tmux.wittano.enable = true;
         fish.shellAliases = {
 
@@ -157,7 +157,7 @@ let
 
       home.packages = with pkgs; [
         sshs # SSH client
-        logseq # Notebook
+        joplin-desktop
         vscodium # VS code
         unstable.postman # REST API Client
         jmeter # Stress API testing
@@ -173,15 +173,15 @@ let
       desktop.autostart.programs = [
         "signal-desktop --start-in-tray"
         "telegram-desktop -startintray"
-        "discord --start-minimized"
+        # "discord --start-minimized"
         "spotify"
         "vivaldi"
         "todoist-electron"
-        "element-desktop --hidden"
+        # "element-desktop --hidden"
         "steam -silent"
       ];
 
-      programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/Movies --progress ::: $argv";
+      # programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/Movies --progress ::: $argv";
 
       home.packages = with pkgs; [
         spotify
@@ -191,8 +191,8 @@ let
 
         # Social media
         telegram-desktop
-        master.freetube
-        discord
+        # master.freetube
+        # discord
       ] ++ programmingCommunicator;
     }
   ];
@@ -348,7 +348,7 @@ mkMerge [
       fish.enable = true;
       file-roller.enable = true; # Archive explorer
       evince.enable = true; # PDF viever
-      # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
+      droidcam.enable = false; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
     };
 
     # Home-manager
