@@ -301,7 +301,7 @@ mkMerge [
       };
     };
 
-    virtualisation.podman.wittano.enable = true;
+    virtualisation.docker.wittano.enable = true;
     hardware = {
       trackpoint.emulateWheel = true;
       printers.wittano.enable = true;
