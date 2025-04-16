@@ -1,13 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 with lib.my;
-let
-  cfg = config.hardware.nvidia;
-in
 {
-  options.hardware.nvidia.enable = mkEnableOption "Enable nvidia drivers";
+  options.hardware.nvidia.wittano.enable = mkEnableOption "Enable nvidia drivers";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.hardware.nvidia.wittano.enable {
     services.xserver.videoDrivers = mkIf config.services.xserver.enable [ "nvidia" ];
 
     boot.blacklistedKernelModules = [ "nouveau" ];

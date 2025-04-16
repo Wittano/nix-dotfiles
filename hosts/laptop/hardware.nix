@@ -16,7 +16,7 @@ _: {
       size = 8192;
     }
     {
-      device = "/dev/disk/by-label/SLOW-SWAP";
+      device = "/dev/disk/by-label/SWAP";
     }
   ];
 }

@@ -1,6 +1,9 @@
 activate:
 	nh os switch -H pc . -- --show-trace
 
+activate-laptop:
+	nh os switch -H laptop . -- --show-trace
+
 clean:
 ifneq (,$(windcard result))
 	unlink result

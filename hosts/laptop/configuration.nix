@@ -14,9 +14,7 @@ mkMerge [
 
     hardware = {
       trackpoint.emulateWheel = true;
-      keyboard.zsa.enable = true;
 
-      nvidia.enable = true;
       samba.enable = true;
       printers.wittano.enable = true;
     };
