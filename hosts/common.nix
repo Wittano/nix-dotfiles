@@ -1,5 +1,4 @@
-{ config
-, lib
+{ lib
 , pkgs
 , inputs
 , unstable
@@ -15,187 +14,7 @@ let
   accent = "pink";
   flavor = "latte";
 
-  nixDotfilesPath = "${config.home-manager.users.wito.home.homeDirectory}/nix-dotfiles";
-
   systemVersion = "24.11";
-
-  programmingCommunicator = with pkgs; [
-    signal-desktop # Signal desktop
-  ];
-
-  commonHomeManager = {
-    imports = [
-      inputs.catppuccin.homeManagerModules.catppuccin
-      inputs.nixvim.homeManagerModules.nixvim
-      ./../home-manager
-    ];
-
-    home = {
-      stateVersion = systemVersion;
-      packages = with pkgs; [
-        # Utils
-        flameshot # Screenshot
-        textsnatcher # Text extractor
-        czkawka # File duplication cleaner
-
-        # Folder Dialog menu
-        zenity
-
-        # Web browser
-        vivaldi
-
-        # Utils 
-        eog # Image viewer
-        libreoffice # Office staff
-        nemo # File explorer
-        pandoc # Text file converter
-
-        # Apps
-        keepassxc # Password manager
-        gnome-pomodoro # Pomodoro
-        todoist-electron # ToDo app
-        joplin-desktop # Notebook
-        xournalpp # Handwritten notebook
-        dropbox-cli
-        remmina # VNC client
-        spotify # Spotify
-
-        # Security
-        bitwarden
-      ];
-    };
-
-    programs = {
-      git.wittano.enable = true;
-      btop.enable = true;
-      kitty.wittano.enable = true;
-      fish = {
-        wittano = {
-          enable = true;
-          enableDirenv = true;
-        };
-        shellAliases.open = "xdg-open";
-      };
-      nitrogen.wittano.enable = true;
-      rofi.wittano = {
-        inherit desktopName;
-
-        enable = true;
-      };
-
-      neovim.wittano.enable = true;
-
-      mpv.enable = true;
-    };
-
-
-    qt.wittano.enable = true;
-    gtk.wittano.enable = true;
-
-    catppuccin = {
-      inherit accent flavor;
-
-      enable = true;
-    };
-
-    services = {
-      redshift.wittano.enable = true;
-      picom.wittano.enable = true;
-      dunst.wittano.enable = true;
-    };
-
-    desktop.autostart = {
-      enable = true;
-      programs = [ "gnome-pomodoro" ];
-    };
-
-  };
-
-  workHomeManagerConfig = mkMerge [
-    commonHomeManager
-    {
-      home.packages = with pkgs; [
-        teams-for-linux # Microsoft Teams
-      ];
-
-      desktop.autostart.programs = [
-        "teams-for-linux"
-      ];
-    }
-  ];
-
-  programmingHomeManagerConfig = mkMerge [
-    commonHomeManager
-    {
-      programs = {
-        jetbrains.ides = [ "go" "cpp" "sql" "elixir" ];
-        tmux.wittano.enable = true;
-        fish.shellAliases = {
-
-          # Projects
-          pnix = "cd $HOME/nix-dotfiles";
-          plab = "cd $HOME/projects/server/home-lab";
-
-          # Nix
-          nfu = "nix flake update";
-          nfc = "nix flake check";
-          repl = "nix repl -f '<nixpkgs>'";
-
-          # systemd
-          scs = "sudo systemctl status";
-          scst = "sudo systemctl stop";
-          scsta = "sudo systemctl start";
-          sce = "sudo systemctl enable --now";
-          scr = "sudo systemctl restart";
-          sdb = "systemd-analyze blame";
-        };
-      };
-
-      gtk.gtk3.bookmarks = [
-        "file://${nixDotfilesPath} Nix configuration"
-      ];
-
-      home.packages = with pkgs; [
-        sshs # SSH client
-        joplin-desktop
-        vscodium # VS code
-        unstable.postman # REST API Client
-        jmeter # Stress API testing
-        signal-desktop # Signal communicator
-      ] ++ programmingCommunicator;
-    }
-  ];
-  gamingHomeHamagerConfig = mkMerge [
-    commonHomeManager
-    {
-      programs.thunderbird.wittano.enable = true;
-
-      desktop.autostart.programs = [
-        "signal-desktop --start-in-tray"
-        "telegram-desktop -startintray"
-        # "discord --start-minimized"
-        "spotify"
-        "vivaldi"
-        "todoist-electron"
-        # "element-desktop --hidden"
-        "steam -silent"
-      ];
-
-      # programs.fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/Movies --progress ::: $argv";
-
-      home.packages = with pkgs; [
-        spotify
-        keepassxc
-        vlc
-        krita
-
-        # Social media
-        telegram-desktop
-        # master.freetube
-        # discord
-      ] ++ programmingCommunicator;
-    }
-  ];
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
   hardwareModule = import (./. + "/${hostname}/hardware.nix") { };
@@ -270,7 +89,7 @@ mkMerge [
       variables =
         {
           EDITOR = "vim";
-          NIX_DOTFILES = nixDotfilesPath;
+          NIX_DOTFILES = "$HOME/nix-dotfiles";
         };
 
       shells = with pkgs; [ bash fish ];
@@ -318,24 +137,10 @@ mkMerge [
     };
 
     #User settings
-    users.users = {
-      wittano = {
-        isNormalUser = true;
-        uid = mkDefault 1000;
-        shell = pkgs.fish;
-      };
-      wito = {
-        isNormalUser = true;
-        uid = mkDefault 1001;
-        extraGroups = [ "wheel" ];
-        shell = pkgs.fish;
-      };
-      work = {
-        isNormalUser = true;
-        uid = mkDefault 1002;
-        extraGroups = [ "wheel" ];
-        shell = pkgs.fish;
-      };
+    users.users.wittano = {
+      isNormalUser = true;
+      uid = mkDefault 1000;
+      shell = pkgs.fish;
     };
 
     catppuccin = {
@@ -356,11 +161,6 @@ mkMerge [
       extraSpecialArgs = { inherit pkgs unstable lib inputs master; };
       useUserPackages = true;
       backupFileExtension = "backup";
-      users = {
-        wittano = gamingHomeHamagerConfig;
-        wito = programmingHomeManagerConfig;
-        work = workHomeManagerConfig;
-      };
     };
 
     # Programs

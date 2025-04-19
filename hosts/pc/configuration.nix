@@ -1,10 +1,32 @@
 { config, lib, pkgs, hostname, inputs, unstable, master, ... }:
+with lib;
 let
-  commonConfig = import ../common.nix { inherit config lib master pkgs hostname inputs unstable; cores = 24; };
+  commonConfig = import ../common.nix { inherit lib master pkgs hostname inputs unstable; cores = 24; };
+  commonHomeManager = import ../common-home-manager.nix {
+    inherit inputs pkgs;
+    systemVersion = config.system.stateVersion;
+    accent = config.catppuccin.accent;
+    flavor = config.catppuccin.flavor;
+  };
 in
 lib.mkMerge [
   commonConfig
   rec {
+    users.users = {
+      wito = {
+        isNormalUser = true;
+        uid = mkDefault 1001;
+        extraGroups = [ "wheel" ];
+        shell = pkgs.fish;
+      };
+      work = {
+        isNormalUser = true;
+        uid = mkDefault 1002;
+        extraGroups = [ "wheel" ];
+        shell = pkgs.fish;
+      };
+    };
+
     hardware = {
       keyboard.zsa.enable = true;
       virtualization.wittano = {
@@ -20,12 +42,29 @@ lib.mkMerge [
 
     virtualisation.podman.wittano.enable = true;
 
-    home-manager.users.wittano.programs = {
-      games.enable = true;
-      lutris.enable = true;
+    home-manager.users = {
+      wittano = mkMerge [
+        commonHomeManager
+        {
+          programs = {
+            games.enable = true;
+            lutris.enable = true;
+          };
+        }
+      ];
+      wito = mkMerge [
+        commonHomeManager
+        {
+          profile.programming.enable = true;
+        }
+      ];
+      work = mkMerge [
+        commonHomeManager
+        {
+          profile.work.enable = true;
+        }
+      ];
     };
-
-    environment.systemPackages = with pkgs; [ openfortivpn ];
 
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX

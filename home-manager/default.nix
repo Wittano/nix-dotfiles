@@ -24,5 +24,7 @@
       ./stalonetray.nix
       ./thunderbird.nix
       ./qbittorrent.nix
+      ./work.nix
+      ./programming.nix
     ];
 }

@@ -1,10 +1,17 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostname, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.hardware.samba;
 
   sambaGroupName = "samba";
+  users = if (hostname == "pc") then [ "wittano" "wito" ] else [ "wittano" ];
+  extraGroups =
+    if users != [ ] then
+      builtins.listToAttrs
+        (builtins.map
+          (x: { name = x; value = { extraGroups = [ sambaGroupName ]; }; })
+          users) else { };
 in
 {
 
@@ -15,18 +22,14 @@ in
 
     environment.systemPackages = with pkgs; [ cifs-utils ];
 
-    home-manager.users = desktop.mkMultiUserHomeManager [ "wittano" "wito" ] {
+    home-manager.users = desktop.mkMultiUserHomeManager users {
       gtk.gtk3.bookmarks = [
         "file:///mnt/samba Remote Home"
       ];
     };
 
     users = {
-      users = {
-        wittano.extraGroups = [ sambaGroupName ];
-        wito.extraGroups = [ sambaGroupName ];
-        work.extraGroups = [ sambaGroupName ];
-      };
+      users = extraGroups;
       groups.samba.gid = 988;
     };
 

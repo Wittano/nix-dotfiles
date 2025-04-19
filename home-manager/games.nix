@@ -51,6 +51,12 @@ let
       };
       text = builtins.readFile (repo + "/install-mf-64.sh");
     };
+
+  patches = [
+    fixDarksiders
+    fixAge2Sync
+    fixSteamSystemTray
+  ];
 in
 {
   options.programs.games = {
@@ -59,10 +65,22 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = games ++ [
-      fixDarksiders
-      fixAge2Sync
-      fixSteamSystemTray
+    home.packages = games ++ patches ++ (with pkgs; [
+      spotify
+      vlc
+
+      # Social media
+      telegram-desktop
+      signal-desktop
+    ]);
+
+    programs.jetbrains.ides = mkIf cfg.enableDev [ "jvm" "dotnet" ];
+
+    desktop.autostart.programs = [
+      "signal-desktop --start-in-tray"
+      "telegram-desktop -startintray"
+      "spotify"
+      "steam -silent"
     ];
 
     services.picom.wittano.exceptions = games ++ [

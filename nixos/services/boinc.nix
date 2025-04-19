@@ -1,15 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hostname, ... }:
 with lib;
 with lib.my;
 let
-  nvidiaDriverPackage = lists.optionals config.hardware.nvidia.enable [ config.boot.kernelPackages.nvidiaPackages.stable ];
+  nvidiaDriverPackage = lists.optionals (hostname != "pc") [ config.boot.kernelPackages.nvidiaPackages.stable ];
   extraEnvPackages = with pkgs; [ ocl-icd ] ++ nvidiaDriverPackage;
+  users = if hostname == "pc" then [ "wittano" "wito" ] else [ "wittano" ];
 in
 {
   options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
 
   config = mkIf config.services.boinc.wittano.enable {
-    users.users = desktop.mkMultiUserHomeManager [ "wittano" "wito" ] {
+    users.users = desktop.mkMultiUserHomeManager users {
       extraGroups = [ "boinc" ];
     };
 
