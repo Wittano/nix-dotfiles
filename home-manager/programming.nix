@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 {
   options.profile.programming.enable = mkEnableOption "programming stuff";
@@ -36,8 +36,6 @@ with lib;
       sshs # SSH client
       joplin-desktop
       vscodium # VS code
-      unstable.postman # REST API Client
-      jmeter # Stress API testing
       signal-desktop # Signal communicator
     ];
   };

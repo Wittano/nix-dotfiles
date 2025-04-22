@@ -85,7 +85,7 @@ mkMerge [
 
     # Global packages
     environment = {
-      systemPackages = with pkgs; [ vim htop bash keymapp wally-cli ];
+      systemPackages = with pkgs; [ vim htop bash ];
       variables =
         {
           EDITOR = "vim";
@@ -120,7 +120,6 @@ mkMerge [
       };
     };
 
-    virtualisation.docker.wittano.enable = true;
     hardware = {
       trackpoint.emulateWheel = true;
       printers.wittano.enable = true;

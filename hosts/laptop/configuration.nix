@@ -20,10 +20,18 @@ mkMerge [
   {
     virtualisation.podman.wittano.enable = true;
 
+    users.users.wittano.extraGroups = [ "wheel" ];
+
     home-manager.users.wittano = mkMerge [
       commonHomeManager
       {
+        home.packages = with pkgs; [
+          telegram-desktop
+          discord
+        ];
+
         profile.programming.enable = true;
+        programs.jetbrains.ides = mkForce [ "go" "haskell" ];
       }
     ];
 

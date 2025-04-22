@@ -11,7 +11,7 @@
       # Utils
       flameshot # Screenshot
       textsnatcher # Text extractor
-      czkawka # File duplication cleaner
+      # czkawka # File duplication cleaner
 
       # Folder Dialog menu
       zenity
@@ -23,7 +23,7 @@
       eog # Image viewer
       libreoffice # Office staff
       nemo # File explorer
-      pandoc # Text file converter
+      # pandoc # Text file converter
 
       # Apps
       keepassxc # Password manager
@@ -31,8 +31,6 @@
       todoist-electron # ToDo app
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
-      dropbox-cli
-      remmina # VNC client
       spotify # Spotify
 
       # Security

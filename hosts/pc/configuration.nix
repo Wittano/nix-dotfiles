@@ -8,10 +8,17 @@ let
     accent = config.catppuccin.accent;
     flavor = config.catppuccin.flavor;
   };
+
+  remmina = pkgs.remmina; # VNC client
+  dropbox = pkgs.dropbox-cli; # Dropbox CLI
 in
 lib.mkMerge [
   commonConfig
   rec {
+    environment.systemPackages = with pkgs; [ keymapp wally-cli ];
+
+    virtualisation.docker.wittano.enable = true;
+
     users.users = {
       wito = {
         isNormalUser = true;
@@ -22,7 +29,6 @@ lib.mkMerge [
       work = {
         isNormalUser = true;
         uid = mkDefault 1002;
-        extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
     };
@@ -46,6 +52,8 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
+          home.packages = [ remmina dropbox ];
+
           programs = {
             games.enable = true;
             lutris.enable = true;
@@ -55,12 +63,14 @@ lib.mkMerge [
       wito = mkMerge [
         commonHomeManager
         {
+          home.packages = [ remmina dropbox ];
           profile.programming.enable = true;
         }
       ];
       work = mkMerge [
         commonHomeManager
         {
+          home.packages = [ remmina ];
           profile.work.enable = true;
         }
       ];
