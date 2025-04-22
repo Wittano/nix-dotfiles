@@ -1,13 +1,23 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hostname, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.services.syncthing.wittano;
-  user = "wittano";
+  user = if hostname == "pc" then "syncthing" else "wittano";
   group = "syncthing";
   dataDir = "/home/wittano/.cache/syncthing";
   configDir = "/home/wittano/.config/syncthing";
   package = pkgs.syncthing;
+
+  syncthingUser = attrsets.optionalAttrs (hostname == "pc") {
+    syncthing = {
+      inherit group;
+
+      uid = 1004;
+      isSystemUser = true;
+      homeMode = "0770";
+    };
+  };
 in
 {
   options.services.syncthing.wittano.enable = mkEnableOption "Enable syncthing deamon";
@@ -17,8 +27,13 @@ in
 
     users.groups.${group}.gid = config.ids.gids.syncthing;
 
-    users.users.wittano.extraGroups = [
-      group
+    users.users = mkMerge [
+      syncthingUser
+      {
+        wittano.extraGroups = [
+          group
+        ];
+      }
     ];
 
     systemd.services.syncthing = mkIf cfg.enable {

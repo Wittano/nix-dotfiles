@@ -38,7 +38,7 @@ mkMerge [
         options = "--delete-older-than 7d";
       };
       package = pkgs.nix;
-      extraOptions = "experimental-features = nix-command flakes";
+      extraOptions = "experimental-features = nix-command flakes pipe-operators";
     };
 
     nixpkgs.config = {
