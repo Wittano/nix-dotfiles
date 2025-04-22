@@ -1,8 +1,9 @@
-{ config, lib, pkgs, unstable, ... }:
+{ config, lib, pkgs, unstable, hostname, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.desktop.xmonad;
+  barPrefix = strings.optionalString (hostname == "laptop") "-${hostname}-";
 in
 {
   options.desktop.xmonad = {
@@ -33,7 +34,7 @@ in
       programs.xmobar = {
         enable = true;
         package = unstable.xmobar;
-        extraConfig = builtins.readFile (./. + "/xmobarrc-${config.catppuccin.flavor}");
+        extraConfig = builtins.readFile (./. + "/xmobarrc${barPrefix}${config.catppuccin.flavor}");
       };
 
       xsession.windowManager.xmonad = {
