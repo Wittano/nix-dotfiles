@@ -64,30 +64,21 @@ let
       dotnet.package = rider;
       rust.package = rust-rover;
       jvm.package = idea-ultimate;
-      sql = {
-        package = datagrip;
-        extraConfig = {
-          home.packages = with pkgs; [ mysql-workbench mongodb-compass ];
-
-          systemd.user.services.pgadmin = rec {
-            Unit = {
-              Description = "pgadmin - web application to manage Postgres database";
-              Requires = [ "graphical-session.target" ];
-              After = [ "network.target" ];
-            };
-
-            Service = {
-              ExecStart = meta.getExe pkgs.pgadmin4-desktopmode;
-            };
-
-            Install.WantedBy = Unit.Requires;
-          };
-        };
-      };
+      sql.package = datagrip;
       web.package = webstorm;
       andorid.package = unstable.andorid-studio;
-      haskell.extraConfig = fork.extraConfig;
-      elixir.extraConfig = haskell.extraConfig;
+      haskell.extraConfig = mkMerge [
+        fork.extraConfig
+        {
+          programs.neovim.wittano.enableHaskell = true;
+        }
+      ];
+      elixir.extraConfig = mkMerge [
+        haskell.extraConfig
+        {
+          programs.neovim.wittano.enableElixir = true;
+        }
+      ];
       fork.extraConfig = {
         programs.nixvim.enable = true;
       };

@@ -1,9 +1,16 @@
 { config, pkgs, lib, ... }:
 with lib;
+let
+  cfg = config.programs.neovim.wittano;
+in
 {
-  options.programs.neovim.wittano.enable = mkEnableOption "Enable Neovim editor";
+  options.programs.neovim.wittano = {
+    enable = mkEnableOption "Neovim editor";
+    enableElixir = mkEnableOption "Elixir LSP plugins";
+    enableHaskell = mkEnableOption "Haskell LSP plugins";
+  };
 
-  config = mkIf config.programs.neovim.wittano.enable {
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [ ripgrep ];
 
     programs = {
@@ -139,19 +146,19 @@ with lib;
             };
             servers = rec {
               html = {
-                enable = true;
+                enable = cfg.enableElixir;
                 filetypes = [ "html" "heex" "jsx" "tsx" ];
               };
               htmx = {
                 inherit (html) filetypes;
 
-                enable = true;
+                enable = false;
               };
               tailwindcss = {
-                enable = true;
+                enable = cfg.enableElixir;
                 filetypes = html.filetypes ++ [ "css" ];
               };
-              elixirls.enable = true;
+              elixirls.enable = cfg.enableElixir;
               bashls = {
                 enable = true;
                 package = pkgs.nodePackages.bash-language-server;
@@ -161,9 +168,9 @@ with lib;
                 enable = true; # Nix
                 settings.formatting.command = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
               };
-              hls = {
-                enable = true;
-                installGhc = true;
+              hls = rec {
+                enable = cfg.enableHaskell;
+                installGhc = enable;
                 filetypes = [ "haskell" "lhaskell" "cabal" ];
                 package = pkgs.haskell-language-server;
               };
