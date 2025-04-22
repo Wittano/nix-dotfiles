@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 let
   cfg = config.desktop.xmonad;
-  barPrefix = strings.optionalString (hostname == "laptop") "-${hostname}-";
+  barSuffix = if hostname == "laptop" then "-${hostname}-${config.catppuccin.flavor}" else "-${config.catppuccin.flavor}";
 in
 {
   options.desktop.xmonad = {
@@ -34,7 +34,7 @@ in
       programs.xmobar = {
         enable = true;
         package = unstable.xmobar;
-        extraConfig = builtins.readFile (./. + "/xmobarrc${barPrefix}${config.catppuccin.flavor}");
+        extraConfig = builtins.readFile (./. + "/xmobarrc${barSuffix}");
       };
 
       xsession.windowManager.xmonad = {
