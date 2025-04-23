@@ -17,11 +17,22 @@ Config { overrideRedirect = False
                         , "--"
                         , "--on", ""
                         ]
+                    , Run BatteryP ["BAT1"] [
+                        "-t", "<acstatus>: <left>% - <timeleft>",
+                    	"--",
+                    	--"-c", "charge_full",
+                    	"-O", "AC",
+                    	"-o", "Bat",
+                        "-L", "15",
+                        "-H", "80",
+                    	"-h", "#d20f39",
+                    	"-l", "#d20f39"
+                    ] 10
                     , Run Memory 
                         [ "--template" 
                         ,"<fc=#ea76cb>  <fn=2>\xf2db</fn>  <usedratio>%  </fc>"
                         ] 10
-                    , Run Network "wlp3s0" 
+                    , Run DynNetwork
                         [ "-t"
                         , "  <fc=#fe640b>  <fn=2>\xf063</fn> <rx>  <fn=2>\xf062</fn> <tx></fc>  "
                         , "-S"
@@ -34,5 +45,5 @@ Config { overrideRedirect = False
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%XMonadLog% }{ %alsa:default:Master% %sep% %eno1% %sep% %memory% %sep% %date% %time% "
+       , template = "%XMonadLog% }{ %alsa:default:Master% %sep% %dynnetwork% %sep% %memory% %sep% %battery% %sep% %date% %time% "
        }
