@@ -28,6 +28,7 @@ mkMerge [
         home.packages = with pkgs; [
           telegram-desktop
           discord
+          pavucontrol
         ];
 
         profile.programming.enable = true;
