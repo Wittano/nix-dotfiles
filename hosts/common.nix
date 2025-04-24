@@ -37,7 +37,6 @@ mkMerge [
         dates = "weekly";
         options = "--delete-older-than 7d";
       };
-      package = pkgs.nix;
       extraOptions = "experimental-features = nix-command flakes pipe-operators";
     };
 

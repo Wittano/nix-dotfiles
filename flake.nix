@@ -5,6 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs-master.url = "nixpkgs/master";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     filebot.url = "github:Wittano/filebot";
     aagl = {
