@@ -5,8 +5,8 @@ let
   cfg = config.services.syncthing.wittano;
   user = if hostname == "pc" then "syncthing" else "wittano";
   group = "syncthing";
-  dataDir = "/home/wittano/.cache/syncthing";
-  configDir = "/home/wittano/.config/syncthing";
+  dataDir = "/home/${user}/.cache/syncthing";
+  configDir = "/home/${user}/.config/syncthing";
   package = pkgs.syncthing;
 
   syncthingUser = attrsets.optionalAttrs (hostname == "pc") {
@@ -15,7 +15,10 @@ let
 
       uid = 1004;
       isSystemUser = true;
+      isNormalUser = false;
       homeMode = "0770";
+      createHome = true;
+      home = "/home/syncthing";
     };
   };
 in
