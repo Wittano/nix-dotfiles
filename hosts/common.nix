@@ -168,10 +168,7 @@ mkMerge [
       interval = "21:37";
     };
 
-    desktop."${desktopName}" = {
-      enable = true;
-      users = builtins.attrNames users.users;
-    };
+    desktop."${desktopName}".enable = true;
 
     # System
     system.stateVersion = systemVersion;

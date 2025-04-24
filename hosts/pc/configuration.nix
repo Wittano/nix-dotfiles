@@ -1,7 +1,8 @@
 { config, lib, pkgs, hostname, inputs, unstable, master, ... }:
 with lib;
 let
-  commonConfig = import ../common.nix { inherit lib master pkgs hostname inputs unstable; cores = 24; };
+  desktopName = "xmonad";
+  commonConfig = import ../common.nix { inherit lib master pkgs hostname inputs unstable desktopName; cores = 24; };
   commonHomeManager = import ../common-home-manager.nix {
     inherit inputs pkgs;
     systemVersion = config.system.stateVersion;
@@ -11,6 +12,8 @@ let
 
   remmina = pkgs.remmina; # VNC client
   dropbox = pkgs.dropbox-cli; # Dropbox CLI
+  czkawka = pkgs.czkawka;
+  pandoc = pkgs.pandoc;
 in
 lib.mkMerge [
   commonConfig
@@ -18,6 +21,8 @@ lib.mkMerge [
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
 
     virtualisation.docker.wittano.enable = true;
+
+    desktop.${desktopName}.users = [ "wittano" "wito" "work" ];
 
     users.users = {
       wito = {
@@ -52,7 +57,7 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
-          home.packages = [ remmina dropbox ];
+          home.packages = with pkgs; [ remmina dropbox czkawka pandoc krita master.freetube discord ];
 
           programs = {
             games.enable = true;
@@ -63,14 +68,14 @@ lib.mkMerge [
       wito = mkMerge [
         commonHomeManager
         {
-          home.packages = [ remmina dropbox ];
+          home.packages = with pkgs; [ remmina dropbox postman czkawka ];
           profile.programming.enable = true;
         }
       ];
       work = mkMerge [
         commonHomeManager
         {
-          home.packages = [ remmina ];
+          home.packages = [ remmina czkawka ];
           profile.work.enable = true;
         }
       ];
@@ -83,8 +88,8 @@ lib.mkMerge [
         disk.enable = true;
       };
       mihoyo = {
-        enable = true;
-        games = [ "honkai-railway" ];
+        enable = false;
+        games = [ "honkai-railway" ]; # FIXME Failed download rustls during nix build 
       };
     };
 
