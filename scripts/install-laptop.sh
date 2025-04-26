@@ -33,4 +33,4 @@ mount /dev/disk/by-label/BACKUP "$ROOT_DIR/backup"
 mount /dev/disk/by-label/NIX_STORE "$ROOT_DIR/nix/store"
 
 echo "Install NixOS"
-sudo nixos-install --flake .#laptop --root "$ROOT_DIR" && umount -R "$ROOT_DIR"
+nixos-install --flake .#laptop --root "$ROOT_DIR" && umount -R "$ROOT_DIR"

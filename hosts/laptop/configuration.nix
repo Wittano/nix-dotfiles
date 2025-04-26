@@ -36,10 +36,7 @@ mkMerge [
       }
     ];
 
-    console = {
-      earlySetup = true;
-      useXkbConfig = true;
-    };
+    console.earlySetup = true;
 
     hardware = {
       trackpoint.emulateWheel = true;
