@@ -21,6 +21,7 @@ _: {
   boot = {
     loader = {
       grub.enableCryptodisk = true;
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
     initrd.luks.devices = {
