@@ -7,15 +7,30 @@ if [ ! $EUID -eq 0 ]; then
     exit 1
 fi
 
-cryptsetup -v luksOpen /dev/sda hdd
-cryptsetup -v luksOpen /dev/sdb2 ssd
+echo "Open encrypted disks"
+HDD_ENCRYPTED_NAME="hdd"
+if [ ! -b "/dev/mapper/$HDD_ENCRYPTED_NAME" ]; then
+    cryptsetup -v luksOpen /dev/sda "$HDD_ENCRYPTED_NAME"
+fi
 
-mount /dev/disk/by-label/ROOT /mnt
+SDD_ENCRYPTED_NAME="ssd"
+if [ ! -b "/dev/mapper/$SDD_ENCRYPTED_NAME" ]; then
+    cryptsetup -v luksOpen /dev/sdb2 "$SDD_ENCRYPTED_NAME"
+fi
 
-mkdir -p /mnt/boot/efi /mnt/backup /mnt/nix/store
+sleep 5s
 
-mount /dev/disk/by-label/BOOT /mnt/boot/efi
-mount /dev/disk/by-label/BACKUP /mnt/backup
-mount /dev/disk/by-label/NIX_STORE /mnt/nix/store
+echo "Mounting ROOT partition"
+ROOT_DIR=/mnt
+mount /dev/disk/by-label/ROOT "$ROOT_DIR"
 
-sudo nixos-install --flake .#laptop && umount -R /mnt
+echo "Create requires directories"
+mkdir -p "$ROOT_DIR/boot/efi" "$ROOT_DIR/backup" "$ROOT_DIR/nix/store"
+
+echo "Mount BOOT, BACKUP and NIX_STORE partitions"
+mount /dev/disk/by-label/BOOT "$ROOT_DIR/boot/efi"
+mount /dev/disk/by-label/BACKUP "$ROOT_DIR/backup"
+mount /dev/disk/by-label/NIX_STORE "$ROOT_DIR/nix/store"
+
+echo "Install NixOS"
+sudo nixos-install --flake .#laptop --root "$ROOT_DIR" && umount -R "$ROOT_DIR"
