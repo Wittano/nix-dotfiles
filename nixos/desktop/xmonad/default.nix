@@ -11,6 +11,7 @@ in
     users = mkOption {
       description = "List of users that use desktop configuration";
       type = with types; listOf str;
+      default = [ "wittano" ];
     };
   };
 
