@@ -11,7 +11,7 @@ let
     mindustry # Mindustry
     xivlauncher # FF XIV
     prismlauncher # Minecraft
-    zeroadPackages.zeroad-unwrapped # 0 A.D
+    zeroad-unwrapped # 0 A.D
   ];
 
   fixAge2Sync = pkgs.writeShellApplication {
@@ -38,6 +38,7 @@ let
         };
 
         patches = [ ./patches/fix-darksiders.patch ];
+
       };
     in
     pkgs.writeShellApplication {

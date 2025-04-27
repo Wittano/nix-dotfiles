@@ -6,14 +6,14 @@ let
   commonHomeManager = import ../common-home-manager.nix {
     inherit inputs pkgs;
     systemVersion = config.system.stateVersion;
-    accent = config.catppuccin.accent;
-    flavor = config.catppuccin.flavor;
+    inherit (config.catppuccin) accent;
+    inherit (config.catppuccin) flavor;
   };
 
-  remmina = pkgs.remmina; # VNC client
+  inherit (pkgs) remmina; # VNC client
   dropbox = pkgs.dropbox-cli; # Dropbox CLI
-  czkawka = pkgs.czkawka;
-  pandoc = pkgs.pandoc;
+  inherit (pkgs) czkawka;
+  inherit (pkgs) pandoc;
 in
 lib.mkMerge [
   commonConfig

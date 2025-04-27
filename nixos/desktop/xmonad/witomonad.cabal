@@ -1,7 +1,10 @@
 cabal-version:      3.0
 name:               witomonad
+synopsis:           Wittano Xmonad desktop
+description:        Wittano configuration for Xmonad desktop
+category:           desktop
 version:            0.1.0.0
-license:            NONE
+license:            GPL-1.0-or-later
 author:             Wittano Bonarotti
 maintainer:         radoslaw.ratyna@gmail.com
 build-type:         Simple
@@ -14,10 +17,10 @@ executable xmonad-x86_64-linux
     main-is:          Main.hs
 
     build-depends:
-        base >=4.17.2.1,
-        xmonad >=0.18.0,
-        xmonad-contrib >=0.18.0,
-        xmonad-extras >=0.17.0,
+        base ^>=4.18,
+        xmonad ^>=0.18.0,
+        xmonad-contrib ^>=0.18.0,
+        xmonad-extras ^>=0.17.0,
         containers >=0.7 && <0.8
 
     hs-source-dirs:   src

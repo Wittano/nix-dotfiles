@@ -7,16 +7,11 @@
 , writeShellApplication
 , nh
 , python3
-, gst_all_1
 , pipenv
 , coreutils
 , docker
 , act
-, sddm
-, nix
 , haskell-language-server
-, cabal-install
-, kdePackages
 , haskellPackages
 , statix
 , ...
@@ -46,6 +41,7 @@ let
     xmonad-contrib
     xmonad-extras
     xmobar
+    cabal-install
   ]);
 in
 mkShell {
@@ -69,7 +65,6 @@ mkShell {
 
     # Haskell deps
     haskell-language-server
-    cabal-install
 
     # Xmonad
     xmonadDevDeps

@@ -11,8 +11,8 @@ let
   commonHomeManager = import ../common-home-manager.nix {
     inherit inputs pkgs;
     systemVersion = config.system.stateVersion;
-    accent = config.catppuccin.accent;
-    flavor = config.catppuccin.flavor;
+    inherit (config.catppuccin) accent;
+    inherit (config.catppuccin) flavor;
   };
 in
 mkMerge [

@@ -4,10 +4,10 @@ with lib;
   options.programs.tmux.wittano.enable = mkEnableOption "Enable custom tmux config";
 
   config = mkIf config.programs.tmux.wittano.enable {
+    catppuccin.fzf.enable = false;
     programs = {
       fzf = {
         enable = true;
-        catppuccin.enable = false;
         enableFishIntegration = true;
         colors = {
           fg = "-1";

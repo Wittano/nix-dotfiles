@@ -3,13 +3,10 @@ with lib;{
   options.services.redis.wittano.enable = mkEnableOption "Own redis configuration";
 
   config = mkIf config.services.redis.wittano.enable {
-    services.redis = {
-      openFirewall = true;
+    services.redis."servers".homelab = {
+      enable = true;
       maxclients = 10;
-
-      servers.homelab = {
-        enable = true;
-      };
+      openFirewall = true;
     };
   };
 }

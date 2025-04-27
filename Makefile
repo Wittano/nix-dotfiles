@@ -1,7 +1,7 @@
-activate:
+activate: check
 	nh os switch -H pc . -- --show-trace
 
-activate-laptop:
+activate-laptop: check
 	nh os switch -H laptop . -- --show-trace
 
 clean:
@@ -10,18 +10,16 @@ ifneq (,$(windcard result))
 endif
 	nh clean all
 
-check:
+check: xmonad-check
+	statix fix
 	nix flake check
-	statix check
 
 xmonad-check:
-	PWD=$(pwd)
-	cd ./nixos/desktop/xmonad
-	cabal build --enable-nix
-	cd $PWD
+	cabal update
+	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
 
-try-laptop:
+try-laptop: check
 	nh os build -H laptop . -- --show-trace
 
-build-laptop:
+build-laptop: check
 	nh os build -H laptop . -- --show-trace

@@ -51,8 +51,8 @@ in
       } // cursorTheme;
     };
 
-    i18n.inputMethod.fcitx5.catppuccin = {
-      inherit (config.catppuccin) flavor;
+    catppuccin.fcitx5 = {
+      inherit (catppuccin) flavor;
 
       enable = true;
     };

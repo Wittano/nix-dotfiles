@@ -17,10 +17,10 @@ in
     fonts.fontconfig.enable = services.dunst.enable;
     home.packages = mkIf services.dunst.enable [ pkgs.jetbrains-mono ];
 
+    catppuccin.dunst.enable = mkForce false;
     services.dunst = {
       inherit (config.services.dunst.wittano) enable;
 
-      catppuccin.enable = mkForce false;
       settings = mkMerge [
         (mkTheme config.catppuccin.flavor)
         {
