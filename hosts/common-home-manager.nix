@@ -11,7 +11,8 @@
       # Utils
       flameshot # Screenshot
       textsnatcher # Text extractor
-      # czkawka # File duplication cleaner
+      czkawka # File duplication cleaner
+      szyszka # File renamer
 
       # Folder Dialog menu
       zenity
