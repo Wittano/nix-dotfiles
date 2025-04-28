@@ -73,6 +73,7 @@
 
   services = {
     redshift.wittano.enable = true;
+    betterlockscreen.wittano.enable = true;
     picom.wittano.enable = true;
     dunst.wittano.enable = true;
   };

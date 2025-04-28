@@ -26,5 +26,6 @@
       ./qbittorrent.nix
       ./work.nix
       ./programming.nix
+      ./betterlockscreen.nix
     ];
 }
