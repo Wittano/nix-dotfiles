@@ -4,13 +4,13 @@ let
   desktopName = "xmonad";
   commonConfig = import ../common.nix { inherit lib master pkgs hostname inputs unstable desktopName; cores = 24; };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs;
+    inherit inputs pkgs master;
     systemVersion = config.system.stateVersion;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;
   };
 
-  inherit (pkgs) remmina; # VNC client
+  inherit (pkgs) remmina;# VNC client
   dropbox = pkgs.dropbox-cli; # Dropbox CLI
   inherit (pkgs) czkawka;
   inherit (pkgs) pandoc;

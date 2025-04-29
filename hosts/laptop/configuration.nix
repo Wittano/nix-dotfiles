@@ -9,7 +9,7 @@ let
     users = [ "wittano" ];
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs;
+    inherit inputs pkgs master;
     systemVersion = config.system.stateVersion;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;

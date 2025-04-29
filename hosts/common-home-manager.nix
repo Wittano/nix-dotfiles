@@ -1,4 +1,4 @@
-{ inputs, systemVersion, pkgs, accent ? "pink", flavor ? "latte", desktopName ? "xmonad", ... }: {
+{ inputs, systemVersion, master, pkgs, accent ? "pink", flavor ? "latte", desktopName ? "xmonad", ... }: {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeManagerModules.nixvim
@@ -41,6 +41,7 @@
   };
 
   programs = {
+    fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;
