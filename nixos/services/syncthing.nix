@@ -19,7 +19,12 @@ let
       homeMode = "0770";
       createHome = true;
       home = "/home/syncthing";
+      extraGroups = [ "samba" "users" ];
     };
+  };
+
+  witoSyncthingGroup = mkIf (hostname == "pc") {
+    wito.extraGroups = [ group ];
   };
 in
 {
@@ -32,6 +37,7 @@ in
 
     users.users = mkMerge [
       syncthingUser
+      witoSyncthingGroup
       {
         wittano.extraGroups = [
           group
