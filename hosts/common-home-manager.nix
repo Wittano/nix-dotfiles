@@ -81,6 +81,11 @@
 
   desktop.autostart = {
     enable = true;
-    programs = [ "gnome-pomodoro" ];
+    programs = [
+      "gnome-pomodoro"
+      "vivaldi"
+      "signal-desktop --start-in-tray"
+      "todoist-electron"
+    ];
   };
 }

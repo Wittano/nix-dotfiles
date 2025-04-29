@@ -30,7 +30,7 @@ let
       done
     '';
 
-  autostartScript = mkAutostartScript "desktop" cfg.programs;
+  autostartScript = mkAutostartScript "desktop" (lists.unique cfg.programs);
 in
 {
   options = {

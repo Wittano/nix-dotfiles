@@ -63,6 +63,13 @@ lib.mkMerge [
             games.enable = true;
             lutris.enable = true;
           };
+
+          desktop.autostart.programs = [
+            "telegram-desktop -startintray"
+            "discord --start-minimized"
+            "spotify"
+            "steam -silent"
+          ];
         }
       ];
       wito = mkMerge [
