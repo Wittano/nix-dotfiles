@@ -57,7 +57,7 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
-          home.packages = with pkgs; [ remmina dropbox czkawka pandoc krita master.freetube discord ];
+          home.packages = with pkgs; [ remmina dropbox czkawka pandoc krita master.freetube unstable.vesktop ];
 
           programs = {
             games.enable = true;
@@ -66,7 +66,7 @@ lib.mkMerge [
 
           desktop.autostart.programs = [
             "telegram-desktop -startintray"
-            "discord --start-minimized"
+            "vesktop --start-minimized"
             "spotify"
             "steam -silent"
           ];
