@@ -64,7 +64,7 @@ lib.mkMerge [
             pandoc
             krita
             master.freetube
-            unstable.vesktop
+            discord
             spotify
           ];
 
@@ -76,7 +76,7 @@ lib.mkMerge [
 
           desktop.autostart.programs = [
             "telegram-desktop -startintray"
-            "vesktop --start-minimized"
+            "discord --start-minimized"
             "spotify"
             "steam -silent"
           ];
