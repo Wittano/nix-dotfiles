@@ -57,10 +57,20 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
-          home.packages = with pkgs; [ remmina dropbox czkawka pandoc krita master.freetube unstable.vesktop ];
+          home.packages = with pkgs; [
+            remmina
+            dropbox
+            czkawka
+            pandoc
+            krita
+            master.freetube
+            unstable.vesktop
+            spotify
+          ];
 
           programs = {
             games.enable = true;
+            mpv.enable = true;
             lutris.enable = true;
           };
 
