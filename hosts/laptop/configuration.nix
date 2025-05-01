@@ -36,6 +36,7 @@ mkMerge [
       }
     ];
 
+    programs.nix-ld.enable = true;
     console.earlySetup = true;
 
     hardware = {
