@@ -20,7 +20,10 @@ lib.mkMerge [
   rec {
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
 
-    virtualisation.docker.wittano.enable = true;
+    virtualisation.docker.wittano = {
+      enable = true;
+      user = "wito";
+    };
 
     desktop.${desktopName}.users = [ "wittano" "wito" "work" ];
 
@@ -85,7 +88,7 @@ lib.mkMerge [
       wito = mkMerge [
         commonHomeManager
         {
-          home.packages = with pkgs; [ remmina dropbox postman czkawka ];
+          home.packages = with pkgs; [ remmina dropbox postman czkawka signal-desktop ];
           profile.programming.enable = true;
         }
       ];

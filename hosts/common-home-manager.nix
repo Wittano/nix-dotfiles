@@ -40,17 +40,20 @@
   };
 
   programs = {
-    fish.functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;
     kitty.wittano.enable = true;
     fish = {
+      functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
       wittano = {
         enable = true;
         enableDirenv = true;
       };
-      shellAliases.open = "xdg-open";
+      shellAliases = {
+        open = "xdg-open";
+        weather = "${pkgs.curlWithGnuTls}/bin/curl wttr.in/Poznan";
+      };
     };
     nitrogen.wittano.enable = true;
     rofi.wittano = {
