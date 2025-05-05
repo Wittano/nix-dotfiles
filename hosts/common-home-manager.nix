@@ -24,7 +24,7 @@
       eog # Image viewer
       libreoffice # Office staff
       nemo # File explorer
-      pandoc # Text file converter
+      # pandoc # Text file converter
 
       # Apps
       keepassxc # Password manager
@@ -32,6 +32,7 @@
       todoist-electron # ToDo app
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
+      spotify # Spotify
 
       # Security
       bitwarden
@@ -62,6 +63,7 @@
       enable = true;
     };
     neovim.wittano.enable = true;
+    mpv.enable = true;
   };
 
   qt.wittano.enable = true;

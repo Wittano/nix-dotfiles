@@ -32,10 +32,7 @@ mkMerge [
         ];
 
         profile.programming.enable = true;
-        programs = {
-          jetbrains.ides = [ "go" "haskell" ];
-          mpv.enable = true;
-        };
+        programs.jetbrains.ides = mkForce [ "go" "haskell" ];
       }
     ];
 

@@ -73,7 +73,6 @@ lib.mkMerge [
 
           programs = {
             games.enable = true;
-            mpv.enable = true;
             lutris.enable = true;
           };
 

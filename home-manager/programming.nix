@@ -36,6 +36,7 @@ with lib;
       sshs # SSH client
       joplin-desktop
       vscodium # VS code
+      signal-desktop # Signal communicator
     ];
   };
 }
