@@ -173,6 +173,7 @@ mkMerge [
     system.stateVersion = systemVersion;
 
     services = {
+      backup.enable = true;
       pipewire.wittano.enable = true;
       udisks2 = {
         enable = true;

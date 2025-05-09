@@ -27,10 +27,7 @@ with lib.my;
   system.activationScripts.backupHostKeys =
     let
       homeDir = config.home-manager.users.wittano.home.homeDirectory;
-      backupDir =
-        if config.services.backup.enable
-        then config.services.backup.location
-        else "${homeDir}/.ssh/backup";
+      backupDir = "${homeDir}/.ssh/backup";
       keys = builtins.map (x: x.path) config.services.openssh.hostKeys;
       keyArray = bash.mkBashArray keys;
     in
