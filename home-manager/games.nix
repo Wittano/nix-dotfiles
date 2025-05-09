@@ -68,7 +68,6 @@ in
   config = mkIf cfg.enable {
     home.packages = games ++ patches ++ (with pkgs; [
       spotify
-      vlc
 
       # Social media
       telegram-desktop

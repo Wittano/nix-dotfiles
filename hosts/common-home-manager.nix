@@ -23,7 +23,8 @@
       # Utils 
       eog # Image viewer
       libreoffice # Office staff
-      nemo # File explorer
+      krusader # File explorer
+      krename
       # pandoc # Text file converter
 
       # Apps
