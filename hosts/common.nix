@@ -194,5 +194,11 @@ mkMerge [
         package = pkgs.catppuccin-sddm-corners;
       };
     };
+
+    qt = {
+      enable = true;
+      platformTheme = "qt5ct";
+      style = "kvantum";
+    };
   }
 ]
