@@ -19,6 +19,7 @@ lib.mkMerge [
   commonConfig
   rec {
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
+    boot.tmp.useTmpfs = true;
 
     virtualisation.docker.wittano = {
       enable = true;

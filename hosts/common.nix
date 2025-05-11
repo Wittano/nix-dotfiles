@@ -96,6 +96,7 @@ mkMerge [
 
     # Linux Kernel settings
     boot = {
+      tmp.cleanOnBoot = true;
       supportedFilesystems = {
         ntfs = true;
         nfs = true;

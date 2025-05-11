@@ -21,5 +21,8 @@ xmonad-check:
 try-laptop: check
 	nh os build -H laptop . -- --show-trace
 
+build-pc: check
+	nh os build -H pc . -- --show-trace
+
 build-laptop: check
 	nh os build -H laptop . -- --show-trace
