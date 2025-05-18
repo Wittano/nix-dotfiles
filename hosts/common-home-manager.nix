@@ -25,7 +25,7 @@
       libreoffice # Office staff
       krusader # File explorer
       krename
-      # pandoc # Text file converter
+      pandoc # Text file converter
 
       # Apps
       keepassxc # Password manager
