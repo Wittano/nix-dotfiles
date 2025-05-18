@@ -77,6 +77,7 @@ let
         haskell.extraConfig
         {
           programs.neovim.wittano.enableElixir = true;
+          home.packages = with pkgs; [ vscodium ];
         }
       ];
       fork.extraConfig = {

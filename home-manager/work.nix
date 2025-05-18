@@ -5,7 +5,7 @@ with lib;
 
   config = mkIf config.profile.work.enable {
     home.packages = with pkgs; [
-      teams-for-linux # Microsoft Teams
+      # teams-for-linux # Microsoft Teams
       openfortivpn # VPN
     ];
 
