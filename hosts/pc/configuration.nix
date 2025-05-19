@@ -26,18 +26,13 @@ lib.mkMerge [
       user = "wito";
     };
 
-    desktop.${desktopName}.users = [ "wittano" "wito" "work" ];
+    desktop.${desktopName}.users = [ "wittano" "wito" ];
 
     users.users = {
       wito = {
         isNormalUser = true;
         uid = mkDefault 1001;
         extraGroups = [ "wheel" ];
-        shell = pkgs.fish;
-      };
-      work = {
-        isNormalUser = true;
-        uid = mkDefault 1002;
         shell = pkgs.fish;
       };
     };
@@ -90,13 +85,6 @@ lib.mkMerge [
         {
           home.packages = with pkgs; [ remmina dropbox postman czkawka signal-desktop ];
           profile.programming.enable = true;
-        }
-      ];
-      work = mkMerge [
-        commonHomeManager
-        {
-          home.packages = [ remmina czkawka ];
-          profile.work.enable = true;
         }
       ];
     };
