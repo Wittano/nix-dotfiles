@@ -98,7 +98,7 @@ in
             xc = "xprop | grep CLASS";
 
             # Programs
-            neofetch = "nix run nixpkgs#neofetch";
+            neofetch = "nix run nixpkgs#fastfetch";
             onefetch = "nix run nixpkgs#onefetch";
             calc = "nix run nixpkgs#R";
 
