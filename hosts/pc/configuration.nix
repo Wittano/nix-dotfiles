@@ -102,6 +102,7 @@ lib.mkMerge [
     };
 
     services = {
+      teamviewer.enable = true;
       redis.wittano.enable = true;
       prometheus.wittano.enable = true;
       xserver = {
