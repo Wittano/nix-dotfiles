@@ -2,17 +2,17 @@
   description = "Wittano NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     filebot.url = "github:Wittano/filebot";
     aagl = {
-      url = "github:ezKEa/aagl-gtk-on-nix/release-24.11";
+      url = "github:ezKEa/aagl-gtk-on-nix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim.url = "github:nix-community/nixvim/nixos-24.11";
+    nixvim.url = "github:nix-community/nixvim/nixos-25.05";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin-dunst = {

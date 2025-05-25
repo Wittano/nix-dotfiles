@@ -31,6 +31,7 @@ in
     services.displayManager.sddm = {
       inherit theme extraPackages;
 
+      package = pkgs.kdePackages.sddm;
       enable = true;
       autoNumlock = true;
       settings = {

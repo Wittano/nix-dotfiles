@@ -34,10 +34,14 @@ let
     };
 
     signal-desktop = prev.signal-desktop.overrideAttrs (oldAttrs: {
-      preFixup = oldAttrs.preFixup + ''
-        substituteInPlace $out/share/applications/${oldAttrs.pname}.desktop \
-        --replace "$out/bin/${oldAttrs.pname}" "$out/bin/${oldAttrs.pname} --use-tray-icon"
-      '';
+      desktopItems =
+        let
+          desktopItem = builtins.head oldAttrs.desktopItems;
+          fixedDesktopItem = desktopItem.override {
+            exec = "${oldAttrs.meta.mainProgram} %U --use-tray-icon";
+          };
+        in
+        [ fixedDesktopItem ];
     });
 
     jetbrains = prev.jetbrains // {

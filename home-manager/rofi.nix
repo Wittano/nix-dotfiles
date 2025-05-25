@@ -52,8 +52,20 @@ in
     home.packages =
       let
         script = lists.optional (cfg.desktopName != null) switchOffScript;
+        nerdFonts = with pkgs.nerd-fonts; [
+          sauce-code-pro
+          noto
+          hasklug
+          gohufont
+          go-mono
+          fira-mono
+          fira-code
+          ubuntu
+          terminess-ttf
+          jetbrains-mono
+        ];
       in
-      with pkgs; [ nerdfonts oranchelo-icon-theme ] ++ script;
+      with pkgs; [ oranchelo-icon-theme ] ++ script ++ nerdFonts;
 
     programs.rofi = {
       enable = true;

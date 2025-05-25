@@ -69,7 +69,7 @@ lib.mkMerge [
 
           programs = {
             games.enable = true;
-            lutris.enable = true;
+            lutris.wittano.enable = true;
           };
 
           desktop.autostart.programs = [
@@ -83,7 +83,7 @@ lib.mkMerge [
       wito = mkMerge [
         commonHomeManager
         {
-          home.packages = with pkgs; [ remmina dropbox postman czkawka signal-desktop ];
+          home.packages = with pkgs; [ remmina dropbox postman ];
           profile.programming.enable = true;
         }
       ];
@@ -96,7 +96,7 @@ lib.mkMerge [
         disk.enable = true;
       };
       mihoyo = {
-        enable = false;
+        enable = true;
         games = [ "honkai-railway" ]; # FIXME Failed download rustls during nix build 
       };
     };

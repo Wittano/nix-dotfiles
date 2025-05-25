@@ -6,7 +6,7 @@ with lib.my;
 
   config = mkIf config.qt.wittano.enable {
     home = {
-      packages = with pkgs; [ kdePackages.qt6ct libsForQt5.qt5ct breeze-icons ];
+      packages = with pkgs; [ kdePackages.qt6ct libsForQt5.qt5ct libsForQt5.breeze-icons ];
       sessionVariables = {
         QT_QPA_PLATFORMTHEME = "kvantum";
         QT_QPA_PLATFORM = "xcb";

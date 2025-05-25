@@ -11,7 +11,7 @@ in
     home.packages = with pkgs; [ xclip ];
     services.gpg-agent = {
       enable = true;
-      pinentryPackage = pkgs.pinentry-all;
+      pinentry.package = pkgs.pinentry-all;
     };
 
     programs = {

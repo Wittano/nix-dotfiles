@@ -14,7 +14,7 @@ let
   accent = "pink";
   flavor = "latte";
 
-  systemVersion = "24.11";
+  systemVersion = "25.05";
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
   hardwareModule = import (./. + "/${hostname}/hardware.nix") { };
