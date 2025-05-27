@@ -100,7 +100,7 @@ in
             # Programs
             neofetch = "nix run nixpkgs#fastfetch";
             onefetch = "nix run nixpkgs#onefetch";
-            calc = "nix run nixpkgs#R";
+            calc = "${pkgs.R}/bin/R";
 
             # Projects
             pnix = "cd $HOME/nix-dotfiles";
