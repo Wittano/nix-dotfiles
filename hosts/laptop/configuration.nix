@@ -1,10 +1,10 @@
-{ config, lib, pkgs, hostname, inputs, unstable, master, ... }:
+{ config, lib, pkgs, hostname, inputs, unstable, master, secretDir, ... }:
 with lib;
 with lib.my;
 let
   desktopName = "xmonad";
   commonConfig = import ../common.nix {
-    inherit desktopName master config lib hostname pkgs unstable inputs;
+    inherit desktopName master config lib hostname pkgs unstable inputs secretDir;
     cores = 4;
     users = [ "wittano" ];
   };

@@ -4,6 +4,7 @@
 , unstable
 , master
 , hostname
+, secretDir ? ./../secrets/homelab.crt
 , desktopName ? "xmonad"
 , cores ? 24
 , ...
@@ -200,5 +201,8 @@ mkMerge [
       platformTheme = "qt5ct";
       style = "kvantum";
     };
+
+
+    security.pki.certificateFiles = [ "${secretDir}/homelab.crt" ];
   }
 ]

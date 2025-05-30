@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 with lib;
 with lib.my;
 let
@@ -15,6 +15,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [ pass docker-credential-helpers ];
+
     hardware.virtualization.wittano.stopServices = [{
       name = "win10";
       services = [

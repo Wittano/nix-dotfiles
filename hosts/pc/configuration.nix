@@ -1,8 +1,11 @@
-{ config, lib, pkgs, hostname, inputs, unstable, master, ... }:
+{ config, lib, pkgs, hostname, inputs, secretDir, unstable, master, ... }:
 with lib;
 let
   desktopName = "xmonad";
-  commonConfig = import ../common.nix { inherit lib master pkgs hostname inputs unstable desktopName; cores = 24; };
+  commonConfig = import ../common.nix {
+    inherit lib secretDir master pkgs hostname inputs unstable desktopName;
+    cores = 24;
+  };
   commonHomeManager = import ../common-home-manager.nix {
     inherit inputs pkgs master;
     systemVersion = config.system.stateVersion;
