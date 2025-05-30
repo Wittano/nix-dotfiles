@@ -24,6 +24,7 @@
       eog # Image viewer
       libreoffice # Office staff
       krusader # File explorer
+      kdePackages.kde-cli-tools
       krename
       pandoc # Text file converter
 
