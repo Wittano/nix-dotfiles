@@ -23,9 +23,6 @@
       # Utils 
       eog # Image viewer
       libreoffice # Office staff
-      krusader # File explorer
-      kdePackages.kde-cli-tools
-      krename
       pandoc # Text file converter
 
       # Apps
@@ -44,6 +41,7 @@
   };
 
   programs = {
+    krusader.enable = true;
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;

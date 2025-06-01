@@ -27,5 +27,6 @@
       ./work.nix
       ./programming.nix
       ./betterlockscreen.nix
+      ./krusader.nix
     ];
 }
