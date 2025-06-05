@@ -41,7 +41,6 @@
   };
 
   programs = {
-    krusader.enable = true;
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;

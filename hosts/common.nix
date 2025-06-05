@@ -150,6 +150,7 @@ mkMerge [
     };
 
     programs = {
+      krusader.enable = true;
       fish.enable = true;
       file-roller.enable = true; # Archive explorer
       evince.enable = true; # PDF viever

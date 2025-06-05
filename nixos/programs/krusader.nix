@@ -11,7 +11,12 @@ in
   options.programs.krusader.enable = mkEnableOption "krusader";
 
   config = mkIf config.programs.krusader.enable {
-    home.packages =
+    services.locate = {
+      enable = true;
+      interval = "18:00";
+    };
+
+    environment.systemPackages =
       let
         kdePackage = with pkgs.kdePackages; [
           kde-cli-tools
@@ -20,6 +25,12 @@ in
       with pkgs; [
         patchedKrusader
         krename
+        bzip2
+        cpio
+        coreutils
+        gnutar
+        gzip
+        xz
       ] ++ kdePackage;
   };
 } 
