@@ -29,7 +29,7 @@ in
       enable = true;
       storageDriver = "overlay2";
       autoPrune = {
-        enable = true;
+        enable = !config.services.boinc.wittano.enable;
         dates = "daily";
       };
     };
