@@ -164,11 +164,6 @@ mkMerge [
       backupFileExtension = "backup";
     };
 
-    # Programs
-    services.locate = {
-      enable = true;
-      interval = "21:37";
-    };
 
     desktop."${desktopName}".enable = true;
 
@@ -204,6 +199,6 @@ mkMerge [
     };
 
 
-    security.pki.certificateFiles = [ "${secretDir}/homelab.crt" ];
+    security.pki.certificateFiles = [ "${secretDir}/homelab.crt" "${secretDir}/homelab_ca.pem" ];
   }
 ]
