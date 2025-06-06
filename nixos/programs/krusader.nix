@@ -20,6 +20,7 @@ in
       let
         kdePackage = with pkgs.kdePackages; [
           kde-cli-tools
+          kget
         ];
       in
       with pkgs; [
@@ -31,6 +32,14 @@ in
         gnutar
         gzip
         xz
+        xxdiff
+        busybox
+        p7zip
+        arj
+        lhasa
+        rar
+        unzip
+        zip
       ] ++ kdePackage;
   };
 } 
