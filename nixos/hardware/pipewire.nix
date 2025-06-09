@@ -9,7 +9,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ pulseaudio ];
+    environment.systemPackages = with pkgs; [
+      pulseaudio
+      pavucontrol
+    ];
 
     security.rtkit.enable = true;
     hardware.enableAllFirmware = cfg.enable;
