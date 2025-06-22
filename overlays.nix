@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 with lib;
 with lib.my;
 let
@@ -57,13 +57,9 @@ let
     };
   };
 in
-{
-  overlay = wittanoOverlay;
-
-  systemOverlays = inputs.xmonad-contrib.overlays ++ [
-    wittanoOverlay
-    haskellPackagesOverlay
-    packagesPatches
-  ];
-}
+[
+  wittanoOverlay
+  haskellPackagesOverlay
+  packagesPatches
+]
 

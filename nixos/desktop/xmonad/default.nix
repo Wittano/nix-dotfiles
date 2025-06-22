@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, hostname, ... }:
+{ config, lib, pkgs, inputs, unstable, hostname, ... }:
 with lib;
 with lib.my;
 let
@@ -17,6 +17,8 @@ in
 
   config = mkIf config.desktop.xmonad.enable {
     assertions = desktop.mkDesktopAssertion config cfg.users;
+
+    nixpkgs.overlays = inputs.xmonad-contrib.overlays;
 
     services.xserver = {
       enable = true;

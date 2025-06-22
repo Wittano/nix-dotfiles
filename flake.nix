@@ -27,7 +27,6 @@
     let
       system = "x86_64-linux";
 
-      overlays = import ./overlays.nix { inherit lib inputs pkgs; };
       mkPkgs = p:
         import p {
           inherit system;
@@ -40,7 +39,7 @@
             ];
           };
 
-          overlays = overlays.systemOverlays;
+          overlays = import ./overlays.nix { inherit lib; pkgs = p; };
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
@@ -50,7 +49,7 @@
       lib = nixpkgs.lib.extend (sefl: super: {
         inherit (home-manager.lib) hm;
 
-        my = import ./lib { inherit lib system inputs pkgs unstable master; };
+        my = import ./lib { inherit lib pkgs system inputs unstable master; };
       });
     in
     {
@@ -60,7 +59,6 @@
         pc = lib.my.hosts.mkHost "pc";
         laptop = lib.my.hosts.mkHost "laptop";
       };
-      overlays.default = overlays.overlay;
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };
     };

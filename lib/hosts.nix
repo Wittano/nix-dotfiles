@@ -1,4 +1,4 @@
-{ lib, system, pkgs, unstable, master, inputs, secretDir, ... }:
+{ lib, system, unstable, master, inputs, secretDir, ... }:
 with lib;
 with lib.my;
 {
@@ -6,21 +6,32 @@ with lib.my;
     let
       splitName = strings.splitString "-" name;
       hostname = builtins.head splitName;
+
+      nixpkgsConfig = { pkgs, ... }: {
+        nixpkgs = {
+          overlays =
+            let
+              overlay = import ./../overlays.nix { inherit lib pkgs; };
+            in
+            inputs.xmonad-contrib.overlays ++ overlay;
+          config = {
+            allowBroken = false;
+            allowUnfree = true;
+          };
+        };
+      };
     in
     inputs.nixpkgs.lib.nixosSystem rec {
       inherit system;
 
       specialArgs = {
-        inherit pkgs unstable lib inputs system hostname secretDir master;
+        inherit unstable lib inputs system hostname secretDir master;
         templateDir = ./../templates;
       };
 
       modules =
-        let
-          hostnameNoDev = strings.removeSuffix "-dev" hostname;
-        in
         [
-          ./../hosts/${hostnameNoDev}/configuration.nix
+          ./../hosts/${hostname}/configuration.nix
 
           inputs.catppuccin.nixosModules.catppuccin
           inputs.home-manager.nixosModules.home-manager
@@ -28,6 +39,8 @@ with lib.my;
           inputs.determinate.nixosModules.default
 
           ../nixos
+
+          nixpkgsConfig
         ];
     };
 }
