@@ -199,6 +199,8 @@ mkMerge [
     };
 
 
-    security.pki.certificateFiles = [ "${secretDir}/homelab.crt" "${secretDir}/homelab_ca.pem" ];
+    security.pki.certificateFiles = [
+      "${secretDir}/homelab_ca.pem"
+    ];
   }
 ]
