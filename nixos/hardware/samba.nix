@@ -1,11 +1,11 @@
-{ config, pkgs, lib, hostname, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
   cfg = config.hardware.samba;
 
   sambaGroupName = "samba";
-  users = if (hostname == "pc") then [ "wittano" "wito" ] else [ "wittano" ];
+  users = [ "wittano" ];
   extraGroups =
     if users != [ ] then
       builtins.listToAttrs

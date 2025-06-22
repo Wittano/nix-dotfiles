@@ -26,25 +26,18 @@ lib.mkMerge [
 
     virtualisation.docker.wittano = {
       enable = true;
-      user = "wito";
+      user = "wittano";
     };
 
-    desktop.${desktopName}.users = [ "wittano" "wito" ];
+    desktop.${desktopName}.users = [ "wittano" ];
 
-    users.users = {
-      wito = {
-        isNormalUser = true;
-        uid = mkDefault 1001;
-        extraGroups = [ "wheel" ];
-        shell = pkgs.fish;
-      };
-    };
+    users.users.wittano.extraGroups = [ "wheel" ];
 
     hardware = {
       keyboard.zsa.enable = true;
       virtualization.wittano = {
         enable = true;
-        users = [ "wittano" "wito" ];
+        users = [ "wittano" ];
         enableWindowsVM = false;
       };
       amd.enable = true; # AMD GPU
@@ -59,6 +52,8 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
+          profile.programming.enable = true;
+
           home.packages = with pkgs; [
             remmina
             dropbox
@@ -81,13 +76,6 @@ lib.mkMerge [
             "spotify"
             "steam -silent"
           ];
-        }
-      ];
-      wito = mkMerge [
-        commonHomeManager
-        {
-          home.packages = with pkgs; [ remmina dropbox postman ];
-          profile.programming.enable = true;
         }
       ];
     };

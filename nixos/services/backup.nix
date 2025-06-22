@@ -57,7 +57,7 @@ in
 
       pruneOpts = [ "--keep-weekly 4" ];
       repository = "sftp:backup:/mnt/backup/nixos.${hostname}";
-      paths = [ "/home" ];
+      paths = [ "/home/wittano" ];
       timerConfig = {
         OnBootSec = "15m";
         OnUnitActiveSec = "1d";

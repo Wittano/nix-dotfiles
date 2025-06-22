@@ -4,7 +4,7 @@ with lib.my;
 let
   nvidiaDriverPackage = lists.optionals (hostname != "pc") [ config.boot.kernelPackages.nvidiaPackages.stable ];
   extraEnvPackages = with pkgs; [ ocl-icd virtualbox ] ++ nvidiaDriverPackage;
-  users = if hostname == "pc" then [ "wittano" "wito" ] else [ "wittano" ];
+  users = [ "wittano" ];
 in
 {
   options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
