@@ -78,10 +78,6 @@ in
     hardware.virtualization.wittano = {
       enable = mkEnableOption "Enable virutalization tools";
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
-      users = mkOption {
-        type = with types; listOf str;
-        description = "List of users who will be added virt libvirtd";
-      };
       stopServices = mkOption {
         description = "Set of services, that should be stopped by KVM before start VM";
         type = with types; listOf (submodule {
@@ -115,7 +111,16 @@ in
           onShutdown = "shutdown";
           qemu = {
             package = mkIf cfg.enableWindowsVM unstable.qemu;
-            ovmf.enable = true;
+            swtpm.enable = true;
+            ovmf = {
+              enable = true;
+              packages = [
+                (pkgs.OVMF.override {
+                  secureBoot = true;
+                  tpmSupport = true;
+                }).fd
+              ];
+            };
             runAsRoot = true;
           };
           hooks.qemu = mkIf cfg.enableWindowsVM qemuHooks;
@@ -127,7 +132,7 @@ in
       swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
 
       security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
-        inherit (cfg) users;
+        users = [ "wittano" "virt" ];
 
         commands = [{
           command = "/run/current-system/sw/bin/virsh";
@@ -135,16 +140,18 @@ in
         }];
       }];
 
-      users.users = trivial.pipe cfg.users [
-        (builtins.map (x: {
-          name = x;
-          value = {
-            extraGroups = [ "libvirtd" ];
+      users.users =
+        let
+          virtGroup = [ "libvirtd" ];
+        in
+        {
+          wittano.extraGroups = virtGroup;
+          virt = {
+            uid = 1002;
+            isNormalUser = true;
+            extraGroups = virtGroup;
           };
-        }))
-        builtins.listToAttrs
-      ];
-
+        };
       programs = {
         virt-manager.enable = true;
         dconf.enable = true;
@@ -175,10 +182,19 @@ in
       ];
 
       boot = mkIf cfg.enableWindowsVM {
-        kernelParams = [ "amd_iommu=on" "iommu=pt" "iommu=1" ];
-        kernelModules = [ "vifo-pci" "vendor-reset" ];
+        kernelParams = [ "amd_iommu=on" ];
+        kernelModules = [
+          "vendor-reset"
+          "kvm-amd"
+          "vfio_pci"
+          "vfio"
+          "vfio_iommu_type1"
+          "vfio_virqfd"
+        ];
         extraModulePackages = with config.boot.kernelPackages; [ vendor-reset ];
       };
+
+      services.openssh.settings.AllowUsers = [ "virt" ];
 
       services = {
         ssh.wittano.enable = true;

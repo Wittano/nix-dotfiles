@@ -8,7 +8,12 @@ with lib;
       inherit (config.services.ssh.wittano) enable;
 
       startWhenNeeded = enable;
-      settings.PermitRootLogin = "no";
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+        DenyUsers = [ "wittano" ];
+        DenyGroups = [ "wheel" ];
+      };
     };
   };
 }

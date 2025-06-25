@@ -25,6 +25,8 @@ echo 0 >/sys/class/vtconsole/vtcon1/bind
 # modprobe -r nvidia_modeset
 # modprobe -r nvidia
 
+sleep 5
+
 modprobe -r amdgpu
 
 # Avoid a Race condition by waiting 2 seconds. This can be calibrated to be shorter or longer if required for your system

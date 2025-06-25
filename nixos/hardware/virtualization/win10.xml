@@ -1,32 +1,35 @@
-<domain type='kvm'>
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
-  <uuid>cd11ab63-19c2-41a3-85f7-136afdea2f0d</uuid>
+  <uuid>5af36486-6e1b-45fa-9893-97bb9b672d3f</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://microsoft.com/win/10"/>
+      <libosinfo:os id="http://microsoft.com/win/11"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>12582912</memory>
-  <currentMemory unit='KiB'>12582912</currentMemory>
-  <vcpu placement='static'>3</vcpu>
-  <os>
-    <type arch='x86_64' machine='pc-q35-7.1'>hvm</type>
-    <loader readonly='yes' type='pflash'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
-    <nvram template='/run/libvirt/nix-ovmf/OVMF_VARS.fd'>/var/lib/libvirt/qemu/nvram/win10_VARS.fd</nvram>
+  <memory unit='KiB'>33554432</memory>
+  <currentMemory unit='KiB'>33554432</currentMemory>
+  <vcpu placement='static'>20</vcpu>
+  <os firmware='efi'>
+    <type arch='x86_64' machine='pc-q35-9.2'>hvm</type>
+    <firmware>
+      <feature enabled='no' name='enrolled-keys'/>
+      <feature enabled='yes' name='secure-boot'/>
+    </firmware>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/nix/store/rc29ivsfb1g2frjl0hqv28jcnl56bp9v-qemu-10.0.0/share/qemu/edk2-x86_64-secure-code.fd</loader>
+    <nvram template='/nix/store/rc29ivsfb1g2frjl0hqv28jcnl56bp9v-qemu-10.0.0/share/qemu/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/win11_VARS.fd</nvram>
+    <boot dev='hd'/>
   </os>
   <features>
     <acpi/>
     <apic/>
     <hyperv mode='custom'>
-      <relaxed state='on'/>
-      <vapic state='on'/>
-      <spinlocks state='on' retries='8191'/>
+      <vendor_id state='on' value='1234567890ab'/>
     </hyperv>
     <vmport state='off'/>
+    <smm state='on'/>
+    <ioapic driver='kvm'/>
   </features>
-  <cpu mode='host-passthrough' check='none' migratable='on'>
-    <topology sockets='1' dies='1' cores='3' threads='1'/>
-  </cpu>
+  <cpu mode='host-passthrough' check='none' migratable='on'/>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
     <timer name='pit' tickpolicy='delay'/>
@@ -43,11 +46,10 @@
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='qcow2' discard='unmap'/>
-      <source file='/var/lib/libvirt/images/win10.qcow2'/>
-      <target dev='sdb' bus='sata'/>
-      <boot order='1'/>
-      <address type='drive' controller='0' bus='0' target='0' unit='1'/>
+      <driver name='qemu' type='raw'/>
+      <source file='/var/lib/libvirt/images/pool/win11.img'/>
+      <target dev='sdc' bus='sata'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='2'/>
     </disk>
     <controller type='usb' index='0' model='qemu-xhci' ports='15'>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
@@ -123,65 +125,32 @@
       <target chassis='14' port='0x1d'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x5'/>
     </controller>
-    <controller type='pci' index='15' model='pcie-root-port'>
-      <model name='pcie-root-port'/>
-      <target chassis='15' port='0x8'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0'/>
-    </controller>
-    <controller type='pci' index='16' model='pcie-to-pci-bridge'>
-      <model name='pcie-pci-bridge'/>
-      <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
-    </controller>
     <controller type='sata' index='0'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
     </controller>
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
-    <controller type='scsi' index='0' model='lsilogic'>
-      <address type='pci' domain='0x0000' bus='0x10' slot='0x01' function='0x0'/>
-    </controller>
     <interface type='network'>
-      <mac address='52:54:00:b8:48:90'/>
+      <mac address='52:54:00:29:bf:78'/>
       <source network='default'/>
       <model type='e1000e'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
+    <tpm model='tpm-tis'>
+      <backend type='passthrough'>
+        <device path='/dev/tpm0'/>
+      </backend>
+    </tpm>
     <audio id='1' type='none'/>
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
-        <address domain='0x0000' bus='0x01' slot='0x00' function='0x1'/>
+        <address domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
       </source>
-      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
-      </source>
-      <rom file='/var/lib/libvirt/vbios/vibios.rom'/>
-      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <source>
-        <address domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
-      </source>
-      <address type='pci' domain='0x0000' bus='0x0a' slot='0x00' function='0x0'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <vendor id='0x046d'/>
-        <product id='0xc077'/>
-      </source>
-      <address type='usb' bus='0' port='3'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <vendor id='0x145f'/>
-        <product id='0x024b'/>
-      </source>
-      <address type='usb' bus='0' port='2'/>
+      <rom file='/home/wittano/nix-dotfiles/nixos/hardware/virtualization/amd.vibios.rom'/>
+      <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0' multifunction='on'/>
     </hostdev>
     <hostdev mode='subsystem' type='usb' managed='yes'>
       <source>
@@ -192,15 +161,53 @@
     </hostdev>
     <hostdev mode='subsystem' type='usb' managed='yes'>
       <source>
+        <vendor id='0x05e3'/>
+        <product id='0x0608'/>
+      </source>
+      <address type='usb' bus='0' port='4'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
         <vendor id='0x0b05'/>
         <product id='0x190e'/>
       </source>
-      <address type='usb' bus='0' port='4'/>
+      <address type='usb' bus='0' port='5'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x331a'/>
+        <product id='0x5020'/>
+      </source>
+      <address type='usb' bus='0' port='6'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x1c4f'/>
+        <product id='0x0034'/>
+      </source>
+      <address type='usb' bus='0' port='7'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x048d'/>
+        <product id='0x5702'/>
+      </source>
+      <address type='usb' bus='0' port='8'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x07' slot='0x00' function='0x1'/>
+      </source>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
     <watchdog model='itco' action='reset'/>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </memballoon>
   </devices>
+  <qemu:commandline>
+    <qemu:arg value='-fw_cfg'/>
+    <qemu:arg value='opt/ovmf/X-PciMmio64Mb,string=65536'/>
+  </qemu:commandline>
 </domain>
 

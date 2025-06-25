@@ -20,14 +20,9 @@ let
 in
 lib.mkMerge [
   commonConfig
-  rec {
+  {
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
     boot.tmp.useTmpfs = true;
-
-    virtualisation.docker.wittano = {
-      enable = true;
-      user = "wittano";
-    };
 
     desktop.${desktopName}.users = [ "wittano" ];
 
@@ -37,12 +32,10 @@ lib.mkMerge [
       keyboard.zsa.enable = true;
       virtualization.wittano = {
         enable = true;
-        users = [ "wittano" ];
-        enableWindowsVM = false;
+        enableWindowsVM = true;
       };
       amd.enable = true; # AMD GPU
       samba.enable = true; # Local network SAMAB server 
-      printers.wittano.enable = true;
       bluetooth.wittano.enable = true;
     };
 
@@ -115,7 +108,7 @@ lib.mkMerge [
           }
         ];
       };
-      boinc.wittano.enable = !hardware.virtualization.wittano.enableWindowsVM;
+      boinc.wittano.enable = true;
     };
   }
 ]
