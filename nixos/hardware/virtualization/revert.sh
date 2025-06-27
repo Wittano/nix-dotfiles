@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -x
 
+function shutdown_vm() {
+    virsh destory "$1" || echo "Failed force shutdown win10 vm"
+}
+
 function _reboot() {
+    shutdown_vm "win10"
     reboot || systemctl reboot
 }
 

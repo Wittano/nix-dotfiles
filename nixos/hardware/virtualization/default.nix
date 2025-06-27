@@ -9,10 +9,6 @@ let
     lists.unique
   ];
 
-  isAutoscriptEnable = lists.any
-    (x: home-manager.users.${x}.desktop.autostart.enable or false)
-    (desktop.getNormalUsers config);
-
   mkQemuHook = vm: scripts:
     let
       installQemuScript = strings.optionalString cfg.enableWindowsVM ''
@@ -182,7 +178,7 @@ in
       ];
 
       boot = mkIf cfg.enableWindowsVM {
-        kernelParams = [ "amd_iommu=on" ];
+        kernelParams = [ "amd_iommu=on" "preempt=voluntary" ];
         kernelModules = [
           "vendor-reset"
           "kvm-amd"
@@ -196,9 +192,16 @@ in
 
       services.openssh.settings.AllowUsers = [ "virt" ];
 
+      fileSystems = mkIf cfg.enableWindowsVM {
+        "/var/lib/libvirt/images/pool" = {
+          device = "/dev/disk/by-label/VM_STORAGE";
+          fsType = "ext4";
+        };
+      };
+
       services = {
         ssh.wittano.enable = true;
-        xserver.displayManager.session = mkIf (cfg.enableWindowsVM && isAutoscriptEnable) [{
+        xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
           name = "windows";
           manage = "window";
           start = "sudo virsh start win10";

@@ -9,27 +9,48 @@
   <memory unit='KiB'>33554432</memory>
   <currentMemory unit='KiB'>33554432</currentMemory>
   <vcpu placement='static'>20</vcpu>
-  <os firmware='efi'>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu='0' cpuset='1'/>
+    <vcpupin vcpu='1' cpuset='2'/>
+    <vcpupin vcpu='2' cpuset='3'/>
+    <vcpupin vcpu='3' cpuset='4'/>
+    <vcpupin vcpu='4' cpuset='5'/>
+    <vcpupin vcpu='5' cpuset='6'/>
+    <vcpupin vcpu='6' cpuset='7'/>
+    <vcpupin vcpu='7' cpuset='9'/>
+    <vcpupin vcpu='8' cpuset='11'/>
+    <vcpupin vcpu='9' cpuset='13'/>
+    <vcpupin vcpu='10' cpuset='14'/>
+    <vcpupin vcpu='11' cpuset='15'/>
+    <vcpupin vcpu='12' cpuset='16'/>
+    <vcpupin vcpu='13' cpuset='17'/>
+    <vcpupin vcpu='14' cpuset='18'/>
+    <vcpupin vcpu='15' cpuset='19'/>
+    <vcpupin vcpu='16' cpuset='20'/>
+    <vcpupin vcpu='17' cpuset='21'/>
+    <emulatorpin cpuset='0,12'/>
+    <iothreadpin iothread='1' cpuset='0,12'/>
+  </cputune>
+  <os>
     <type arch='x86_64' machine='pc-q35-9.2'>hvm</type>
-    <firmware>
-      <feature enabled='no' name='enrolled-keys'/>
-      <feature enabled='yes' name='secure-boot'/>
-    </firmware>
-    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/nix/store/rc29ivsfb1g2frjl0hqv28jcnl56bp9v-qemu-10.0.0/share/qemu/edk2-x86_64-secure-code.fd</loader>
-    <nvram template='/nix/store/rc29ivsfb1g2frjl0hqv28jcnl56bp9v-qemu-10.0.0/share/qemu/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/win11_VARS.fd</nvram>
+    <loader readonly='yes' type='pflash' format='raw'>/run/libvirt/nix-ovmf/OVMF_CODE.fd</loader>
+    <nvram format='raw'>/var/lib/libvirt/qemu/nvram/win11_VARS.fd</nvram>
     <boot dev='hd'/>
+    <bootmenu enable='no'/>
+    <smbios mode='sysinfo'/>
   </os>
   <features>
     <acpi/>
     <apic/>
-    <hyperv mode='custom'>
-      <vendor_id state='on' value='1234567890ab'/>
-    </hyperv>
+    <pae/>
     <vmport state='off'/>
     <smm state='on'/>
     <ioapic driver='kvm'/>
   </features>
-  <cpu mode='host-passthrough' check='none' migratable='on'/>
+  <cpu mode='host-passthrough' check='none' migratable='on'>
+    <topology sockets='1' dies='1' clusters='1' cores='10' threads='2'/>
+  </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
     <timer name='pit' tickpolicy='delay'/>
@@ -46,7 +67,7 @@
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
-      <driver name='qemu' type='raw'/>
+      <driver name='qemu' type='raw' cache='none' discard='unmap'/>
       <source file='/var/lib/libvirt/images/pool/win11.img'/>
       <target dev='sdc' bus='sata'/>
       <address type='drive' controller='0' bus='0' target='0' unit='2'/>
