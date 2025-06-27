@@ -7,7 +7,7 @@ let
     cores = 24;
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master;
+    inherit inputs pkgs master unstable;
     systemVersion = config.system.stateVersion;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;
@@ -54,7 +54,6 @@ lib.mkMerge [
             pandoc
             krita
             master.freetube
-            unstable.vesktop
             spotify
             telegram-desktop
           ];

@@ -87,6 +87,7 @@ in
 
             # Media
             discord.desktop = DISCORD_WORKSPACE;
+            vesktop.desktop = DISCORD_WORKSPACE;
 
             # Games
             "openttd".desktop = "^1";

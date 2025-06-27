@@ -1,4 +1,4 @@
-{ inputs, systemVersion, master, pkgs, accent ? "pink", flavor ? "latte", desktopName ? "xmonad", ... }: {
+{ inputs, systemVersion, master, unstable, pkgs, accent ? "pink", flavor ? "latte", desktopName ? "xmonad", ... }: {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeManagerModules.nixvim
@@ -39,7 +39,7 @@
       keepassxc
 
       telegram-desktop
-      discord
+      unstable.vesktop
       signal-desktop
     ];
   };
