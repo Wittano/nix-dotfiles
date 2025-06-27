@@ -56,18 +56,18 @@ lib.mkMerge [
             master.freetube
             unstable.vesktop
             spotify
+            telegram-desktop
           ];
 
           programs = {
-            games.enable = true;
-            lutris.wittano.enable = true;
+            games.enable = false;
+            lutris.wittano.enable = false;
           };
 
           desktop.autostart.programs = [
             "telegram-desktop -startintray"
             "vesktop --start-minimized"
             "spotify"
-            "steam -silent"
           ];
         }
       ];
@@ -76,19 +76,19 @@ lib.mkMerge [
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
       steam.wittano = {
-        enable = true;
-        disk.enable = true;
+        enable = false;
+        disk.enable = false;
       };
       mihoyo = {
-        enable = true;
+        enable = false;
         games = [ "honkai-railway" ]; # FIXME Failed download rustls during nix build 
       };
     };
 
     services = {
       teamviewer.enable = true;
-      redis.wittano.enable = true;
-      prometheus.wittano.enable = true;
+      redis.wittano.enable = false;
+      prometheus.wittano.enable = false;
       xserver = {
         exportConfiguration = true;
         xrandrHeads = [

@@ -37,6 +37,10 @@
       # Security
       bitwarden
       keepassxc
+
+      telegram-desktop
+      discord
+      signal-desktop
     ];
   };
 

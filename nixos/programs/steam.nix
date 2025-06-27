@@ -22,6 +22,8 @@ in
       package = unstable.steam;
     };
 
+    home-manager.users.wittano.desktop.autostart.programs = [ "steam -silent" ];
+
     environment.systemPackages = with unstable; [
       # Steam staff
       gamescope
