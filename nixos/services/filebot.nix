@@ -12,10 +12,9 @@ in
   ];
 
   config = mkIf config.services.filebot.wittano.enable {
-    hardware.virtualization.wittano.stopServices = [{
-      name = "win10";
-      services = [ "fielbot.service" ];
-    }];
+    hardware.virtualization.wittano.stoppedServices = [
+      "fielbot.service"
+    ];
 
     services.filebot = {
       enable = true;

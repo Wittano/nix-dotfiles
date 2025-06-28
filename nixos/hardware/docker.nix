@@ -17,13 +17,10 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ pass docker-credential-helpers ];
 
-    hardware.virtualization.wittano.stopServices = [{
-      name = "win10";
-      services = [
-        "docker.service"
-        "docker.socket"
-      ];
-    }];
+    hardware.virtualization.wittano.stoppedServices = [
+      "docker.service"
+      "docker.socket"
+    ];
 
     virtualisation.docker = {
       enable = true;

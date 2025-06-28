@@ -5,10 +5,9 @@ with lib;
 
   config = mkIf config.hardware.bluetooth.wittano.enable {
     hardware = {
-      virtualization.wittano.stopServices = [{
-        name = "win10";
-        services = [ "bluetooth.service" ];
-      }];
+      virtualization.wittano.stoppedServices = [
+        "bluetooth.service"
+      ];
 
       bluetooth = {
         enable = true;

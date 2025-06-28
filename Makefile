@@ -12,7 +12,7 @@ endif
 
 check: xmonad-check
 	statix fix
-	nix flake check
+	nix flake check --show-trace
 
 xmonad-check:
 	cabal update

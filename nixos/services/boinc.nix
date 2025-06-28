@@ -14,10 +14,9 @@ in
       extraGroups = [ "boinc" ];
     };
 
-    hardware.virtualization.wittano.stopServices = [{
-      name = "win10";
-      services = [ "boinc.service" ];
-    }];
+    hardware.virtualization.wittano.stoppedServices = [
+      "boinc.service"
+    ];
 
     virtualisation.virtualbox = {
       host = rec {
