@@ -59,8 +59,8 @@ lib.mkMerge [
           ];
 
           programs = {
-            games.enable = false;
-            lutris.wittano.enable = false;
+            games.enable = true;
+            lutris.wittano.enable = true;
           };
 
           desktop.autostart.programs = [
@@ -75,11 +75,11 @@ lib.mkMerge [
     programs = {
       # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
       steam.wittano = {
-        enable = false;
-        disk.enable = false;
+        enable = true;
+        disk.enable = true;
       };
       mihoyo = {
-        enable = false;
+        enable = true;
         games = [ "honkai-railway" ]; # FIXME Failed download rustls during nix build 
       };
     };
