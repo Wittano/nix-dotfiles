@@ -258,7 +258,7 @@ in
         udev = {
           packages = with config.boot.kernelPackages; [ vendor-reset ];
           extraRules = mkIf cfg.enableWindowsVM ''
-            ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+= "${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
+            ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
             ACTION == "remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
           '';
         };

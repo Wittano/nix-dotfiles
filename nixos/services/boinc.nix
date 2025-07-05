@@ -1,30 +1,32 @@
-{ config, pkgs, lib, hostname, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.my;
 let
-  nvidiaDriverPackage = lists.optionals (hostname != "pc") [ config.boot.kernelPackages.nvidiaPackages.stable ];
-  extraEnvPackages = with pkgs; [ ocl-icd virtualbox ] ++ nvidiaDriverPackage;
-  users = [ "wittano" ];
+  nvidiaDriverPackage = lists.optionals config.hardware.nvidia.wittano.enable [ config.boot.kernelPackages.nvidiaPackages.stable ];
+
+  inherit (pkgs) virtualbox;
+  virtualboxPackage = lists.optionals (!config.hardware.virtualization.wittano.enableWindowsVM) [ virtualbox ];
+
+  extraEnvPackages = [ pkgs.ocl-icd ] ++ nvidiaDriverPackage ++ virtualboxPackage;
 in
 {
   options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
 
   config = mkIf config.services.boinc.wittano.enable {
-    users.users = desktop.mkMultiUserHomeManager users {
-      extraGroups = [ "boinc" ];
-    };
+    users.users.wittano.extraGroups = [ "boinc" ];
 
     hardware.virtualization.wittano.stoppedServices = [
       "boinc.service"
     ];
 
-    virtualisation.virtualbox = {
+    virtualisation.virtualbox = rec {
       host = rec {
-        enable = true;
-        enableKvm = true;
+        enable = config.hardware.virtualization.wittano.enableWindowsVM;
+        package = virtualbox;
+        enableKvm = config.virtualisation.libvirtd.enable;
         addNetworkInterface = !enableKvm;
       };
-      guest.enable = true;
+      guest.enable = host.enable;
     };
 
     services.boinc = {
