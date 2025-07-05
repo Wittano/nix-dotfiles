@@ -29,7 +29,7 @@ customKeybinds =
     ("M-o", unGrab *> spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%"),
     ("M-m", unGrab *> spawn "amixer sset Master toggle"),
     ("M-r", unGrab *> spawn "rollWallpaper"),
-    ("M-]", unGrab *> spawn "betterlockscreen --lock"),
+    ("M-]", unGrab *> spawn "setup-wacom"),
     ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
   ]
 

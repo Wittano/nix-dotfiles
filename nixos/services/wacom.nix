@@ -2,16 +2,22 @@
 with lib;
 with lib.my;
 let
+  cfg = config.services.xserver.wacom.wittano;
+
   name = "setup-wacom";
   setupWacom = pkgs.writeShellApplication {
     inherit name;
 
     runtimeInputs = with pkgs;[ xf86_input_wacom gawk ];
     text = ''
+      if [ "$DISPLAY" == "" ]; then
+        export DISPLAY=':0'
+      fi
+
       devices=$(xsetwacom list devices | awk '{print $9}')
 
       for d in $devices; do
-        xsetwacom --set "$d" MapToOutput HDMI-A-0
+        xsetwacom --set "$d" MapToOutput ${cfg.monitor}
         # Enable scrolling on middle(lower) button
         xsetwacom --set "$d" Button 2 "pan"
         xsetwacom --set "$d" PanScrollThreshold 150
@@ -19,19 +25,25 @@ let
       done
     '';
   };
+
+  primaryMonitor = lists.findFirst
+    (x: x.primary)
+    { output = "HDMI-A-0"; }
+    config.services.xserver.xrandrHeads;
 in
 {
-  options.services.xserver.wacom.wittano.enable = mkEnableOption "Enable support for wacom graphic tablet";
+  options.services.xserver.wacom.wittano = {
+    enable = mkEnableOption "Enable support for wacom graphic tablet";
+    monitor = mkOption {
+      type = types.str;
+      description = "Select monitor which wacom tablet will be mapped";
+      example = "HDMI-A-0";
+      default = primaryMonitor.output;
+    };
+  };
 
   config = mkIf config.services.xserver.wacom.wittano.enable {
     services.xserver.wacom.enable = true;
-
-    services.udev = {
-      enable = mkForce true;
-      extraRules = ''
-        ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="056a", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="${name}.service"
-      '';
-    };
 
     environment.systemPackages = [ setupWacom ];
 
