@@ -23,9 +23,9 @@ bar =
     ppWindow :: String -> String
     ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
 
-    blue = xmobarColor "#7287fd" ""
-    white = xmobarColor "#acb0be" ""
+    blue = xmobarColor "#b7bdf8" ""
+    white = xmobarColor "#5b6078" ""
     yellow = xmobarColor "#df8e1d" ""
-    urgent = xmobarColor "#e64553" ""
-    green = xmobarColor "#40a02b" ""
-    inactive = xmobarColor "#e6e9ef" ""
+    urgent = xmobarColor "#ed8796" ""
+    green = xmobarColor "#a6da95" ""
+    inactive = xmobarColor "#292c3c" ""
