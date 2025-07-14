@@ -26,7 +26,7 @@ _: {
     };
     initrd.luks.devices = {
       crypthome = {
-        device = "/dev/disk/by-partlable/ENCRYPTED_HOME";
+        device = "/dev/disk/by-partlabel/ENCRYPTED_HOME";
         preLVM = true;
       };
     };
