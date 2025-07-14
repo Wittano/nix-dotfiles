@@ -49,14 +49,21 @@ let
   ];
 in
 {
-  options.services.backup.enable = mkEnableOption "Enable Backup service";
+  options.services.backup = {
+    enable = mkEnableOption "Enable Backup service";
+    path = mkOption {
+      type = types.str;
+      default = "sftp:backup:/mnt/backup/nixos.${hostname}";
+    };
+  };
 
   config = mkIf cfg.enable {
     services.restic.backups.home = {
       inherit exclude;
 
       pruneOpts = [ "--keep-weekly 4" ];
-      repository = "sftp:backup:/mnt/backup/nixos.${hostname}";
+      user = "wittano";
+      repository = cfg.path;
       paths = [ "/home/wittano" ];
       timerConfig = {
         OnBootSec = "15m";

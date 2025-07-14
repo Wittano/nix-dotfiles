@@ -88,6 +88,7 @@ lib.mkMerge [
       teamviewer.enable = true;
       redis.wittano.enable = false;
       prometheus.wittano.enable = false;
+      backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
         exportConfiguration = true;
         xrandrHeads = [
