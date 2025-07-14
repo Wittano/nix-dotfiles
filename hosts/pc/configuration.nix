@@ -49,6 +49,7 @@ lib.mkMerge [
 
           home.packages = with pkgs; [
             remmina
+            gnome-pomodoro # Pomodoro
             dropbox
             czkawka
             pandoc
@@ -66,6 +67,7 @@ lib.mkMerge [
           desktop.autostart.programs = [
             "telegram-desktop -startintray"
             "vesktop --start-minimized"
+            "gnome-pomodoro"
             "spotify"
           ];
         }

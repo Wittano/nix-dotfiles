@@ -28,7 +28,6 @@
 
       # Apps
       keepassxc # Password manager
-      gnome-pomodoro # Pomodoro
       todoist-electron # ToDo app
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
@@ -91,7 +90,6 @@
   desktop.autostart = {
     enable = true;
     programs = [
-      "gnome-pomodoro"
       "vivaldi"
       "signal-desktop --start-in-tray"
       "todoist-electron"

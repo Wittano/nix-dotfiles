@@ -37,6 +37,8 @@ mkMerge [
     programs.nix-ld.enable = true;
     console.earlySetup = true;
 
+    services.backup.path = "sftp:laptop_backup:/mnt/hdd/backup/laptop";
+
     hardware = {
       trackpoint.emulateWheel = true;
 
