@@ -48,7 +48,7 @@ let
         (ide.extraConfig or { })
       ];
     in
-    addProjectDirField (with unstable.jetbrains; rec {
+    addProjectDirField (with pkgs.jetbrains; rec {
       python = {
         package = pycharm-professional;
         extraConfig = mkExtraConfig fork;
@@ -66,7 +66,7 @@ let
       jvm.package = idea-ultimate;
       sql.package = datagrip;
       web.package = webstorm;
-      andorid.package = unstable.andorid-studio;
+      andorid.package = andorid-studio;
       haskell.extraConfig = mkMerge [
         fork.extraConfig
         {
