@@ -48,7 +48,7 @@ let
         (ide.extraConfig or { })
       ];
     in
-    addProjectDirField (with pkgs.jetbrains; rec {
+    addProjectDirField (with unstable.jetbrains; rec {
       python = {
         package = pycharm-professional;
         extraConfig = mkExtraConfig fork;
