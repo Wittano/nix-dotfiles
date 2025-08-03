@@ -69,7 +69,7 @@ in
         let
           lightness = if config.catppuccin.flavor == "latte" then "Light" else "Dark";
         in
-        {
+        mkForce {
           name = "Colloid-${colloidSchemaVariant}-${lightness}";
           package = colloidIconTheme;
         };

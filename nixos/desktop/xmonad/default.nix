@@ -4,6 +4,19 @@ with lib.my;
 let
   cfg = config.desktop.xmonad;
   barSuffix = if hostname == "laptop" then "-${hostname}-${config.catppuccin.flavor}" else "-${config.catppuccin.flavor}";
+
+  xmonadOverlay = final: prev: {
+    signal-desktop = prev.signal-desktop.overrideAttrs (oldAttrs: {
+      desktopItems =
+        let
+          desktopItem = builtins.head oldAttrs.desktopItems;
+          fixedDesktopItem = desktopItem.override {
+            exec = "${oldAttrs.meta.mainProgram} %U --use-tray-icon";
+          };
+        in
+        [ fixedDesktopItem ];
+    });
+  };
 in
 {
   options.desktop.xmonad = {
@@ -18,7 +31,9 @@ in
   config = mkIf config.desktop.xmonad.enable {
     assertions = desktop.mkDesktopAssertion config cfg.users;
 
-    nixpkgs.overlays = inputs.xmonad-contrib.overlays;
+    nixpkgs.overlays = inputs.xmonad-contrib.overlays ++ [
+      xmonadOverlay
+    ];
 
     services.xserver = {
       enable = true;

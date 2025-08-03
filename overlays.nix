@@ -33,17 +33,6 @@ let
       '';
     };
 
-    signal-desktop = prev.signal-desktop.overrideAttrs (oldAttrs: {
-      desktopItems =
-        let
-          desktopItem = builtins.head oldAttrs.desktopItems;
-          fixedDesktopItem = desktopItem.override {
-            exec = "${oldAttrs.meta.mainProgram} %U --use-tray-icon";
-          };
-        in
-        [ fixedDesktopItem ];
-    });
-
     jetbrains = prev.jetbrains // {
       goland = prev.jetbrains.goland.overrideAttrs (attrs: {
         postFixup = (attrs.postFixup or "") + lib.optionalString final.stdenv.isLinux ''
