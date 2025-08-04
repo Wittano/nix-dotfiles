@@ -28,7 +28,6 @@
 
       # Apps
       keepassxc # Password manager
-      todoist-electron # ToDo app
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
       spotify # Spotify
