@@ -5,7 +5,6 @@ with lib;
 
   config = mkIf config.services.stalonetray.wittano.enable {
     systemd.user.targets.tray.Unit = rec {
-      Description = "System tray target";
       Requires = [ "graphical-session.target" ];
       After = Requires;
     };
