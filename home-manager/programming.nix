@@ -5,7 +5,7 @@ with lib;
 
   config = mkIf config.profile.programming.enable {
     programs = {
-      jetbrains.ides = [ "go" "cpp" "sql" "jvm" "python" "elixir" ];
+      jetbrains.ides = [ "go" "cpp" "sql" "jvm" "python" "elixir" "dotnet" ];
       tmux.wittano.enable = true;
       fish.shellAliases = {
 
