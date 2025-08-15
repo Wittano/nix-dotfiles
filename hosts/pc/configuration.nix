@@ -39,7 +39,7 @@ lib.mkMerge [
       bluetooth.wittano.enable = true;
     };
 
-    virtualisation.podman.wittano.enable = true;
+    virtualisation.docker.wittano.enable = true;
 
     home-manager.users = {
       wittano = mkMerge [
