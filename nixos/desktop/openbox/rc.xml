@@ -10,7 +10,7 @@
     <focusLast>yes</focusLast>
     <underMouse>no</underMouse>
     <focusDelay>200</focusDelay>
-    <raiseOnFocus>no</raiseOnFocus>
+    <raiseOnFocus>yes</raiseOnFocus>
   </focus>
   <placement>
     <policy>UnderMouse</policy>
