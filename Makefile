@@ -1,8 +1,10 @@
-activate: check
-	nh os switch --no-nom -H pc . -- --show-trace
+check-profile:
+ifeq ($(filter $(PROFILE), pc laptop),)
+	$(error unknown profile: $(PROFILE))
+endif
 
-activate-laptop: check
-	nh os switch --no-nom -H laptop . -- --show-trace
+activate: check-profile check
+	sudo nixos-rebuild switch --flake .#$(PROFILE)
 
 clean:
 ifneq (,$(windcard result))
@@ -18,11 +20,8 @@ xmonad-check:
 	cabal update
 	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
 
-try-laptop: check
-	nh os build --no-nom -H laptop . -- --show-trace
+try-build: check-profile check
+	nixos-rebuild try-build --flake .#$(PROFILE)
 
-build-pc: check
-	nh os build --no-nom -H pc . -- --show-trace
-
-build-laptop: check
-	nh os build --no-nom -H laptop . -- --show-trace
+build: check-profile try-build
+	nixos-rebuild build --flake .#$(PROFILE)
