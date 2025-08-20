@@ -66,6 +66,7 @@ in
     xdg.configFile = completions;
 
     programs = {
+
       direnv = {
         enable = cfg.enableDirenv;
         nix-direnv.enable = cfg.enableDirenv;
@@ -101,6 +102,7 @@ in
             neofetch = "nix run nixpkgs#fastfetch";
             onefetch = "nix run nixpkgs#onefetch";
             calc = "${pkgs.R}/bin/R";
+            grep = "${pkgs.ripgrep}/bin/rg";
 
             # Projects
             pnix = "cd $HOME/nix-dotfiles";
