@@ -33,11 +33,6 @@ mkMerge [
         max-jobs = cores;
         auto-optimise-store = true;
       };
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 7d";
-      };
       extraOptions = "experimental-features = nix-command flakes pipe-operators";
     };
 
@@ -150,6 +145,7 @@ mkMerge [
     };
 
     programs = {
+      nh.wittano.enable = true;
       krusader.enable = true;
       fish.enable = true;
       file-roller.enable = true; # Archive explorer

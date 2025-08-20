@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, inputs, secretDir, ... }:
+{ config, lib, system, inputs, secretDir, ... }:
 with lib;
 with lib.my;
 {
@@ -23,38 +23,4 @@ with lib.my;
       PasswordAuthentication = false;
     };
   };
-
-  system.activationScripts.backupHostKeys =
-    let
-      homeDir = config.home-manager.users.wittano.home.homeDirectory;
-      backupDir = "${homeDir}/.ssh/backup";
-      keys = builtins.map (x: x.path) config.services.openssh.hostKeys;
-      keyArray = bash.mkBashArray keys;
-    in
-    mkIf config.services.backup.enable
-      /*bash*/ ''
-      keys=(${keyArray})
-      today=$(date +"%d-%b-%Y")
-
-      moveNewerKey() {
-          name=$(${pkgs.toybox}/bin/basename "$1")
-          currect="${backupDir}/$name"
-          newHash=$(${pkgs.toybox}/bin/sha512sum "$1" | cut -f 1 -d ' ')
-          oldHash=$(${pkgs.toybox}/bin/sha512sum "$currect" | cut -f 1 -d ' ' || echo "")
-
-          if [ "$newHash" != "$oldHash" ]; then
-              echo "Backup $currect and create new key"
-              if [ -f "$currect" ]; then
-                mv "$currect" "${backupDir}/$today-$name"
-              fi
-
-              cp "$1" "$currect"
-          fi
-      }
-
-      for p in "''${keys[@]}"; do
-          moveNewerKey "$p" || echo "failed move file $p"
-          moveNewerKey "$p.pub" || echo "failed move file $p.pub"
-      done
-    '';
 }
