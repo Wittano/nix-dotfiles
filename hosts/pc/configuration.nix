@@ -54,7 +54,6 @@ lib.mkMerge [
             czkawka
             pandoc
             krita
-            master.freetube
             spotify
             telegram-desktop
           ];
