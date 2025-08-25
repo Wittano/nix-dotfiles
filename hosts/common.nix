@@ -12,8 +12,8 @@
 with lib;
 with lib.my;
 let
-  accent = "sky";
-  flavor = "macchiato";
+  accent = "pink";
+  flavor = "latte";
 
   systemVersion = "25.05";
 
