@@ -54,7 +54,6 @@ lib.mkMerge [
             czkawka
             pandoc
             krita
-            spotify
             telegram-desktop
           ];
 
@@ -67,7 +66,6 @@ lib.mkMerge [
             "telegram-desktop -startintray"
             "vesktop --start-minimized"
             "gnome-pomodoro"
-            "spotify"
           ];
         }
       ];

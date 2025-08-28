@@ -67,8 +67,6 @@ in
 
   config = mkIf cfg.enable {
     home.packages = games ++ patches ++ (with pkgs; [
-      spotify
-
       # Social media
       telegram-desktop
       signal-desktop
@@ -79,7 +77,6 @@ in
     desktop.autostart.programs = [
       "signal-desktop --start-in-tray"
       "telegram-desktop -startintray"
-      "spotify"
       "steam -silent"
     ];
 

@@ -27,10 +27,14 @@ mkMerge [
       {
         home.packages = with pkgs; [
           pavucontrol
+          spotify
         ];
 
         profile.programming.enable = true;
         programs.jetbrains.ides = mkForce [ "go" "haskell" ];
+        desktop.autostart.programs = [
+          "spotify"
+        ];
       }
     ];
 

@@ -30,7 +30,6 @@
       keepassxc # Password manager
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
-      spotify # Spotify
       signal-desktop # Signal
 
       # Security
