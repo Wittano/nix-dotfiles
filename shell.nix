@@ -14,6 +14,7 @@
 , haskell-language-server
 , haskellPackages
 , statix
+, openssl
 , ...
 }:
 with lib;
@@ -68,5 +69,8 @@ mkShell {
 
     # Xmonad
     xmonadDevDeps
+
+    # Security
+    openssl
   ];
 }

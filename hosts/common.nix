@@ -193,10 +193,5 @@ mkMerge [
       platformTheme = "qt5ct";
       style = "kvantum";
     };
-
-
-    security.pki.certificateFiles = [
-      "${secretDir}/homelab_ca.pem"
-    ];
   }
 ]

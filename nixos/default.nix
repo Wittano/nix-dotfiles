@@ -6,5 +6,6 @@
     ./programs
     ./services
     ./secrets.nix
+    ./security
   ];
 }
