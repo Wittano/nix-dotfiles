@@ -155,20 +155,21 @@ in
           enable = true;
           onBoot = "ignore";
           onShutdown = "shutdown";
-          qemu = {
-            package = mkIf cfg.enableWindowsVM unstable.qemu;
-            swtpm.enable = true;
-            ovmf = {
-              enable = true;
-              packages = [
-                (pkgs.OVMF.override {
-                  secureBoot = true;
-                  tpmSupport = true;
-                }).fd
-              ];
+          qemu =
+            {
+              package = mkIf cfg.enableWindowsVM pkgs.qemu;
+              swtpm.enable = true;
+              ovmf = {
+                enable = true;
+                packages = [
+                  (pkgs.OVMF.override {
+                    secureBoot = true;
+                    tpmSupport = true;
+                  }).fd
+                ];
+              };
+              runAsRoot = true;
             };
-            runAsRoot = true;
-          };
           hooks.qemu.win10 = pkgs.stdenvNoCC.mkDerivation {
             name = "win10-hooks";
 
