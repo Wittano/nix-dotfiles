@@ -8,7 +8,6 @@ let
     # Games
     osu-lazer # osu!lazer
     # airshipper # Veloren
-    mindustry # Mindustry
     xivlauncher # FF XIV
     prismlauncher # Minecraft
     zeroad-unwrapped # 0 A.D
