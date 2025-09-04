@@ -39,7 +39,6 @@ let
     "**/*/CMakeFiles"
     "**/*/.idea"
     ".steam"
-    "go/**/*"
     "git"
     ".sbt"
     ".osu"
