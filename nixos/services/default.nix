@@ -14,6 +14,7 @@
     ./wacom.nix
     ./redis.nix
     ./glances.nix
+    ./ntop.nix
   ];
 }
 
