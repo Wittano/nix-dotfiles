@@ -13,6 +13,7 @@
     ./syncthing.nix
     ./wacom.nix
     ./redis.nix
+    ./glances.nix
   ];
 }
 

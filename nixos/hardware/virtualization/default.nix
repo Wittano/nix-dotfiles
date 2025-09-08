@@ -250,6 +250,8 @@ in
 
       services = {
         ssh.wittano.enable = true;
+        glances.wittano.enable = cfg.enableWindowsVM;
+
         xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
           name = "windows";
           manage = "window";
