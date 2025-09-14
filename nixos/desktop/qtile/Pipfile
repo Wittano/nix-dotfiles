@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-qtile = "0.25.0"
+qtile = "0.31.0"
 mypy = "*"
 black = "*"
 

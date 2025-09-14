@@ -15,6 +15,7 @@
 , haskellPackages
 , statix
 , openssl
+, mypy
 , ...
 }:
 with lib;
@@ -44,6 +45,11 @@ let
     xmobar
     cabal-install
   ]);
+
+  pythonPackages = python3.withPackages (pkgs: with pkgs; [
+    mypy
+    qtile
+  ]);
 in
 mkShell {
   nativeBuildInputs = [
@@ -61,8 +67,9 @@ mkShell {
     testGithubActions
 
     # Python
-    python3
+    pythonPackages
     pipenv
+    mypy
 
     # Haskell deps
     haskell-language-server

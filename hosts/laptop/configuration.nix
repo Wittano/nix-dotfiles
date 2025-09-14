@@ -2,9 +2,8 @@
 with lib;
 with lib.my;
 let
-  desktopName = "xmonad";
   commonConfig = import ../common.nix {
-    inherit desktopName master config lib hostname pkgs unstable inputs secretDir;
+    inherit master config lib hostname pkgs unstable inputs secretDir;
     cores = 4;
     users = [ "wittano" ];
   };
@@ -31,7 +30,6 @@ mkMerge [
         ];
 
         profile.programming.enable = true;
-        programs.jetbrains.ides = mkForce [ "go" "haskell" ];
         desktop.autostart.programs = [
           "spotify"
         ];

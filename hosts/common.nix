@@ -4,8 +4,7 @@
 , unstable
 , master
 , hostname
-, secretDir ? ./../secrets/homelab.crt
-, desktopName ? "xmonad"
+, desktopName ? "qtile"
 , cores ? 24
 , ...
 }:

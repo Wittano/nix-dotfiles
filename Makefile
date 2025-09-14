@@ -16,6 +16,16 @@ check: xmonad-check
 	statix fix
 	nix flake check --show-trace
 
+qtile-test:
+	unlink $(HOME)/.config/qtile
+	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(HOME)/.config/qtile
+
+qtile-check:
+	qtile check -c nixos/desktop/qtile/config.py
+
+restore-home:
+	systemctl --user restart home-manager-$(shell whoami).service
+
 xmonad-check:
 	cabal update
 	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
