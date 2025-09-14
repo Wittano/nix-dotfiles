@@ -49,10 +49,14 @@ in
     environment.systemPackages = with pkgs; [ alsa-utils ];
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
-      programs.xmobar = {
-        enable = true;
-        package = unstable.xmobar;
-        extraConfig = builtins.readFile (./. + "/xmobarrc${barSuffix}");
+      programs = {
+        xmobar = {
+          enable = true;
+          package = unstable.xmobar;
+          extraConfig = builtins.readFile (./. + "/xmobarrc${barSuffix}");
+        };
+
+        jetbrains.ides = [ "haskell" ];
       };
 
       xsession.windowManager.xmonad = {

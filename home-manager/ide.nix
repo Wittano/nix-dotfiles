@@ -127,12 +127,10 @@ let
   ];
 in
 {
-  options.programs.jetbrains = {
-    ides = mkOption {
-      type = with types; listOf (enum ideNames);
-      description = "List of enabled IDEs";
-      default = [ ];
-    };
+  options.programs.jetbrains.ides = mkOption {
+    type = with types; listOf (enum ideNames);
+    description = "List of enabled IDEs";
+    default = [ ];
   };
 
   config = mkIf ((builtins.length cfg.ides) != 0) (mkMerge [

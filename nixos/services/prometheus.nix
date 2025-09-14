@@ -16,6 +16,8 @@ in
   config = mkIf config.services.prometheus.wittano.enable rec {
     networking.firewall.interfaces.eno1.allowedTCPPorts = [ services.prometheus.port 9100 ];
 
+    home-manager.users.wittano.programs.jetbrains.ides = [ "go" ];
+
     services.prometheus = rec {
       enable = true;
       package = unstable.prometheus;

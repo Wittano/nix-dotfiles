@@ -16,6 +16,8 @@ in
 
     networking.networkmanager.enable = true;
 
+    home-manager.users.wittano.programs.jetbrains.ides = [ "cpp" ];
+
     boot = mkIf cfg.enableTpLink {
       kernelPackages = mkForce pkgs.linuxPackages;
       extraModulePackages = [ config.boot.kernelPackages.rtl8192eu ];

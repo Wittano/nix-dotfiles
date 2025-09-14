@@ -58,7 +58,10 @@ lib.mkMerge [
           ];
 
           programs = {
-            games.enable = true;
+            games = {
+              enable = true;
+              enableDev = true;
+            };
             lutris.wittano.enable = true;
           };
 
