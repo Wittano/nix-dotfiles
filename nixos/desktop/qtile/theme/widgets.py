@@ -5,7 +5,7 @@ from typing import Dict
 from libqtile import widget
 from libqtile.lazy import lazy
 
-from const import TERMINAL, DEFAULT_THEME_NAME
+from const import TERMINAL, THEME_NAME
 
 
 class LogoWidget(widget.TextBox):
@@ -121,7 +121,7 @@ class RoundedSeparator(widget.Image):
         direction = "left" if isLeft else "right"
 
         super(RoundedSeparator, self).__init__(
-            filename=f"{os.getenv('HOME')}/.config/qtile/assets/{DEFAULT_THEME_NAME}/rounded_{direction}_sep.png",
+            filename=f"{os.getenv('HOME')}/.config/qtile/assets/{THEME_NAME}/rounded_{direction}_sep.png",
             background=theme["brightness_background"],
         )
 
@@ -132,7 +132,7 @@ class CurveSeparator(widget.Image):
         direction = "left" if isLeft else "right"
 
         super(CurveSeparator, self).__init__(
-            filename=f"{homeDir}/.config/qtile/assets/{DEFAULT_THEME_NAME}/curve_{direction}_sep.png",
+            filename=f"{homeDir}/.config/qtile/assets/{THEME_NAME}/curve_{direction}_sep.png",
             background=theme["brightness_background"],
         )
 
@@ -143,7 +143,7 @@ class SepLineSeparator(widget.Image):
         direction = "left" if isLeft else "right"
 
         super(SepLineSeparator, self).__init__(
-            filename=f"{homeDir}/.config/qtile/assets/{DEFAULT_THEME_NAME}/sep_{direction}_line.png",
+            filename=f"{homeDir}/.config/qtile/assets/{THEME_NAME}/sep_{direction}_line.png",
             background=theme["brightness_background"],
         )
 

@@ -7,7 +7,7 @@ let
     cores = 24;
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master unstable;
+    inherit inputs pkgs master unstable desktopName;
     systemVersion = config.system.stateVersion;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;

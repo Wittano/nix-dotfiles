@@ -2,13 +2,14 @@
 with lib;
 with lib.my;
 let
+  desktopName = "qtile";
   commonConfig = import ../common.nix {
-    inherit master config lib hostname pkgs unstable inputs secretDir;
+    inherit master config lib hostname pkgs unstable inputs secretDir desktopName;
     cores = 4;
     users = [ "wittano" ];
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master unstable;
+    inherit inputs pkgs master unstable desktopName;
     systemVersion = config.system.stateVersion;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;

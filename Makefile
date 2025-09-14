@@ -3,8 +3,8 @@ ifeq ($(filter $(PROFILE), pc laptop),)
 	$(error unknown profile: $(PROFILE))
 endif
 
-activate: check-profile check
-	sudo nixos-rebuild switch --flake .#$(PROFILE)
+activate: unlink-qtile check-profile check
+	sudo nixos-rebuild switch --flake .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
 
 clean:
 ifneq (,$(windcard result))
@@ -16,15 +16,17 @@ check: xmonad-check
 	statix fix
 	nix flake check --show-trace
 
-qtile-test:
-	unlink $(HOME)/.config/qtile
+unlink-qtile:
+	unlink $(HOME)/.config/qtile || echo "Missing qtile link"
+
+qtile-test: unlink-qtile
 	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(HOME)/.config/qtile
 
 qtile-check:
 	qtile check -c nixos/desktop/qtile/config.py
 
-restore-home:
-	systemctl --user restart home-manager-$(shell whoami).service
+restore-home: unlink-qtile
+	systemctl restart home-manager-$(shell whoami).service
 
 xmonad-check:
 	cabal update

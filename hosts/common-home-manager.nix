@@ -1,4 +1,4 @@
-{ inputs, systemVersion, master, unstable, pkgs, accent ? "pink", flavor ? "latte", desktopName ? "xmonad", ... }: {
+{ inputs, systemVersion, master, unstable, pkgs, accent ? "pink", flavor ? "latte", desktopName, ... }: {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeManagerModules.nixvim

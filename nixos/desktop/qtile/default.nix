@@ -19,8 +19,13 @@ in
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       xdg.configFile."qtile".source = ./.;
-      programs.jetbrains.ides = [ "python" ];
-
+      programs = {
+        jetbrains.ides = [ "python" ];
+        rofi.wittano = {
+          enable = true;
+          desktopName = "qtile";
+        };
+      };
     };
 
     environment.variables.QTILE_THEME = "catppuccin_${config.catppuccin.flavor}";
