@@ -1,7 +1,7 @@
 { config, lib, pkgs, hostname, inputs, secretDir, unstable, master, ... }:
 with lib;
 let
-  desktopName = "qtile";
+  desktopName = "xmonad";
   commonConfig = import ../common.nix {
     inherit lib secretDir master pkgs hostname inputs unstable desktopName;
     cores = 24;
