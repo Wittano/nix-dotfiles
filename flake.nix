@@ -14,7 +14,7 @@
     };
     nixvim.url = "github:nix-community/nixvim/nixos-25.05";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
     catppuccin-dunst = {
       url = "github:catppuccin/dunst";
       flake = false;
