@@ -55,6 +55,7 @@ lib.mkMerge [
             pandoc
             krita
             telegram-desktop
+            tor-browser-bundle-bin
           ];
 
           programs = {
