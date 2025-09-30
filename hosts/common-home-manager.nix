@@ -31,6 +31,7 @@
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
       signal-desktop # Signal
+      darktable # Photo editing
 
       # Security
       bitwarden
