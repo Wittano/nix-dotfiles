@@ -35,7 +35,7 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-screens = [LIGHT_THEME_SCREEN] + [Screen()] if monitors.get_monitors_count() > 1 else []
+screens = [LIGHT_THEME_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
 
 mouse = mouse.MOUSE_BINDS
 
