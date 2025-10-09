@@ -31,6 +31,7 @@ mkMerge [
         ];
 
         profile.programming.enable = true;
+        programs.jetbrains.ides = [ "go" "cpp" ];
         desktop.autostart.programs = [
           "spotify"
         ];
