@@ -91,11 +91,22 @@ class ClockWidget(widget.Clock):
         self.format = self.short_format
         self.bar.draw()
 
+class BatteryWidget(widget.Battery):
+    def __init__(self, theme: Dict[str, str], interface: str = "eno1"):
+        super().__init__(
+            interface=interface,
+            format="  {percent:2.0%} {hour:d}:{min:02d} {watt:.2f} W",
+            font="Hack NF Bold",
+            background=theme["background"],
+            charging_foreground=theme["orange"],
+            low_foreground=theme["red"],
+            foreground=theme["green"]
+        )
 
 class NetWidget(widget.Net):
-    def __init__(self, theme: Dict[str, str]):
+    def __init__(self, theme: Dict[str, str], interface: str = "eno1"):
         super().__init__(
-            interface="eno1",
+            interface=interface,
             format="\uf063  {down:.1f}{down_suffix}  \uf062  {up:.1f}{up_suffix}",
             font="Hack NF Bold",
             background=theme["background"],

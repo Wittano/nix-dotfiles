@@ -7,8 +7,9 @@ name = "pypi"
 qtile = "*"
 mypy = "*"
 black = "*"
+psutil = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.13"

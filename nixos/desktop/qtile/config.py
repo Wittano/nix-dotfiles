@@ -9,13 +9,14 @@ from libqtile.backend.base import Window
 from libqtile.config import Group, Key, Screen
 from libqtile.core.manager import Qtile
 from libqtile.log_utils import logger
+from libqtile.resources.default_config import screens
 
 import groups
 from layout import layouts
 from binds import keyboard, mouse
 from layout.floating import FLOATING_LAYOUT
 from scripts import monitors
-from theme.screen import PRIMARY_SCREEN, LIGHT_THEME_SCREEN
+from theme.screen import PRIMARY_SCREEN, SCREEN, LAPTOP_SCREEN
 
 QTILE: Qtile = libqtile.qtile
 
@@ -35,7 +36,8 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-screens = [LIGHT_THEME_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
+# TODO Create better system to spaw screen configuration between Laptop and PC
+screens = [LAPTOP_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
 
 mouse = mouse.MOUSE_BINDS
 

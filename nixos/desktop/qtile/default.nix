@@ -32,7 +32,12 @@ in
 
     services.xserver = {
       enable = true;
-      windowManager.qtile.enable = true;
+      windowManager.qtile = {
+        enable = true;
+        extraPackages = pyPkgs: with pyPkgs; [
+          psutil
+        ];
+      };
     };
   };
 }
