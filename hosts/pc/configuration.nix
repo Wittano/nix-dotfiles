@@ -14,9 +14,6 @@ let
   };
 
   inherit (pkgs) remmina;# VNC client
-  dropbox = pkgs.dropbox-cli; # Dropbox CLI
-  inherit (pkgs) czkawka;
-  inherit (pkgs) pandoc;
 in
 lib.mkMerge [
   commonConfig
@@ -49,28 +46,21 @@ lib.mkMerge [
 
           home.packages = with pkgs; [
             remmina
-            gnome-pomodoro # Pomodoro
-            dropbox
-            czkawka
-            pandoc
             krita
-            telegram-desktop
             tor-browser-bundle-bin
           ];
 
           programs = {
+            spotify.enable = true;
+            telegram.enable = true;
+            vivaldi.enable = true;
+            pomodoro.enable = true;
             games = {
               enable = true;
               enableDev = true;
             };
             lutris.wittano.enable = true;
           };
-
-          desktop.autostart.programs = [
-            "telegram-desktop -startintray"
-            "vesktop --start-minimized"
-            "gnome-pomodoro"
-          ];
         }
       ];
     };
@@ -83,7 +73,7 @@ lib.mkMerge [
       };
       mihoyo = {
         enable = true;
-        games = [ "honkai-railway" ]; # FIXME Failed download rustls during nix build 
+        games = [ "honkai-railway" ];
       };
     };
 

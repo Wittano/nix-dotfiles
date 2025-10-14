@@ -65,17 +65,15 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = games ++ patches ++ (with pkgs; [
-      # Social media
-      telegram-desktop
-      signal-desktop
-    ]);
+    home.packages = games ++ patches;
 
-    programs.jetbrains.ides = mkIf cfg.enableDev [ "jvm" "dotnet" ];
+    programs = {
+      jetbrains.ides = mkIf cfg.enableDev [ "jvm" "dotnet" ];
+      telegram.enable = true;
+      signal.enable = true;
+    };
 
     desktop.autostart.programs = [
-      "signal-desktop --start-in-tray"
-      "telegram-desktop -startintray"
       "steam -silent"
     ];
 

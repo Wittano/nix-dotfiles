@@ -24,23 +24,16 @@
       # Utils 
       eog # Image viewer
       libreoffice # Office staff
-      pandoc # Text file converter
 
       # Apps
       keepassxc # Password manager
       joplin-desktop # Notebook
       xournalpp # Handwritten notebook
-      signal-desktop # Signal
       darktable # Photo editing
 
       # Security
       bitwarden
       keepassxc
-
-      # Communicators
-      telegram-desktop
-      unstable.vesktop
-      signal-desktop
     ];
   };
 
@@ -49,6 +42,10 @@
     git.wittano.enable = true;
     btop.enable = true;
     kitty.wittano.enable = true;
+    vivaldi.wittano.enable = true;
+    discord.enable = true;
+    signal.enable = true;
+    telegram.enable = true;
     fish = {
       functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
       wittano = {
@@ -81,17 +78,9 @@
 
   services = {
     redshift.wittano.enable = true;
-    betterlockscreen.wittano.enable = true;
     picom.wittano.enable = true;
     dunst.wittano.enable = true;
   };
 
-  desktop.autostart = {
-    enable = true;
-    programs = [
-      "vivaldi"
-      "signal-desktop --start-in-tray"
-      "todoist-electron"
-    ];
-  };
+  desktop.autostart.enable = true;
 }

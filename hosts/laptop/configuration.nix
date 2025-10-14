@@ -25,16 +25,14 @@ mkMerge [
     home-manager.users.wittano = mkMerge [
       commonHomeManager
       {
-        home.packages = with pkgs; [
-          pavucontrol
-          spotify
-        ];
+        home.packages = with pkgs; [ pavucontrol ];
 
         profile.programming.enable = true;
-        programs.jetbrains.ides = [ "go" "cpp" ];
-        desktop.autostart.programs = [
-          "spotify"
-        ];
+        programs = {
+          jetbrains.ides = [ "go" "cpp" ];
+          spotify.enable = true;
+        };
+        services.betterlockscreen.enable = true;
       }
     ];
 

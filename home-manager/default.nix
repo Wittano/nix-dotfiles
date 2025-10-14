@@ -2,6 +2,13 @@
   imports =
     [
       ./alacritty.nix
+      ./pomodoro.nix
+      ./telegram.nix
+      ./vivaldi.nix
+      ./spotify.nix
+      ./signal.nix
+      ./discord.nix
+      ./todoist.nix
       ./autostart.nix
       ./dunst.nix
       ./feh.nix
@@ -26,6 +33,5 @@
       ./qbittorrent.nix
       ./work.nix
       ./programming.nix
-      ./betterlockscreen.nix
     ];
 }

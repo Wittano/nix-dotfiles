@@ -19,6 +19,7 @@ in
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       xdg.configFile."qtile".source = ./.;
+      desktop.autostart.enable = true;
       programs = {
         jetbrains.ides = [ "python" ];
         rofi.wittano = {
