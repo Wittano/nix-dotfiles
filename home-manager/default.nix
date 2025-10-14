@@ -3,6 +3,7 @@
     [
       ./alacritty.nix
       ./pomodoro.nix
+      ./joplin.nix
       ./telegram.nix
       ./vivaldi.nix
       ./spotify.nix

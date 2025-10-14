@@ -27,7 +27,6 @@
 
       # Apps
       keepassxc # Password manager
-      joplin-desktop # Notebook
       xournalpp # Handwritten notebook
       darktable # Photo editing
 
@@ -45,6 +44,7 @@
     vivaldi.wittano.enable = true;
     discord.enable = true;
     signal.enable = true;
+    joplin.enable = true;
     telegram.enable = true;
     fish = {
       functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
