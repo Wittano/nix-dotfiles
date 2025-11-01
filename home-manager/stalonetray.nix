@@ -18,7 +18,7 @@ with lib;
       config = {
         background = "#24273a";
         icon_size = 28;
-        geometry = "1x1+900+19";
+        geometry = "1x1+1920+19";
       };
     };
   };
