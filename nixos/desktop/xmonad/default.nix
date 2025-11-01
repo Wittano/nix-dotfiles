@@ -68,6 +68,8 @@ in
           (builtins.mapAttrs (n: v: pkgs.writeText n (builtins.readFile (./src + "/${n}"))))
         ];
       };
+
+      services.stalonetray.wittano.enable = true;
     };
   };
 }
