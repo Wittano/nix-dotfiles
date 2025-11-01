@@ -16,7 +16,7 @@ from layout import layouts
 from binds import keyboard, mouse
 from layout.floating import FLOATING_LAYOUT
 from scripts import monitors
-from theme.screen import PRIMARY_SCREEN, SCREEN, LAPTOP_SCREEN
+from theme.screen import PRIMARY_SCREEN, __screen, __laptop_screen, MAIN_SCREEN
 
 QTILE: Qtile = libqtile.qtile
 
@@ -37,7 +37,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 # TODO Create better system to spaw screen configuration between Laptop and PC
-screens = [LAPTOP_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
+screens = [MAIN_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
 
 mouse = mouse.MOUSE_BINDS
 

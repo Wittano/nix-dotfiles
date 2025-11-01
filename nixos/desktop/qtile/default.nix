@@ -12,6 +12,11 @@ in
       type = with types; listOf str;
       default = [ "wittano" ];
     };
+    profile = mkOption {
+      type = types.enum [ "LAPTOP" "PC" ];
+      default = "PC";
+      description = "Qtile profile";
+    };
   };
 
   config = mkIf config.desktop.qtile.enable {
@@ -29,7 +34,10 @@ in
       };
     };
 
-    environment.variables.QTILE_THEME = "catppuccin_${config.catppuccin.flavor}";
+    environment.variables = {
+      QTILE_THEME = "catppuccin_${config.catppuccin.flavor}";
+      QTILE_PROFILE = config.desktop.qtile.profile;
+    };
 
     services.xserver = {
       enable = true;

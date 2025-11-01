@@ -22,6 +22,8 @@ mkMerge [
 
     users.users.wittano.extraGroups = [ "wheel" ];
 
+    desktop.qtile.profile = "LAPTOP";
+
     home-manager.users.wittano = mkMerge [
       commonHomeManager
       {

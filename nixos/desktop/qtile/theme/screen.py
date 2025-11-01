@@ -1,4 +1,5 @@
-import psutil
+import os
+
 from libqtile import bar
 from libqtile.config import Screen
 from libqtile.widget.spacer import Spacer
@@ -12,7 +13,7 @@ theme = DEFAULT_THEME
 SPACER = Spacer(length=10, background=theme["background"])
 BLACK_SPACER = Spacer(length=10, background=theme["background"])
 
-LAPTOP_SCREEN = Screen(
+__laptop_screen = Screen(
     top=bar.Bar([
         LogoWidget(theme),
         GroupBoxWidget(theme),
@@ -40,7 +41,7 @@ LAPTOP_SCREEN = Screen(
         margin=[15, 60, 6, 60])
 )
 
-SCREEN = Screen(
+__screen = Screen(
     top=bar.Bar([
         LogoWidget(theme),
         GroupBoxWidget(theme),
@@ -99,3 +100,5 @@ PRIMARY_SCREEN = Screen(
         border_color=theme["background"],
         margin=[15, 60, 6, 60])
 )
+
+MAIN_SCREEN = __laptop_screen if os.environ.get("PROFILE") == "LAPTOP" else __screen
