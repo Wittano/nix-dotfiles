@@ -17,7 +17,7 @@ executable xmonad-x86_64-linux
     main-is:          Main.hs
 
     build-depends:
-        base ^>=4.19,
+        base ^>=4.20,
         xmonad ^>=0.18.0,
         xmonad-contrib ^>=0.18.0,
         xmonad-extras ^>=0.17.0,
