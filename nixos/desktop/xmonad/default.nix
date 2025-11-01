@@ -4,17 +4,6 @@ with lib.my;
 let
   cfg = config.desktop.xmonad;
   barSuffix = if hostname == "laptop" then "-${hostname}-${config.catppuccin.flavor}" else "-${config.catppuccin.flavor}";
-
-  signalDesktop = pkgs.signal-desktop.overrideAttrs (oldAttrs: {
-    desktopItems =
-      let
-        desktopItem = builtins.head oldAttrs.desktopItems;
-        fixedDesktopItem = desktopItem.override {
-          exec = "${oldAttrs.meta.mainProgram} %U --use-tray-icon";
-        };
-      in
-      [ fixedDesktopItem ];
-  });
 in
 {
   options.desktop.xmonad = {
@@ -53,7 +42,6 @@ in
         };
 
         jetbrains.ides = [ "haskell" ];
-        signal.package = signalDesktop;
       };
 
       xsession.windowManager.xmonad = {
