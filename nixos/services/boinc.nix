@@ -21,7 +21,7 @@ in
 
     virtualisation.virtualbox = rec {
       host = rec {
-        enable = config.hardware.virtualization.wittano.enableWindowsVM;
+        enable = !config.hardware.virtualization.wittano.enableWindowsVM;
         package = virtualbox;
         enableKvm = config.virtualisation.libvirtd.enable;
         addNetworkInterface = !enableKvm;
