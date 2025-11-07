@@ -73,15 +73,14 @@ let
           programs.neovim.wittano.enableHaskell = true;
         }
       ];
-      elixir.extraConfig = mkMerge [
-        haskell.extraConfig
+      elixir.extraConfig =
         {
           programs.neovim.wittano.enableElixir = true;
-          home.packages = with pkgs; [ vscodium ];
-        }
-      ];
+          home.packages = [ pkgs.zed-editor ];
+        };
       fork.extraConfig = {
         programs.nixvim.enable = true;
+        home.packages = [ pkgs.zed-editor ];
       };
     });
 

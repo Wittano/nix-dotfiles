@@ -26,17 +26,16 @@ with lib;
         scr = "sudo systemctl restart";
         sdb = "systemd-analyze blame";
       };
+      joplin.enable = true;
+      signal.enable = true;
     };
 
     gtk.gtk3.bookmarks = [
       "file://$HOME/nix-dotfiles Nix configuration"
     ];
 
-    home.packages = with pkgs; [
-      sshs # SSH client
-      joplin-desktop
-      vscodium # VS code
-      signal-desktop # Signal communicator
+    home.packages = [
+      pkgs.sshs # SSH client
     ];
   };
 }
