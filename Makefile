@@ -22,14 +22,15 @@ qtile-test: unlink-qtile
 	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(qtile_dest_path)
 
 openbox_path = $(HOME)/.config/openbox
+openbox_source = $(NIX_DOTFILES)/nixos/desktop/openbox
 
 unlink-openbox:
-ifeq ($(windcard openbox_path),)
-	unlink $(openbox_path)
-endif
+	unlink $(openbox_path)/rc.xml
+	unlink $(openbox_path)/menu.xml
 
 openbox-test: unlink-openbox
-	ln -s $(NIX_DOTFILES)/nixos/desktop/openbox $(openbox_path)
+	ln -s $(openbox_source)/rc.xml $(openbox_path)/rc.xml
+	ln -s $(openbox_source)/menu.xml $(openbox_path)/menu.xml
 
 qtile-check:
 	qtile check -c nixos/desktop/qtile/config.py
@@ -41,8 +42,8 @@ xmonad-check:
 	cabal update
 	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
 
-try-build:  check
+try-build: check
 	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild try-build --flake .#$(PROFILE)
 
-build: check
+build: check unlink-openbox
 	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild build --flake .#$(PROFILE)
