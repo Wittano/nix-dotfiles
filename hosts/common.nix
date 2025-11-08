@@ -4,7 +4,7 @@
 , unstable
 , master
 , hostname
-, desktopName ? "qtile"
+, desktopName
 , cores ? 24
 , ...
 }:

@@ -1,14 +1,15 @@
-{ config, lib, pkgs, hostname, inputs, secretDir, unstable, master, ... }:
+{ config, lib, pkgs, hostname, inputs, secretDir, unstable, master, desktop ? "xmonad", ... }:
 with lib;
 let
-  desktopName = "xmonad";
   commonConfig = import ../common.nix {
-    inherit lib secretDir master pkgs hostname inputs unstable desktopName;
+    inherit lib secretDir master pkgs hostname inputs unstable;
+    desktopName = desktop;
     cores = 24;
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master unstable desktopName;
+    inherit inputs pkgs master unstable;
     systemVersion = config.system.stateVersion;
+    desktopName = desktop;
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;
   };
@@ -21,7 +22,7 @@ lib.mkMerge [
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
     boot.tmp.useTmpfs = true;
 
-    desktop.${desktopName}.users = [ "wittano" ];
+    desktop.${desktop}.users = [ "wittano" ];
 
     users.users.wittano.extraGroups = [ "wheel" ];
 

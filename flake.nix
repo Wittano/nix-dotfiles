@@ -31,14 +31,7 @@
         import p {
           inherit system;
 
-          config = {
-            allowUnfree = true;
-            permittedInsecurePackages = [
-              "electron-27.3.11"
-              "electron-33.4.11"
-            ];
-          };
-
+          config.allowUnfree = true;
           overlays = import ./overlays.nix { inherit lib; pkgs = p; };
         };
 
@@ -56,8 +49,14 @@
       lib = lib.my;
 
       nixosConfigurations = {
-        pc = lib.my.hosts.mkHost "pc";
-        laptop = lib.my.hosts.mkHost "laptop";
+        pc-xmonad = lib.my.hosts.mkHost "pc" "xmonad";
+        laptop-xmonad = lib.my.hosts.mkHost "laptop" "xmonad";
+
+        pc-openbox = lib.my.hosts.mkHost "pc" "openbox";
+        laptop-openbox = lib.my.hosts.mkHost "laptop" "openbox";
+
+        pc-qtile = lib.my.hosts.mkHost "pc" "qtile";
+        laptop-qtile = lib.my.hosts.mkHost "laptop" "qtile";
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };

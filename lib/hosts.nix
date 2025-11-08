@@ -1,12 +1,7 @@
 { lib, system, unstable, master, inputs, secretDir, ... }:
-with lib;
-with lib.my;
 {
-  mkHost = name:
+  mkHost = hostname: desktop:
     let
-      splitName = strings.splitString "-" name;
-      hostname = builtins.head splitName;
-
       nixpkgsConfig = { pkgs, ... }: {
         nixpkgs = {
           overlays =
@@ -25,7 +20,7 @@ with lib.my;
       inherit system;
 
       specialArgs = {
-        inherit unstable lib inputs system hostname secretDir master;
+        inherit unstable lib inputs system hostname secretDir master desktop;
         templateDir = ./../templates;
       };
 

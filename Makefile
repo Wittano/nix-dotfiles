@@ -1,10 +1,5 @@
-check-profile:
-ifeq ($(filter $(PROFILE), pc laptop),)
-	$(error unknown profile: $(PROFILE))
-endif
-
-activate: unlink-qtile check-profile check
-	sudo nixos-rebuild switch --flake .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
+activate: unlink-qtile check
+	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
 
 clean:
 ifneq (,$(windcard result))
@@ -14,26 +9,40 @@ endif
 
 check: xmonad-check
 	statix fix
-	nix flake check --show-trace
+	nix flake check --show-trace --max-jobs $(shell nproc)
+
+qtile_dest_path = $(HOME)/.config/qtile
 
 unlink-qtile:
-	unlink $(HOME)/.config/qtile || echo "Missing qtile link"
+ifneq ($(wildcard qtile_dest_path),)
+	unlink $(qtile_dest_path)
+endif
 
 qtile-test: unlink-qtile
-	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(HOME)/.config/qtile
+	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(qtile_dest_path)
+
+openbox_path = $(HOME)/.config/openbox
+
+unlink-openbox:
+ifeq ($(windcard openbox_path),)
+	unlink $(openbox_path)
+endif
+
+openbox-test: unlink-openbox
+	ln -s $(NIX_DOTFILES)/nixos/desktop/openbox $(openbox_path)
 
 qtile-check:
 	qtile check -c nixos/desktop/qtile/config.py
 
-restore-home: unlink-qtile
+restore-home: unlink-qtile unlink-openbox
 	systemctl restart home-manager-$(shell whoami).service
 
 xmonad-check:
 	cabal update
 	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
 
-try-build: check-profile check
-	nixos-rebuild try-build --flake .#$(PROFILE)
+try-build:  check
+	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild try-build --flake .#$(PROFILE)
 
-build: check-profile try-build
-	nixos-rebuild build --flake .#$(PROFILE)
+build: check
+	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild build --flake .#$(PROFILE)
