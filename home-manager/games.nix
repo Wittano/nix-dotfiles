@@ -10,7 +10,7 @@ let
     # airshipper # Veloren
     xivlauncher # FF XIV
     prismlauncher # Minecraft
-    zeroad-unwrapped # 0 A.D
+    # zeroad-unwrapped # 0 A.D
   ];
 
   fixAge2Sync = pkgs.writeShellApplication {
