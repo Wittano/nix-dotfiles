@@ -2,6 +2,7 @@
   imports =
     [
       ./alacritty.nix
+      ./zed.nix
       ./pomodoro.nix
       ./joplin.nix
       ./telegram.nix

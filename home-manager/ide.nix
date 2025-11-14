@@ -1,4 +1,4 @@
-{ config, lib, unstable ? pkgs, pkgs, ... }:
+{ config, lib, unstable ? pkgs, pkgs, inputs, ... }:
 with lib;
 with lib.my;
 let
@@ -70,17 +70,32 @@ let
       haskell.extraConfig = mkMerge [
         fork.extraConfig
         {
-          programs.neovim.wittano.enableHaskell = true;
+          programs = {
+            neovim.wittano.enableHaskell = true;
+            zed-editor = {
+              wittano.enable = true;
+              extensions = [ "haskell" ];
+              extraPackages = [ pkgs.haskell-language-server ];
+            };
+          };
         }
       ];
       elixir.extraConfig =
         {
-          programs.neovim.wittano.enableElixir = true;
-          home.packages = [ pkgs.zed-editor ];
+          programs = {
+            neovim.wittano.enableElixir = true;
+            zed-editor = {
+              wittano.enable = true;
+              extensions = [ "elixir" "elixir-snippets" ];
+              extraPackages = [ inputs.expert-ls.packages.x86_64-linux.default ];
+            };
+          };
         };
       fork.extraConfig = {
-        programs.nixvim.enable = true;
-        home.packages = [ pkgs.zed-editor ];
+        programs = {
+          nixvim.enable = true;
+          zed-editor.wittano.enable = true;
+        };
       };
     });
 
