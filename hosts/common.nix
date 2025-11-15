@@ -144,12 +144,12 @@ mkMerge [
     };
 
     programs = {
+      kitty.wittano.enable = true;
       nh.wittano.enable = true;
       krusader.enable = true;
       fish.enable = true;
       file-roller.enable = true; # Archive explorer
       evince.enable = true; # PDF viever
-      droidcam.enable = false; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
     };
 
     # Home-manager
@@ -159,8 +159,16 @@ mkMerge [
       backupFileExtension = "backup";
     };
 
-
+    # Desktop
     desktop."${desktopName}".enable = true;
+    xdg = {
+      portal = {
+        enable = true;
+        xdgOpenUsePortal = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+        config.common.default = [ "gtk" ];
+      };
+    };
 
     # System
     system.stateVersion = systemVersion;
