@@ -57,7 +57,7 @@ in
         ];
       };
 
-      services.stalonetray.wittano.enable = true;
+      services.stalonetray.wittano.enable = false;
     };
   };
 }
