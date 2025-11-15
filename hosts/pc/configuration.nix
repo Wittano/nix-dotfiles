@@ -66,7 +66,7 @@ lib.mkMerge [
     };
 
     programs = {
-      # droidcam.enable = true; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
+      droidcam.enable = true;
       steam.wittano = {
         enable = true;
         disk.enable = true;
