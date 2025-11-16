@@ -1,4 +1,4 @@
-{ inputs, systemVersion, master, pkgs, accent ? "pink", flavor ? "latte", desktopName, ... }: {
+{ inputs, systemVersion, master, unstable, pkgs, accent ? "pink", flavor ? "latte", desktopName, ... }: {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
     inputs.nixvim.homeManagerModules.nixvim
@@ -40,6 +40,7 @@
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;
+    kitty.wittano.enable = true;
     vivaldi.wittano.enable = true;
     discord.enable = true;
     signal.enable = true;

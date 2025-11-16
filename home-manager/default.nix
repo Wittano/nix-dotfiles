@@ -19,6 +19,7 @@
       ./git.nix
       ./gtk.nix
       ./ide.nix
+      ./kitty.nix
       ./lutris.nix
       ./neovim.nix
       ./nitrogen.nix
