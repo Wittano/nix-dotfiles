@@ -149,7 +149,6 @@ mkMerge [
       fish.enable = true;
       file-roller.enable = true; # Archive explorer
       evince.enable = true; # PDF viever
-      droidcam.enable = false; # FIXME Problem with sharing Video phone <-> pc. ONLY ON LINUX
     };
 
     # Home-manager

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: with lib;{
+{ config, lib, pkgs, unstable, ... }: with lib;{
   options.programs.zed-editor.wittano.enable = mkEnableOption "zed-editor";
 
   config = mkIf config.programs.zed-editor.wittano.enable {
@@ -12,8 +12,8 @@
         nixfmt-classic
         nodePackages.prettier
         terraform-ls
-        ansible
-        ansible-lint
+        unstable.ansible
+        unstable.ansible-lint
         yaml-language-server
         python3Full
       ];
