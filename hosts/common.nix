@@ -79,7 +79,7 @@ mkMerge [
 
     # Global packages
     environment = {
-      systemPackages = with pkgs; [ vim htop bash ];
+      systemPackages = with pkgs; [ vim htop bash file ];
       variables =
         {
           EDITOR = "vim";
