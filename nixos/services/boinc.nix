@@ -7,26 +7,32 @@ let
   inherit (pkgs) virtualbox;
   virtualboxPackage = lists.optionals (!config.hardware.virtualization.wittano.enableWindowsVM) [ virtualbox ];
 
-  extraEnvPackages = [ pkgs.ocl-icd ] ++ nvidiaDriverPackage ++ virtualboxPackage;
+  extraEnvPackages = [ pkgs.ocl-icd pkgs.util-linux pkgs.docker ] ++ nvidiaDriverPackage ++ virtualboxPackage;
 in
 {
   options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
 
   config = mkIf config.services.boinc.wittano.enable {
-    users.users.wittano.extraGroups = [ "boinc" ];
+    users.users = {
+      wittano.extraGroups = [ "boinc" ];
+      boinc.extraGroups = mkIf config.virtualisation.docker.enable [ "docker" ];
+    };
 
     hardware.virtualization.wittano.stoppedServices = [
       "boinc.service"
     ];
 
-    virtualisation.virtualbox = rec {
-      host = rec {
-        enable = !config.hardware.virtualization.wittano.enableWindowsVM;
-        package = virtualbox;
-        enableKvm = config.virtualisation.libvirtd.enable;
-        addNetworkInterface = !enableKvm;
+    virtualisation = {
+      docker.wittano.enable = true;
+      virtualbox = rec {
+        host = rec {
+          enable = !config.hardware.virtualization.wittano.enableWindowsVM;
+          package = virtualbox;
+          enableKvm = config.virtualisation.libvirtd.enable;
+          addNetworkInterface = !enableKvm;
+        };
+        guest.enable = host.enable;
       };
-      guest.enable = host.enable;
     };
 
     services.boinc = {
