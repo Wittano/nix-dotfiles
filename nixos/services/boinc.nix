@@ -5,7 +5,7 @@ let
   nvidiaDriverPackage = lists.optionals config.hardware.nvidia.wittano.enable [ config.boot.kernelPackages.nvidiaPackages.stable ];
 
   inherit (pkgs) virtualbox;
-  virtualboxPackage = lists.optionals (!config.hardware.virtualization.wittano.enableWindowsVM) [ virtualbox ];
+  virtualboxPackage = lists.optionals config.virtualisation.virtualbox.host.enable [ virtualbox ];
 
   extraEnvPackages = [ pkgs.ocl-icd pkgs.util-linux pkgs.docker ] ++ nvidiaDriverPackage ++ virtualboxPackage;
   dockerGroup = lists.optionals config.virtualisation.docker.enable [ "docker" ];
@@ -33,6 +33,7 @@ in
           package = virtualbox;
           enableKvm = config.virtualisation.libvirtd.enable;
           addNetworkInterface = !enableKvm;
+          headless = true;
         };
         guest.enable = host.enable;
       };
