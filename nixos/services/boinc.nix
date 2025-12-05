@@ -8,6 +8,9 @@ let
   virtualboxPackage = lists.optionals (!config.hardware.virtualization.wittano.enableWindowsVM) [ virtualbox ];
 
   extraEnvPackages = [ pkgs.ocl-icd pkgs.util-linux pkgs.docker ] ++ nvidiaDriverPackage ++ virtualboxPackage;
+  dockerGroup = lists.optionals config.virtualisation.docker.enable [ "docker" ];
+  vboxGroup = lists.optionals config.virtualisation.virtualbox.host.enable [ "vboxusers" ];
+
 in
 {
   options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
@@ -15,7 +18,7 @@ in
   config = mkIf config.services.boinc.wittano.enable {
     users.users = {
       wittano.extraGroups = [ "boinc" ];
-      boinc.extraGroups = mkIf config.virtualisation.docker.enable [ "docker" ];
+      boinc.extraGroups = dockerGroup ++ vboxGroup;
     };
 
     hardware.virtualization.wittano.stoppedServices = [
@@ -26,7 +29,7 @@ in
       docker.wittano.enable = true;
       virtualbox = rec {
         host = rec {
-          enable = !config.hardware.virtualization.wittano.enableWindowsVM;
+          enable = true;
           package = virtualbox;
           enableKvm = config.virtualisation.libvirtd.enable;
           addNetworkInterface = !enableKvm;
