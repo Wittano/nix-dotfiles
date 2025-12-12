@@ -45,6 +45,10 @@ mkMerge [
     services.backup.path = "sftp:laptop_backup:/mnt/hdd/backup/laptop";
 
     hardware = {
+      nvidia.wittano = {
+        enable = true;
+        hostType = "laptop";
+      };
       trackpoint.emulateWheel = true;
 
       samba.enable = true;
