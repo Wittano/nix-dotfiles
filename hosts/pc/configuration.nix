@@ -52,6 +52,7 @@ lib.mkMerge [
           ];
 
           programs = {
+            spotify.enable = true;
             telegram.enable = true;
             vivaldi.enable = true;
             pomodoro.enable = true;
