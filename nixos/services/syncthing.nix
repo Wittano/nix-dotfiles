@@ -37,10 +37,10 @@ in
         Group = group;
         ExecStart = ''
           ${package}/bin/syncthing \
-            -no-browser \
-            -gui-address=127.0.0.1:8384 \
-            -config=${configDir} \
-            -data=${dataDir} \
+            --no-browser \
+            --gui-address=127.0.0.1:8384 \
+            --config=${configDir} \
+            --data=${dataDir} \
         '';
         MemoryDenyWriteExecute = true;
         NoNewPrivileges = true;
