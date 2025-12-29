@@ -1,20 +1,15 @@
-{ lib, config, pkgs, ... }: with lib;
+{ lib, config, ... }: with lib;
 let
-  cfg = config.programs.discord;
-  exeName = meta.getExe cfg.package;
+  cfg = config.programs.discord.wittano;
 in
 {
-  options.programs.discord = {
+  options.programs.discord.wittano = {
     enable = mkEnableOption "discord";
-    package = mkOption {
-      default = pkgs.vesktop;
-      description = "discord client";
-    };
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    programs.vesktop.enable = true;
 
-    desktop.autostart.programs = [ "${exeName} --start-minimized" ];
+    desktop.autostart.programs = [ "vesktop --start-minimized" ];
   };
 }

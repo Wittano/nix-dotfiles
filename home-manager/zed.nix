@@ -15,7 +15,7 @@
         unstable.ansible
         unstable.ansible-lint
         yaml-language-server
-        python3Full
+        python314
       ];
 
       userSettings = {

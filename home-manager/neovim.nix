@@ -96,24 +96,26 @@ in
           nvim-tree = {
             enable = true;
             autoClose = true;
-            autoReloadOnWrite = true;
-            actions = {
-              useSystemClipboard = true;
-              openFile = {
-                quitOnOpen = true;
-                resizeWindow = true;
+            settings = {
+              auto_reload_on_write = true;
+              update_focused_file.enable = true;
+              git = {
+                enable = true;
+                ignore = false;
               };
-              windowPicker.enable = true;
-            };
-            git = {
-              enable = true;
-              ignore = false;
-            };
-            liveFilter.alwaysShowFolders = true;
-            updateFocusedFile.enable = true;
-            view = {
-              number = true;
-              relativenumber = true;
+              view = {
+                number = true;
+                relativenumber = true;
+              };
+              actions = {
+                useSystemClipboard = true;
+                openFile = {
+                  quitOnOpen = true;
+                  resizeWindow = true;
+                };
+                windowPicker.enable = true;
+              };
+              liveFilter.alwaysShowFolders = true;
             };
           };
 
@@ -175,7 +177,6 @@ in
                 package = pkgs.haskell-language-server;
               };
               dockerls.enable = true;
-              ansiblels.enable = true;
             };
           };
 

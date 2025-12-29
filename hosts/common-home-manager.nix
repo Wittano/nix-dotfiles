@@ -1,7 +1,7 @@
 { inputs, systemVersion, master, pkgs, accent ? "pink", flavor ? "latte", desktopName, ... }: {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./../home-manager
   ];
 
@@ -31,7 +31,7 @@
       darktable # Photo editing
 
       # Security
-      bitwarden
+      bitwarden-desktop
       keepassxc
     ];
   };
@@ -43,7 +43,7 @@
     spotify.enable = true;
     kitty.wittano.enable = true;
     vivaldi.wittano.enable = true;
-    discord.enable = true;
+    discord.wittano.enable = true;
     signal.enable = true;
     joplin.enable = true;
     telegram.enable = true;

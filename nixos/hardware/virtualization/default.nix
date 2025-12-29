@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, unstable, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 with lib;
 with lib.my;
 let
@@ -157,17 +157,10 @@ in
           onShutdown = "shutdown";
           qemu =
             {
-              package = mkIf cfg.enableWindowsVM pkgs.qemu;
+              package = mkIf cfg.enableWindowsVM (pkgs.qemu.override {
+                tpmSupport = true;
+              });
               swtpm.enable = true;
-              ovmf = {
-                enable = true;
-                packages = [
-                  (pkgs.OVMF.override {
-                    secureBoot = true;
-                    tpmSupport = true;
-                  }).fd
-                ];
-              };
               runAsRoot = true;
             };
           hooks.qemu.win10 = pkgs.stdenvNoCC.mkDerivation {

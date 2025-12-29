@@ -48,7 +48,6 @@ lib.mkMerge [
           home.packages = with pkgs; [
             remmina
             krita
-            tor-browser-bundle-bin
           ];
 
           programs = {

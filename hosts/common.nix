@@ -14,7 +14,7 @@ let
   accent = "pink";
   flavor = "macchiato";
 
-  systemVersion = "25.05";
+  systemVersion = "25.11";
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
   hardwareModule = import (./. + "/${hostname}/hardware.nix") { };
@@ -67,7 +67,6 @@ mkMerge [
     # Fonts
     fonts.packages = with pkgs; [
       noto-fonts
-      noto-fonts-extra
       noto-fonts-color-emoji
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -79,7 +78,7 @@ mkMerge [
 
     # Global packages
     environment = {
-      systemPackages = with pkgs; [ vim htop bash file ];
+      systemPackages = with pkgs; [ vim htop bash file file-roller ];
       variables =
         {
           EDITOR = "vim";
@@ -147,7 +146,6 @@ mkMerge [
       nh.wittano.enable = true;
       krusader.enable = true;
       fish.enable = true;
-      file-roller.enable = true; # Archive explorer
       evince.enable = true; # PDF viever
     };
 

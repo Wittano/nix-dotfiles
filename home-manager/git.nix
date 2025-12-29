@@ -6,8 +6,6 @@ in
   options.programs.git.wittano.enable = mkEnableOption "Enable custmo git confgi";
 
   config = mkIf cfg.enable {
-    # services.dbus.packages = with pkgs; [ gcr ];
-
     home.packages = with pkgs; [ xclip ];
     services.gpg-agent = {
       enable = true;
@@ -17,9 +15,11 @@ in
     programs = {
       git = {
         enable = true;
-        userName = "Wittano Bonarotti";
-        userEmail = "radoslaw.ratyna@gmail.com";
-        extraConfig = {
+        settings = {
+          user = {
+            name = "Wittano Bonarotti";
+            email = "radoslaw.ratyna@gmail.com";
+          };
           core.editor = "vim";
           init.defaultBranch = "main";
           pull.rebase = true;
