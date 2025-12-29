@@ -43,6 +43,10 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
+          systemd.user.tmpfiles.rules = [
+            "d /home/wittano/Downloads 0755 wittano users 7d"
+          ];
+
           profile.programming.enable = true;
 
           home.packages = with pkgs; [
