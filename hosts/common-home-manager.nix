@@ -40,7 +40,6 @@
     thunderbird.wittano.enable = true;
     git.wittano.enable = true;
     btop.enable = true;
-    spotify.enable = true;
     kitty.wittano.enable = true;
     vivaldi.wittano.enable = true;
     discord.wittano.enable = true;
