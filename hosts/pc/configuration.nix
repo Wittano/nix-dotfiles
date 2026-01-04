@@ -56,6 +56,7 @@ lib.mkMerge [
           ];
 
           programs = {
+            nemo.enable = true;
             telegram.enable = true;
             vivaldi.enable = true;
             pomodoro.enable = true;

@@ -144,7 +144,6 @@ mkMerge [
 
     programs = {
       nh.wittano.enable = true;
-      krusader.enable = true;
       fish.enable = true;
       evince.enable = true; # PDF viever
     };
