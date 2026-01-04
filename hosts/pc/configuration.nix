@@ -34,6 +34,7 @@ lib.mkMerge [
       };
       amd.enable = true; # AMD GPU
       samba.enable = true; # Local network SAMAB server 
+      nfs-client.enable = true; # Local network NFS server
       bluetooth.wittano.enable = true;
     };
 
