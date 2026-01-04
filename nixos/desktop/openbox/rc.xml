@@ -6,17 +6,17 @@
   </resistance>
   <focus>
     <focusNew>yes</focusNew>
-    <followMouse>yes</followMouse>
+    <followMouse>no</followMouse>
     <focusLast>yes</focusLast>
     <underMouse>no</underMouse>
     <focusDelay>200</focusDelay>
-    <raiseOnFocus>yes</raiseOnFocus>
+    <raiseOnFocus>no</raiseOnFocus>
   </focus>
   <placement>
     <policy>UnderMouse</policy>
     <center>yes</center>
     <monitor>Active</monitor>
-    <primaryMonitor>1</primaryMonitor>
+    <primaryMonitor>Active</primaryMonitor>
   </placement>
   <theme>
     <name>Catppuccin-Frappe</name>
@@ -70,7 +70,7 @@
       <name>VI</name>
       <name>V</name>
     </names>
-    <popupTime>0</popupTime>
+    <popupTime>500</popupTime>
   </desktops>
   <resize>
     <drawContents>yes</drawContents>
@@ -82,7 +82,7 @@
     </popupFixedPosition>
   </resize>
   <margins>
-    <top>0</top>
+    <top>20</top>
     <bottom>0</bottom>
     <left>0</left>
     <right>0</right>
