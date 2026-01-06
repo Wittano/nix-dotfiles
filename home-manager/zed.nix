@@ -16,6 +16,7 @@
         unstable.ansible-lint
         yaml-language-server
         python314
+        haskellPackages.cabal-gild
       ];
 
       userSettings = {
