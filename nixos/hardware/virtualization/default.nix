@@ -139,6 +139,7 @@ in
     hardware.virtualization.wittano = {
       enable = mkEnableOption "Enable virutalization tools";
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
+      enableExternalStorage = mkEnableOption "external storage for qemu images";
       stoppedServices = mkOption {
         type = with types; listOf str;
         description = "List of services, that should be stopped";
@@ -234,7 +235,7 @@ in
 
       services.openssh.settings.AllowUsers = [ "virt" ];
 
-      fileSystems = mkIf cfg.enableWindowsVM {
+      fileSystems = mkIf cfg.enableExternalStorage {
         "/var/lib/libvirt/images/pool" = {
           device = "/dev/disk/by-label/VM_STORAGE";
           fsType = "ext4";

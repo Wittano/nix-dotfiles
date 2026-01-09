@@ -31,6 +31,7 @@ lib.mkMerge [
       virtualization.wittano = {
         enable = true;
         enableWindowsVM = true;
+        enableExternalStorage = true;
       };
       amd.enable = true; # AMD GPU
       samba.enable = true; # Local network SAMAB server 
