@@ -30,8 +30,8 @@ lib.mkMerge [
       keyboard.zsa.enable = true;
       virtualization.wittano = {
         enable = true;
-        enableWindowsVM = true;
         enableExternalStorage = true;
+        enableWindowsVM = false;
       };
       amd.enable = true; # AMD GPU
       samba.enable = true; # Local network SAMAB server 
