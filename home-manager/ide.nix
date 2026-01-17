@@ -58,7 +58,7 @@ let
       go = {
         package = goland;
         extraConfig = {
-          home.packages = with pkgs; [ golangci-lint ];
+          home.packages = with pkgs; [ golangci-lint templ ];
         };
       };
       dotnet.package = rider;
