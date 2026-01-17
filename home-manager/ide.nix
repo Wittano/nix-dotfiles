@@ -50,7 +50,7 @@ let
     in
     addProjectDirField (with unstable.jetbrains; rec {
       python = {
-        package = pycharm-professional;
+        package = pycharm;
         extraConfig = mkExtraConfig fork;
       };
       cpp.package = clion;
@@ -63,7 +63,7 @@ let
       };
       dotnet.package = rider;
       rust.package = rust-rover;
-      jvm.package = idea-ultimate;
+      jvm.package = idea;
       sql.package = datagrip;
       web.package = webstorm;
       andorid.package = andorid-studio;
