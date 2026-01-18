@@ -60,6 +60,7 @@ lib.mkMerge [
             nemo.enable = true;
             telegram.enable = true;
             vivaldi.enable = true;
+            spotify.enable = true;
             pomodoro.enable = true;
             games = {
               enable = true;
