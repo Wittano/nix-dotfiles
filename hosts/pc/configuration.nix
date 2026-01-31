@@ -108,7 +108,7 @@ lib.mkMerge [
           }
         ];
       };
-      boinc.wittano.enable = true;
+      boinc.wittano.enable = false;
     };
   }
 ]
