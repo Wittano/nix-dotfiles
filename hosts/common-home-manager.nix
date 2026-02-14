@@ -47,15 +47,11 @@
     joplin.enable = true;
     telegram.enable = true;
     fish = {
-      functions.download-yt.body = "${pkgs.parallel}/bin/parallel ${master.yt-dlp}/bin/yt-dlp -P /mnt/samba/youtube --progress ::: $argv";
       wittano = {
         enable = true;
         enableDirenv = true;
       };
-      shellAliases = {
-        open = "xdg-open";
-        weather = "${pkgs.curlWithGnuTls}/bin/curl wttr.in/Poznan";
-      };
+      shellAliases.open = "xdg-open";
     };
     nitrogen.wittano.enable = true;
     rofi.wittano = {
