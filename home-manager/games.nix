@@ -62,6 +62,7 @@ in
   options.programs.games = {
     enable = mkEnableOption "Install unrelated(with Steam, lutris or other launchers) games";
     enableDev = mkEnableOption "Enable developer tools to moddling games";
+    enableAutostart = mkEnableOption "autostart";
   };
 
   config = mkIf cfg.enable {
@@ -73,7 +74,7 @@ in
       signal.enable = true;
     };
 
-    desktop.autostart.programs = [
+    desktop.autostart.programs = mkIf cfg.enableAutostart [
       "steam -silent"
     ];
 

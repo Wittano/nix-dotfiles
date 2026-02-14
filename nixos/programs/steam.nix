@@ -14,6 +14,7 @@ in
         description = "Path to mounted additional disk";
       };
     };
+    enableAutostart = mkEnableOption "steam on autostart";
   };
 
   config = mkIf cfg.enable {
@@ -22,7 +23,7 @@ in
       package = unstable.steam;
     };
 
-    home-manager.users.wittano.desktop.autostart.programs = [ "steam -silent" ];
+    home-manager.users.wittano.desktop.autostart.programs = mkIf cfg.enableAutostart [ "steam -silent" ];
 
     environment.systemPackages = with unstable; [
       # Steam staff

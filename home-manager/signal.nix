@@ -9,11 +9,15 @@ in
       description = "Package of signal desktop";
       default = pkgs.signal-desktop;
     };
+    enableAutostart = mkEnableOption "signal on autostart";
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages =
+      if cfg.enableAutostart
+      then [ cfg.package ]
+      else [ pkgs.signal-desktop ];
 
-    desktop.autostart.programs = [ "signal-desktop --start-in-tray" ];
+    desktop.autostart.programs = mkIf cfg.enableAutostart [ "signal-desktop --start-in-tray" ];
   };
 }
