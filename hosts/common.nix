@@ -74,6 +74,7 @@ mkMerge [
 
       hanazono
       hackgen-nf-font
+      minecraftia # Minecraft font
     ];
 
     # Global packages
