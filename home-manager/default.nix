@@ -36,5 +36,6 @@
       ./qbittorrent.nix
       ./work.nix
       ./programming.nix
+      ./ghostty.nix
     ];
 }

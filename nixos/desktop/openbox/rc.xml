@@ -399,7 +399,7 @@
     <!-- Launch terminal -->
     <keybind key="W-Return">
       <action name="Execute">
-        <command>kitty</command>
+        <command>ghostty</command>
       </action>
     </keybind>
     <!-- Launch nautilus-->
