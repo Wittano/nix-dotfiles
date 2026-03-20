@@ -5,6 +5,8 @@ clean:
 ifneq (,$(windcard result))
 	unlink result
 endif
+	nix-store --gc
+	nix-collect-garbage --delete-older-than 7d
 	nh clean all
 
 check: xmonad-check
