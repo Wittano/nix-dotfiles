@@ -32,6 +32,7 @@
           inputs.home-manager.nixosModules.home-manager
           inputs.agenix.nixosModules.default
           inputs.determinate.nixosModules.default
+          inputs.nix-index-database.nixosModules.default
 
           ../nixos
 

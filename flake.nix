@@ -22,6 +22,10 @@
     };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
     agenix.url = "github:ryantm/agenix";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
