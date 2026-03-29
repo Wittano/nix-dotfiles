@@ -35,16 +35,19 @@ in
   config = mkIf config.desktop.openbox.enable {
     assertions = desktop.mkDesktopAssertion config cfg.users;
 
+    security.polkit.enable = true;
+
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       desktop.autostart = {
         enable = true;
         paths = [ ".config/openbox/autostart" ];
-        programs = [ "tint2" "volumeicon" ];
+        programs = [ "tint2" "volumeicon" "lxpolkit" ];
       };
       home = {
         packages = with pkgs; [
           openbox-menu
           lxmenu-data
+          lxsession
           obconf
           volumeicon
           tint2
