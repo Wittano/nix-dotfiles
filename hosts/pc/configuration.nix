@@ -41,6 +41,8 @@ lib.mkMerge [
 
     virtualisation.docker.wittano.enable = true;
 
+    programs.kdeconnect.enable = true;
+
     home-manager.users = {
       wittano = mkMerge [
         commonHomeManager
