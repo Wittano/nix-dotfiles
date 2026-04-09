@@ -7,5 +7,6 @@
     ./services
     ./secrets.nix
     ./security
+    ./specialisation.nix
   ];
 }

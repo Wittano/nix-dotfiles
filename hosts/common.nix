@@ -11,9 +11,6 @@
 with lib;
 with lib.my;
 let
-  accent = "pink";
-  flavor = "macchiato";
-
   systemVersion = "25.11";
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
@@ -135,12 +132,6 @@ mkMerge [
       isNormalUser = true;
       uid = mkDefault 1000;
       shell = pkgs.fish;
-    };
-
-    catppuccin = {
-      inherit accent flavor;
-
-      enable = mkForce false;
     };
 
     programs = {

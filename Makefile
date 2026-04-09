@@ -1,5 +1,5 @@
 activate: unlink-qtile check
-	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
+	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) --specialisation $(THEME_MODE)-theme || systemctl restart home-manager-$(shell whoami).service
 
 clean:
 ifneq (,$(windcard result))
