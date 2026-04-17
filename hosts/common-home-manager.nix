@@ -29,6 +29,7 @@
       keepassxc # Password manager
       xournalpp # Handwritten notebook
       darktable # Photo editing
+      obsidian
 
       # Security
       bitwarden-desktop
