@@ -14,6 +14,7 @@
     ./qtile
     ./xmonad
     ./bspwm.nix
+    ./labwc
   ];
 }
 

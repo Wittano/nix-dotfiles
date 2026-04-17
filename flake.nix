@@ -57,6 +57,7 @@
         pc-xmonad = lib.my.hosts.mkHost "pc" "xmonad";
         pc-openbox = lib.my.hosts.mkHost "pc" "openbox";
         pc-qtile = lib.my.hosts.mkHost "pc" "qtile";
+        pc-labwc = lib.my.hosts.mkHost "pc" "labwc";
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };
