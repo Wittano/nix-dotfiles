@@ -27,11 +27,13 @@ in
         enable = true;
         systemd.enable = true;
         style = ''
+          .active {
+            color: @green;
+          }
           #custom-music {
             color: @green;
             font-family: "Font Awesome";
           }
-
           .modules-right * {
             margin: 5px;
           }
@@ -39,6 +41,7 @@ in
         settings = {
           mainBar = {
             layer = "top";
+            output = [ "HDMI-A-1" ];
             position = "top";
             modules-left = [ "ext/workspaces" ];
             modules-center = [ "custom/music" ];
@@ -68,7 +71,7 @@ in
             clock = {
               timezone = "Europe/Warsaw";
               tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-              format-alt = " {:%d/%m/%Y}";
+              format-alt = "{:%d/%m/%Y}";
               format = "{:%H:%M}";
             };
             pulseaudio = {
