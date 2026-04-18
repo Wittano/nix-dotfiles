@@ -88,7 +88,7 @@ in
         systemd.enable = true;
         xwayland.enable = true;
         autostart = [
-          "wlr-randr --output HDMI-A-2 --transform 270 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal &"
+          "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal &"
           "wl-paste --watch cliphist store &"
           "waypaper --restore &"
         ];
