@@ -122,9 +122,12 @@ in
       pkgs.font-awesome
     ];
 
-    xdg.portal.extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-    ];
+    xdg.portal = {
+      wlr.enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
+    };
 
     services = {
       displayManager.sddm.wayland.enable = true;
