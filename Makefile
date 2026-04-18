@@ -34,6 +34,13 @@ openbox-test: unlink-openbox
 	ln -s $(openbox_source)/rc.xml $(openbox_path)/rc.xml
 	ln -s $(openbox_source)/menu.xml $(openbox_path)/menu.xml
 
+labwc_path = $(HOME)/.config/labwc
+labwc_source = $(NIX_DOTFILES)/nixos/desktop/labwc
+
+unlink-labwc:
+	unlink $(labwc_path)/rc.xml
+	unlink $(labwc_path)/menu.xml
+
 qtile-check:
 	qtile check -c nixos/desktop/qtile/config.py
 
