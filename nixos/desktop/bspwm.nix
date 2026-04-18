@@ -21,11 +21,11 @@ in
   config = mkIf config.desktop.bspwm.enable {
     assertions = desktop.mkDesktopAssertion config cfg.users;
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
-      home.packages = with pkgs; [ gsimplecal ];
+      home.packages = with pkgs; [ gsimplecal flameshot ];
 
       desktop.autostart.programs = [ "wmname compiz" ];
 
-      serivces.polybar.wittano.profile = if cfg.deviceType == "pc" then "wittano" else "laptop";
+      programs.nitrogen.wittano.enable = true;
 
       xsession.windowManager.bspwm = {
         inherit package;
@@ -108,7 +108,11 @@ in
           };
       };
 
-      services.sxhkd = {
+      services = {
+        polybar.wittano.profile = if cfg.deviceType == "pc" then "wittano" else "laptop";
+        redshift.wittano.enable = true;
+        picom.wittano.enable = true;
+        sxhkd = {
         enable = true;
         keybindings = {
           # Terminal
@@ -149,7 +153,7 @@ in
           "super + alt + shift + {h,j,k,l}" = "bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
           "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
         };
-      };
+      };};
     };
 
     services.xserver = {

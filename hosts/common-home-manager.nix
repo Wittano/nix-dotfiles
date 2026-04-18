@@ -9,7 +9,6 @@
     stateVersion = systemVersion;
     packages = with pkgs; [
       # Utils
-      flameshot # Screenshot
       textsnatcher # Text extractor
       czkawka # File duplication cleaner
       szyszka # File renamer
@@ -21,7 +20,7 @@
       # Web browser
       vivaldi
 
-      # Utils 
+      # Utils
       eog # Image viewer
       libreoffice # Office staff
 
@@ -54,7 +53,6 @@
       };
       shellAliases.open = "xdg-open";
     };
-    nitrogen.wittano.enable = true;
     rofi.wittano = {
       inherit desktopName;
 
@@ -73,11 +71,7 @@
     enable = true;
   };
 
-  services = {
-    redshift.wittano.enable = true;
-    picom.wittano.enable = true;
-    dunst.wittano.enable = true;
-  };
+  services.dunst.wittano.enable = true;
 
   desktop.autostart.enable = true;
 }

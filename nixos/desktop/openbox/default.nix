@@ -53,6 +53,7 @@ in
           tint2
           # Utils
           arandr
+          flameshot # Screenshot
         ];
         file = themes;
       };
@@ -60,6 +61,12 @@ in
         "openbox/menu.xml".source = ./menu.xml;
         "openbox/rc.xml".source = ./rc.xml;
         "tint2".source = ./tint2;
+      };
+      programs.nitrogen.wittano.enable = true;
+
+      services = {
+        redshift.wittano.enable = true;
+        picom.wittano.enable = true;
       };
     };
 

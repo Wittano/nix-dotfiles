@@ -34,7 +34,10 @@ in
     environment.systemPackages = with pkgs; [ alsa-utils ];
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
+      home.packages = with pkgs; [ flameshot ];
+
       programs = {
+        nitrogen.wittano.enable = true;
         xmobar = {
           enable = true;
           package = unstable.xmobar;
@@ -42,6 +45,11 @@ in
         };
 
         jetbrains.ides = [ "haskell" ];
+      };
+
+      services = {
+        redshift.wittano.enable = true;
+        picom.wittano.enable = true;
       };
 
       xsession.windowManager.xmonad = {

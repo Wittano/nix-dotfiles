@@ -26,12 +26,18 @@ in
       xdg.configFile."qtile".source = ./.;
       desktop.autostart.enable = true;
       programs = {
+        nitrogen.wittano.enable = true;
         jetbrains.ides = [ "python" ];
         rofi.wittano = {
           enable = true;
           desktopName = "qtile";
         };
       };
+      services = {
+        redshift.wittano.enable = true;
+        picom.wittano.enable = true;
+      };
+      home.packages = with pkgs; [ flameshot ];
     };
 
     environment.variables = {
