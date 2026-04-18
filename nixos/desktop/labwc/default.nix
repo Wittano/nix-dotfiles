@@ -99,12 +99,26 @@ in
         enable = true;
         systemd.enable = true;
         xwayland.enable = true;
+        environment = [
+          "XKB_DEFAULT_LAYOUT=pl"
+          "QT_QPA_PLATFORMTHEME=qt6ct"
+          "ELECTRON_OZONE_PLATFORM_HINT=auto"
+          "_JAVA_AWT_WM_NONREPARENTING=1"
+          "PROTON_ENABLE_WAYLAND=1"
+          "SDL_VIDEO_DRIVER=wayland"
+          "WLR_WL_OUTPUTS=2"
+          "RTC_USE_PIPEWIRE=true"
+        ];
         autostart = [
           "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal &"
           "wl-paste --watch cliphist store &"
           "waypaper --restore &"
         ];
       };
+      xdg.configFile = {
+        "labwc/rc.xml".source = ./rc.xml;
+      };
+
       home = {
         packages = with pkgs; [
           waypaper
@@ -114,6 +128,7 @@ in
           grim
           wl-clipboard
           screenshot
+          wlrctl
         ];
       };
     };
