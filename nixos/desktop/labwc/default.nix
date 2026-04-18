@@ -1,4 +1,15 @@
-{ config, lib, pkgs, ... }: with lib; {
+{ config, lib, pkgs, ... }: with lib; let
+  screenshot = pkgs.writeShellApplication {
+    name = "screenshot";
+    runtimeInputs = with pkgs; [
+      slurp
+      grim
+      wl-clipboard
+    ];
+    text = "slurp | grim -g - - | wl-copy";
+  };
+in
+{
   options.desktop.labwc = {
     enable = mkEnableOption "labwc";
     users = mkOption {
@@ -87,7 +98,10 @@
           waypaper
           swaybg
           wlr-randr
+          slurp
+          grim
           wl-clipboard
+          screenshot
         ];
       };
     };
