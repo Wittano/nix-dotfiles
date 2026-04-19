@@ -17,6 +17,7 @@
         </item>
         <separator/>
         <menu execute="labwc-menu-generator -nIp" id="apps" label="Applications"/>
+        <menu execute="bluetooth-menu-generator" id="bluetooth" label="Bluetooth"/>
         <menu id="client-list-menu"/>
         <separator/>
         <item label="Configurations">

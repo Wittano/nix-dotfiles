@@ -8,6 +8,12 @@
     ];
     text = "slurp | grim -g - - | wl-copy";
   };
+
+  bluetoothMenuGenerator = pkgs.writeShellApplication {
+    name = "bluetooth-menu-generator";
+    runtimeInputs = with pkgs; [ busybox bluez ];
+    text = builtins.readFile ./bluetooth-menu-generator.sh;
+  };
 in
 {
   options.desktop.labwc = {
@@ -132,6 +138,7 @@ in
           wlrctl
           labwc-tweaks
           labwc-menu-generator
+          bluetoothMenuGenerator
         ];
       };
     };
