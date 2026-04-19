@@ -686,7 +686,6 @@
     </context>
   </mouse>
   <menu>
-    <file>/var/lib/openbox/debian-menu.xml</file>
     <file>menu.xml</file>
     <hideDelay>200</hideDelay>
     <middle>no</middle>

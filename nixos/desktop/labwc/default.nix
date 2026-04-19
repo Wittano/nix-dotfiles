@@ -117,6 +117,7 @@ in
       };
       xdg.configFile = {
         "labwc/rc.xml".source = ./rc.xml;
+        "labwc/menu.xml".source = ./menu.xml;
       };
 
       home = {
@@ -129,6 +130,8 @@ in
           wl-clipboard
           screenshot
           wlrctl
+          labwc-tweaks
+          labwc-menu-generator
         ];
       };
     };
