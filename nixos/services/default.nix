@@ -15,6 +15,6 @@
     ./redis.nix
     ./glances.nix
     ./ntop.nix
+    ./ly.nix
   ];
 }
-

@@ -87,6 +87,7 @@ lib.mkMerge [
     };
 
     services = {
+      ly.wittano.enable = true;
       teamviewer.enable = false;
       redis.wittano.enable = false;
       prometheus.wittano.enable = false;

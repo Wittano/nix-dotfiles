@@ -169,10 +169,6 @@ mkMerge [
       };
 
       syncthing.wittano.enable = true;
-      displayManager.sddm.wittano = {
-        enable = true;
-        package = pkgs.catppuccin-sddm-corners;
-      };
     };
 
     qt = {
