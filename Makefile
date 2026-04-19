@@ -1,4 +1,4 @@
-activate: unlink-qtile check
+activate: check
 	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) --specialisation $(THEME_MODE)-theme || systemctl restart home-manager-$(shell whoami).service
 
 clean:
@@ -18,6 +18,14 @@ qtile_dest_path = $(HOME)/.config/qtile
 unlink-qtile:
 ifneq ($(wildcard qtile_dest_path),)
 	unlink $(qtile_dest_path)
+endif
+
+labwc_rc_path = $(HOME)/.config/labwc/rc.xml
+
+unlink-labwc:
+ifneq ($(wildcard labwc_rc_path),)
+	unlink $(HOME).config/labwc/rc.xml
+	unlink $(HOME).config/labwc/envirionment
 endif
 
 qtile-test: unlink-qtile
@@ -41,10 +49,14 @@ unlink-labwc:
 	unlink $(labwc_path)/rc.xml
 	unlink $(labwc_path)/menu.xml
 
+labwc-test: restore-home unlink-labwc
+	ln -s $(labwc_source)/rc.xml $(labwc_path)/rc.xml
+	ln -s $(labwc_source)/menu.xml $(labwc_path)/menu.xml
+
 qtile-check:
 	qtile check -c nixos/desktop/qtile/config.py
 
-restore-home: unlink-qtile unlink-openbox
+restore-home:
 	systemctl restart home-manager-$(shell whoami).service
 
 xmonad-check:
