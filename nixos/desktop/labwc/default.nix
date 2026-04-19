@@ -141,7 +141,15 @@ in
     ];
 
     xdg.portal = {
-      wlr.enable = true;
+      wlr = {
+        enable = true;
+        settings.screencast = {
+          output_name = "HDMI-A-1";
+          max_fps = 60;
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+        };
+      };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
       ];
