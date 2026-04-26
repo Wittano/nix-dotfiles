@@ -19,6 +19,7 @@
 
       # Web browser
       vivaldi
+      firefox
 
       # Utils
       eog # Image viewer
