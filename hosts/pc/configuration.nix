@@ -97,6 +97,7 @@ lib.mkMerge [
       prometheus.wittano.enable = false;
       backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
+        enable = !config.desktop.labwc.enable;
         exportConfiguration = true;
         xrandrHeads = [
           {
