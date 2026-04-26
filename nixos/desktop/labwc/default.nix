@@ -33,13 +33,16 @@ in
       desktop.autostart.enable = mkForce false;
 
       wayland.systemd.target = "labwc-session.target";
-      services.wlsunset = {
-        enable = true;
-        latitude = "50.50";
-        longitude = "23.41";
-        temperature = {
-          day = 6000;
-          night = 4300;
+      services = {
+        cliphist.enable = true;
+        wlsunset = {
+          enable = true;
+          latitude = "50.50";
+          longitude = "23.41";
+          temperature = {
+            day = 6000;
+            night = 4300;
+          };
         };
       };
       programs.waybar = {
@@ -137,7 +140,6 @@ in
           wlr-randr
           slurp
           grim
-          wl-clipboard
           screenshot
           wlrctl
           labwc-tweaks
