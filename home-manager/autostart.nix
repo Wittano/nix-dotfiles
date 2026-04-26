@@ -10,7 +10,7 @@ let
     in
     pkgs.writeShellScript "autostart.sh" ''
       export DISPLAY=":0"
-    
+
       log_dir=$HOME/.local/share/${desktopName}
       if [ ! -d "$log_dir"  ]; then
         mkdir -p "$log_dir" || exit
@@ -50,6 +50,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = config.wayland.systemd.target == "graphical-session.target";
+        message = "destkop.autostart options is avaiable only for Xorg desktops, not Wayland compositors";
+      }
+    ];
+
     home.file = trivial.pipe cfg.paths [
       (builtins.filter (x: x != null && x != ""))
       (builtins.map (x: {

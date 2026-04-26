@@ -14,6 +14,8 @@
     runtimeInputs = with pkgs; [ busybox bluez ];
     text = builtins.readFile ./bluetooth-menu-generator.sh;
   };
+
+  autostartPrograms = builtins.map (x: "${x} &") config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
   options.desktop.labwc = {
@@ -28,6 +30,8 @@ in
   config = mkIf config.desktop.labwc.enable {
     programs.labwc.enable = true;
     home-manager.users.wittano = {
+      desktop.autostart.enable = mkForce false;
+
       wayland.systemd.target = "labwc-session.target";
       services.wlsunset = {
         enable = true;
@@ -116,10 +120,10 @@ in
           "RTC_USE_PIPEWIRE=true"
         ];
         autostart = [
-          "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal &"
+          "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal"
           "wl-paste --watch cliphist store &"
           "waypaper --restore &"
-        ];
+        ] ++ autostartPrograms;
       };
       xdg.configFile = {
         "labwc/rc.xml".source = ./rc.xml;
