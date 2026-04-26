@@ -25,6 +25,10 @@ in
       "boinc.service"
     ];
 
+    home-manager.users.wittano.programs.fish.wittano.completion = {
+      boinc-config = "sudo vim /var/lib/boinc/cc_config.xml && sudo systemctl restart boinc.service";
+    };
+
     virtualisation = {
       docker.wittano.enable = true;
       virtualbox = rec {
