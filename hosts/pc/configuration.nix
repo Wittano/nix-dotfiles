@@ -14,6 +14,11 @@ let
     inherit (config.catppuccin) flavor;
   };
 
+  enableAutostart = {
+    enable = true;
+    enableAutostart = true;
+  };
+
   inherit (pkgs) remmina;# VNC client
 in
 lib.mkMerge [
@@ -60,9 +65,9 @@ lib.mkMerge [
 
           programs = {
             nemo.enable = true;
-            telegram.enable = true;
-            vivaldi.enable = true;
-            spotify.enable = true;
+            telegram = enableAutostart;
+            vivaldi.wittano = enableAutostart;
+            spotify = enableAutostart;
             pomodoro.enable = true;
             games = {
               enable = true;
@@ -76,8 +81,7 @@ lib.mkMerge [
 
     programs = {
       droidcam.enable = true;
-      steam.wittano = {
-        enable = true;
+      steam.wittano = enableAutostart // {
         disk.enable = true;
       };
       mihoyo = {
