@@ -47,6 +47,10 @@
     signal.enable = true;
     joplin.enable = true;
     telegram.enable = true;
+    matrix = {
+      enable = true;
+      enableAutostart = true;
+    };
     fish = {
       wittano = {
         enable = true;
