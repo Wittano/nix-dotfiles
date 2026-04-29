@@ -44,9 +44,15 @@
     ghostty.wittano.enable = true;
     vivaldi.wittano.enable = true;
     discord.wittano.enable = false;
-    signal.enable = true;
+    signal = {
+      enable = true;
+      enableAutostart = true;
+    };
     joplin.enable = true;
-    telegram.enable = true;
+    telegram = {
+      enable = true;
+      enableAutostart = true;
+    };
     matrix = {
       enable = true;
       enableAutostart = true;
