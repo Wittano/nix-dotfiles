@@ -73,7 +73,7 @@ lib.mkMerge [
               enable = true;
               enableDev = true;
             };
-            lutris.wittano.enable = true;
+            lutris.wittano.enable = false;
           };
         }
       ];
