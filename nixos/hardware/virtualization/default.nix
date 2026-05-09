@@ -220,9 +220,13 @@ in
         sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
       };
 
-      boot = mkIf cfg.enableWindowsVM {
-        kernelParams = [ "amd_iommu=on" "preempt=voluntary" ];
-        kernelModules = [
+      boot = {
+        extraModprobeConfig = ''
+          options kvm_amd nested=1
+          options kvm ignore_msrs=1 report_ignored_msrs=0
+        '';
+        kernelParams = lists.optionals cfg.enableWindowsVM [ "amd_iommu=on" "preempt=voluntary" ];
+        kernelModules = lists.optionals cfg.enableWindowsVM [
           "vendor-reset"
           "kvm-amd"
           "vfio_pci"
