@@ -4,7 +4,7 @@ let
 
   discordExe =
     if cfg.type == "discord"
-    then meta.getExe programs.discord.package
+    then meta.getExe config.programs.discord.package
     else if cfg.type == "vesktop" then meta.getExe programs.vesktop.package
     else throw "Unknown Discord client configuration ${cfg.type}";
 in
@@ -20,8 +20,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.vesktop.enable = cfg.type == "vesktop";
-    programs.discord.enable = cfg.type == "discord";
+    programs = {
+      vesktop.enable = cfg.type == "vesktop";
+      discord.enable = cfg.type == "discord";
+    };
 
     desktop.autostart.programs = mkIf cfg.enableAutostart [ "${discordExe} --start-minimized" ];
   };
