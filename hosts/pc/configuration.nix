@@ -68,7 +68,6 @@ lib.mkMerge [
             telegram = enableAutostart;
             vivaldi.wittano = enableAutostart;
             spotify = enableAutostart;
-            discord.enable = true;
             pomodoro.enable = true;
             games = {
               enable = true;
