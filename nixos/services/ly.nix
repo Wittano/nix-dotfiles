@@ -13,7 +13,7 @@
         clock = "%R %D";
         show_tty = true;
       };
-      x11Support = !config.desktop.labwc.enable;
+      x11Support = true;
     };
   };
 }

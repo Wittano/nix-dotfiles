@@ -27,7 +27,13 @@ lib.mkMerge [
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
     boot.tmp.useTmpfs = true;
 
-    desktop.${desktop}.users = [ "wittano" ];
+    desktop = rec {
+      labwc = {
+        enable = true;
+        users = [ "wittano" ];
+      };
+      openbox.users = labwc.users;
+    };
 
     users.users.wittano.extraGroups = [ "wheel" ];
 
@@ -97,7 +103,7 @@ lib.mkMerge [
       prometheus.wittano.enable = false;
       backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
-        enable = !config.desktop.labwc.enable;
+        enable = true;
         exportConfiguration = true;
         xrandrHeads = [
           {
