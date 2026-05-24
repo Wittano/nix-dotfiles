@@ -4,6 +4,6 @@
   config = mkIf config.programs.pomodoro.enable {
     home.packages = [ pkgs.gnome-pomodoro ];
 
-    desktop.autostart.programs = [ "gnome-pomodoro" ];
+    desktop.autostart.programs = [ "gnome-pomodoro --start --no-default-window" ];
   };
 }
