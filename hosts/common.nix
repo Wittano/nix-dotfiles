@@ -76,7 +76,7 @@ mkMerge [
 
     # Global packages
     environment = {
-      systemPackages = with pkgs; [ vim htop bash file file-roller ];
+      systemPackages = with pkgs; [ vim htop bash file ];
       variables =
         {
           EDITOR = "vim";

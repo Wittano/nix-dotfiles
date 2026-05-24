@@ -1,6 +1,7 @@
 { ... }: {
   imports =
     [
+      ./file-roller.nix
       ./alacritty.nix
       ./matrix.nix
       ./nemo.nix

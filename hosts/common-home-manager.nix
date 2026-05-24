@@ -39,6 +39,7 @@
 
   programs = {
     thunderbird.wittano.enable = true;
+    file-roller.enable = true;
     git.wittano.enable = true;
     btop.enable = true;
     ghostty.wittano.enable = true;
