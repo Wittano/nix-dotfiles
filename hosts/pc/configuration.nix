@@ -73,13 +73,13 @@ lib.mkMerge [
             nemo.enable = true;
             telegram = enableAutostart;
             vivaldi.wittano = enableAutostart;
-            spotify = enableAutostart;
+            # spotify = enableAutostart;
             pomodoro.enable = true;
             games = {
               enable = true;
               enableDev = true;
             };
-            lutris.wittano.enable = false;
+            # lutris.wittano.enable = false;
           };
         }
       ];
