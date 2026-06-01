@@ -86,7 +86,6 @@ lib.mkMerge [
     };
 
     programs = {
-      droidcam.enable = true;
       steam.wittano = enableAutostart // {
         disk.enable = true;
       };
