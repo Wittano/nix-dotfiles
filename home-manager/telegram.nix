@@ -7,6 +7,6 @@
   config = mkIf config.programs.telegram.enable {
     home.packages = [ pkgs.telegram-desktop ];
 
-    desktop.autostart.programs = mkIf config.programs.telegram.enableAutostart [ "telegram-desktop -startintray" ];
+    desktop.autostart.programs = mkIf config.programs.telegram.enableAutostart [ "${meta.getExe pkgs.telegram-desktop} -startintray" ];
   };
 }

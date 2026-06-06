@@ -8,7 +8,7 @@ with lib;
       enable = true;
       package = unstable.lutris;
       extraPackages = with unstable; [ xdelta xterm steam-run ];
-      winePackages = with unstable.wineWowPackages; [ full ];
+      winePackages = [ wineWow64Packages.full ];
       steamPackage = unstable.steam;
     };
   };

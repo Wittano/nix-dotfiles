@@ -163,7 +163,7 @@ in
               elixirls.enable = cfg.enableElixir;
               bashls = {
                 enable = true;
-                package = pkgs.nodePackages.bash-language-server;
+                package = pkgs.bash-language-server;
               };
               terraformls.enable = true;
               nil_ls = {
@@ -191,7 +191,6 @@ in
           cmp-nvim-lsp.enable = true;
           cmp-path.enable = true;
           cmp-buffer.enable = true;
-          cmp-spell.enable = true;
           cmp-vim-lsp.enable = true;
           cmp = {
             enable = true;
@@ -199,7 +198,6 @@ in
               sources = [
                 { name = "nvim_lsp"; }
                 { name = "path"; }
-                { name = "spell"; }
                 { name = "buffer"; }
                 { name = "vim_lsp"; }
                 { name = "nvim_lua"; }

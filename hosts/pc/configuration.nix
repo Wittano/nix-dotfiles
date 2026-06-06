@@ -2,7 +2,7 @@
 with lib;
 let
   commonConfig = import ../common.nix {
-    inherit lib secretDir master pkgs hostname inputs unstable;
+    inherit lib secretDir master pkgs hostname inputs unstable config;
     desktopName = desktop;
     cores = 24;
   };
@@ -34,7 +34,6 @@ lib.mkMerge [
       virtualization.wittano = {
         enable = true;
         enableExternalStorage = true;
-        enableWindowsVM = false;
       };
       amd.enable = true; # AMD GPU
       samba.enable = true; # Local network SAMAB server 
@@ -63,13 +62,8 @@ lib.mkMerge [
             nemo.enable = true;
             telegram = enableAutostart;
             vivaldi.wittano = enableAutostart;
-            # spotify = enableAutostart;
             pomodoro.enable = true;
-            games = {
-              enable = true;
-              enableDev = true;
-            };
-            # lutris.wittano.enable = false;
+            games.enable = true;
           };
         }
       ];
@@ -87,9 +81,6 @@ lib.mkMerge [
 
     services = {
       ly.wittano.enable = true;
-      teamviewer.enable = false;
-      redis.wittano.enable = false;
-      prometheus.wittano.enable = false;
       backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
         enable = true;

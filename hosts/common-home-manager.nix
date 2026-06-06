@@ -10,8 +10,6 @@
     packages = with pkgs; [
       # Utils
       textsnatcher # Text extractor
-      czkawka # File duplication cleaner
-      szyszka # File renamer
       sniffnet # Network monitoring
 
       # Folder Dialog menu
@@ -32,7 +30,6 @@
       obsidian
 
       # Security
-      bitwarden-desktop
       keepassxc
     ];
   };

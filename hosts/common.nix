@@ -6,12 +6,13 @@
 , hostname
 , desktopName
 , cores ? 24
+, config
 , ...
 }:
 with lib;
 with lib.my;
 let
-  systemVersion = "25.11";
+  systemVersion = "26.05";
 
   networkModule = import (./. + "/${hostname}/networking.nix") { inherit lib; };
   hardwareModule = import (./. + "/${hostname}/hardware.nix") { };
@@ -165,7 +166,7 @@ mkMerge [
       gvfs.enable = true;
       xserver = {
         xkb.layout = "pl";
-        wacom.wittano.enable = true;
+        wacom.wittano.enable = !config.desktop.labwc.enable;
       };
 
       syncthing.wittano.enable = true;

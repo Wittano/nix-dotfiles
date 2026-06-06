@@ -9,8 +9,8 @@
 
       extraPackages = with pkgs; [
         nixd
-        nixfmt-classic
-        nodePackages.prettier
+        nixfmt
+        prettier
         terraform-ls
         unstable.ansible
         unstable.ansible-lint

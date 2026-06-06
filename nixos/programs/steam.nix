@@ -34,7 +34,7 @@ in
     programs.nix-ld = {
       enable = true;
       libraries = with pkgs; [
-        wineWowPackages.full
+        wineWow64Packages.full
       ];
     };
 

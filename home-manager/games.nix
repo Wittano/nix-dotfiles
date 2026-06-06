@@ -24,36 +24,7 @@ let
   fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
     "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
 
-  fixDarksiders =
-    let
-      repo = pkgs.srcOnly {
-        name = "mf-installcab_steamdeck";
-        version = "08-11-2023";
-        src = pkgs.fetchFromGitLab {
-          repo = "mf-installcab_steamdeck";
-          owner = "steevyp";
-          rev = "c7b89af844d056eb0d5d700ae702b9581094d017";
-          sha256 = "sha256-8UlZcELv0JLmjymucYV/Wq/2C+M+PT6ETKa6EZssJpU=";
-        };
-
-        patches = [ ./patches/fix-darksiders.patch ];
-
-      };
-    in
-    pkgs.writeShellApplication {
-      name = "fix-darksiders";
-      runtimeInputs = with pkgs; [ python3 coreutils toybox cabextract wget ];
-      runtimeEnv = {
-        PROTON = "/mnt/gaming/SteamLibrary/steamapps/common/Proton 8.0";
-        WINEPREFIX = "/mnt/gaming/SteamLibrary/steamapps/compatdata/462780/pfx";
-        SCRIPTDIR = builtins.toString repo;
-        GAME_EXE = "/mnt/gaming/SteamLibrary/steamapps/common/Darksiders Warmastered Edition";
-      };
-      text = builtins.readFile (repo + "/install-mf-64.sh");
-    };
-
   patches = [
-    fixDarksiders
     fixAge2Sync
     fixSteamSystemTray
   ];
