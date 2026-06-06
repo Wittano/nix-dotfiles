@@ -13,7 +13,10 @@ let
 
 in
 {
-  options.services.boinc.wittano.enable = mkEnableOption "Enable BOINC deamon";
+  options.services.boinc.wittano = {
+    enable = mkEnableOption "Enable BOINC deamon";
+    enableVbox = mkEnableOption "Virtualbox support for boinc";
+  };
 
   config = mkIf config.services.boinc.wittano.enable {
     users.users = {
@@ -33,7 +36,7 @@ in
       docker.wittano.enable = true;
       virtualbox = rec {
         host = rec {
-          enable = true;
+          enable = config.services.boinc.wittano.enableVbox;
           package = virtualbox;
           enableKvm = config.virtualisation.libvirtd.enable;
           addNetworkInterface = !enableKvm;
