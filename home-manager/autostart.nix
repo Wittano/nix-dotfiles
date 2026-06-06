@@ -50,13 +50,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.wayland.systemd.target == "graphical-session.target";
-        message = "destkop.autostart options is avaiable only for Xorg desktops, not Wayland compositors";
-      }
-    ];
-
     home.file = trivial.pipe cfg.paths [
       (builtins.filter (x: x != null && x != ""))
       (builtins.map (x: {
