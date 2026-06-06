@@ -27,14 +27,6 @@ lib.mkMerge [
     environment.systemPackages = with pkgs; [ keymapp wally-cli ];
     boot.tmp.useTmpfs = true;
 
-    desktop = rec {
-      labwc = {
-        enable = true;
-        users = [ "wittano" ];
-      };
-      openbox.users = labwc.users;
-    };
-
     users.users.wittano.extraGroups = [ "wheel" ];
 
     hardware = {
@@ -49,8 +41,6 @@ lib.mkMerge [
       nfs-client.enable = true; # Local network NFS server
       bluetooth.wittano.enable = true;
     };
-
-    virtualisation.docker.wittano.enable = true;
 
     programs.kdeconnect.enable = true;
 
