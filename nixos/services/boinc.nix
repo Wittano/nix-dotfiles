@@ -16,6 +16,7 @@ in
   options.services.boinc.wittano = {
     enable = mkEnableOption "Enable BOINC deamon";
     enableVbox = mkEnableOption "Virtualbox support for boinc";
+    enableDocker = mkEnableOption "Docker support for boinc";
   };
 
   config = mkIf config.services.boinc.wittano.enable {
@@ -33,7 +34,7 @@ in
     };
 
     virtualisation = {
-      docker.wittano.enable = true;
+      docker.wittano.enable = config.services.boinc.wittano.enableDocker;
       virtualbox = rec {
         host = rec {
           enable = config.services.boinc.wittano.enableVbox;
