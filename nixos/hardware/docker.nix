@@ -25,6 +25,7 @@ in
     virtualisation.docker = {
       enable = true;
       storageDriver = "overlay2";
+      enableNvidia = config.hardware.nvidia.wittano.enable;
       autoPrune = {
         enable = !config.services.boinc.wittano.enable;
         dates = "daily";
