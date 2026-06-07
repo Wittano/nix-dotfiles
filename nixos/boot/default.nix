@@ -1,0 +1,5 @@
+{ ... }: {
+  imports = [
+    ./plymouth.nix
+  ];
+}

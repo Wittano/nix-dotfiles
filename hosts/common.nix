@@ -105,12 +105,6 @@ mkMerge [
           efiSysMountPoint = "/boot/efi";
         };
       };
-
-      plymouth = {
-        enable = true;
-        themePackages = with pkgs; [ nixos-blur-playmouth ];
-        theme = "nixos-blur";
-      };
     };
 
     hardware = {

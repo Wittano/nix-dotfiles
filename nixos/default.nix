@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./desktop
+    ./boot
     ./hardware
     ./networking
     ./programs
