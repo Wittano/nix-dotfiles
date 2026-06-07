@@ -41,7 +41,6 @@
     btop.enable = true;
     ghostty.wittano.enable = true;
     vivaldi.wittano.enable = true;
-    discord.wittano.enable = false;
     signal = {
       enable = true;
       enableAutostart = true;
