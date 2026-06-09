@@ -17,13 +17,13 @@ in
     enableAutostart = mkEnableOption "steam on autostart";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable rec {
     programs.steam = {
       enable = true;
       package = unstable.steam;
     };
 
-    home-manager.users.wittano.desktop.autostart.programs = mkIf cfg.enableAutostart [ "steam -silent" ];
+    home-manager.users.wittano.desktop.autostart.programs = mkIf cfg.enableAutostart [ (meta.getExe programs.steam.package) ];
 
     environment.systemPackages = with unstable; [
       # Steam staff
