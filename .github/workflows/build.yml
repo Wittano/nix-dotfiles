@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v11
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
-      - uses: DeterminateSystems/flake-checker-action@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@v14
+      - uses: DeterminateSystems/flake-checker-action@v12
       - name: Check nix repository
         run: nix flake check
   build:
@@ -30,11 +30,11 @@ jobs:
           ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 10
-      - uses: DeterminateSystems/nix-installer-action@v11
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/magic-nix-cache-action@v14
       - name: Check flake lock diff
         id: flake-diff
         env:
@@ -52,7 +52,7 @@ jobs:
             echo "raw-diff=1" >> $GITHUB_OUTPUT
           fi
       - name: "Install Cachix"
-        uses: cachix/cachix-action@v14
+        uses: cachix/cachix-action@v17
         if: ${{ github.ref == 'refs/heads/main' && steps.flake-diff.outputs.raw-diff }}
         with:
           name: wittano-nix-repo
