@@ -31,7 +31,6 @@ _: {
 
   swapDevices = [{
     device = "/dev/nixos/swap";
-    size = 8 * 1024; # 16 GiB
   }];
 
   boot = {
