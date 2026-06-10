@@ -4,7 +4,7 @@ let
   commonConfig = import ../common.nix {
     inherit lib secretDir master pkgs hostname inputs unstable config;
     desktopName = desktop;
-    cores = 24;
+    cores = 8;
   };
   commonHomeManager = import ../common-home-manager.nix {
     inherit inputs pkgs master unstable;
