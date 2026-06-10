@@ -33,4 +33,9 @@ _: {
     device = "/dev/nixos/swap";
     size = 8 * 1024; # 16 GiB
   }];
+
+  boot = {
+    initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/UUID-OF-SDA2";
+    supportedFilesystems = [ "btrfs" ];
+  };
 }
