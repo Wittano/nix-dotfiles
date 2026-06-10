@@ -2,6 +2,10 @@
 
 echo "<openbox_pipe_menu>"
 
+current_device=$(bluetoothctl info | grep Name | cut -f 2- -d ' ' || echo "NONE")
+echo "<item label=\"$current_device\"/>"
+echo "<separator/>"
+
 IFS=$'\n'
 for device in $(bluetoothctl devices | cut -f 2- -d ' '); do
     device_name=$(echo "$device" | cut -f 2- -d ' ')
