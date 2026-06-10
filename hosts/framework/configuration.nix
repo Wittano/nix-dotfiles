@@ -18,27 +18,15 @@ let
     enable = true;
     enableAutostart = true;
   };
-
-  inherit (pkgs) remmina;# VNC client
 in
 lib.mkMerge [
   commonConfig
   {
-    environment.systemPackages = with pkgs; [ keymapp wally-cli ];
     boot.tmp.useTmpfs = true;
 
     users.users.wittano.extraGroups = [ "wheel" ];
 
     hardware = {
-      trackpoint.emulateWheel = true;
-      keyboard.zsa.enable = true;
-      virtualization.wittano = {
-        enable = true;
-        enableExternalStorage = true;
-      };
-      amd.enable = true; # AMD GPU
-      samba.enable = true; # Local network SAMAB server 
-      nfs-client.enable = true; # Local network NFS server
       bluetooth.wittano.enable = true;
     };
 
@@ -48,10 +36,6 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
-          systemd.user.tmpfiles.rules = [
-            "d /home/wittano/Downloads 0755 wittano users 7d"
-          ];
-
           profile.programming.enable = true;
 
           home.packages = with pkgs; [
@@ -64,26 +48,13 @@ lib.mkMerge [
             telegram = enableAutostart;
             vivaldi.wittano = enableAutostart;
             pomodoro.enable = true;
-            games.enable = true;
           };
         }
       ];
     };
 
-    programs = {
-      steam.wittano = enableAutostart // {
-        disk.enable = true;
-      };
-      mihoyo = {
-        enable = true;
-        games = [ "honkai-railway" ];
-      };
-    };
-
     services = {
-      backup.enable = true;
       ly.wittano.enable = true;
-      backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
         enable = true;
         exportConfiguration = true;

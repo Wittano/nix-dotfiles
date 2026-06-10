@@ -108,7 +108,6 @@ mkMerge [
     };
 
     hardware = {
-      trackpoint.emulateWheel = true;
       printers.wittano.enable = true;
       bluetooth.wittano.enable = true;
     };
@@ -149,7 +148,6 @@ mkMerge [
     system.stateVersion = systemVersion;
 
     services = {
-      backup.enable = true;
       pipewire.wittano.enable = true;
       udisks2 = {
         enable = true;
