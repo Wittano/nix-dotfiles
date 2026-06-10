@@ -1,7 +1,7 @@
 _: {
   fileSystems = {
     "/" = {
-      device = "/dev/nixos/ROOT";
+      device = "/dev/nixos/root";
       fsType = "btrfs";
     };
     "/boot/efi" = {
