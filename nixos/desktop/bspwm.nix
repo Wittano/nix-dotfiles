@@ -44,6 +44,7 @@ in
         enable = true;
         startupPrograms = [
           "wmname compiz"
+          "systemctl --user start polybar.service"
         ] ++ config.home-manager.users.wittano.desktop.autostart.programs;
 
         settings = {
