@@ -2,6 +2,7 @@
 with lib;
 with lib.my;
 let
+  fontSize = 22;
   colors = {
     background = "#212337";
     background-alt = "#444";
@@ -41,7 +42,7 @@ in
         "bar/wittano" = {
           monitor = "\${env:MONITOR:HDMI-1}";
           width = "100%";
-          height = 32;
+          height = 48;
           radius = 6;
           fixed-center = false;
 
@@ -56,13 +57,13 @@ in
           module-margin-left = 1;
           module-margin-right = 2;
 
-          font-0 = "DejaVuSans:pixelsize=14:style=Regular";
-          font-1 = "fixed:pixelsize=14;1";
+          font-0 = "DejaVuSans:pixelsize=${fontSize}:style=Regular";
+          font-1 = "fixed:pixelsize=${fontSize};1";
           font-2 = "unifont:fontformat=truetype:size=8:antialias=false;0";
-          font-3 = "siji:pixelsize=14;1";
-          font-4 = "all-the-icons:pixelsize=14";
-          font-5 = "Font Awesome 5 Brands:pixelsize=14";
-          font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=14";
+          font-3 = "siji:pixelsize=${fontSize};1";
+          font-4 = "all-the-icons:pixelsize=${fontSize}";
+          font-5 = "Font Awesome 5 Brands:pixelsize=${fontSize}";
+          font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=${fontSize}";
 
           modules-left = [ "logo" "bspwm" "xwindow" ];
           modules-right = [ "kernel" "sep" "filesystem" "sep" "alsa" "sep" "memory" "sep" "cpu" "sep" "wlan" "sep" "date" ];
