@@ -29,6 +29,11 @@ in
       type = types.enum [ "wittano" "laptop" ];
       description = "Select polybar profile";
     };
+    wifiAdapter = mkOption {
+      type = types.str;
+      description = "wifi adapter on the laptop";
+      default = "wlp3s0";
+    };
   };
 
   config = mkIf config.services.polybar.wittano.enable {
@@ -197,7 +202,7 @@ in
         };
         "module/wifi-laptop" = {
           type = "internal/network";
-          interface = "wlp3s0";
+          interface = config.services.polybar.wittano.wifiAdapter;
           interval = 3;
 
           format-connected = "<ramp-signal> <label-connected>";

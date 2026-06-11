@@ -32,11 +32,15 @@ lib.mkMerge [
         commonHomeManager
         {
           profile.programming.enable = true;
-          services.polybar.wittano.profile = "laptop";
+          services.polybar.wittano = {
+            profile = "laptop";
+            wifiAdapter = "wlp0s20f3";
+          };
 
           xsession.windowManager.bspwm.monitors = {
             "eDP-1" = [ "I" "II" "III" "IV" "V" ];
           };
+
           home.packages = with pkgs; [
             krita
           ];
