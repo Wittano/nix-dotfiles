@@ -29,14 +29,17 @@ in
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [ gsimplecal flameshot ];
 
-      desktop.autostart.programs = [ "wmname compiz" ];
-
       programs.nitrogen.wittano.enable = true;
+
+      desktop.autostart.enable = mkForce false;
 
       xsession.windowManager.bspwm = {
         inherit package;
 
         enable = true;
+        startupPrograms = [
+          "wmname compiz"
+        ] ++ config.home-manager.users.wittano.desktop.autostart.programs;
 
         settings = {
           "border_width" = 2;
