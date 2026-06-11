@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 let
-  fontSize = 22;
+  fontSize = "22";
   colors = {
     background = "#212337";
     background-alt = "#444";
