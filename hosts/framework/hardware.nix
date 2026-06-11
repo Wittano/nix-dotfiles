@@ -35,6 +35,7 @@ _: {
 
   boot = {
     initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/7120db43-88e1-4cea-b691-cdce81da1185";
+    loader.grub.enableCryptodisk = true;
     supportedFilesystems = [ "btrfs" ];
   };
 }
