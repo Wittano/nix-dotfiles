@@ -71,6 +71,7 @@ in
     };
 
     services.xserver = {
+      exportConfiguration = true;
       enable = true;
       windowManager.openbox.enable = true;
     };
