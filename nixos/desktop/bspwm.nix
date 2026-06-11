@@ -17,6 +17,11 @@ in
       type = types.enum [ "pc" "laptop" ];
       description = "Type of device which BSPWM configuration is launched. It's required information for polybar profile";
     };
+    terminal = mkOption {
+      type = types.str;
+      description = "Default terminal emulator under Super+Enter keybind";
+      default = "ghostty";
+    };
   };
 
   config = mkIf config.desktop.bspwm.enable {
@@ -121,7 +126,7 @@ in
           enable = true;
           keybindings = {
             # Terminal
-            "super + Return" = "kitty";
+            "super + Return" = "${config.desktop.bspwm.terminal}";
 
             # Rofi
             "super + e" = "rofi -show drun";
