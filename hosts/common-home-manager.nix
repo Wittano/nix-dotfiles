@@ -35,6 +35,7 @@
   };
 
   programs = {
+    nemo.enable = true;
     thunderbird.wittano.enable = true;
     file-roller.enable = true;
     git.wittano.enable = true;

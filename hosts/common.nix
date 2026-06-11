@@ -6,7 +6,6 @@
 , hostname
 , desktopName
 , cores ? 24
-, config
 , ...
 }:
 with lib;
@@ -156,10 +155,7 @@ mkMerge [
 
       devmon.enable = true;
       gvfs.enable = true;
-      xserver = {
-        xkb.layout = "pl";
-        wacom.wittano.enable = !config.desktop.labwc.enable;
-      };
+      xserver.xkb.layout = "pl";
 
       syncthing.wittano.enable = true;
     };

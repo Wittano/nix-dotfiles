@@ -60,9 +60,6 @@ lib.mkMerge [
           ];
 
           programs = {
-            nemo.enable = true;
-            telegram = enableAutostart;
-            vivaldi.wittano = enableAutostart;
             pomodoro.enable = true;
             games.enable = true;
           };
