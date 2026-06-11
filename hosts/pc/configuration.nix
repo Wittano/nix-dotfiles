@@ -48,13 +48,13 @@ lib.mkMerge [
         commonHomeManager
         {
           xsession.windowManager.bspwm.monitors = {
-            "DVI-D-0" = [ "I" "II" "III" ];
-            "HDMI-0" = [ "IV" "V" ];
+            "HDMI-A-0" = [ "I" "II" "III" ];
+            "HDMI-A-1" = [ "IV" "V" ];
           };
 
           services.polybar.wittano = {
             profile = "wittano";
-            monitor = "HDMI-A-1";
+            monitor = "HDMI-A-0";
           };
 
           systemd.user.tmpfiles.rules = [

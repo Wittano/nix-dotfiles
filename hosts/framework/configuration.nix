@@ -33,7 +33,7 @@ lib.mkMerge [
     home-manager.users = {
       wittano = mkMerge [
         commonHomeManager
-        {
+        rec {
           profile.programming.enable = true;
           services.polybar.wittano = {
             profile = "laptop";
@@ -42,7 +42,7 @@ lib.mkMerge [
           };
 
           xsession.windowManager.bspwm.monitors = {
-            "eDP-1" = [ "I" "II" "III" "IV" "V" ];
+            "${services.polybar.wittano.monitor}" = [ "I" "II" "III" "IV" "V" ];
           };
 
           home.packages = with pkgs; [
