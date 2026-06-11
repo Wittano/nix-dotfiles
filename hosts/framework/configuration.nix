@@ -35,7 +35,7 @@ lib.mkMerge [
           services.polybar.wittano.profile = "laptop";
 
           xsession.windowManager.bspwm.monitors = {
-            "HDMI-0" = [ "I" "II" "III" "IV" "V" ];
+            "eDP-1" = [ "I" "II" "III" "IV" "V" ];
           };
           home.packages = with pkgs; [
             krita
