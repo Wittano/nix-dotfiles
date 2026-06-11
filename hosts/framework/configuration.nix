@@ -13,11 +13,6 @@ let
     inherit (config.catppuccin) accent;
     inherit (config.catppuccin) flavor;
   };
-
-  enableAutostart = {
-    enable = true;
-    enableAutostart = true;
-  };
 in
 lib.mkMerge [
   commonConfig
@@ -30,7 +25,7 @@ lib.mkMerge [
       bluetooth.wittano.enable = true;
     };
 
-    programs.kdeconnect.enable = true;
+    desktop.bspwm.deviceType = "laptop";
 
     home-manager.users = {
       wittano = mkMerge [
@@ -39,43 +34,12 @@ lib.mkMerge [
           profile.programming.enable = true;
 
           home.packages = with pkgs; [
-            remmina
             krita
           ];
-
-          programs = {
-            nemo.enable = true;
-            telegram = enableAutostart;
-            vivaldi.wittano = enableAutostart;
-            pomodoro.enable = true;
-          };
         }
       ];
     };
 
-    services = {
-      ly.wittano.enable = true;
-      xserver = {
-        enable = true;
-        exportConfiguration = true;
-        xrandrHeads = [
-          {
-            output = "HDMI-A-1";
-            monitorConfig = ''
-              Option "Rotate" "right"
-              Option "PreferredMode" "1920x1080"
-            '';
-          }
-          {
-            primary = true;
-            output = "HDMI-A-0";
-            monitorConfig = ''
-              Option "PreferredMode" "1920x1080"
-            '';
-          }
-        ];
-      };
-      boinc.wittano.enable = true;
-    };
+    services.ly.wittano.enable = true;
   }
 ]
