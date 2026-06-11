@@ -25,18 +25,18 @@ in
   options.services.polybar.wittano = {
     enable = mkEnableOption "Enable custom polybar config";
     profile = mkOption {
-      type = types.enumOf [ "wittano" "laptop" ];
+      type = types.enum [ "wittano" "laptop" ];
       description = "Select polybar profile";
     };
   };
 
   config = mkIf config.services.polybar.wittano.enable {
     fonts.fontconfig.enable = true;
-    home.packages = with pkgs; [ font-awesome font-awesome_5 siji nerdfonts ];
+    home.packages = with pkgs; [ font-awesome font-awesome_5 siji emacs-all-the-icons-fonts ];
 
     services.polybar = {
       enable = true;
-      script = "polybar ${cfg.profile}";
+      script = "polybar ${config.services.polybar.wittano.profile}";
       config = {
         "bar/wittano" = {
           monitor = "\${env:MONITOR:HDMI-1}";
