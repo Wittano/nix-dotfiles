@@ -43,6 +43,11 @@ in
   };
 
   config = mkIf config.services.xserver.wacom.wittano.enable {
+    warnings =
+      if config.desktop.labwc.enable
+      then [ "Wacom configuration only works on Xorg machines" ]
+      else [ ];
+
     services.xserver.wacom.enable = true;
 
     environment.systemPackages = [ setupWacom ];
