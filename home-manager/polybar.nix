@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 let
-  fontSize = "22";
+  fontSize = "12";
   colors = {
     background = "#212337";
     background-alt = "#444";
@@ -33,7 +33,7 @@ in
       type = types.str;
       description = "wifi adapter on the laptop";
       default = "wlp3s0";
-};
+    };
     monitor = mkOption {
       type = types.str;
       description = "Display name where should be render polybar";
@@ -55,7 +55,7 @@ in
         "bar/wittano" = {
           monitor = config.services.polybar.wittano.monitor;
           width = "100%";
-          height = 48;
+          height = 32;
           radius = 6;
           fixed-center = false;
 
