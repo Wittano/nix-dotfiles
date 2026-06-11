@@ -38,6 +38,7 @@ lib.mkMerge [
           services.polybar.wittano = {
             profile = "laptop";
             wifiAdapter = "wlp0s20f3";
+            monitor = "eDP-1";
           };
 
           xsession.windowManager.bspwm.monitors = {
