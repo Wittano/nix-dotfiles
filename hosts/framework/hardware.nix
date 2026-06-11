@@ -34,7 +34,7 @@ _: {
   }];
 
   boot = {
-    initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/UUID-OF-SDA2";
+    initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/7120db43-88e1-4cea-b691-cdce81da1185";
     supportedFilesystems = [ "btrfs" ];
   };
 }
