@@ -11,9 +11,10 @@ in
     users = mkOption {
       description = "List of users that use desktop configuration";
       type = with types; listOf str;
+      default = [ "wittano" ];
     };
     deviceType = mkOption {
-      type = with types; enumOf [ "pc" "laptop" ];
+      type = types.enum [ "pc" "laptop" ];
       description = "Type of device which BSPWM configuration is launched. It's required information for polybar profile";
     };
   };
@@ -113,47 +114,48 @@ in
         redshift.wittano.enable = true;
         picom.wittano.enable = true;
         sxhkd = {
-        enable = true;
-        keybindings = {
-          # Terminal
-          "super + Return" = "kitty";
+          enable = true;
+          keybindings = {
+            # Terminal
+            "super + Return" = "kitty";
 
-          # Rofi
-          "super + e" = "rofi -show drun";
-          "super + w" = "rofi -show window";
-          "super + shift + q" = "switch-off";
+            # Rofi
+            "super + e" = "rofi -show drun";
+            "super + w" = "rofi -show window";
+            "super + shift + q" = "switch-off";
 
-          # Audio
-          "super + m" = "amixer sset Master toggle";
-          "super + p" = "amixer sset Master 5%+";
-          "super + o" = "amixer sset Master 5%-";
+            # Audio
+            "super + m" = "amixer sset Master toggle";
+            "super + p" = "amixer sset Master 5%+";
+            "super + o" = "amixer sset Master 5%-";
 
-          # Utilites
-          "super + shift + p" = "flameshot gui";
-          "super + r" = "rollWallpaper";
+            # Utilites
+            "super + shift + p" = "flameshot gui";
+            "super + r" = "rollWallpaper";
 
-          # bspwm hotkeys
-          "super + alt + r" = "bspc wm -r";
-          "super + {_,shift + }q" = "bspc node -{c,k}";
-          "super + Tab" = "bspc desktop -l next";
-          "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
-          "super + space" = "bspc node -s biggest";
+            # bspwm hotkeys
+            "super + alt + r" = "bspc wm -r";
+            "super + {_,shift + }q" = "bspc node -{c,k}";
+            "super + Tab" = "bspc desktop -l next";
+            "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
+            "super + space" = "bspc node -s biggest";
 
-          # state/flags
-          "super + {t,shift + t,s,f}" = "bspc node -t {tiled ,pseudo_tiled ,floating ,fullscreen }";
+            # state/flags
+            "super + {t,shift + t,s,f}" = "bspc node -t {tiled ,pseudo_tiled ,floating ,fullscreen }";
 
-          # focus/swap
-          "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
-          "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
-          "super + {grave,Tab}" = "bspc {node,desktop} -f last";
-          "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
+            # focus/swap
+            "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
+            "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
+            "super + {grave,Tab}" = "bspc {node,desktop} -f last";
+            "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
 
-          # move/resize
-          "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
-          "super + alt + shift + {h,j,k,l}" = "bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
-          "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
+            # move/resize
+            "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
+            "super + alt + shift + {h,j,k,l}" = "bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
+            "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
+          };
         };
-      };};
+      };
     };
 
     services.xserver = {
