@@ -3,11 +3,8 @@ with lib;
 with lib.my;
 let
   cfg = config.hardware.samba;
-
-  users = [ "wittano" ];
 in
 {
-
   options.hardware.nfs-client.enable = mkEnableOption "Mount NFS devices to system";
 
   config = mkIf cfg.enable {
