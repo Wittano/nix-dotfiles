@@ -52,6 +52,8 @@ lib.mkMerge [
             "HDMI-0" = [ "IV" "V" ];
           };
 
+          services.polybar.wittano.profile = "wittano";
+
           systemd.user.tmpfiles.rules = [
             "d /home/wittano/Downloads 0755 wittano users 7d"
           ];

@@ -114,7 +114,7 @@ in
       };
 
       services = {
-        polybar.wittano.profile = if cfg.deviceType == "pc" then "wittano" else "laptop";
+        polybar.wittano.enable = true;
         redshift.wittano.enable = true;
         picom.wittano.enable = true;
         sxhkd = {

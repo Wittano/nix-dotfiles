@@ -32,6 +32,7 @@ lib.mkMerge [
         commonHomeManager
         {
           profile.programming.enable = true;
+          services.polybar.wittano.profile = "laptop";
 
           xsession.windowManager.bspwm.monitors = {
             "HDMI-0" = [ "I" "II" "III" "IV" "V" ];
