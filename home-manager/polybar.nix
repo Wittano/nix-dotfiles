@@ -22,7 +22,7 @@ let
   };
 in
 {
-  options.serivces.polybar.wittano = {
+  options.services.polybar.wittano = {
     enable = mkEnableOption "Enable custom polybar config";
     profile = mkOption {
       type = types.enumOf [ "wittano" "laptop" ];
@@ -30,7 +30,7 @@ in
     };
   };
 
-  config = mkIf config.serivces.polybar.wittano.enable {
+  config = mkIf config.services.polybar.wittano.enable {
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [ font-awesome font-awesome_5 siji nerdfonts ];
 
