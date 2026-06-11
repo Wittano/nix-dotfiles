@@ -83,6 +83,7 @@ lib.mkMerge [
       xserver = {
         enable = true;
         exportConfiguration = true;
+        wacom.wittano.enable = true;
         xrandrHeads = [
           {
             output = "HDMI-A-1";
