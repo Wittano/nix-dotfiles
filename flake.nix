@@ -58,11 +58,13 @@
         pc-openbox = lib.my.hosts.mkHost "pc" "openbox";
         pc-qtile = lib.my.hosts.mkHost "pc" "qtile";
         pc-labwc = lib.my.hosts.mkHost "pc" "labwc";
+        pc-bspwm = lib.my.hosts.mkHost "pc" "bspwm";
 
         framework-xmonad = lib.my.hosts.mkHost "framework" "xmonad";
         framework-openbox = lib.my.hosts.mkHost "framework" "openbox";
         framework-qtile = lib.my.hosts.mkHost "framework" "qtile";
         framework-labwc = lib.my.hosts.mkHost "framework" "labwc";
+        framework-bspwm = lib.my.hosts.mkHost "framework" "bspwm";
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };
