@@ -45,6 +45,9 @@ in
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [ font-awesome font-awesome_5 siji emacs-all-the-icons-fonts ];
 
+
+    catppuccin.polybar.enable = false;
+
     services.polybar = {
       enable = true;
       script = "polybar ${config.services.polybar.wittano.profile}";
