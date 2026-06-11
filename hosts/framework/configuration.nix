@@ -33,6 +33,9 @@ lib.mkMerge [
         {
           profile.programming.enable = true;
 
+          xsession.windowManager.bspwm.monitors = {
+            "HDMI-0" = [ "I" "II" "III" "IV" "V" ];
+          };
           home.packages = with pkgs; [
             krita
           ];

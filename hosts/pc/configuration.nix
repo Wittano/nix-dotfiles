@@ -47,6 +47,11 @@ lib.mkMerge [
       wittano = mkMerge [
         commonHomeManager
         {
+          xsession.windowManager.bspwm.monitors = {
+            "DVI-D-0" = [ "I" "II" "III" ];
+            "HDMI-0" = [ "IV" "V" ];
+          };
+
           systemd.user.tmpfiles.rules = [
             "d /home/wittano/Downloads 0755 wittano users 7d"
           ];

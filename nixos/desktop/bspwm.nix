@@ -20,7 +20,12 @@ in
   };
 
   config = mkIf config.desktop.bspwm.enable {
-    assertions = desktop.mkDesktopAssertion config cfg.users;
+    assertions = (desktop.mkDesktopAssertion config cfg.users) ++ [
+      {
+        assertion = (builtins.length (builtins.attrNames config.home-manager.users.wittano.xsession.windowManager.bspwm.monitors)) != 0;
+        message = "BSPWM requires set up list of monitors. You need to set up home-manager.users.{user}.xsession.windowManager.bspwm.monitors";
+      }
+    ];
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [ gsimplecal flameshot ];
 
@@ -33,10 +38,6 @@ in
 
         enable = true;
 
-        monitors = {
-          "DVI-D-0" = [ "I" "II" "III" ];
-          "HDMI-0" = [ "IV" "V" ];
-        };
         settings = {
           "border_width" = 2;
           "window_gap" = 20;
