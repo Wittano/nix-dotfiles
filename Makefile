@@ -13,22 +13,16 @@ check: xmonad-check
 	statix fix
 	nix flake check --show-trace --max-jobs $(shell nproc)
 
-qtile_dest_path = $(HOME)/.config/qtile
-
-unlink-qtile:
-ifneq ($(wildcard qtile_dest_path),)
-	unlink $(qtile_dest_path)
-endif
-
-labwc_rc_path = $(HOME)/.config/labwc/rc.xml
-
 unlink-labwc:
 ifneq ($(wildcard labwc_rc_path),)
 	unlink $(HOME).config/labwc/rc.xml
 	unlink $(HOME).config/labwc/envirionment
 endif
 
-qtile-test: unlink-qtile
+qtile_dest_path = $(HOME)/.config/qtile
+
+qtile-test:
+	unlink $(qtile_dest_path)
 	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(qtile_dest_path)
 
 openbox_path = $(HOME)/.config/openbox
