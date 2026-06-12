@@ -25,7 +25,10 @@ lib.mkMerge [
       bluetooth.wittano.enable = true;
     };
 
-    desktop.bspwm.deviceType = "laptop";
+    desktop = {
+      bspwm.deviceType = "laptop";
+      qtile.profile = "LAPTOP";
+    };
 
     home-manager.users = {
       wittano = mkMerge [
