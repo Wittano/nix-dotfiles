@@ -29,7 +29,7 @@ __laptop_screen = Screen(
         VolumeWidget(theme),
         SPACER,
         SPACER,
-        NetWidget(theme, interface="wlp3s0"),
+        NetWidget(theme, interface="wlp0s20f3"),
         SPACER,
         SPACER,
         MemoryWidget(theme),
@@ -101,4 +101,4 @@ PRIMARY_SCREEN = Screen(
         margin=[15, 60, 6, 60])
 )
 
-MAIN_SCREEN = __laptop_screen if os.environ.get("PROFILE") == "LAPTOP" else __screen
+MAIN_SCREEN = __laptop_screen if os.environ.get("QTILE_PROFILE") == "LAPTOP" else __screen
