@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: with lib; let
+{ config, lib, pkgs, unstable, ... }: with lib; let
   screenshot = pkgs.writeShellApplication {
     name = "screenshot";
     runtimeInputs = with pkgs; [
@@ -28,7 +28,10 @@ in
   };
 
   config = mkIf config.desktop.labwc.enable {
-    programs.labwc.enable = true;
+    programs.labwc = {
+      enable = true;
+      package = unstable.labwc;
+    };
     home-manager.users.wittano = {
       desktop.autostart.enable = mkForce false;
 
@@ -142,8 +145,8 @@ in
           grim
           screenshot
           wlrctl
-          labwc-tweaks
-          labwc-menu-generator
+          unstable.labwc-tweaks
+          unstable.labwc-menu-generator
           bluetoothMenuGenerator
         ];
       };
