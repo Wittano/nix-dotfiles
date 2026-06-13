@@ -1,4 +1,4 @@
-activate: check
+activate: 
 	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) --specialisation $(THEME_MODE)-theme || systemctl restart home-manager-$(shell whoami).service
 
 clean:
