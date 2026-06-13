@@ -65,7 +65,7 @@ in
         detect-rounded-corners = true;
         detect-client-opacity = true;
         refresh-rate = 0;
-        dbe = false;
+        be = false;
         unredir-if-possible = false;
         detect-transient = true;
         detect-client-leader = true;

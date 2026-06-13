@@ -39,7 +39,7 @@ games_staff: List[str] = [
     r"[Ll]inux$",
     r"steam_app*",
     r"[Ss]team*",
-    r"[Mm]ono",
+    r"[Mm]one",
     r"[Mm]inecraft*",
 ]
 
@@ -71,20 +71,24 @@ _music_staff: List[str] = [
     r"[sS]potify*",
 ]
 
-_chat_staff: List[str] = ["discord", "vesktop", r"[sS]ignal*", r"[eE]lement", "telegram-desktop"]
+_chat_staff: List[str] = [
+    "discord",
+    "vesktop",
+    r"[sS]ignal*",
+    r"[eE]lement",
+    "telegram-desktop",
+]
 
 _doc_staff: List[str] = ["obsidian", "Evince", r"[eE]og", r"[jJ]oplin"]
 
 _matches: List[_WindowMatch] = [
     _WindowMatch(group="4", match_rule=Match(wm_class=re.compile(r"[tT]hunderbird"))),
     _WindowMatch(group="4", match_rule=Match(wm_class=re.compile("[kK]rita*"))),
-
     _WindowMatch(group="3", match_rule=Match(wm_class="Org.gnome.Nautilus")),
     _WindowMatch(group="3", match_rule=Match(wm_class=r"[nN]emo")),
     _WindowMatch(group="3", match_rule=Match(wm_class="FreeTube")),
     _WindowMatch(group="3", match_rule=Match(wm_class="streamlink-twitch-gui")),
     _WindowMatch(group="3", match_rule=Match(wm_class=r"(gl)|(mpv)")),
-
     _WindowMatch(group="1", match_rule=Match(wm_class="Postman")),
 ]
 

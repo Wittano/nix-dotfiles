@@ -13,8 +13,8 @@ for f in /tmp/*.xml; do
 
     device="$vendorId:$idProduct"
     if ! lsusb | cut -f 6 -d ' ' | grep -q "$device"; then
-        virsh detach-device "$vm" --live --file "$f" || logger -s "failed detach-device $device on $vm" 
-    else 
+        virsh detach-device "$vm" --live --file "$f" || logger -s "failed detach-device $device on $vm"
+    else
         logger "device $vendorId:$idProduct is conneceted"
     fi
 done

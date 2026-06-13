@@ -4,9 +4,16 @@ from typing import List
 from libqtile.config import Group, Key
 from libqtile.lazy import lazy
 
-from const import (ALT_KEY, CONTROL_KEY, SHIFT_KEY, SUPER_KEY, TERMINAL,
-                   VOLUME_PERCENT_RATIO)
+from const import (
+    ALT_KEY,
+    CONTROL_KEY,
+    SHIFT_KEY,
+    SUPER_KEY,
+    TERMINAL,
+    VOLUME_PERCENT_RATIO,
+)
 from scripts import monitors
+
 
 def __is_pipewire_installed() -> bool:
     try:
@@ -14,6 +21,7 @@ def __is_pipewire_installed() -> bool:
         return exit_code != 0
     except subprocess.CalledProcessError:
         return True
+
 
 def __get_volume_change_command(vol_up: bool = True) -> str:
     change_char = "+" if vol_up else "-"
@@ -27,8 +35,13 @@ def __get_volume_change_command(vol_up: bool = True) -> str:
 
     return f"{command} {volume_suffix}"
 
+
 def get_keybindings(groups: List[Group]) -> List[Key]:
-    volume_toogle_command = "pactl set-sink-mute @DEFAULT_SINK@ toggle" if __is_pipewire_installed() else "amixer sset Master toggle"
+    volume_toggle_command = (
+        "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        if __is_pipewire_installed()
+        else "amixer sset Master toggle"
+    )
 
     binds = [
         Key([SUPER_KEY], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -97,7 +110,7 @@ def get_keybindings(groups: List[Group]) -> List[Key]:
         Key(
             [SUPER_KEY],
             "m",
-            lazy.spawn(volume_toogle_command),
+            lazy.spawn(volume_toggle_command),
             desc="Toggle mute/unmute volume",
         ),
         Key(

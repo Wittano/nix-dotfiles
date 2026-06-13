@@ -18,7 +18,7 @@ in
         wittano.completions."tvi" = ''complete -c tvi -x -a "(__fish_complete_directories)"'';
         functions.tvi.body = /*fish*/ ''
           if test -d $argv
-            cd $argv 
+            cd $argv
           end
 
           tmux new-session -d "nvim"

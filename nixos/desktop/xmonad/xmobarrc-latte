@@ -8,7 +8,7 @@ Config { overrideRedirect = False
        , fgColor  = "#4c4f69"
        , lowerOnStart = True
        -- , position = TopSize C 80 35
-       , position = TopHM 35 30 30 15 15 
+       , position = TopHM 35 30 30 15 15
        -- , position = Static { xpos = 1140 , ypos = 15, width = 1800, height = 35 }
        , persistent = False
        , commands = [ Run Alsa "default" "Master"
@@ -17,11 +17,11 @@ Config { overrideRedirect = False
                         , "--"
                         , "--on", ""
                         ]
-                    , Run Memory 
-                        [ "--template" 
+                    , Run Memory
+                        [ "--template"
                         ,"<fc=#ea76cb>  <fn=2>\xf2db</fn>  <usedratio>%  </fc>"
                         ] 10
-                    , Run Network "eno1" 
+                    , Run Network "eno1"
                         [ "-t"
                         , "  <fc=#fe640b>  <fn=2>\xf063</fn> <rx>  <fn=2>\xf062</fn> <tx></fc>  "
                         , "-S"

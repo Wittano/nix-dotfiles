@@ -16,6 +16,12 @@
 , statix
 , openssl
 , mypy
+, pre-commit
+, black
+, gitleaks
+, typos
+, yamlfmt
+, yamllint
 , ...
 }:
 with lib;
@@ -63,13 +69,19 @@ mkShell {
     shellcheck
     shfmt
 
-    # Desktop
+    # DevOps
+    pre-commit
     testGithubActions
+    gitleaks
+    typos
+    yamlfmt
+    yamllint
 
     # Python
     pythonPackages
     pipenv
     mypy
+    black
 
     # Haskell deps
     haskell-language-server

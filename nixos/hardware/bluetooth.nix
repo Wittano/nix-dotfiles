@@ -1,7 +1,7 @@
 { config, lib, unstable, ... }:
 with lib;
 {
-  options.hardware.bluetooth.wittano.enable = mkEnableOption "custom bluethooth bluetooth";
+  options.hardware.bluetooth.wittano.enable = mkEnableOption "custom bluetooth bluetooth";
 
   config = mkIf config.hardware.bluetooth.wittano.enable {
     hardware = {

@@ -231,4 +231,3 @@
     <qemu:arg value='opt/ovmf/X-PciMmio64Mb,string=65536'/>
   </qemu:commandline>
 </domain>
-

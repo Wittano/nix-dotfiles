@@ -137,7 +137,7 @@ in
 
   options = {
     hardware.virtualization.wittano = {
-      enable = mkEnableOption "Enable virutalization tools";
+      enable = mkEnableOption "Enable virtualization tools";
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
       enableExternalStorage = mkEnableOption "external storage for qemu images";
       stoppedServices = mkOption {
@@ -267,5 +267,3 @@ in
       };
     };
 }
-
-

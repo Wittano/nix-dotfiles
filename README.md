@@ -20,19 +20,19 @@ nixConfig = {
         "wittano-nix-repo.cachix.org-1:SqjGwMsbzVQOXhbS90DXFC7AoGH99dzPy8zixK3cyt0="
     ];
 };
-```  
+```
 
 - Templates
 ```bash
     nix flake init --template github:Wittano/templates#<template_name>
 ```
-List of avaiable templates you can find in [templates directory](./templates/README.md)
+List of available templates you can find in [templates directory](./templates/README.md)
 
 - NixOS configuration
 
-Reposiotry contain 3 profiles with "dev" version. Dev version of profile is additation version of profile, that create mutable configuration for a few configuration e.g. qtile. It make easy updating configuration without rebuilding whole system or config.
+Repository contain 3 profiles with "dev" version. Dev version of profile is additation version of profile, that create mutable configuration for a few configuration e.g. qtile. It make easy updating configuration without rebuilding whole system or config.
 
-Avaiable NixOS profiles are:
+Available NixOS profiles are:
 - pc - default and main configuration for my NixOS system. There are a few desktop configuration:
     - qtile ![Qtile desktop](./img/qtile.png)
     - openbox ![Openbox desktop](./img/openbox.png)

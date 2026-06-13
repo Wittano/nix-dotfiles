@@ -4,7 +4,7 @@ index 0025769..3754bda 100755
 +++ b/install-mf-64.sh
 @@ -1,24 +1,10 @@
  #!/bin/sh
- 
+
 -check_env() {
 -    [ -z "$1" ] && echo "$2 is not set" && exit 1
 -}
@@ -17,7 +17,7 @@ index 0025769..3754bda 100755
 -check_sanity "$WINEPREFIX" drive_c
 -
  # User instructions:
- # Set PROTON to a Heroic Game Launcher Proton folder just like WINEPREFIX, pass -heroicproton to script. 
+ # Set PROTON to a Heroic Game Launcher Proton folder just like WINEPREFIX, pass -heroicproton to script.
  # Heroic now includes a "Wine Manager" for managing wine versions. Wine versions installed using the
  # "Wine Manager" have a slightly different directory structure different than standard proton wine versions.
  if [ "$1" = "-heroicproton" ]; then
@@ -38,21 +38,21 @@ index 0025769..3754bda 100755
      export WINESERVER="$PROTON/dist/bin/wineserver"
      export WINELOADER="$PROTON/dist/bin/wine"
 @@ -39,20 +22,20 @@ fi
- 
+
  set -e
- 
+
 -scriptdir=$(dirname "$0")
 -cd "$scriptdir"
 -
 -export PATH="$scriptdir/tools:$PATH"
 +export PATH="$SCRIPTDIR/tools:$PATH"
- 
+
 -if [ ! -f "windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe" ]; then
 +if [ ! -f "/tmp/windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe" ]; then
 +    cd "/tmp"
      wget "http://download.windowsupdate.com/msdownload/update/software/svpk/2011/02/windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe"
  fi
- 
+
 -python installcab.py windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe mediafoundation
 -python installcab.py windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe mf_
 -python installcab.py windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe mfreadwrite
@@ -67,6 +67,6 @@ index 0025769..3754bda 100755
 +python "$SCRIPTDIR/installcab.py" "/tmp/windows6.1-kb976932-x64_74865ef2562006e51d7f9333b4a8d45b7a749dab.exe" wmadmod
 +
 +cp "$SCRIPTDIR/mfplat.dll" "$GAME_EXE/mfplat.dll"
- 
+
 -echo -e "\nNow you need to get mfplat.dll in your application directory"
 +echo "Done"

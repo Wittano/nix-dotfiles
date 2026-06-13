@@ -3,7 +3,7 @@
 set -e
 
 if [ ! $EUID -eq 0 ]; then
-    echo "Script requires root premission"
+    echo "Script requires root permission"
     exit 1
 fi
 

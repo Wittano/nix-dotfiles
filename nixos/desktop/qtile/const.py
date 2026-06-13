@@ -13,6 +13,7 @@ def get_theme_assets_path(theme: str | None) -> Optional[str]:
 
     return path
 
+
 THEME_NAME = os.environ.get("QTILE_THEME")
 
 if get_theme_assets_path(THEME_NAME) is None:

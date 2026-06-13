@@ -20,23 +20,19 @@ from theme.screen import PRIMARY_SCREEN, __screen, __laptop_screen, MAIN_SCREEN
 
 QTILE: Qtile = libqtile.qtile
 
-groups: List[Group] = groups.get_default_groups()
-keys: List[Key] = keyboard.get_keybindings(groups)
+keys = keyboard.get_keybindings(groups)
 
-layouts = [
-    layouts.MAX,
-    layouts.MONAD_TALL
-]
+layouts = [layouts.MAX, layouts.MONAD_TALL]
 
 widget_defaults = dict(
-    font='jetbrains-mono',
+    font="jetbrains-mono",
     fontsize=14,
     padding=3,
 )
 
 extension_defaults = widget_defaults.copy()
 
-# TODO Create better system to spaw screen configuration between Laptop and PC
+# TODO Create better system to spawn screen configuration between Laptop and PC
 screens = [MAIN_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
 
 mouse = mouse.MOUSE_BINDS
@@ -61,9 +57,10 @@ wmname = "LG3D"
 # Hooks
 ########
 
+
 @hook.subscribe.startup_once
 def autostart_hook():
-    home_dir = os.environ['HOME']
+    home_dir = os.environ["HOME"]
     autostart_path = f"{home_dir}/.config/autostart.sh"
 
     if os.path.isfile(autostart_path):
@@ -81,8 +78,12 @@ async def move_non_games_from_game_workspace(_: Window):
             logger.error(f"Failed compile regex '{rex}', cause: {err}")
 
     windows: List[Window] = list(
-        filter(lambda window: True not in [bool(x.search(window.get_wm_class()[0])) for x in games_regex],
-               QTILE.groups_map["5"].windows))
+        filter(
+            lambda window: True
+            not in [bool(x.search(window.get_wm_class()[0])) for x in games_regex],
+            QTILE.groups_map["5"].windows,
+        )
+    )
 
     if len(windows) == len(QTILE.groups_map["5"].windows):
         logger.warning("No found any non-game window on gaming workspace")

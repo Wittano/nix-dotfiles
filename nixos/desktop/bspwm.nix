@@ -139,7 +139,7 @@ in
             "super + p" = "amixer sset Master 5%+";
             "super + o" = "amixer sset Master 5%-";
 
-            # Utilites
+            # Utilities
             "super + shift + p" = "flameshot gui";
             "super + r" = "rollWallpaper";
 

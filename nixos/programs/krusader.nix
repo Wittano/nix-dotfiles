@@ -42,4 +42,4 @@ in
         zip
       ] ++ kdePackage;
   };
-} 
+}

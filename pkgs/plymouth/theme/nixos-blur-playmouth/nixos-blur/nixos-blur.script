@@ -38,7 +38,7 @@ fun refresh_callback ()
     flyingman_sprite.SetImage(flyingman_image[Math.Int(progress / 2) % 151]);
     progress++;
   }
-  
+
 Plymouth.SetRefreshFunction (refresh_callback);
 
 //------------------------------------- Password prompt -------------------------------
@@ -100,4 +100,3 @@ fun MessageCallback(text) {
     message.sprite.SetPosition(screen.half.w - message.image.GetWidth() / 2, message.image.GetHeight());
 }
 Plymouth.SetMessageFunction(MessageCallback);
-

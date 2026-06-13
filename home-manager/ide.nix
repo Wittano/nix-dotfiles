@@ -38,7 +38,7 @@ let
     '';
   };
 
-  avaiableIde =
+  availableIde =
     let
       mkExtraConfig = ide: mkMerge [
         {
@@ -66,7 +66,7 @@ let
       jvm.package = idea;
       sql.package = datagrip;
       web.package = webstorm;
-      andorid.package = andorid-studio;
+      android.package = android-studio;
       haskell.extraConfig = mkMerge [
         fork.extraConfig
         {
@@ -100,14 +100,14 @@ let
     });
 
   installedIDEs = trivial.pipe cfg.ides [
-    (builtins.map (x: avaiableIde."${x}".package or null))
+    (builtins.map (x: availableIde."${x}".package or null))
     (builtins.filter (x: x != null))
   ];
 
   cmdCompletions = builtins.map
     (x: {
       name = "p${x}";
-      value = mkCmdCompletion avaiableIde."${x}".projectDir;
+      value = mkCmdCompletion availableIde."${x}".projectDir;
     })
     cfg.ides;
 
@@ -115,14 +115,14 @@ let
     (x:
       {
         name = "p${x}";
-        value = mkCmdCommand avaiableIde."${x}".projectDir;
+        value = mkCmdCommand availableIde."${x}".projectDir;
       }
     )
     cfg.ides;
 
-  ideNames = builtins.attrNames avaiableIde;
+  ideNames = builtins.attrNames availableIde;
   extraConfigs = trivial.pipe ideNames [
-    (builtins.map (x: avaiableIde.${x}.extraConfig or { }))
+    (builtins.map (x: availableIde.${x}.extraConfig or { }))
     mkMerge
   ];
 
@@ -159,7 +159,7 @@ in
         packages = installedIDEs;
         activation.createProjectsDir =
           let
-            idesDirs = builtins.map (x: avaiableIde.${x}.projectDir) cfg.ides;
+            idesDirs = builtins.map (x: availableIde.${x}.projectDir) cfg.ides;
             bashArray = bash.mkBashArray idesDirs;
           in
           lib.hm.dag.entryBefore [ "writeBoundary" ] /*bash*/''

@@ -11,7 +11,7 @@ from const import TERMINAL, THEME_NAME
 class LogoWidget(widget.TextBox):
     def __init__(self, theme: Dict[str, str]):
         super(LogoWidget, self).__init__(
-            text='\uf157',
+            text="\uf157",
             fontsize=25,
             font="Hack Nerd Font",
             background=theme["background"],
@@ -33,7 +33,7 @@ class TitlebarWidget(widget.WindowName):
 class GroupBoxWidget(widget.GroupBox):
     def __init__(self, theme: Dict[str, str]):
         super().__init__(
-            highlight_method='line',
+            highlight_method="line",
             borderwidth=3,
             fontsize=18,
             background=theme["background"],
@@ -41,12 +41,12 @@ class GroupBoxWidget(widget.GroupBox):
             block_highlight_text_color=theme["foreground"],
             active=theme["green"],
             padding_x=10,
-            highlight_color = [ theme["brightness_background"], theme["current_line"] ],
+            highlight_color=[theme["brightness_background"], theme["current_line"]],
             foreground=theme["brightness_background"],
             inactive=theme["current_line"],
             urgent_text=theme["comment"],
             urgent_border=theme["orange"],
-            urgent_alert_method='block',
+            urgent_alert_method="block",
             invert_mouse_wheel=True,
             disable_drag=True,
         )
@@ -68,13 +68,13 @@ class ClockWidget(widget.Clock):
         (
             "long_format",
             "  %d/%m/%y - %a, %I:%M %p",
-            "Format to show when mouse is over widget."
+            "Format to show when mouse is over widget.",
         )
     ]
 
     def __init__(self, theme: Dict[str, str]):
         super().__init__(
-            format='\uf017  %I:%M %p',
+            format="\uf017  %I:%M %p",
             font="Hack NF Bold",
             padding=30,
             foreground=theme["yellow"],
@@ -91,6 +91,7 @@ class ClockWidget(widget.Clock):
         self.format = self.short_format
         self.bar.draw()
 
+
 class BatteryWidget(widget.Battery):
     def __init__(self, theme: Dict[str, str], interface: str = "eno1"):
         super().__init__(
@@ -100,8 +101,9 @@ class BatteryWidget(widget.Battery):
             background=theme["background"],
             charging_foreground=theme["orange"],
             low_foreground=theme["red"],
-            foreground=theme["green"]
+            foreground=theme["green"],
         )
+
 
 class NetWidget(widget.Net):
     def __init__(self, theme: Dict[str, str], interface: str = "eno1"):
@@ -110,7 +112,7 @@ class NetWidget(widget.Net):
             format="\uf063  {down:.1f}{down_suffix}  \uf062  {up:.1f}{up_suffix}",
             font="Hack NF Bold",
             background=theme["background"],
-            foreground=theme["orange"]
+            foreground=theme["orange"],
         )
 
 
@@ -120,10 +122,8 @@ class CPUWidget(widget.CPU):
             background=theme["background"],
             foreground=theme["purple"],
             font="Hack NF Bold",
-            format='  {load_percent}%',
-            mouse_callbacks={
-                'Button1': lazy.spawn(f"{TERMINAL} -e 'htop'")
-            },
+            format="  {load_percent}%",
+            mouse_callbacks={"Button1": lazy.spawn(f"{TERMINAL} -e 'htop'")},
         )
 
 
@@ -161,7 +161,7 @@ class SepLineSeparator(widget.Image):
 
 class VolumeWidget(widget.Volume):
     def __init__(self, theme: Dict[str, str]):
-        command = "pactl get-sink-volume @DEFAULT_SINK@ | cut -f 6 -d ' '"
+        command: str | None = "pactl get-sink-volume @DEFAULT_SINK@ | cut -f 6 -d ' '"
         try:
             exit_code, _ = subprocess.getstatusoutput("which amixer")
             if exit_code == 0:
@@ -170,7 +170,7 @@ class VolumeWidget(widget.Volume):
             pass
 
         super(VolumeWidget, self).__init__(
-            fmt='  {}',
+            fmt="  {}",
             fontsize=14,
             font="Hack NF Bold",
             background=theme["background"],
@@ -193,8 +193,6 @@ class SearchWidget(widget.TextBox):
             fontfamily="Font Awesome 6 Free-Solid",
             fontsize="16",
             margin=0,
-            mouse_callbacks={
-                "Button1": lazy.spawn("rofi -show drun")
-            },
+            mouse_callbacks={"Button1": lazy.spawn("rofi -show drun")},
             background=theme["background"],
         )

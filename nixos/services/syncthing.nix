@@ -10,7 +10,7 @@ let
   package = pkgs.syncthing;
 in
 {
-  options.services.syncthing.wittano.enable = mkEnableOption "Enable syncthing deamon";
+  options.services.syncthing.wittano.enable = mkEnableOption "Enable syncthing daemon";
 
   config = mkIf cfg.enable {
     systemd.packages = [ package ];

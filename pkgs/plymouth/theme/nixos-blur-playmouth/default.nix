@@ -5,9 +5,9 @@
 
   installPhase = ''
     mkdir -p $out/share/plymouth/themes/nixos-blur
-    
+
     cp -r * $out/share/plymouth/themes/nixos-blur
-    
+
     chmod +x $out/share/plymouth/themes/nixos-blur/nixos-blur.plymouth
     chmod +x $out/share/plymouth/themes/nixos-blur/nixos-blur.script
   '';

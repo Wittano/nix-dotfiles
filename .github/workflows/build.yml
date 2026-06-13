@@ -25,9 +25,7 @@ jobs:
       - check-flake
     strategy:
       matrix:
-        packages: [
-            nixos-blur-playmouth,
-          ]
+        packages: [nixos-blur-playmouth]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.3
@@ -40,16 +38,16 @@ jobs:
         env:
           pkgName: ${{ matrix.packages }}
         run: |
-          PKG_DIR=$(find ./pkgs -type d -iname $pkgName)
+          PKG_DIR=$(find ./pkgs -type d -iname "$pkgName")
           if [ -n "$PKG_DIR" ]; then
-            FILE_DIFF=$(git diff HEAD~1 -- $PKG_DIR)
+            FILE_DIFF=$(git diff HEAD~1 -- "$PKG_DIR")
           else
             FILE_DIFF=""
           fi
 
           DIFF=$(git diff HEAD~1 -- flake.lock)
           if [ -n "$DIFF" ] || [ -n "$FILE_DIFF" ]; then
-            echo "raw-diff=1" >> $GITHUB_OUTPUT
+            echo "raw-diff=1" >> "$GITHUB_OUTPUT"
           fi
       - name: "Install Cachix"
         uses: cachix/cachix-action@v17

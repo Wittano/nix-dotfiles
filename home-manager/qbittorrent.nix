@@ -39,4 +39,4 @@ with lib;
 
     home.packages = mkIf cfg.installDesktop [ pkgs.qbittorrent ];
   };
-} 
+}

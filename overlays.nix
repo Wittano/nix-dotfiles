@@ -51,4 +51,3 @@ in
   haskellPackagesOverlay
   packagesPatches
 ]
-

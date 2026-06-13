@@ -18,7 +18,7 @@ rec {
 
   toCfg = name: attrs:
     let
-      # This script fix problem for nitrogen, becauses for some resons
+      # This script fix problem for nitrogen, because for some reasons
       # nitrogen read path with " chars and throws exception for that
       fixCfgPaths = builtins.toFile "fixCfgPaths.py" /*python*/''
         #!/usr/bin/env python

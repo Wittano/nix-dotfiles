@@ -40,4 +40,3 @@ in
       ''docker ps | cut -f 1 -d " " | tail -n +2 | xargs docker stop'';
   };
 }
-

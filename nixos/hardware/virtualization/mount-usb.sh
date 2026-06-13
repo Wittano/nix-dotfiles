@@ -8,7 +8,7 @@ fi
 
 vm_state=$(virsh list --state-running | tail -n +3 | grep "$vm")
 if [[ -z "$vm_state" ]]; then
-    logger "win10-work vm isn't running"  
+    logger "win10-work vm isn't running"
     exit 0
 fi
 
@@ -22,7 +22,7 @@ devices=$(lsusb | grep "$device")
 if [[ -n "$devices" ]]; then
     path="/tmp/$1-$2.xml"
     if [[ ! -f "$path" ]]; then
-        cat >"$path" <<EOL 
+        cat >"$path" <<EOL
         <hostdev mode='subsystem' type='usb' managed='yes'>
             <source>
                 <vendor id="0x$2"/>

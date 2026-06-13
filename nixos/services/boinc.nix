@@ -14,7 +14,7 @@ let
 in
 {
   options.services.boinc.wittano = {
-    enable = mkEnableOption "Enable BOINC deamon";
+    enable = mkEnableOption "Enable BOINC daemon";
     enableVbox = mkEnableOption "Virtualbox support for boinc";
     enableDocker = mkEnableOption "Docker support for boinc";
   };

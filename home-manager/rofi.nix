@@ -24,7 +24,7 @@ let
         if [ -n "$DESKTOP" ]; then
           echo "Kill ${cfg.desktopName} $DESKTOP"
           kill -9 "$DESKTOP"
-        fi 
+        fi
         ;;
       "$REBOOT")
         ${systemd}/bin/reboot

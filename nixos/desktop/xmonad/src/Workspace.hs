@@ -27,7 +27,7 @@ gamesStaff =
     "[Ll]inux$",
     "steam_app*",
     "[Ss]team*",
-    "[Mm]ono",
+    "[Mm]one",
     "[Mm]inecraft*"
   ]
 

@@ -1,7 +1,7 @@
 { lib, config, unstable, ... }:
 with lib;
 {
-  options.programs.lutris.wittano.enable = mkEnableOption "Enable lutris and utilties to run games";
+  options.programs.lutris.wittano.enable = mkEnableOption "Enable lutris and utilities to run games";
 
   config = mkIf config.programs.lutris.wittano.enable {
     programs.lutris = {

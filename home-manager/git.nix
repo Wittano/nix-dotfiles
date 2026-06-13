@@ -3,7 +3,7 @@ with lib;
 let cfg = config.programs.git.wittano;
 in
 {
-  options.programs.git.wittano.enable = mkEnableOption "Enable custmo git confgi";
+  options.programs.git.wittano.enable = mkEnableOption "Enable customer git config";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ xclip ];
