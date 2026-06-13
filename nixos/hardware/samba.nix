@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 let
-  cfg = config.hardware.samba;
+  cfg = config.hardware.samba.wittano;
 
   sambaGroupName = "samba";
   users = [ "wittano" ];
@@ -15,42 +15,50 @@ let
 in
 {
 
-  options.hardware.samba.enable = mkEnableOption "Mount Samba device to system";
+  options.hardware.samba.wittano = {
+    mountAsSystem = mkEnableOption "Mount Samba device to system";
+    onlyBookmarks = mkEnableOption "Add Samaba Homelab share dictionary as a GTK bookmark";
+  };
 
-  config = mkIf cfg.enable {
+  config = {
     services.gvfs.enable = true;
 
     environment.systemPackages = with pkgs; [ cifs-utils ];
 
     home-manager.users = desktop.mkMultiUserHomeManager users {
-      gtk.gtk3.bookmarks = [
-        "file:///mnt/samba Remote Home"
-      ];
+      gtk.gtk3.bookmarks =
+        let
+          remoteHomelab = lists.optional cfg.onlyBookmarks "smb://wittano.me/wittano TrueNAS";
+          mountedHomelab = lists.optional cfg.mountAsSystem "file:///mnt/samba TrueNAS";
+        in
+        remoteHomelab ++ mountedHomelab;
     };
 
-    users = {
+    users = mkIf cfg.mountAsSystem {
       users = extraGroups;
       groups.samba.gid = 988;
     };
 
-    fileSystems."/mnt/samba" = {
-      device = "//192.168.1.5/wittano";
-      fsType = "cifs";
-      options = [
-        "credentials=${config.age.secrets.samba.path}"
-        "uid=${builtins.toString config.users.users.wittano.uid}"
-        "gid=${sambaGroupName}"
-        "x-systemd.automount"
-        "noauto"
-        "x-systemd.idle-timeout=60"
-        "x-systemd.device-timeout=5s"
-        "x-systemd.mount-timeout=5s"
-        "user"
-        "file_mode=0774"
-        "dir_mode=0774"
-        "rw"
-        "users"
-      ];
+    fileSystems = mkIf cfg.mountAsSystem {
+      "/mnt/samba" = {
+        device = "//wittano.me/wittano";
+        fsType = "cifs";
+        options = [
+          "credentials=${config.age.secrets.samba.path}"
+          "uid=${builtins.toString config.users.users.wittano.uid}"
+          "gid=${sambaGroupName}"
+          "x-systemd.automount"
+          "noauto"
+          "x-systemd.idle-timeout=60"
+          "x-systemd.device-timeout=5s"
+          "x-systemd.mount-timeout=5s"
+          "user"
+          "file_mode=0774"
+          "dir_mode=0774"
+          "rw"
+          "users"
+        ];
+      };
     };
   };
 }

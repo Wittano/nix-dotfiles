@@ -1,13 +1,10 @@
 { config, pkgs, lib, ... }:
 with lib;
 with lib.my;
-let
-  cfg = config.hardware.samba;
-in
 {
   options.hardware.nfs-client.enable = mkEnableOption "Mount NFS devices to system";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.hardware.nfs-client.enable {
     services.gvfs.enable = true;
 
     environment.systemPackages = [ pkgs.nfs-utils ];
