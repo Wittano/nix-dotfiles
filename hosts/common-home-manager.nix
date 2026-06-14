@@ -67,7 +67,6 @@
 
       enable = true;
     };
-    neovim.wittano.enable = true;
     mpv.enable = true;
   };
 
