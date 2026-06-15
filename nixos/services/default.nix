@@ -16,5 +16,6 @@
     ./glances.nix
     ./ntop.nix
     ./ly.nix
+    ./printer.nix
   ];
 }

@@ -106,10 +106,7 @@ mkMerge [
       };
     };
 
-    hardware = {
-      printers.wittano.enable = true;
-      bluetooth.wittano.enable = true;
-    };
+    hardware.bluetooth.wittano.enable = true;
 
     # Network
     networking = {
@@ -147,6 +144,7 @@ mkMerge [
     system.stateVersion = systemVersion;
 
     services = {
+      printers.wittano.enable = true;
       pipewire.wittano.enable = true;
       udisks2 = {
         enable = true;

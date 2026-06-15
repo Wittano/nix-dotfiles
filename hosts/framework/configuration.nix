@@ -52,6 +52,9 @@ lib.mkMerge [
       ];
     };
 
-    services.ly.wittano.enable = true;
+    services = {
+      ly.wittano.enable = true;
+      printers.wittano.enable = true;
+    };
   }
 ]

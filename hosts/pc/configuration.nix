@@ -88,6 +88,7 @@ lib.mkMerge [
     };
 
     services = {
+      printers.wittano.enableBrother = true;
       backup.enable = true;
       ly.wittano.enable = true;
       backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
