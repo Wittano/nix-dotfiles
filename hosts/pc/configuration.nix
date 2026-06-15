@@ -1,13 +1,38 @@
-{ config, lib, pkgs, hostname, inputs, secretDir, unstable, master, desktop ? "xmonad", ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostname,
+  inputs,
+  secretDir,
+  unstable,
+  master,
+  desktop ? "xmonad",
+  ...
+}:
 with lib;
 let
   commonConfig = import ../common.nix {
-    inherit lib secretDir master pkgs hostname inputs unstable config;
+    inherit
+      lib
+      secretDir
+      master
+      pkgs
+      hostname
+      inputs
+      unstable
+      config
+      ;
     desktopName = desktop;
     cores = 24;
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master unstable;
+    inherit
+      inputs
+      pkgs
+      master
+      unstable
+      ;
     systemVersion = config.system.stateVersion;
     desktopName = desktop;
     inherit (config.catppuccin) accent;
@@ -19,12 +44,15 @@ let
     enableAutostart = true;
   };
 
-  inherit (pkgs) remmina;# VNC client
+  inherit (pkgs) remmina; # VNC client
 in
 lib.mkMerge [
   commonConfig
   {
-    environment.systemPackages = with pkgs; [ keymapp wally-cli ];
+    environment.systemPackages = with pkgs; [
+      keymapp
+      wally-cli
+    ];
     boot.tmp.useTmpfs = true;
 
     users.users.wittano.extraGroups = [ "wheel" ];
@@ -49,8 +77,15 @@ lib.mkMerge [
         commonHomeManager
         {
           xsession.windowManager.bspwm.monitors = {
-            "HDMI-A-0" = [ "I" "II" "III" ];
-            "HDMI-A-1" = [ "IV" "V" ];
+            "HDMI-A-0" = [
+              "I"
+              "II"
+              "III"
+            ];
+            "HDMI-A-1" = [
+              "IV"
+              "V"
+            ];
           };
 
           services.polybar.wittano = {

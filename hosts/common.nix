@@ -1,12 +1,13 @@
-{ lib
-, pkgs
-, inputs
-, unstable
-, master
-, hostname
-, desktopName
-, cores ? 24
-, ...
+{
+  lib,
+  pkgs,
+  inputs,
+  unstable,
+  master,
+  hostname,
+  desktopName,
+  cores ? 24,
+  ...
 }:
 with lib;
 with lib.my;
@@ -76,14 +77,21 @@ mkMerge [
 
     # Global packages
     environment = {
-      systemPackages = with pkgs; [ vim htop bash file ];
-      variables =
-        {
-          EDITOR = "vim";
-          NIX_DOTFILES = "$HOME/nix-dotfiles";
-        };
+      systemPackages = with pkgs; [
+        vim
+        htop
+        bash
+        file
+      ];
+      variables = {
+        EDITOR = "vim";
+        NIX_DOTFILES = "$HOME/nix-dotfiles";
+      };
 
-      shells = with pkgs; [ bash fish ];
+      shells = with pkgs; [
+        bash
+        fish
+      ];
     };
 
     # Linux Kernel settings
@@ -93,7 +101,12 @@ mkMerge [
         ntfs = true;
         nfs = true;
       };
-      initrd.availableKernelModules = [ "ahci" "xhci_pci" "sd_mod" "sr_mod" ];
+      initrd.availableKernelModules = [
+        "ahci"
+        "xhci_pci"
+        "sd_mod"
+        "sr_mod"
+      ];
       loader = {
         grub.wittano = {
           enable = true;
@@ -132,11 +145,18 @@ mkMerge [
 
     # Home-manager
     home-manager = {
-      extraSpecialArgs = { inherit pkgs unstable lib inputs master; };
+      extraSpecialArgs = {
+        inherit
+          pkgs
+          unstable
+          lib
+          inputs
+          master
+          ;
+      };
       useUserPackages = true;
       backupFileExtension = "backup";
     };
-
 
     desktop."${desktopName}".enable = true;
 

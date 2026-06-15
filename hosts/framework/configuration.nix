@@ -1,13 +1,38 @@
-{ config, lib, pkgs, hostname, inputs, secretDir, unstable, master, desktop ? "xmonad", ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostname,
+  inputs,
+  secretDir,
+  unstable,
+  master,
+  desktop ? "xmonad",
+  ...
+}:
 with lib;
 let
   commonConfig = import ../common.nix {
-    inherit lib secretDir master pkgs hostname inputs unstable config;
+    inherit
+      lib
+      secretDir
+      master
+      pkgs
+      hostname
+      inputs
+      unstable
+      config
+      ;
     desktopName = desktop;
     cores = 8;
   };
   commonHomeManager = import ../common-home-manager.nix {
-    inherit inputs pkgs master unstable;
+    inherit
+      inputs
+      pkgs
+      master
+      unstable
+      ;
     systemVersion = config.system.stateVersion;
     desktopName = desktop;
     inherit (config.catppuccin) accent;
@@ -42,7 +67,13 @@ lib.mkMerge [
           };
 
           xsession.windowManager.bspwm.monitors = {
-            "${services.polybar.wittano.monitor}" = [ "I" "II" "III" "IV" "V" ];
+            "${services.polybar.wittano.monitor}" = [
+              "I"
+              "II"
+              "III"
+              "IV"
+              "V"
+            ];
           };
 
           home.packages = with pkgs; [
