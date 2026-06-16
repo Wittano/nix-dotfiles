@@ -1,7 +1,7 @@
 from libqtile.config import Drag
 from libqtile.lazy import lazy
 
-from const import SUPER_KEY, CONTROL_KEY
+from const import SUPER_KEY
 
 RIGHT_BUTTON = "Button3"
 MIDDLE_BUTTON = "Button2"

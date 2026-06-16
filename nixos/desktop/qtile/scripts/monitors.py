@@ -1,10 +1,11 @@
 import os
+import shlex
 import subprocess
 from typing import List, Optional
 
-from libqtile.log_utils import logger
-from libqtile.lazy import lazy
 from libqtile.core.manager import Qtile
+from libqtile.lazy import lazy
+from libqtile.log_utils import logger
 
 WACOM_SCRIPT_PATH: str = (
     f"{os.environ['HOME']}/projects/config/system/scripts/wacom-multi-monitor.sh"
@@ -12,9 +13,18 @@ WACOM_SCRIPT_PATH: str = (
 
 
 def _map_to_output(selected_monitor: Optional[str]) -> bytes:
-    return subprocess.Popen(
-        ["bash", WACOM_SCRIPT_PATH, selected_monitor], stderr=subprocess.PIPE
-    ).stderr.read()
+    command = shlex.split(f"bash {WACOM_SCRIPT_PATH} {selected_monitor}")
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    if stderr is not None:
+        logger.warning(
+            "Failed map Wacom table to selected monitor {}. Error: {}",
+            selected_monitor,
+            stderr,
+        )
+
+    return stdout
 
 
 def map_wacom_to_one_monitor(screen_index: int):
@@ -22,7 +32,9 @@ def map_wacom_to_one_monitor(screen_index: int):
     error = _map_to_output(monitors[screen_index] if monitors is not None else None)
 
     if error:
-        new_monitors = [f"HEAD-{i}" for i in range(len(monitors))]
+        new_monitors = [
+            f"HEAD-{i}" for i in range(len(monitors) if monitors is not None else 0)
+        ]
 
         error = _map_to_output(new_monitors[screen_index])
 
@@ -42,7 +54,7 @@ def _get_monitors_name() -> Optional[List[str]]:
     monitors_list = bytes.decode(monitors_output).split("\n")[1:]
 
     if error:
-        logger.warning(f"Getting monitor failed: {error}")
+        logger.warning("Getting monitor failed: {}", error)
         return None
 
     return [monitor for monitor in map(get_monitor, monitors_list) if monitor]
@@ -81,4 +93,4 @@ def swap_monitor(qtile: Qtile):
         current_screen_index + 1 if current_screen_index + 1 < _MONITORS_COUNT else 0
     )
 
-    qtile.groups_map[current_group.name].cmd_toscreen(selected_screen)
+    qtile.groups_map[current_group.name].toscreen(selected_screen)

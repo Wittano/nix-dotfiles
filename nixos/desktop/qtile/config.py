@@ -1,28 +1,23 @@
 import os
-import re
 import subprocess
 from typing import List
 
-import libqtile.hook
 from libqtile import hook
-from libqtile.backend.base import Window
-from libqtile.config import Group, Key, Screen
-from libqtile.core.manager import Qtile
-from libqtile.log_utils import logger
-from libqtile.resources.default_config import screens
+from libqtile.config import Screen
 
-import groups
-from layout import layouts
-from binds import keyboard, mouse
+from binds import keyboard
+from binds import mouse as CustomeMouseBinding
+from groups import get_default_groups
+from layout import layouts as CustomLayouts
 from layout.floating import FLOATING_LAYOUT
 from scripts import monitors
-from theme.screen import PRIMARY_SCREEN, __screen, __laptop_screen, MAIN_SCREEN
+from theme.screen import MAIN_SCREEN
 
-QTILE: Qtile = libqtile.qtile
+groups = get_default_groups()
 
 keys = keyboard.get_keybindings(groups)
 
-layouts = [layouts.MAX, layouts.MONAD_TALL]
+layouts = [CustomLayouts.MAX, CustomLayouts.MONAD_TALL]
 
 widget_defaults = dict(
     font="jetbrains-mono",
@@ -35,7 +30,7 @@ extension_defaults = widget_defaults.copy()
 # TODO Create better system to spawn screen configuration between Laptop and PC
 screens = [MAIN_SCREEN] + ([Screen()] if monitors.get_monitors_count() > 1 else [])
 
-mouse = mouse.MOUSE_BINDS
+mouse = CustomeMouseBinding.MOUSE_BINDS
 
 dgroups_key_binder = None
 dgroups_app_rules: List = []
@@ -65,32 +60,3 @@ def autostart_hook():
 
     if os.path.isfile(autostart_path):
         subprocess.call([autostart_path])
-
-
-@hook.subscribe.client_new
-async def move_non_games_from_game_workspace(_: Window):
-    games_regex: List[re.Pattern] = []
-
-    for rex in games_regex:
-        try:
-            games_regex.append(re.compile(rex))
-        except re.error as err:
-            logger.error(f"Failed compile regex '{rex}', cause: {err}")
-
-    windows: List[Window] = list(
-        filter(
-            lambda window: True
-            not in [bool(x.search(window.get_wm_class()[0])) for x in games_regex],
-            QTILE.groups_map["5"].windows,
-        )
-    )
-
-    if len(windows) == len(QTILE.groups_map["5"].windows):
-        logger.warning("No found any non-game window on gaming workspace")
-        return
-
-    for win in windows:
-        if len(QTILE.screens) > 1:
-            screen_index = 0 if QTILE.current_screen.index == 1 else 1
-
-            win.togroup(QTILE.screens[screen_index].group.name)

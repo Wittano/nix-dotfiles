@@ -9,7 +9,7 @@ endif
 	nix-collect-garbage --delete-older-than 7d
 	nh clean all
 
-check: xmonad-check
+check: xmonad-check qtile-check
 	statix fix
 	nix flake check --show-trace --max-jobs $(shell nproc)
 
@@ -22,7 +22,7 @@ endif
 qtile_dest_path = $(HOME)/.config/qtile
 
 qtile-test:
-	unlink $(qtile_dest_path)
+	unlink $(qtile_dest_path) || echo "Skip unlinking qtile configuration"
 	ln -s $(NIX_DOTFILES)/nixos/desktop/qtile $(qtile_dest_path)
 
 openbox_path = $(HOME)/.config/openbox
