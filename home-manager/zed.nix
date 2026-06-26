@@ -23,8 +23,8 @@
         base_keymap = "JetBrains";
         features.copilot = false;
         telemetry.metrics = false;
-        ui_font_size = 16;
-        buffer_font_size = 18;
+        ui_font_size = 12;
+        buffer_font_size = 12;
         lsp = {
           nixd = {
             settings = {
