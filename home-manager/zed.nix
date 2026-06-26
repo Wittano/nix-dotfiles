@@ -1,11 +1,27 @@
-{ config, lib, pkgs, unstable, ... }: with lib;{
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
+}:
+with lib;
+{
   options.programs.zed-editor.wittano.enable = mkEnableOption "zed-editor";
 
   config = mkIf config.programs.zed-editor.wittano.enable {
     programs.zed-editor = {
       enable = true;
 
-      extensions = [ "catppuccin" "nix" "html" "html-snippets" "log" "ansible" "terraform" ];
+      extensions = [
+        "catppuccin"
+        "nix"
+        "html"
+        "html-snippets"
+        "log"
+        "ansible"
+        "terraform"
+      ];
 
       extraPackages = with pkgs; [
         nixd
