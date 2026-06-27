@@ -173,3 +173,5 @@ nixos/desktop/xmonad/dist-newstyle/
 secrets/*.json
 
 nixos/desktop/xmonad/src/Main
+
+.st*
