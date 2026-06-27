@@ -105,6 +105,7 @@ lib.mkMerge [
           ];
 
           programs = {
+            vivaldi.wittano.enableAutostart = true;
             pomodoro.enable = true;
             games.enable = true;
           };
