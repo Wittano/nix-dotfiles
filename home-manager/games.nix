@@ -6,7 +6,7 @@ let
 
   games = with unstable; [
     # Games
-    osu-lazer # osu!lazer
+    osu-lazer-bin # osu!lazer
     # airshipper # Veloren
     xivlauncher # FF XIV
     prismlauncher # Minecraft
