@@ -26,27 +26,28 @@ SPACER = Spacer(length=10, background=theme["background"])
 BLACK_SPACER = Spacer(length=10, background=theme["background"])
 
 __laptop_screen = Screen(
-    top=bar.Bar([
-        LogoWidget(theme),
-        GroupBoxWidget(theme),
-        RoundedSeparator(theme, isLeft=False),
-        TitlebarWidget(theme),
-        RoundedSeparator(theme),
-        SysTrayWidget(theme),
-        SPACER,
-        SPACER,
-        BatteryWidget(theme),
-        SPACER,
-        SPACER,
-        VolumeWidget(theme),
-        SPACER,
-        SPACER,
-        NetWidget(theme, interface="wlp0s20f3"),
-        SPACER,
-        SPACER,
-        MemoryWidget(theme),
-        ClockWidget(theme),
-    ],
+    top=bar.Bar(
+        [
+            LogoWidget(theme),
+            GroupBoxWidget(theme),
+            RoundedSeparator(theme, isLeft=False),
+            TitlebarWidget(theme),
+            RoundedSeparator(theme),
+            SysTrayWidget(theme),
+            SPACER,
+            SPACER,
+            BatteryWidget(theme),
+            SPACER,
+            SPACER,
+            VolumeWidget(theme),
+            SPACER,
+            SPACER,
+            NetWidget(theme, interface="wlp0s20f3"),
+            SPACER,
+            SPACER,
+            MemoryWidget(theme),
+            ClockWidget(theme),
+        ],
         size=32,
         background=theme["background"],
         border_color=theme["background"],
@@ -118,4 +119,6 @@ PRIMARY_SCREEN = Screen(
     )
 )
 
-MAIN_SCREEN = __laptop_screen if os.environ.get("QTILE_PROFILE") == "LAPTOP" else __screen
+MAIN_SCREEN = (
+    __laptop_screen if os.environ.get("QTILE_PROFILE") == "LAPTOP" else __screen
+)

@@ -1,4 +1,12 @@
-{ config, lib, pkgs, unstable, ... }: with lib; let
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
+}:
+with lib;
+let
   screenshot = pkgs.writeShellApplication {
     name = "screenshot";
     runtimeInputs = with pkgs; [
@@ -11,11 +19,16 @@
 
   bluetoothMenuGenerator = pkgs.writeShellApplication {
     name = "bluetooth-menu-generator";
-    runtimeInputs = with pkgs; [ busybox bluez ];
+    runtimeInputs = with pkgs; [
+      busybox
+      bluez
+    ];
     text = builtins.readFile ./bluetooth-menu-generator.sh;
   };
 
-  autostartPrograms = builtins.map (x: "${x} &") config.home-manager.users.wittano.desktop.autostart.programs;
+  autostartPrograms = builtins.map (
+    x: "${x} &"
+  ) config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
   options.desktop.labwc = {
@@ -70,7 +83,11 @@ in
             position = "top";
             modules-left = [ "ext/workspaces" ];
             modules-center = [ "custom/music" ];
-            modules-right = [ "pulseaudio" "clock" "tray" ];
+            modules-right = [
+              "pulseaudio"
+              "clock"
+              "tray"
+            ];
             "ext/workspaces" = {
               disable-scroll = true;
               sort-by-id = true;
@@ -103,7 +120,11 @@ in
               format = "{icon} {volume}%";
               format-muted = "";
               format-icons = {
-                default = [ "" "" " " ];
+                default = [
+                  ""
+                  ""
+                  " "
+                ];
               };
               on-click = "pavucontrol";
             };
@@ -129,7 +150,8 @@ in
           "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal"
           "wl-paste --watch cliphist store &"
           "waypaper --restore &"
-        ] ++ autostartPrograms;
+        ]
+        ++ autostartPrograms;
       };
       xdg.configFile = {
         "labwc/rc.xml".source = ./rc.xml;

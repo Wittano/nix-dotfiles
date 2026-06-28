@@ -1,4 +1,10 @@
-{ lib, config, pkgs, unstable ? pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  unstable ? pkgs,
+  ...
+}:
 with lib;
 with lib.my;
 let
@@ -15,14 +21,18 @@ let
 
   fixAge2Sync = pkgs.writeShellApplication {
     name = "fixAge2Sync";
-    runtimeInputs = with pkgs; [ wget cabextract coreutils sudo ];
+    runtimeInputs = with pkgs; [
+      wget
+      cabextract
+      coreutils
+      sudo
+    ];
     text = builtins.readFile ./scripts/fixAge2Sync.sh;
     runtimeEnv = {
       STEAM_GAME_DIR = "/mnt/gaming/SteamLibrary";
     };
   };
-  fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray"
-    "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
+  fixSteamSystemTray = pkgs.writeScriptBin "fixSteamSystemTray" "rm -rf ~/.local/share/Steam/ubuntu12_32/steam-runtime/pinned_libs_{32,64}";
 
   patches = [
     fixAge2Sync
@@ -40,7 +50,10 @@ in
     home.packages = games ++ patches;
 
     programs = {
-      jetbrains.ides = mkIf cfg.enableDev [ "jvm" "dotnet" ];
+      jetbrains.ides = mkIf cfg.enableDev [
+        "jvm"
+        "dotnet"
+      ];
       telegram.enable = true;
       signal.enable = true;
     };
