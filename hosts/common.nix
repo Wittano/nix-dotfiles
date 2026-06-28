@@ -158,6 +158,11 @@ mkMerge [
       backupFileExtension = "backup";
     };
 
+    environment.pathsToLink = [
+      "/share/applications"
+      "/share/xdg-desktop-portal"
+    ];
+
     desktop."${desktopName}".enable = true;
 
     # System

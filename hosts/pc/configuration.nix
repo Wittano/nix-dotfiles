@@ -87,24 +87,25 @@ lib.mkMerge [
               "V"
             ];
           };
-
           services.polybar.wittano = {
             profile = "wittano";
             monitor = "HDMI-A-0";
           };
-
           systemd.user.tmpfiles.rules = [
             "d /home/wittano/Downloads 0755 wittano users 7d"
           ];
-
           profile.programming.enable = true;
-
           home.packages = with pkgs; [
             remmina
             krita
           ];
 
           programs = {
+            discord.wittano = {
+              enable = !config.desktop.labwc.enable;
+              enableAutostart = false;
+              type = "discord";
+            };
             vivaldi.wittano.enableAutostart = true;
             pomodoro.enable = true;
             games.enable = true;
