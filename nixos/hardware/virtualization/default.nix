@@ -1,33 +1,45 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
 with lib;
 with lib.my;
 let
   cfg = config.hardware.virtualization.wittano;
 
-  mkManageDaemonScript = command: builtins.concatStringsSep
-    "\n"
-    (builtins.map (x: "systemctl ${command} ${x} || true") cfg.stoppedServices);
+  mkManageDaemonScript =
+    command:
+    cfg.stoppedServices |> map (x: "systemctl ${command} ${x} || true") |> concatStringsSep "\n";
 
   startServices = mkManageDaemonScript "start";
   stopServices = mkManageDaemonScript "stop";
 
   releaseVmScript = pkgs.writeShellApplication {
     name = "release-vm";
-    runtimeInputs = with pkgs; [ bash systemd toybox kmod libvirt ];
+    runtimeInputs = with pkgs; [
+      bash
+      systemd
+      toybox
+      kmod
+      libvirt
+    ];
     text =
       let
-        nvidiaDriver = strings.optionalString config.hardware.nvidia.wittano.enable /*bash*/ ''
+        nvidiaDriver = strings.optionalString config.hardware.nvidia.wittano.enable /* bash */ ''
           modprobe nvidia
           modprobe nvidia_modeset
           modprobe nvidia_drm
           modprobe nvidia_uvm
         '';
 
-        amdDriver = strings.optionalString config.hardware.amd.enable /*bash*/''
+        amdDriver = strings.optionalString config.hardware.amd.enable /* bash */ ''
           timeout 10s modprobe amdgpu
         '';
       in
-        /*bash*/''
+      /* bash */ ''
         set -x
 
         function _reboot() {
@@ -59,21 +71,28 @@ let
 
   prepareVmScript = pkgs.writeShellApplication {
     name = "prepare-vm";
-    runtimeInputs = with pkgs; [ bash releaseVmScript systemd toybox kmod libvirt ];
+    runtimeInputs = with pkgs; [
+      bash
+      releaseVmScript
+      systemd
+      toybox
+      kmod
+      libvirt
+    ];
     text =
       let
-        nvidiaDriver = strings.optionalString config.hardware.nvidia.wittano.enable /*bash*/ ''
+        nvidiaDriver = strings.optionalString config.hardware.nvidia.wittano.enable /* bash */ ''
           modprobe -r nvidia_uvm
           modprobe -r nvidia_drm
           modprobe -r nvidia_modeset
           modprobe -r nvidia
         '';
 
-        amdDriver = strings.optionalString config.hardware.amd.enable /*bash*/''
+        amdDriver = strings.optionalString config.hardware.amd.enable /* bash */ ''
           modprobe -r amdgpu
         '';
       in
-        /*bash*/ ''
+      /* bash */ ''
         set -x
 
         function _revert() {
@@ -114,23 +133,46 @@ let
 
   usbMountScript = pkgs.writeShellApplication {
     name = "mount-usb-device";
-    runtimeInputs = with pkgs; [ coreutils usbutils toybox libvirt ];
-    text = trivial.pipe ./mount-usb.sh [
-      builtins.readFile
-      (builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ])
+    runtimeInputs = with pkgs; [
+      coreutils
+      usbutils
+      toybox
+      libvirt
     ];
+    # TODO Replace bultins.replaceStrings by substringInFile
+    text = builtins.readFile ./mount-usb.sh |> builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ];
   };
 
   unmountScript = pkgs.writeShellApplication {
     name = "unmount-usb-device";
-    runtimeInputs = with pkgs; [ coreutils usbutils toybox libvirt ];
-    text = trivial.pipe ./unmount.sh [
-      builtins.readFile
-      (builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ])
+    runtimeInputs = with pkgs; [
+      coreutils
+      usbutils
+      toybox
+      libvirt
     ];
+    text = builtins.readFile ./unmount.sh |> builtins.replaceStrings [ ''vm=""'' ] [ ''vm="win10"'' ];
   };
 
-
+  imagesPoolDisk = mkIf cfg.enableExternalStorage {
+    "/var/lib/libvirt/images" = {
+      fsType = if cfg.enableBtfsStorage then "btfs" else "ext4";
+      device = if !cfg.enableBtfsStorage then "/dev/disk/by-label/VM_STORAGE" else null;
+      options = lists.optionals cfg.enableBtfsStorage [
+        "subvol=virt-images"
+        "compress=zstd"
+        "noatime"
+      ];
+    };
+    "/var/lib/libvirt/storage/vm" = mkIf cfg.enableBtfsStorage {
+      fsType = "btfs";
+      options = [
+        "subvol=virt-storage"
+        "compress=zstd"
+        "noatime"
+      ];
+    };
+  };
 in
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
@@ -140,6 +182,7 @@ in
       enable = mkEnableOption "Enable virtualization tools";
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
       enableExternalStorage = mkEnableOption "external storage for qemu images";
+      enableBtfsStorage = mkEnableOption "external storage for libvirt data in BTRFS subvolumes";
       stoppedServices = mkOption {
         type = with types; listOf str;
         description = "List of services, that should be stopped";
@@ -148,122 +191,155 @@ in
     };
   };
 
-  config = mkIf cfg.enable
-    {
-      virtualisation = {
-        spiceUSBRedirection.enable = true;
-        libvirtd = {
-          enable = true;
-          onBoot = "ignore";
-          onShutdown = "shutdown";
-          qemu =
-            {
-              package = mkIf cfg.enableWindowsVM (pkgs.qemu.override {
-                tpmSupport = true;
-              });
-              swtpm.enable = true;
-              runAsRoot = true;
-            };
-          hooks.qemu.win10 = pkgs.stdenvNoCC.mkDerivation {
-            name = "win10-hooks";
-
-            src = ./.;
-
-            installPhase = ''
-              mkdir -p $out/begin/prepare $out/release/end
-
-              cp ${meta.getExe prepareVmScript} $out/begin/prepare/start.sh
-              cp ${meta.getExe releaseVmScript} $out/release/end/stop.sh
-            '';
-          };
+  config = mkIf cfg.enable {
+    assertions =
+      let
+        btrfsAssertions = mkIf (cfg.enableExternalStorage && cfg.enableBtfsStorage) {
+          assertion = builtins.attrValues config.fileSystems |> lists.any (x: x.fsType == "btfs");
+          message = "You must have minimum 1 BTFS filesystem mounted to NixOS";
         };
-      };
+      in
+      [
+        btrfsAssertions
+      ];
 
-      warnings = mkIf cfg.enableWindowsVM [ "Windows 10 VM will DISABLE all swap devices in configuration" ];
-
-      swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
-
-      security.sudo.extraRules = mkIf cfg.enableWindowsVM [{
-        users = [ "wittano" "virt" ];
-
-        commands = [{
-          command = "/run/current-system/sw/bin/virsh";
-          options = [ "NOPASSWD" ];
-        }];
-      }];
-
-      users.users =
-        let
-          virtGroup = [ "libvirtd" ];
-        in
-        {
-          wittano.extraGroups = virtGroup;
-          virt = {
-            uid = 1002;
-            isNormalUser = true;
-            extraGroups = virtGroup;
-          };
+    virtualisation = {
+      spiceUSBRedirection.enable = true;
+      libvirtd = {
+        enable = true;
+        onBoot = "ignore";
+        onShutdown = "shutdown";
+        qemu = {
+          package = mkIf cfg.enableWindowsVM (
+            pkgs.qemu.override {
+              tpmSupport = true;
+            }
+          );
+          swtpm.enable = true;
+          runAsRoot = true;
         };
-      programs = {
-        virt-manager.enable = true;
-        dconf.enable = true;
-      };
+        hooks.qemu.win10 = pkgs.stdenvNoCC.mkDerivation {
+          name = "win10-hooks";
 
-      environment.systemPackages = with pkgs; [ libguestfs virtiofsd ];
+          src = ./.;
 
-      systemd = {
-        services = {
-          libvirtd.path = mkIf cfg.enableWindowsVM (with pkgs; [ bash libvirt kmod systemd ripgrep sd ]);
-          pcscd.enable = mkIf cfg.enableWindowsVM false;
-        };
+          installPhase = ''
+            mkdir -p $out/begin/prepare $out/release/end
 
-        sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
-      };
-
-      boot = {
-        extraModprobeConfig = ''
-          options kvm_amd nested=1
-          options kvm ignore_msrs=1 report_ignored_msrs=0
-        '';
-        kernelParams = lists.optionals cfg.enableWindowsVM [ "amd_iommu=on" "preempt=voluntary" ];
-        kernelModules = lists.optionals cfg.enableWindowsVM [
-          "vendor-reset"
-          "kvm-amd"
-          "vfio_pci"
-          "vfio"
-          "vfio_iommu_type1"
-          "vfio_virqfd"
-        ];
-        extraModulePackages = with config.boot.kernelPackages; [ vendor-reset ];
-      };
-
-      services.openssh.settings.AllowUsers = [ "virt" ];
-
-      fileSystems = mkIf cfg.enableExternalStorage {
-        "/var/lib/libvirt/images/pool" = {
-          device = "/dev/disk/by-label/VM_STORAGE";
-          fsType = "ext4";
-        };
-      };
-
-      services = {
-        ssh.wittano.enable = true;
-        glances.wittano.enable = cfg.enableWindowsVM;
-        ntopng.wittano.enable = cfg.enableWindowsVM;
-
-        xserver.displayManager.session = mkIf cfg.enableWindowsVM [{
-          name = "windows";
-          manage = "window";
-          start = "sudo virsh start win10";
-        }];
-
-        udev = {
-          packages = with config.boot.kernelPackages; [ vendor-reset ];
-          extraRules = mkIf cfg.enableWindowsVM ''
-            ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
-            ACTION == "remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
+            cp ${meta.getExe prepareVmScript} $out/begin/prepare/start.sh
+            cp ${meta.getExe releaseVmScript} $out/release/end/stop.sh
           '';
         };
       };
     };
+
+    warnings = mkIf cfg.enableWindowsVM [
+      "Windows 10 VM will DISABLE all swap devices in configuration"
+    ];
+
+    swapDevices = mkIf cfg.enableWindowsVM (mkForce [ ]);
+
+    security.sudo.extraRules = mkIf cfg.enableWindowsVM [
+      {
+        users = [
+          "wittano"
+          "virt"
+        ];
+
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/virsh";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+
+    users.users =
+      let
+        virtGroup = [ "libvirtd" ];
+      in
+      {
+        wittano.extraGroups = virtGroup;
+        virt = {
+          uid = 1002;
+          isNormalUser = true;
+          extraGroups = virtGroup;
+        };
+      };
+    programs = {
+      virt-manager.enable = true;
+      dconf.enable = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      libguestfs
+      virtiofsd
+    ];
+
+    systemd = {
+      services = {
+        libvirtd.path = mkIf cfg.enableWindowsVM (
+          with pkgs;
+          [
+            bash
+            libvirt
+            kmod
+            systemd
+            ripgrep
+            sd
+          ]
+        );
+        pcscd.enable = mkIf cfg.enableWindowsVM false;
+      };
+
+      sockets.pcscd.enable = mkIf cfg.enableWindowsVM false;
+    };
+
+    boot = {
+      extraModprobeConfig = ''
+        options kvm_amd nested=1
+        options kvm ignore_msrs=1 report_ignored_msrs=0
+      '';
+      kernelParams = lists.optionals cfg.enableWindowsVM [
+        "amd_iommu=on"
+        "preempt=voluntary"
+      ];
+      kernelModules = lists.optionals cfg.enableWindowsVM [
+        "vendor-reset"
+        "kvm-amd"
+        "vfio_pci"
+        "vfio"
+        "vfio_iommu_type1"
+        "vfio_virqfd"
+      ];
+      extraModulePackages = with config.boot.kernelPackages; [ vendor-reset ];
+    };
+
+    services.openssh.settings.AllowUsers = [ "virt" ];
+
+    fileSystems = imagesPoolDisk;
+
+    services = {
+      ssh.wittano.enable = true;
+      glances.wittano.enable = cfg.enableWindowsVM;
+      ntopng.wittano.enable = cfg.enableWindowsVM;
+
+      xserver.displayManager.session = mkIf cfg.enableWindowsVM [
+        {
+          name = "windows";
+          manage = "window";
+          start = "sudo virsh start win10";
+        }
+      ];
+
+      udev = {
+        packages = with config.boot.kernelPackages; [ vendor-reset ];
+        extraRules = mkIf cfg.enableWindowsVM ''
+          ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${pkgs.bash}/bin/bash -c '${meta.getExe usbMountScript} ''$attr{idProduct} ''$attr{idVendor}'"
+          ACTION == "remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", RUN+="${meta.getExe unmountScript}"
+        '';
+      };
+    };
+  };
 }

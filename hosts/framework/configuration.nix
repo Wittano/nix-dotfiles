@@ -83,6 +83,18 @@ lib.mkMerge [
       ];
     };
 
+    hardware = {
+      virtualization.wittano = {
+        enable = true;
+        enableExternalStorage = true;
+        enableBtfsStorage = true;
+      };
+    };
+
+    virtualisation = {
+      docker.wittano.enable = true;
+    };
+
     services = {
       ly.wittano.enable = true;
       printers.wittano.enable = true;
