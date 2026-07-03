@@ -87,7 +87,7 @@ lib.mkMerge [
       virtualization.wittano = {
         enable = true;
         enableExternalStorage = true;
-        enableBtfsStorage = true;
+        enableBtrfsStorage = true;
       };
     };
 

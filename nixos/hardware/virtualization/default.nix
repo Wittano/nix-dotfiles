@@ -156,16 +156,17 @@ let
 
   imagesPoolDisk = mkIf cfg.enableExternalStorage {
     "/var/lib/libvirt/images" = {
-      fsType = if cfg.enableBtfsStorage then "btfs" else "ext4";
-      device = if !cfg.enableBtfsStorage then "/dev/disk/by-label/VM_STORAGE" else null;
-      options = lists.optionals cfg.enableBtfsStorage [
+      fsType = if cfg.enableBtrfsStorage then "btrfs" else "ext4";
+      device = if cfg.enableBtrfsStorage then "/dev/nixos/root" else "/dev/disk/by-label/VM_STORAGE";
+      options = mkIf cfg.enableBtrfsStorage [
         "subvol=virt-images"
         "compress=zstd"
         "noatime"
       ];
     };
-    "/var/lib/libvirt/storage/vm" = mkIf cfg.enableBtfsStorage {
-      fsType = "btfs";
+    "/var/lib/libvirt/storage/vm" = mkIf cfg.enableBtrfsStorage {
+      fsType = "btrfs";
+      device = "/dev/nixos/root";
       options = [
         "subvol=virt-storage"
         "compress=zstd"
@@ -182,7 +183,7 @@ in
       enable = mkEnableOption "Enable virtualization tools";
       enableWindowsVM = mkEnableOption "Enable Windows Gaming VM";
       enableExternalStorage = mkEnableOption "external storage for qemu images";
-      enableBtfsStorage = mkEnableOption "external storage for libvirt data in BTRFS subvolumes";
+      enableBtrfsStorage = mkEnableOption "external storage for libvirt data in BTRFS subvolumes";
       stoppedServices = mkOption {
         type = with types; listOf str;
         description = "List of services, that should be stopped";
@@ -194,9 +195,9 @@ in
   config = mkIf cfg.enable {
     assertions =
       let
-        btrfsAssertions = mkIf (cfg.enableExternalStorage && cfg.enableBtfsStorage) {
-          assertion = builtins.attrValues config.fileSystems |> lists.any (x: x.fsType == "btfs");
-          message = "You must have minimum 1 BTFS filesystem mounted to NixOS";
+        btrfsAssertions = mkIf (cfg.enableExternalStorage && cfg.enableBtrfsStorage) {
+          assertion = builtins.attrValues config.fileSystems |> lists.any (x: x.fsType == "btrfs");
+          message = "You must have minimum 1 BTRFS filesystem mounted to NixOS";
         };
       in
       [
