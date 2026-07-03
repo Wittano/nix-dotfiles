@@ -19,4 +19,4 @@ jobs:
           send-statistics: false
           fail-mode: true
       - name: Check repository
-        run: nix flake check
+        run: nix flake check --extra-experimental-features pipe-operators

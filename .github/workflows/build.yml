@@ -5,7 +5,7 @@ on:
     types: [create-pull-request]
   push:
     branches:
-      - 'main'
+      - "main"
   pull_request:
     types: [opened, edited, reopened, synchronize]
 permissions:
@@ -19,7 +19,7 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v14
       - uses: DeterminateSystems/flake-checker-action@v12
       - name: Check nix repository
-        run: nix flake check
+        run: nix flake check --extra-experimental-features pipe-operators
   build:
     needs:
       - check-flake
