@@ -1,9 +1,8 @@
-{
-  lib,
-  config,
-  pkgs,
-  unstable ? pkgs,
-  ...
+{ lib
+, config
+, pkgs
+, unstable ? pkgs
+, ...
 }:
 with lib;
 with lib.my;

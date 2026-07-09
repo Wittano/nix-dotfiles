@@ -1,4 +1,10 @@
-{ config, lib, system, inputs, secretDir, ... }:
+{ config
+, lib
+, system
+, inputs
+, secretDir
+, ...
+}:
 with lib;
 with lib.my;
 {

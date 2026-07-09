@@ -1,8 +1,8 @@
-{config, pkgs, lib, ...}: with lib; {
+{ config, pkgs, lib, ... }: with lib; {
   options.services.ly.wittano.enable = mkEnableOption "ly";
 
   config = mkIf config.services.ly.wittano.enable {
-    environment.systemPackages = [pkgs.cmatrix];
+    environment.systemPackages = [ pkgs.cmatrix ];
 
     services.displayManager.ly = {
       enable = true;

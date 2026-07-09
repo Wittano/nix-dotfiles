@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  modulesPath,
-  ...
+{ config
+, pkgs
+, lib
+, modulesPath
+, ...
 }:
 with lib;
 with lib.my;
@@ -39,7 +38,7 @@ let
           timeout 10s modprobe amdgpu
         '';
       in
-      /* bash */ ''
+        /* bash */ ''
         set -x
 
         function _reboot() {
@@ -92,7 +91,7 @@ let
           modprobe -r amdgpu
         '';
       in
-      /* bash */ ''
+        /* bash */ ''
         set -x
 
         function _revert() {

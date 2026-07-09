@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  unstable,
-  ...
+{ config
+, lib
+, pkgs
+, unstable
+, ...
 }:
 with lib;
 let
@@ -26,9 +25,11 @@ let
     text = builtins.readFile ./bluetooth-menu-generator.sh;
   };
 
-  autostartPrograms = builtins.map (
-    x: "${x} &"
-  ) config.home-manager.users.wittano.desktop.autostart.programs;
+  autostartPrograms = builtins.map
+    (
+      x: "${x} &"
+    )
+    config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
   options.desktop.labwc = {

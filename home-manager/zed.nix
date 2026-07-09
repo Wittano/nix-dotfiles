@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  unstable,
-  ...
+{ config
+, lib
+, pkgs
+, unstable
+, ...
 }:
 with lib;
 {

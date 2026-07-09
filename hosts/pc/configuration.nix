@@ -1,14 +1,13 @@
-{
-  config,
-  lib,
-  pkgs,
-  hostname,
-  inputs,
-  secretDir,
-  unstable,
-  master,
-  desktop ? "xmonad",
-  ...
+{ config
+, lib
+, pkgs
+, hostname
+, inputs
+, secretDir
+, unstable
+, master
+, desktop ? "xmonad"
+, ...
 }:
 with lib;
 let
@@ -44,7 +43,7 @@ let
     enableAutostart = true;
   };
 
-  inherit (pkgs) remmina; # VNC client
+  inherit (pkgs) remmina;# VNC client
 in
 lib.mkMerge [
   commonConfig
