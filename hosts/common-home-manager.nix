@@ -28,6 +28,7 @@
       xournalpp # Handwritten notebook
       darktable # Photo editing
       obsidian
+      inkscape # Vector images editor
 
       # Security
       keepassxc
