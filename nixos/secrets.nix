@@ -3,7 +3,7 @@ with lib;
 with lib.my;
 {
   environment.systemPackages = [ inputs.agenix.packages."${system}".default ];
-  age = {
+  age = mkIf config.hardware.samba.wittano.mountAsSystem {
     identityPaths = [
       "/etc/ssh/samba.key"
     ];
