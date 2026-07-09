@@ -1,11 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 {
   options.profile.programming.enable = mkEnableOption "programming stuff";
 
   config = mkIf config.profile.programming.enable {
     programs = {
-      jetbrains.ides = [ "go" "sql" ];
+      jetbrains.ides = [
+        "go"
+        "sql"
+      ];
       tmux.wittano.enable = true;
       fish.shellAliases = {
 
