@@ -78,6 +78,12 @@ lib.mkMerge [
           home.packages = with pkgs; [
             krita
           ];
+
+          programs.discord.wittano = {
+            enable = true;
+            enableAutostart = true;
+            type = "discord";
+          };
         }
       ];
     };
