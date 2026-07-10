@@ -47,7 +47,6 @@ in
   config = lib.mkMerge [
     commonConfig
     {
-
       users.users.wittano.extraGroups = [
         "wheel"
         "video"
@@ -136,6 +135,14 @@ in
       services = {
         ly.wittano.enable = true;
         printers.wittano.enable = true;
+      };
+
+      programs.mihoyo = {
+        enable = true;
+        games = [
+          "eepey"
+          "honkai-railway"
+        ];
       };
     }
   ];
