@@ -26,29 +26,54 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
 
-      mkPkgs = p:
+      mkPkgs =
+        p:
         import p {
           inherit system;
 
           config.allowUnfree = true;
-          overlays = import ./overlays.nix { inherit lib; pkgs = p; };
+          overlays = import ./overlays.nix {
+            inherit lib;
+            pkgs = p;
+          };
         };
 
       pkgs = mkPkgs inputs.nixpkgs;
       unstable = mkPkgs inputs.nixpkgs-unstable;
       master = mkPkgs inputs.nixpkgs-master;
 
-      lib = nixpkgs.lib.extend (sefl: super: {
-        inherit (home-manager.lib) hm;
+      lib = nixpkgs.lib.extend (
+        sefl: super: {
+          inherit (home-manager.lib) hm;
 
-        my = import ./lib { inherit lib pkgs system inputs unstable master; };
-      });
+          my = import ./lib {
+            inherit
+              lib
+              pkgs
+              system
+              inputs
+              unstable
+              master
+              ;
+          };
+        }
+      );
     in
     {
       lib = lib.my;

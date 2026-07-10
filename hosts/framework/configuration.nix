@@ -1,13 +1,14 @@
-{ config
-, lib
-, pkgs
-, hostname
-, inputs
-, secretDir
-, unstable
-, master
-, desktop ? "xmonad"
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  hostname,
+  inputs,
+  secretDir,
+  unstable,
+  master,
+  desktop ? "xmonad",
+  ...
 }:
 with lib;
 let
@@ -38,71 +39,104 @@ let
     inherit (config.catppuccin) flavor;
   };
 in
-lib.mkMerge [
-  commonConfig
-  {
-    boot.tmp.useTmpfs = true;
+{
+  imports = [
+    inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
+  ];
 
-    users.users.wittano.extraGroups = [ "wheel" ];
+  config = lib.mkMerge [
+    commonConfig
+    {
 
-    hardware = {
-      bluetooth.wittano.enable = true;
-    };
-
-    desktop = {
-      bspwm.deviceType = "laptop";
-      qtile.profile = "LAPTOP";
-    };
-
-    home-manager.users = {
-      wittano = mkMerge [
-        commonHomeManager
-        rec {
-          profile.programming.enable = true;
-          services.polybar.wittano = {
-            profile = "laptop";
-            wifiAdapter = "wlp0s20f3";
-            monitor = "eDP-1";
-          };
-
-          xsession.windowManager.bspwm.monitors = {
-            "${services.polybar.wittano.monitor}" = [
-              "I"
-              "II"
-              "III"
-              "IV"
-              "V"
-            ];
-          };
-
-          home.packages = with pkgs; [
-            krita
-          ];
-
-          programs.discord.wittano = {
-            enable = true;
-            enableAutostart = true;
-            type = "discord";
-          };
-        }
+      users.users.wittano.extraGroups = [
+        "wheel"
+        "video"
+        "render"
       ];
-    };
 
-    hardware = {
-      virtualization.wittano = {
-        enable = true;
-        enableExternalStorage = true;
-        enableBtrfsStorage = true;
+      hardware = {
+        bluetooth.wittano.enable = true;
       };
-    };
 
-    virtualisation = {
-      docker.wittano.enable = true;
-    };
+      desktop = {
+        bspwm.deviceType = "laptop";
+        qtile.profile = "LAPTOP";
+      };
 
-    services = {
-      ly.wittano.enable = true;
-      printers.wittano.enable = true;
-    };
-  }
-]
+      services.xserver.videoDrivers = [ "modesetting" ];
+
+      hardware.graphics = {
+        enable = true;
+        extraPackages = with pkgs; [
+          intel-vaapi-driver
+          intel-media-driver
+          vpl-gpu-rt
+        ];
+      };
+
+      environment.sessionVariables = {
+        LIBVA_DRIVER_NAME = "iHD"; # Prefer the modern iHD backend
+      };
+
+      # May help if FFmpeg/VAAPI/QSV init fails (esp. on Arc with i915):
+      hardware.enableRedistributableFirmware = true;
+      boot = {
+        tmp.useTmpfs = true;
+        kernelParams = [ "i915.force_probe=8086:a7a9" ];
+      };
+
+      home-manager.users = {
+        wittano = mkMerge [
+          commonHomeManager
+          rec {
+            profile.programming.enable = true;
+            services.polybar.wittano = {
+              profile = "laptop";
+              wifiAdapter = "wlp0s20f3";
+              monitor = "eDP-1";
+            };
+
+            xsession.windowManager.bspwm.monitors = {
+              "${services.polybar.wittano.monitor}" = [
+                "I"
+                "II"
+                "III"
+                "IV"
+                "V"
+              ];
+            };
+
+            home.packages = with pkgs; [
+              krita
+              audacity
+              kdePackages.kdenlive
+            ];
+
+            programs.discord.wittano = {
+              enable = true;
+              enableAutostart = true;
+              type = "discord";
+            };
+          }
+        ];
+      };
+
+      hardware = {
+        virtualization.wittano = {
+          enable = true;
+          enableExternalStorage = true;
+          enableBtrfsStorage = true;
+        };
+      };
+
+      virtualisation = {
+        docker.wittano.enable = true;
+      };
+
+      services = {
+        ly.wittano.enable = true;
+        printers.wittano.enable = true;
+      };
+    }
+  ];
+}
