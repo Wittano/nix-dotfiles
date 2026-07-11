@@ -38,6 +38,9 @@
       darktable # Photo editing
       obsidian
       inkscape # Vector images editor
+      kdePackages.kdenlive
+      obs-studio
+      audacity
 
       # Security
       keepassxc
