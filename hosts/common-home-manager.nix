@@ -1,10 +1,11 @@
-{ inputs
-, systemVersion
-, pkgs
-, accent ? "pink"
-, flavor ? "latte"
-, desktopName
-, ...
+{
+  inputs,
+  systemVersion,
+  pkgs,
+  accent ? "pink",
+  flavor ? "latte",
+  desktopName,
+  ...
 }:
 {
   imports = [
