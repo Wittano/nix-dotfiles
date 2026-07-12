@@ -4,7 +4,7 @@ _:
     defaultGateway = "192.168.1.1";
     interfaces.eno1 = {
       ipv4.addresses = [{
-        address = "192.168.1.169";
+        address = "192.168.1.167";
         prefixLength = 24;
       }];
     };
