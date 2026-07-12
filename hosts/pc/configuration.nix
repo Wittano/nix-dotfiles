@@ -100,6 +100,10 @@ lib.mkMerge [
           ];
 
           programs = {
+            zed-editor.userSettings = {
+              ui_font_size = mkForce 16;
+              buffer_font_size = mkForce 18;
+            };
             discord.wittano = {
               enable = !config.desktop.labwc.enable;
               enableAutostart = false;
