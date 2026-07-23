@@ -1,12 +1,21 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.programs.git.wittano;
+let
+  cfg = config.programs.git.wittano;
 in
 {
   options.programs.git.wittano.enable = mkEnableOption "Enable customer git config";
 
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [ xclip ];
+  config = mkIf cfg.enable rec {
+    home.packages = with pkgs; [
+      xclip
+      services.gpg-agent.pinentry.package
+    ];
     services.gpg-agent = {
       enable = true;
       pinentry.package = pkgs.pinentry-all;
