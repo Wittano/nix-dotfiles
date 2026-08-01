@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, unstable
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
 }:
 with lib;
 let
@@ -25,11 +26,7 @@ let
     text = builtins.readFile ./bluetooth-menu-generator.sh;
   };
 
-  autostartPrograms = builtins.map
-    (
-      x: "${x} &"
-    )
-    config.home-manager.users.wittano.desktop.autostart.programs;
+  autostartPrograms = map (x: "${x} &") config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
   options.desktop.labwc = {
@@ -148,7 +145,7 @@ in
           "RTC_USE_PIPEWIRE=true"
         ];
         autostart = [
-          "wlr-randr --output HDMI-A-2 --transform 270 --pos 0,0 --preferred --left-of HDMI-A-1 --output HDMI-A-1 --transform normal"
+          "wlr-randr --output HDMI-A-1 --transform normal --pos 1080,0 --preferred --output HDMI-A-2 --right-of HDMI-A-1 --transform 270 --pos 0,0"
           "wl-paste --watch cliphist store &"
           "waypaper --restore &"
         ]
