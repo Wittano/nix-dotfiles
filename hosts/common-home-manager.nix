@@ -64,10 +64,6 @@
       enable = true;
       enableAutostart = true;
     };
-    matrix = {
-      enable = true;
-      enableAutostart = true;
-    };
     fish = {
       wittano = {
         enable = true;
