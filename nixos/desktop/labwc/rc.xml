@@ -12,8 +12,11 @@
     <focusDelay>200</focusDelay>
     <raiseOnFocus>no</raiseOnFocus>
   </focus>
+  <windowSwitcher>
+    <allWorkspaces>yes</allWorkspaces>
+  </windowSwitcher>
   <placement>
-    <policy>automatic</policy>
+    <policy>cursor</policy>
     <center>yes</center>
     <monitor>Active</monitor>
     <primaryMonitor>Active</primaryMonitor>
