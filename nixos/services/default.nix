@@ -17,5 +17,6 @@
     ./ntop.nix
     ./ly.nix
     ./printer.nix
+    ./teamviewer.nix
   ];
 }
