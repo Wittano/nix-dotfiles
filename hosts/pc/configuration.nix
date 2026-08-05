@@ -119,6 +119,7 @@ lib.mkMerge [
     };
 
     programs = {
+      ffmpeg.enable = true;
       steam.wittano = enableAutostart // {
         disk.enable = true;
       };

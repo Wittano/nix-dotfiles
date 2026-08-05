@@ -5,5 +5,6 @@
     ./nh.nix
     ./steam.nix
     ./krusader.nix
+    ./ffmpeg.nix
   ];
 }
