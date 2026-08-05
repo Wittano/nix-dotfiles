@@ -373,6 +373,11 @@
     <keybind key="W-s">
       <action command="ToggleFullscreen" />
     </keybind>
+    <keybind key="W-l">
+        <action name="Execute">
+            <command>swaylock -f</command>
+        </action>
+   </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
