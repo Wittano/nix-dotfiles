@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with lib.my;
 let
@@ -13,14 +18,21 @@ in
       default = [ "wittano" ];
     };
     profile = mkOption {
-      type = types.enum [ "LAPTOP" "PC" ];
+      type = types.enum [
+        "LAPTOP"
+        "PC"
+      ];
       default = "PC";
       description = "Qtile profile";
     };
   };
 
   config = mkIf config.desktop.qtile.enable {
-    fonts.packages = with pkgs; [ nerd-fonts.hack font-awesome jetbrains-mono ];
+    fonts.packages = with pkgs; [
+      nerd-fonts.hack
+      font-awesome
+      jetbrains-mono
+    ];
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       xdg.configFile."qtile".source = ./.;
@@ -37,7 +49,10 @@ in
         redshift.wittano.enable = true;
         picom.wittano.enable = true;
       };
-      home.packages = with pkgs; [ flameshot ];
+      home.packages = with pkgs; [
+        flameshot
+        alock
+      ];
     };
 
     environment.variables = {
@@ -49,9 +64,10 @@ in
       enable = true;
       windowManager.qtile = {
         enable = true;
-        extraPackages = pyPkgs: with pyPkgs; [
-          psutil
-        ];
+        extraPackages =
+          pyPkgs: with pyPkgs; [
+            psutil
+          ];
       };
     };
   };

@@ -1,9 +1,6 @@
 import subprocess
 from typing import List
 
-from libqtile.config import Group, Key
-from libqtile.lazy import lazy
-
 from const import (
     ALT_KEY,
     CONTROL_KEY,
@@ -12,6 +9,9 @@ from const import (
     TERMINAL,
     VOLUME_PERCENT_RATIO,
 )
+from libqtile.config import Group, Key
+from libqtile.lazy import lazy
+
 from scripts import monitors
 
 
@@ -59,6 +59,12 @@ def get_keybindings(groups: List[Group]) -> List[Key]:
             "l",
             lazy.layout.shuffle_right(),
             desc="Move window to the right",
+        ),
+        Key(
+            [SUPER_KEY, CONTROL_KEY],
+            "l",
+            lazy.spawn("alock"),
+            desc="Lock screen",
         ),
         Key(
             [SUPER_KEY, SHIFT_KEY],
