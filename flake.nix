@@ -6,22 +6,37 @@
     expert-ls.url = "github:elixir-lang/expert";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     filebot.url = "github:Wittano/filebot";
     aagl = {
       url = "github:ezKEa/aagl-gtk-on-nix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
-    catppuccin.url = "github:catppuccin/nix/release-26.05";
+    catppuccin = {
+      url = "github:catppuccin/nix/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin-dunst = {
       url = "github:catppuccin/dunst";
       flake = false;
     };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
-    agenix.url = "github:ryantm/agenix";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
