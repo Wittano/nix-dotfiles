@@ -133,7 +133,7 @@ lib.mkMerge [
       teamviewer.wittano.enable = true;
       printers.wittano.enableBrother = true;
       backup.enable = true;
-      ly.wittano.enable = true;
+      displayManager.sddm.wittano.enable = true;
       backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
       xserver = {
         enable = true;

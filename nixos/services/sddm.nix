@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.services.displayManager.sddm.wittano;
@@ -22,6 +27,7 @@ in
     package = mkOption {
       type = types.package;
       example = pkgs.dexy;
+      default = pkgs.catppuccin-sddm;
       description = "Package of sddm theme";
     };
   };
