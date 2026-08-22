@@ -19,10 +19,7 @@
       url = "github:ezKEa/aagl-gtk-on-nix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
     honkai-railway-grub-theme.url = "github:voidlhf/StarRailGrubThemes";
     catppuccin = {
       url = "github:catppuccin/nix/release-26.05";
