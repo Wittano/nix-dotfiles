@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with lib.my;
 let
@@ -14,12 +19,14 @@ let
   themes = trivial.pipe catppuccin [
     builtins.readDir
     (attrsets.filterAttrs (n: v: strings.hasPrefix "Catppuccin" n && v == "directory"))
-    (attrsets.mapAttrs' (n: _: {
-      name = ".themes/${n}";
-      value = {
-        source = catppuccin + "/${n}";
-      };
-    }))
+    (attrsets.mapAttrs' (
+      n: _: {
+        name = ".themes/${n}";
+        value = {
+          source = catppuccin + "/${n}";
+        };
+      }
+    ))
   ];
 in
 {
@@ -41,7 +48,11 @@ in
       desktop.autostart = {
         enable = true;
         paths = [ ".config/openbox/autostart" ];
-        programs = [ "tint2" "volumeicon" "lxpolkit" ];
+        programs = [
+          "tint2"
+          "volumeicon"
+          "lxpolkit"
+        ];
       };
       home = {
         packages = with pkgs; [
@@ -54,6 +65,7 @@ in
           # Utils
           arandr
           flameshot # Screenshot
+          bluetooth-menu-generator # Bluetooth switcher
         ];
         file = themes;
       };

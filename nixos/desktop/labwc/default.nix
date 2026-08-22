@@ -17,15 +17,6 @@ let
     text = "slurp | grim -g - - | wl-copy";
   };
 
-  bluetoothMenuGenerator = pkgs.writeShellApplication {
-    name = "bluetooth-menu-generator";
-    runtimeInputs = with pkgs; [
-      busybox
-      bluez
-    ];
-    text = builtins.readFile ./bluetooth-menu-generator.sh;
-  };
-
   autostartPrograms = map (x: "${x} &") config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
@@ -170,7 +161,7 @@ in
           wlrctl
           unstable.labwc-tweaks
           unstable.labwc-menu-generator
-          bluetoothMenuGenerator
+          bluetooth-menu-generator
         ];
       };
     };

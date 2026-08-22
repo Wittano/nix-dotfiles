@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <openbox_menu
-        xmlns="http://openbox.org/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://openbox.org/
-    file:///usr/share/openbox/menu.xsd">
+    xmlns="http://openbox.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://openbox.org/
+    file:///usr/share/openbox/menu.xsd"
+>
     <menu id="root-menu" label="Openbox 3">
         <item label="Terminal emulator">
             <action name="Execute">
@@ -15,22 +16,33 @@
                 <execute>vivaldi</execute>
             </action>
         </item>
-        <separator/>
-        <menu execute="openbox-menu lxde-applications.menu" id="apps" label="Applications"/>
-        <menu id="client-list-menu"/>
-        <separator/>
+        <separator />
+        <menu
+            execute="openbox-menu lxde-applications.menu"
+            id="apps"
+            label="Applications"
+        />
+        <menu
+            execute="bluetooth-menu-generator"
+            id="bluetooth"
+            label="Bluetooth"
+        />
+        <menu id="client-list-menu" />
+        <separator />
         <item label="Configurations">
             <action name="Execute">
-                <execute>obconf --config-file /home/wittano/dotfiles/config/openbox/rc.xml</execute>
+                <execute>
+                    obconf --config-file /home/wittano/dotfiles/config/openbox/rc.xml
+                </execute>
             </action>
         </item>
         <item label="Reconfigure">
-            <action name="Reconfigure"/>
+            <action name="Reconfigure" />
         </item>
-        <separator/>
+        <separator />
         <menu id="exit" label="Exit">
             <item label="Logout">
-                <action name="Exit"/>
+                <action name="Exit" />
             </item>
             <item label="Suspend">
                 <icon>suspend</icon>
