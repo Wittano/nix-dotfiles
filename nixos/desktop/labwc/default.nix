@@ -171,6 +171,7 @@ in
     ];
 
     xdg.portal = {
+      enable = true;
       wlr = {
         enable = true;
         settings.screencast = {
@@ -180,9 +181,6 @@ in
           chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
         };
       };
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-      ];
     };
 
     services = {
