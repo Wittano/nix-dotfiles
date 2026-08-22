@@ -40,6 +40,8 @@ in
       wayland.systemd.target = "labwc-session.target";
       services = {
         cliphist.enable = true;
+        dunst.wittano.enable = mkForce false;
+        mako.wittano.enable = true;
         wlsunset = {
           enable = true;
           latitude = "50.50";
