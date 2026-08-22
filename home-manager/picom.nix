@@ -36,7 +36,6 @@ in
       ];
 
       settings = {
-        glx-no-stencil = true;
         glx-copy-from-front = false;
 
         # Border
@@ -64,7 +63,6 @@ in
         mark-ovredir-focused = true;
         detect-rounded-corners = true;
         detect-client-opacity = true;
-        refresh-rate = 0;
         be = false;
         unredir-if-possible = false;
         detect-transient = true;
