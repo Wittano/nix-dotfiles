@@ -17,10 +17,13 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ pass docker-credential-helpers ];
 
-    hardware.virtualization.wittano.stoppedServices = [
+    hardware = {
+	virtualization.wittano.stoppedServices = [
       "docker.service"
       "docker.socket"
     ];
+graphics.enable32Bit = config.hardware.nvidia.wittano.enable;
+};
 
     virtualisation.docker = {
       enable = true;

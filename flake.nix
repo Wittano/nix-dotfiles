@@ -102,6 +102,12 @@
         framework-qtile = lib.my.hosts.mkHost "framework" "qtile";
         framework-labwc = lib.my.hosts.mkHost "framework" "labwc";
         framework-bspwm = lib.my.hosts.mkHost "framework" "bspwm";
+
+        stepps-xmonad = lib.my.hosts.mkHost "stepps" "xmonad";
+        stepps-openbox = lib.my.hosts.mkHost "stepps" "openbox";
+        stepps-qtile = lib.my.hosts.mkHost "stepps" "qtile";
+        stepps-labwc = lib.my.hosts.mkHost "stepps" "labwc";
+        stepps-bspwm = lib.my.hosts.mkHost "stepps" "bspwm";
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };

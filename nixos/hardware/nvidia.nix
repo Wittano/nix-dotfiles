@@ -3,6 +3,11 @@ with lib;
 with lib.my;
 let
   cfg = config.hardware.nvidia.wittano;
+
+  packages = {
+    "pc" = config.boot.kernelPackages.nvidia_x11_production;
+    "laptop" = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  };
 in
 {
   options.hardware.nvidia.wittano = {
@@ -15,21 +20,21 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = mkIf cfg.enable [ "nvidia" ];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     boot.blacklistedKernelModules = [ "nouveau" ];
 
     environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
-    hardware.nvidia = {
-      open = cfg.hostType != "laptop";
-      package =
-        if cfg.hostType == "laptop"
-        then config.boot.kernelPackages.nvidiaPackages.legacy_535
-        else config.boot.kernelPackages.nvidia_x11_production;
+    hardware = {
+      graphics.enable = true;
+      nvidia = {
+        open = cfg.hostType != "laptop";
+        package = packages."${cfg.hostType}";
 
-      modesetting.enable = true;
-      nvidiaSettings = true;
+        modesetting.enable = true;
+        nvidiaSettings = true;
+      };
     };
   };
 }

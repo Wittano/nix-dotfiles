@@ -49,6 +49,11 @@ in
 lib.mkMerge [
   commonConfig
   {
+    imports = [
+      inputs.determinate.nixosModules.default
+      inputs.nix-index-database.nixosModules.default
+    ];
+
     environment.systemPackages = with pkgs; [
       keymapp
       wally-cli
