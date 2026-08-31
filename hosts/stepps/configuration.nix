@@ -73,7 +73,13 @@ in
         qtile.profile = "LAPTOP";
       };
 
-      services.xserver.videoDrivers = [ "modesetting" ];
+      services = {
+        xserver.videoDrivers = [ "modesetting" ];
+        teamviewer.wittano = {
+          enable = true;
+          enableRemoteAccount = true;
+        };
+      };
 
       boot.tmp.useTmpfs = true;
 
