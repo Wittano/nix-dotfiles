@@ -110,6 +110,11 @@ in
       virtualisation.docker.wittano.enable = true;
 
       services.ly.wittano.enable = true;
+
+      programs.steam.wittano = {
+        enable = true;
+        disk.enable = true;
+      };
     }
   ];
 }

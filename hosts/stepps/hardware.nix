@@ -16,6 +16,11 @@ _: {
       fsType = "vfat";
       neededForBoot = true;
     };
+    "/mnt/gaming" = {
+      device = "/dev/disk/by-label/GAMING";
+      fsType = "ext4";
+      options = ["noatime"]; 
+    };
   };
 
   swapDevices = [
