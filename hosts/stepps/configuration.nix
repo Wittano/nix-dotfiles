@@ -86,23 +86,8 @@ in
       home-manager.users = {
         wittano = mkMerge [
           commonHomeManager
-          rec {
+          {
             profile.programming.enable = true;
-            services.polybar.wittano = {
-              profile = "laptop";
-              wifiAdapter = "wlp0s20f3";
-              monitor = "eDP-1";
-            };
-
-            xsession.windowManager.bspwm.monitors = {
-              "${services.polybar.wittano.monitor}" = [
-                "I"
-                "II"
-                "III"
-                "IV"
-                "V"
-              ];
-            };
 
             programs.discord.wittano = {
               enable = true;
