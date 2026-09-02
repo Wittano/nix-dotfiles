@@ -65,6 +65,7 @@ in
           enable = true;
           hostType = "laptop";
         };
+        graphics.extraPackages = [ pkgs.intel-media-driver ];
         bluetooth.wittano.enable = true;
       };
 
@@ -74,7 +75,12 @@ in
       };
 
       services = {
-        xserver.videoDrivers = [ "modesetting" ];
+        xserver = {
+          videoDrivers = [ "modesetting" ];
+          deviceSection = ''
+            Option "TearFree" "true"
+          '';
+        };
         teamviewer.wittano = {
           enable = true;
           enableRemoteAccount = true;
