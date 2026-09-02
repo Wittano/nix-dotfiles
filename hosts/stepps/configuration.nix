@@ -12,6 +12,7 @@
 }:
 with lib;
 let
+  desktopName = desktop;
   commonConfig = import ../common.nix {
     inherit
       lib
@@ -25,18 +26,6 @@ let
       ;
     desktopName = desktop;
     cores = 4;
-  };
-  commonHomeManager = import ../common-home-manager.nix {
-    inherit
-      inputs
-      pkgs
-      master
-      unstable
-      ;
-    systemVersion = config.system.stateVersion;
-    desktopName = desktop;
-    inherit (config.catppuccin) accent;
-    inherit (config.catppuccin) flavor;
   };
 in
 {
@@ -89,19 +78,80 @@ in
 
       boot.tmp.useTmpfs = true;
 
-      home-manager.users = {
-        wittano = mkMerge [
-          commonHomeManager
-          {
-            profile.programming.enable = true;
+      home-manager.users.wittano = {
+            imports = [
+              inputs.catppuccin.homeModules.catppuccin
+              inputs.nixvim.homeModules.nixvim
+              ./../../home-manager
+            ];
 
-            programs.discord.wittano = {
-              enable = true;
-              enableAutostart = true;
-              type = "discord";
+            home = {
+              stateVersion = config.system.stateVersion;
+              packages = with pkgs; [
+                # Utils
+                textsnatcher # Text extractor
+
+                # Folder Dialog menu
+                zenity
+
+                # Web browser
+                firefox
+
+                # Utils
+                eog # Image viewer
+                libreoffice # Office staff
+
+                # Apps
+                keepassxc # Password manager
+
+                # Security
+                keepassxc
+              ];
             };
-          }
-        ];
+
+            programs = {
+              nemo.enable = true;
+              thunderbird.wittano.enable = true;
+              file-roller.enable = true;
+              git.wittano.enable = true;
+              btop.enable = true;
+              ghostty.wittano.enable = true;
+              signal = {
+                enable = true;
+                enableAutostart = true;
+              };
+              joplin.enable = true;
+              telegram = {
+                enable = true;
+                enableAutostart = true;
+              };
+              fish = {
+                wittano = {
+                  enable = true;
+                  enableDirenv = true;
+                };
+                shellAliases.open = "xdg-open";
+              };
+              rofi.wittano = {
+                inherit desktopName;
+
+                enable = true;
+              };
+              mpv.enable = true;
+            };
+
+            qt.wittano.enable = true;
+            gtk.wittano.enable = true;
+
+            catppuccin = {
+              accent = "pink";
+              flavor = "latte";
+              enable = true;
+            };
+
+            desktop.autostart.enable = true;
+
+            profile.programming.enable = true;
       };
 
       virtualisation.docker.wittano.enable = true;
