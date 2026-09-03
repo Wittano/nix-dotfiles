@@ -42,8 +42,6 @@ in
 
       users.users.wittano.extraGroups = [
         "wheel"
-        "video"
-        "render"
       ];
 
       hardware = {
