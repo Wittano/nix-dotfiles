@@ -19,7 +19,16 @@ _: {
     "/mnt/gaming" = {
       device = "/dev/disk/by-label/GAMING";
       fsType = "ext4";
-      options = ["noatime"]; 
+      options = ["noatime"];
+    };
+    "/home/wittano/.cache" = {
+      fsType = "none";
+      device = "/var/cache/wittano";
+      depends = [ "/home" "/" ];
+      options = [
+        "bind"
+        "uid=1000"
+      ];
     };
   };
 
