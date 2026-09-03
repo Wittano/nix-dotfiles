@@ -76,8 +76,6 @@ in
         };
       };
 
-      boot.tmp.useTmpfs = true;
-
       home-manager.users.wittano = {
             imports = [
               inputs.catppuccin.homeModules.catppuccin
