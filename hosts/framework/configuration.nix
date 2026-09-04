@@ -140,7 +140,6 @@ in
       programs.mihoyo = {
         enable = true;
         games = [
-          "eepey"
           "honkai-railway"
         ];
       };
