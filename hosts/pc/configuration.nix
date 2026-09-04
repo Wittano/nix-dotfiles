@@ -46,14 +46,15 @@ let
 
   inherit (pkgs) remmina; # VNC client
 in
-lib.mkMerge [
+{
+  imports = [
+    inputs.determinate.nixosModules.default
+    inputs.nix-index-database.nixosModules.default
+  ];
+
+config = lib.mkMerge [
   commonConfig
   {
-    imports = [
-      inputs.determinate.nixosModules.default
-      inputs.nix-index-database.nixosModules.default
-    ];
-
     environment.systemPackages = with pkgs; [
       keymapp
       wally-cli
@@ -164,4 +165,5 @@ lib.mkMerge [
       boinc.wittano.enable = true;
     };
   }
-]
+];
+}
