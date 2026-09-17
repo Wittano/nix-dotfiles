@@ -1,12 +1,13 @@
-{ lib
-, pkgs
-, inputs
-, unstable
-, master
-, hostname
-, desktopName
-, cores ? 24
-, ...
+{
+  lib,
+  pkgs,
+  inputs,
+  unstable,
+  master,
+  hostname,
+  desktopName,
+  cores ? 24,
+  ...
 }:
 with lib;
 with lib.my;

@@ -52,119 +52,120 @@ in
     inputs.nix-index-database.nixosModules.default
   ];
 
-config = lib.mkMerge [
-  commonConfig
-  {
-    environment.systemPackages = with pkgs; [
-      keymapp
-      wally-cli
-    ];
-    boot.tmp.useTmpfs = true;
+  config = lib.mkMerge [
+    commonConfig
+    {
       nix.extraOptions = "experimental-features = nix-command flakes pipe-operators parallel-eval";
 
-    users.users.wittano.extraGroups = [ "wheel" ];
-
-    hardware = {
-      trackpoint.emulateWheel = true;
-      keyboard.zsa.enable = true;
-      virtualization.wittano = {
-        enable = true;
-        enableExternalStorage = true;
-      };
-      amd.enable = true; # AMD GPU
-      nfs-client.enable = true; # Local network NFS server
-      samba.wittano.onlyBookmarks = true;
-      bluetooth.wittano.enable = true;
-    };
-
-    programs.kdeconnect.enable = true;
-
-    home-manager.users = {
-      wittano = mkMerge [
-        commonHomeManager
-        {
-          xsession.windowManager.bspwm.monitors = {
-            "HDMI-A-0" = [
-              "I"
-              "II"
-              "III"
-            ];
-            "HDMI-A-1" = [
-              "IV"
-              "V"
-            ];
-          };
-          services.polybar.wittano = {
-            profile = "wittano";
-            monitor = "HDMI-A-0";
-          };
-          systemd.user.tmpfiles.rules = [
-            "d /home/wittano/Downloads 0755 wittano users 7d"
-          ];
-          profile.programming.enable = true;
-          home.packages = with pkgs; [
-            remmina
-            krita
-          ];
-
-          programs = {
-            zed-editor.userSettings = {
-              ui_font_size = mkForce 16;
-              buffer_font_size = mkForce 18;
-            };
-            discord.wittano = {
-              enable = !config.desktop.labwc.enable;
-              enableAutostart = false;
-              type = "discord";
-            };
-            vivaldi.wittano.enableAutostart = true;
-            pomodoro.enable = true;
-            games.enable = true;
-          };
-        }
+      environment.systemPackages = with pkgs; [
+        keymapp
+        wally-cli
       ];
-    };
+      boot.tmp.useTmpfs = true;
 
-    programs = {
-      ffmpeg.enable = true;
-      steam.wittano = enableAutostart // {
-        disk.enable = true;
-      };
-      mihoyo = {
-        enable = true;
-        games = [ "honkai-railway" ];
-      };
-    };
+      users.users.wittano.extraGroups = [ "wheel" ];
 
-    services = {
-      teamviewer.wittano.enable = true;
-      printers.wittano.enableBrother = true;
-      backup.enable = true;
-      displayManager.sddm.wittano.enable = true;
-      backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
-      xserver = {
-        enable = true;
-        exportConfiguration = true;
-        wacom.wittano.enable = true;
-        xrandrHeads = [
+      hardware = {
+        trackpoint.emulateWheel = true;
+        keyboard.zsa.enable = true;
+        virtualization.wittano = {
+          enable = true;
+          enableExternalStorage = true;
+        };
+        amd.enable = true; # AMD GPU
+        nfs-client.enable = true; # Local network NFS server
+        samba.wittano.onlyBookmarks = true;
+        bluetooth.wittano.enable = true;
+      };
+
+      programs.kdeconnect.enable = true;
+
+      home-manager.users = {
+        wittano = mkMerge [
+          commonHomeManager
           {
-            output = "HDMI-A-1";
-            monitorConfig = ''
-              Option "Rotate" "right"
-              Option "PreferredMode" "1920x1080"
-            '';
-          }
-          {
-            primary = true;
-            output = "HDMI-A-0";
-            monitorConfig = ''
-              Option "PreferredMode" "1920x1080"
-            '';
+            xsession.windowManager.bspwm.monitors = {
+              "HDMI-A-0" = [
+                "I"
+                "II"
+                "III"
+              ];
+              "HDMI-A-1" = [
+                "IV"
+                "V"
+              ];
+            };
+            services.polybar.wittano = {
+              profile = "wittano";
+              monitor = "HDMI-A-0";
+            };
+            systemd.user.tmpfiles.rules = [
+              "d /home/wittano/Downloads 0755 wittano users 7d"
+            ];
+            profile.programming.enable = true;
+            home.packages = with pkgs; [
+              remmina
+              krita
+            ];
+
+            programs = {
+              zed-editor.userSettings = {
+                ui_font_size = mkForce 16;
+                buffer_font_size = mkForce 18;
+              };
+              discord.wittano = {
+                enable = !config.desktop.labwc.enable;
+                enableAutostart = false;
+                type = "discord";
+              };
+              vivaldi.wittano.enableAutostart = true;
+              pomodoro.enable = true;
+              games.enable = true;
+            };
           }
         ];
       };
-      boinc.wittano.enable = true;
-    };
-  }
-];
+
+      programs = {
+        ffmpeg.enable = true;
+        steam.wittano = enableAutostart // {
+          disk.enable = true;
+        };
+        mihoyo = {
+          enable = true;
+          games = [ "honkai-railway" ];
+        };
+      };
+
+      services = {
+        teamviewer.wittano.enable = true;
+        printers.wittano.enableBrother = true;
+        backup.enable = true;
+        displayManager.sddm.wittano.enable = true;
+        backup.path = "sftp:backup:/mnt/hdd/backup/nixos";
+        xserver = {
+          enable = true;
+          exportConfiguration = true;
+          wacom.wittano.enable = true;
+          xrandrHeads = [
+            {
+              output = "HDMI-A-1";
+              monitorConfig = ''
+                Option "Rotate" "right"
+                Option "PreferredMode" "1920x1080"
+              '';
+            }
+            {
+              primary = true;
+              output = "HDMI-A-0";
+              monitorConfig = ''
+                Option "PreferredMode" "1920x1080"
+              '';
+            }
+          ];
+        };
+        boinc.wittano.enable = true;
+      };
+    }
+  ];
 }
