@@ -29,7 +29,7 @@ mkMerge [
         max-jobs = cores;
         auto-optimise-store = true;
       };
-      extraOptions = "experimental-features = nix-command flakes pipe-operators parallel-eval";
+      extraOptions = "experimental-features = nix-command flakes pipe-operators";
     };
 
     nixpkgs.config = {

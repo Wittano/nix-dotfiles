@@ -60,6 +60,7 @@ config = lib.mkMerge [
       wally-cli
     ];
     boot.tmp.useTmpfs = true;
+      nix.extraOptions = "experimental-features = nix-command flakes pipe-operators parallel-eval";
 
     users.users.wittano.extraGroups = [ "wheel" ];
 
