@@ -70,6 +70,7 @@ in
         keyboard.zsa.enable = true;
         virtualization.wittano = {
           enable = true;
+          enableWindowsVM = true;
           enableExternalStorage = true;
         };
         amd.enable = true; # AMD GPU
