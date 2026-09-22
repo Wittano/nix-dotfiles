@@ -75,79 +75,80 @@ in
       };
 
       home-manager.users.wittano = {
-            imports = [
-              inputs.catppuccin.homeModules.catppuccin
-              inputs.nixvim.homeModules.nixvim
-              ./../../home-manager
-            ];
+        imports = [
+          inputs.catppuccin.homeModules.catppuccin
+          inputs.nixvim.homeModules.nixvim
+          ./../../home-manager
+        ];
 
-            home = {
-              stateVersion = config.system.stateVersion;
-              packages = with pkgs; [
-                # Utils
-                textsnatcher # Text extractor
+        home = {
+          stateVersion = config.system.stateVersion;
+          packages = with pkgs; [
+            # Utils
+            textsnatcher # Text extractor
 
-                # Folder Dialog menu
-                zenity
+            # Folder Dialog menu
+            zenity
 
-                # Web browser
-                firefox
+            # Web browser
+            firefox
 
-                # Utils
-                eog # Image viewer
-                libreoffice # Office staff
+            # Utils
+            eog # Image viewer
+            libreoffice # Office staff
 
-                # Apps
-                keepassxc # Password manager
+            # Apps
+            keepassxc # Password manager
 
-                # Security
-                keepassxc
-              ];
-            };
+            # Security
+            keepassxc
+          ];
+        };
 
-            programs = {
-              nemo.enable = true;
-              thunderbird.wittano.enable = true;
-              file-roller.enable = true;
-              git.wittano.enable = true;
-              btop.enable = true;
-              ghostty.wittano.enable = true;
-              signal = {
-                enable = true;
-                enableAutostart = true;
-              };
-              joplin.enable = true;
-              telegram = {
-                enable = true;
-                enableAutostart = true;
-              };
-              fish = {
-                wittano = {
-                  enable = true;
-                  enableDirenv = true;
-                };
-                shellAliases.open = "xdg-open";
-              };
-              rofi.wittano = {
-                inherit desktopName;
-
-                enable = true;
-              };
-              mpv.enable = true;
-            };
-
-            qt.wittano.enable = true;
-            gtk.wittano.enable = true;
-
-            catppuccin = {
-              accent = "pink";
-              flavor = "latte";
+        programs = {
+          wireguard.enable = true;
+          nemo.enable = true;
+          thunderbird.wittano.enable = true;
+          file-roller.enable = true;
+          git.wittano.enable = true;
+          btop.enable = true;
+          ghostty.wittano.enable = true;
+          signal = {
+            enable = true;
+            enableAutostart = true;
+          };
+          joplin.enable = true;
+          telegram = {
+            enable = true;
+            enableAutostart = true;
+          };
+          fish = {
+            wittano = {
               enable = true;
+              enableDirenv = true;
             };
+            shellAliases.open = "xdg-open";
+          };
+          rofi.wittano = {
+            inherit desktopName;
 
-            desktop.autostart.enable = true;
+            enable = true;
+          };
+          mpv.enable = true;
+        };
 
-            profile.programming.enable = true;
+        qt.wittano.enable = true;
+        gtk.wittano.enable = true;
+
+        catppuccin = {
+          accent = "pink";
+          flavor = "latte";
+          enable = true;
+        };
+
+        desktop.autostart.enable = true;
+
+        profile.programming.enable = true;
       };
 
       virtualisation.docker.wittano.enable = true;

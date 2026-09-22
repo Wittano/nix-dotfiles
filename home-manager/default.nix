@@ -39,5 +39,6 @@
     ./work.nix
     ./programming.nix
     ./ghostty.nix
+    ./wireguard.nix
   ];
 }

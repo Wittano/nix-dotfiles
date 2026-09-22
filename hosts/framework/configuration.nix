@@ -111,10 +111,13 @@ in
               kdePackages.kdenlive
             ];
 
-            programs.discord.wittano = {
-              enable = true;
-              enableAutostart = true;
-              type = "discord";
+            programs = {
+              discord.wittano = {
+                enable = true;
+                enableAutostart = true;
+                type = "discord";
+              };
+              wireguard.enable = true;
             };
           }
         ];
