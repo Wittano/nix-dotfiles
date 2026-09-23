@@ -13,6 +13,12 @@ let
       coreutils
     ];
     text = ''
+        findAnyVivaldiPWA=$(find "$HOME/.local/share/applications" -iname "vivaldi-*" -type f)
+        if [ "$findAnyVivaldiPWA" == "" ]; then
+            echo "Vivaldi PWA apps weren't found"
+            exit 0
+        fi
+
       for f in "$HOME/.local/share/applications"/vivaldi-*; do
           echo "Replace vivaldi PWA bin path: $f"
 
