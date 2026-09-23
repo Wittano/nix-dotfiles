@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with lib.my;
 let
@@ -14,7 +19,10 @@ in
       default = [ "wittano" ];
     };
     deviceType = mkOption {
-      type = types.enum [ "pc" "laptop" ];
+      type = types.enum [
+        "pc"
+        "laptop"
+      ];
       description = "Type of device which BSPWM configuration is launched. It's required information for polybar profile";
     };
     terminal = mkOption {
@@ -27,12 +35,18 @@ in
   config = mkIf config.desktop.bspwm.enable {
     assertions = (desktop.mkDesktopAssertion config cfg.users) ++ [
       {
-        assertion = (builtins.length (builtins.attrNames config.home-manager.users.wittano.xsession.windowManager.bspwm.monitors)) != 0;
+        assertion =
+          (builtins.length (
+            builtins.attrNames config.home-manager.users.wittano.xsession.windowManager.bspwm.monitors
+          )) != 0;
         message = "BSPWM requires set up list of monitors. You need to set up home-manager.users.{user}.xsession.windowManager.bspwm.monitors";
       }
     ];
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
-      home.packages = with pkgs; [ gsimplecal flameshot ];
+      home.packages = with pkgs; [
+        gsimplecal
+        flameshot
+      ];
 
       programs.nitrogen.wittano.enable = true;
 
@@ -45,7 +59,8 @@ in
         startupPrograms = [
           "wmname compiz"
           "systemctl --user start polybar.service"
-        ] ++ config.home-manager.users.wittano.desktop.autostart.programs;
+        ]
+        ++ config.home-manager.users.wittano.desktop.autostart.programs;
 
         settings = {
           "border_width" = 2;
@@ -135,9 +150,9 @@ in
             "super + shift + q" = "switch-off";
 
             # Audio
-            "super + m" = "amixer sset Master toggle";
-            "super + p" = "amixer sset Master 5%+";
-            "super + o" = "amixer sset Master 5%-";
+            "super + m" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            "super + p" = "pactl set-sink-volume @DEFAULT_SINK@ +5%";
+            "super + o" = "pactl set-sink-volume @DEFAULT_SINK@ -5%";
 
             # Utilities
             "super + shift + p" = "flameshot gui";
