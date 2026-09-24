@@ -369,6 +369,60 @@
         <command>ghostty</command>
       </action>
     </keybind>
+    <keybind key="XF86Explorer">
+        <action name="Execute">
+            <command>nemo</command>
+        </action>
+        <action name="Execute">
+            <command>krusader</command>
+        </action>
+    </keybind>
+    <keybind key="XF86Search">
+        <action name="Execute">
+          <startupnotify>
+            <enabled>true</enabled>
+            <name>rofi</name>
+          </startupnotify>
+          <command>rofi -show drun</command>
+        </action>
+    </keybind>
+    <keybind key="XF86Calculator">
+        <action name="Execute">
+            <command>nemo</command>
+        </action>
+        <action name="Execute">
+            <command>krusader</command>
+        </action>
+    </keybind>
+    <keybind key="XF86Tools">
+        <action name="Execute">
+            <command>spotify</command>
+        </action>
+    </keybind>
+    <keybind key="XF86AudioMute">
+        <action name="Execute">
+            <command>pactl set-sink-mute @DEFAULT_SINK@ toggle</command>
+        </action>
+        <action name="Execute">
+            <command>amixer sset Master toggle</command>
+        </action>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+        <action name="Execute">
+            <command>pactl set-sink-volume @DEFAULT_SINK@ -5%</command>
+        </action>
+        <action name="Execute">
+            <command>amixer sset Master 5%-</command>
+        </action>
+    </keybind>
+    <keybind key="XF86AudioRaiseVolume">
+        <action name="Execute">
+            <command>pactl set-sink-volume @DEFAULT_SINK@ +5%</command>
+        </action>
+        <action name="Execute">
+            <command>amixer sset Master 5%+</command>
+        </action>
+    </keybind>
     <!--    Toggle Maximaize/Fullscreen mode-->
     <keybind key="W-s">
       <action command="ToggleFullscreen" />

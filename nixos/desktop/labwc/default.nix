@@ -164,6 +164,7 @@ in
           unstable.labwc-tweaks
           unstable.labwc-menu-generator
           bluetooth-menu-generator
+          speedcrunch
         ];
       };
     };
