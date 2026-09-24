@@ -9,6 +9,8 @@ with lib.my;
 let
   cfg = config.desktop.bspwm;
   package = pkgs.bspwm;
+  xblacklightPackage = pkgs.acpilight;
+  xblackLightPath = meta.getExe xblacklightPackage;
 in
 {
   options.desktop.bspwm = {
@@ -42,13 +44,32 @@ in
         message = "BSPWM requires set up list of monitors. You need to set up home-manager.users.{user}.xsession.windowManager.bspwm.monitors";
       }
     ];
+
+    environment.systemPackages = lists.optionals (cfg.deviceType == "laptop") [ xblacklightPackage ];
+
+    security.sudo.extraRules = lists.optionals (cfg.deviceType == "laptop") [
+      {
+        users = [ "wittano" ];
+        commands = [
+          {
+            options = [ "NOPASSWD" ];
+            command = "${xblackLightPath} -inc 5";
+          }
+          {
+            options = [ "NOPASSWD" ];
+            command = "${xblackLightPath} -dec 5";
+          }
+        ];
+      }
+    ];
+
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [
         gsimplecal
         flameshot
       ];
 
-      programs.nitrogen.wittano.enable = true;
+      programs.feh.wittano.enable = true;
 
       desktop.autostart.enable = mkForce false;
 
@@ -140,49 +161,76 @@ in
         picom.wittano.enable = true;
         sxhkd = {
           enable = true;
-          keybindings = {
-            # Terminal
-            "super + Return" = "${config.desktop.bspwm.terminal}";
+          keybindings =
+            let
+              audioBinds =
+                if config.services.pipewire.wittano.enable then
+                  {
+                    "super + m" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                    "XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                    "super + p" = "pactl set-sink-volume @DEFAULT_SINK@ +5%";
+                    "XF86AudioRaiseVolume" = "pactl set-sink-volume @DEFAULT_SINK@ +5%";
+                    "super + o" = "pactl set-sink-volume @DEFAULT_SINK@ -5%";
+                    "XF86AudioLowerVolume" = "pactl set-sink-volume @DEFAULT_SINK@ -5%";
+                  }
+                else
+                  {
+                    "super + m" = "amixer sset Master toggle";
+                    "XF86AudioMute" = "amixer sset Master toggle";
+                    "super + p" = "amixer sset Master 5%+";
+                    "XF86AudioRaiseVolume" = "amixer sset Master 5%+";
+                    "super + o" = "amixer sset Master 5%-";
+                    "XF86AudioLowerVolume" = "amixer sset Master 5%-";
+                  };
+              fehBinds = attrsets.optionalAttrs config.home-manager.users.wittano.programs.feh.wittano.enable {
+                "super + r" = "rollWallpaper";
+              };
+              lightnessBind = attrsets.optionalAttrs (cfg.deviceType == "laptop") {
+                "XF86MonBrightnessDown" = "sudo ${xblackLightPath} -dec 5";
+                "XF86MonBrightnessUp" = "sudo ${xblackLightPath} -inc 5";
+              };
+            in
+            {
+              # Terminal
+              "super + Return" = "${config.desktop.bspwm.terminal}";
 
-            # Rofi
-            "super + e" = "rofi -show drun";
-            "super + w" = "rofi -show window";
-            "super + shift + q" = "switch-off";
+              # Rofi
+              "super + e" = "rofi -show drun";
+              "super + w" = "rofi -show window";
+              "super + shift + q" = "switch-off";
 
-            # Audio
-            "super + m" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-            "super + p" = "pactl set-sink-volume @DEFAULT_SINK@ +5%";
-            "super + o" = "pactl set-sink-volume @DEFAULT_SINK@ -5%";
+              # Utilities
+              "super + shift + p" = "flameshot gui";
+              "Print" = "flameshot gui";
+              "super + shift + l" = meta.getExe pkgs.alock;
 
-            # Utilities
-            "super + shift + p" = "flameshot gui";
-            "super + r" = "rollWallpaper";
-            "super + shift + l" = meta.getExe pkgs.alock;
+              # bspwm hotkeys
+              "super + alt + r" = "bspc wm -r";
+              "super + {_,shift + }q" = "bspc node -{c,k}";
+              "super + Tab" = "bspc desktop -l next";
+              "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
+              "super + space" = "bspc node -s biggest";
 
-            # bspwm hotkeys
-            "super + alt + r" = "bspc wm -r";
-            "super + {_,shift + }q" = "bspc node -{c,k}";
-            "super + Tab" = "bspc desktop -l next";
-            "super + y" = "bspc node newest.marked.local -n newest.!automatic.local";
-            "super + space" = "bspc node -s biggest";
+              # state/flags
+              "super + {t,shift + t,s,f}" = "bspc node -t {tiled ,pseudo_tiled ,floating ,fullscreen }";
 
-            # state/flags
-            "super + {t,shift + t,s,f}" = "bspc node -t {tiled ,pseudo_tiled ,floating ,fullscreen }";
+              # focus/swap
+              "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
+              "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
+              "super + {grave,Tab}" = "bspc {node,desktop} -f last";
+              "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
 
-            # focus/swap
-            "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
-            "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
-            "super + {grave,Tab}" = "bspc {node,desktop} -f last";
-            "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
+              # move/resize
+              "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
+              "super + alt + shift + {h,j,k,l}" = "bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
+              "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
 
-            # move/resize
-            "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
-            "super + alt + shift + {h,j,k,l}" = "bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}";
-            "super + {Left,Down,Up,Right}" = "bspc node -v {-20 0,0 20,0 -20,20 0}";
-
-            # sxhkd
-            "super + esc" = "pkill -USR1 sxhkd";
-          };
+              # sxhkd
+              "super + esc" = "pkill -USR1 sxhkd";
+            }
+            // audioBinds
+            // fehBinds
+            // lightnessBind;
         };
       };
     };
