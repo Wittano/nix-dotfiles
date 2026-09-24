@@ -388,10 +388,7 @@
     </keybind>
     <keybind key="XF86Calculator">
         <action name="Execute">
-            <command>nemo</command>
-        </action>
-        <action name="Execute">
-            <command>krusader</command>
+            <command>speedcrunch</command>
         </action>
     </keybind>
     <keybind key="XF86Tools">
