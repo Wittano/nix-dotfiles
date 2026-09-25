@@ -218,7 +218,7 @@ in
               "super + {_,shift + }{h,j,k,l}" = "bspc node -{f,s} {west,south,north,east}";
               "super + bracket{left,right}" = "bspc desktop -f {prev,next}.local";
               "super + {grave,Tab}" = "bspc {node,desktop} -f last";
-              "super + {_,shift + }{1-5,6-0}" = "bspc {desktop -f,node -d} '^{1-5,1-5}'";
+              "super + {_,shift + }{1-5}" = "bspc {desktop -f,node -d} '^{1-5}'";
 
               # move/resize
               "super + alt + {h,j,k,l}" = "bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}";
