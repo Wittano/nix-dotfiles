@@ -22,6 +22,7 @@ with lib;
         "ansible"
         "terraform"
         "make"
+        "xml"
       ];
 
       extraPackages = with pkgs; [
