@@ -132,7 +132,6 @@ in
             enable = true;
             enableAutostart = true;
           };
-          joplin.enable = true;
           telegram = {
             enable = true;
             enableAutostart = true;

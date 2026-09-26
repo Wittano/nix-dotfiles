@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 {
@@ -33,8 +34,6 @@ with lib;
         scr = "sudo systemctl restart";
         sdb = "systemd-analyze blame";
       };
-      joplin.enable = true;
-      signal.enable = true;
     };
 
     gtk.gtk3.bookmarks = [
