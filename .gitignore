@@ -175,3 +175,4 @@ secrets/*.json
 nixos/desktop/xmonad/src/Main
 
 .st*
+*.out
