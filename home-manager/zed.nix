@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, unstable
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  unstable,
+  ...
 }:
 with lib;
 {
@@ -20,6 +21,7 @@ with lib;
         "log"
         "ansible"
         "terraform"
+        "make"
       ];
 
       extraPackages = with pkgs; [
@@ -32,6 +34,7 @@ with lib;
         yaml-language-server
         python314
         haskellPackages.cabal-gild
+        gnumake
       ];
 
       userSettings = {
