@@ -81,6 +81,21 @@ in
           ./../../home-manager
         ];
 
+        xsession.windowManager.bspwm.monitors = {
+          "HDMI-A-0" = [
+            "I"
+            "II"
+            "III"
+            "IV"
+            "V"
+          ];
+        };
+
+        services.polybar.wittano = {
+          monitor = "HDMI-1";
+          profile = "laptop";
+        };
+
         home = {
           stateVersion = config.system.stateVersion;
           packages = with pkgs; [

@@ -81,6 +81,8 @@ in
 
       programs.kdeconnect.enable = true;
 
+      desktop.bspwm.deviceType = "pc";
+
       home-manager.users = {
         wittano = mkMerge [
           commonHomeManager
