@@ -19,13 +19,11 @@
     packages = with pkgs; [
       # Utils
       textsnatcher # Text extractor
-      sniffnet # Network monitoring
 
       # Folder Dialog menu
       zenity
 
       # Web browser
-      vivaldi
       firefox
 
       # Utils
@@ -34,16 +32,7 @@
 
       # Apps
       keepassxc # Password manager
-      xournalpp # Handwritten notebook
-      darktable # Photo editing
       obsidian
-      inkscape # Vector images editor
-      kdePackages.kdenlive
-      obs-studio
-      audacity
-
-      # Security
-      keepassxc
     ];
   };
 

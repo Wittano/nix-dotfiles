@@ -107,6 +107,11 @@ in
             home.packages = with pkgs; [
               remmina
               krita
+              inkscape # Vector images editor
+              kdePackages.kdenlive
+              obs-studio
+              audacity
+              xournalpp # Handwritten notebook
             ];
 
             programs = {
