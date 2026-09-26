@@ -140,11 +140,14 @@ in
         printers.wittano.enable = true;
       };
 
-      programs.mihoyo = {
-        enable = true;
-        games = [
-          "honkai-railway"
-        ];
+      programs = {
+        nh.wittano.enable = true;
+        mihoyo = {
+          enable = true;
+          games = [
+            "honkai-railway"
+          ];
+        };
       };
     }
   ];

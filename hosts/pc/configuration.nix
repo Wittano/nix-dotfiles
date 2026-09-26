@@ -135,6 +135,7 @@ in
       };
 
       programs = {
+        hn.wittano.enable = true;
         ffmpeg.enable = true;
         steam.wittano = enableAutostart // {
           disk.enable = true;

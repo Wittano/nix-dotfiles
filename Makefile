@@ -1,12 +1,18 @@
 activate:
+ifneq (,$(windcard /run/current-system/sw/bin/nh))
 	NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) --specialisation $(THEME_MODE)-theme || systemctl restart home-manager-$(shell whoami).service
+else
+	nh os switch --cores $(shell nproc) --no-update-lock-file --specialisation $(THEME_MODE)-theme .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
+endif
 
 clean:
 ifneq (,$(windcard result))
 	unlink result
 endif
+ifneq (,$(windcard /run/current-system/sw/bin/nh))
 	nix-store --gc
 	nix-collect-garbage --delete-older-than 7d
+endif
 	nh clean all
 
 check: xmonad-check qtile-check
@@ -56,9 +62,3 @@ restore-home:
 xmonad-check:
 	cabal update
 	cd ./nixos/desktop/xmonad && cabal check && cabal build && cabal test
-
-try-build: check
-	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild try-build --flake .#$(PROFILE)
-
-build: check unlink-openbox
-	NIX_BUILD_CORES=$(shell nproc) nixos-rebuild build --flake .#$(PROFILE)
