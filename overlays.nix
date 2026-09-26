@@ -7,14 +7,18 @@ let
   wittanoOverlay = _: _: privateRepo;
 
   haskellPackagesOverlay = final: prev: {
-    haskellPackages = prev.haskellPackages.extend
-      (self: super: {
+    haskellPackages = prev.haskellPackages.extend (
+      self: super: {
         xmonad-extras = (self.callHackage "xmonad-extras" "0.17.1" { }).overrideAttrs {
           patches = [ ./patches/xmonad-extras.patch ];
         };
-      });
+      }
+    );
   };
-  commonInputs = with pkgs; [ libnotify coreutils ];
+  commonInputs = with pkgs; [
+    libnotify
+    coreutils
+  ];
 
   packagesPatches = final: prev: {
     timeNotify = pkgs.writeShellApplication {
@@ -35,13 +39,15 @@ let
 
     jetbrains = prev.jetbrains // {
       goland = prev.jetbrains.goland.overrideAttrs (attrs: {
-        postFixup = (attrs.postFixup or "") + lib.optionalString final.stdenv.isLinux ''
-          if [ -f $out/goland/plugins/go-plugin/lib/dlv/linux/dlv ]; then
-            rm $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-          fi
+        postFixup =
+          (attrs.postFixup or "")
+          + lib.optionalString final.stdenv.hostPlatform.isLinux ''
+            if [ -f $out/goland/plugins/go-plugin/lib/dlv/linux/dlv ]; then
+              rm $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
+            fi
 
-          ln -s ${final.delve}/bin/dlv $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
-        '';
+            ln -s ${final.delve}/bin/dlv $out/goland/plugins/go-plugin/lib/dlv/linux/dlv
+          '';
       });
     };
   };
