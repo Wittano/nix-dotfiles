@@ -96,18 +96,21 @@
         pc-qtile = lib.my.hosts.mkHost "pc" "qtile";
         pc-labwc = lib.my.hosts.mkHost "pc" "labwc";
         pc-bspwm = lib.my.hosts.mkHost "pc" "bspwm";
+        pc-mangowc = lib.my.hosts.mkHost "pc" "mangowc";
 
         framework-xmonad = lib.my.hosts.mkHost "framework" "xmonad";
         framework-openbox = lib.my.hosts.mkHost "framework" "openbox";
         framework-qtile = lib.my.hosts.mkHost "framework" "qtile";
         framework-labwc = lib.my.hosts.mkHost "framework" "labwc";
         framework-bspwm = lib.my.hosts.mkHost "framework" "bspwm";
+        framework-mangowc = lib.my.hosts.mkHost "framework" "mangowc";
 
         stepps-xmonad = lib.my.hosts.mkHost "stepps" "xmonad";
         stepps-openbox = lib.my.hosts.mkHost "stepps" "openbox";
         stepps-qtile = lib.my.hosts.mkHost "stepps" "qtile";
         stepps-labwc = lib.my.hosts.mkHost "stepps" "labwc";
         stepps-bspwm = lib.my.hosts.mkHost "stepps" "bspwm";
+        stepps-mangowc = lib.my.hosts.mkHost "stepps" "mangowc";
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };
