@@ -112,6 +112,7 @@ in
             ];
 
             programs = {
+              spotify.enable = true;
               feishin.enable = true;
               discord.wittano = {
                 enable = true;
