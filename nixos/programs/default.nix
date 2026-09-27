@@ -6,5 +6,6 @@
     ./steam.nix
     ./krusader.nix
     ./ffmpeg.nix
+    ./alock.nix
   ];
 }

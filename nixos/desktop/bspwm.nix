@@ -34,7 +34,7 @@ in
     };
   };
 
-  config = mkIf config.desktop.bspwm.enable {
+  config = mkIf config.desktop.bspwm.enable rec {
     assertions = (desktop.mkDesktopAssertion config cfg.users) ++ [
       {
         assertion =
@@ -62,6 +62,8 @@ in
         ];
       }
     ];
+
+    programs.alock.enable = true;
 
     home-manager.users = desktop.mkMultiUserHomeManager cfg.users {
       home.packages = with pkgs; [
@@ -189,6 +191,9 @@ in
                 "XF86MonBrightnessDown" = "sudo ${xblackLightPath} -dec 5";
                 "XF86MonBrightnessUp" = "sudo ${xblackLightPath} -inc 5";
               };
+              alockBinds = attrsets.optionalAttrs (cfg.deviceType == "laptop" && programs.alock.enable) {
+                "super + shift + l" = "nixos-alock";
+              };
             in
             {
               # Terminal
@@ -202,7 +207,6 @@ in
               # Utilities
               "super + shift + p" = "flameshot gui";
               "Print" = "flameshot gui";
-              "super + shift + l" = meta.getExe pkgs.alock;
 
               # bspwm hotkeys
               "super + alt + r" = "bspc wm -r";
@@ -230,7 +234,8 @@ in
             }
             // audioBinds
             // fehBinds
-            // lightnessBind;
+            // lightnessBind
+            // alockBinds;
         };
       };
     };

@@ -63,7 +63,7 @@ def get_keybindings(groups: List[Group]) -> List[Key]:
         Key(
             [SUPER_KEY, CONTROL_KEY],
             "l",
-            lazy.spawn("alock"),
+            lazy.spawn("nixos-alock"),
             desc="Lock screen",
         ),
         Key(

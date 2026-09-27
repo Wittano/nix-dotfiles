@@ -51,7 +51,6 @@ in
       };
       home.packages = with pkgs; [
         flameshot
-        alock
       ];
     };
 
@@ -59,6 +58,8 @@ in
       QTILE_THEME = "catppuccin_${config.catppuccin.flavor}";
       QTILE_PROFILE = config.desktop.qtile.profile;
     };
+
+    programs.alock.enable = true;
 
     services.xserver = {
       enable = true;
