@@ -5,34 +5,6 @@
   ...
 }:
 with lib;
-let
-  colors = {
-    latte = {
-      red = "0xd20f39";
-      sky = "0x04a5e5";
-      green = "0x40a02b";
-      yellow = "0xdf8e1d";
-      mauve = "0x8839ef";
-      overlay = "0x9ca0b0";
-    };
-    macchiato = {
-      red = "0xed8796";
-      sky = "0x91d7e3";
-      green = "0xa6da95";
-      yellow = "0xeed49f";
-      mauve = "0xc6a0f6";
-      overlay = "0x6e738d";
-    };
-  };
-
-  currentFlavor = config.catppuccin.flavor;
-  currentColor = colors."${currentFlavor}";
-
-  autostartPrograms =
-    config.home-manager.users.wittano.desktop.autostart.programs
-    |> map (x: "exec-once=${x}")
-    |> builtins.concatStringsSep "\n";
-in
 {
   options = {
     desktop.mangowc.enable = mkEnableOption "wangowm - tilling windows manager powerers by Wayland";
