@@ -40,5 +40,6 @@
     ./programming.nix
     ./ghostty.nix
     ./wireguard.nix
+    ./feishin.nix
   ];
 }

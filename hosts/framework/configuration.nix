@@ -112,6 +112,7 @@ in
             ];
 
             programs = {
+              feishin.enable = true;
               discord.wittano = {
                 enable = true;
                 enableAutostart = true;

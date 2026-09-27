@@ -121,6 +121,7 @@ in
         };
 
         programs = {
+          feishin.enable = true;
           wireguard.enable = true;
           nemo.enable = true;
           thunderbird.wittano.enable = true;
