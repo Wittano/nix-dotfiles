@@ -7,16 +7,54 @@ on:
   push:
     branches: [main]
 jobs:
-  build:
-    name: Build Nix targets
+  packages:
+    name: Build packages
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        packages:
+          - nixos-blur-playmouth
+          - bluetooth-menu-generator
     steps:
       - uses: actions/checkout@v6.0.3
       - uses: DeterminateSystems/nix-installer-action@v22
-      - name: Check Nix flake inputs
-        uses: DeterminateSystems/flake-checker-action@v12
-        with:
-          send-statistics: false
-          fail-mode: true
-      - name: Check repository
-        run: nix flake check --extra-experimental-features pipe-operators
+      - name: Build custom packages from local repository
+        run: nix build .#packages.x86_64-linux.default.${{ matrix.packages }} --option extra-experimental-features pipe-operators
+  overlays:
+    name: Build packages overrided in private overlay
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        packages:
+          - haskellPackages.xmonad-extras
+          - timeNotify
+          - showVolume
+          - jetbrains.goland
+    steps:
+      - uses: actions/checkout@v6.0.3
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - name: Build packages from overlay
+        run: nix build .#nixosConfigurations.pc-labwc.pkgs.${{ matrix.packages }} --option extra-experimental-features pipe-operators
+  nixos:
+    name: Try build NixOS configuration
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        nixosConfiguration:
+          - pc-bspwm
+          - pc-labwc
+          - pc-qtile
+          - pc-xmonad
+          - stepps-bspwm
+          - stepps-labwc
+          - stepps-qtile
+          - stepps-xmonad
+          - framework-bspwm
+          - framework-labwc
+          - framework-qtile
+          - framework-xmonad
+    steps:
+      - uses: actions/checkout@v6.0.3
+      - uses: cachix/install-nix-action@v31
+      - name: Try build nixos configuration
+        run: nix run nixpkgs#nixos-rebuild -- build --option extra-experimental-features pipe-operators --flake .#${{ matrix.nixosConfiguration }}

@@ -88,8 +88,6 @@
       );
     in
     {
-      lib = lib.my;
-
       nixosConfigurations = {
         pc-xmonad = lib.my.hosts.mkHost "pc" "xmonad";
         pc-openbox = lib.my.hosts.mkHost "pc" "openbox";
@@ -108,6 +106,10 @@
         stepps-qtile = lib.my.hosts.mkHost "stepps" "qtile";
         stepps-labwc = lib.my.hosts.mkHost "stepps" "labwc";
         stepps-bspwm = lib.my.hosts.mkHost "stepps" "bspwm";
+      };
+      packages.${system} = {
+        default = pkgs.callPackage ./pkgs { };
+        inherit pkgs;
       };
       devShells.${system}.default = unstable.callPackage ./shell.nix { };
       templates = import ./templates.nix { inherit lib; };
