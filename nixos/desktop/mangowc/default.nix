@@ -18,15 +18,7 @@ with lib;
         cliphist.enable = true;
         dunst.wittano.enable = mkForce false;
         mako.wittano.enable = true;
-        wlsunset = {
-          enable = true;
-          latitude = "50.50";
-          longitude = "23.41";
-          temperature = {
-            day = 6000;
-            night = 4300;
-          };
-        };
+        wlsunset.wittano.enable = true;
       };
 
       home.packages = with pkgs; [
@@ -36,7 +28,6 @@ with lib;
         slurp
         grim
         wlrctl
-        speedcrunch
       ];
 
       xdg.configFile."mango/config.conf".text = ''
