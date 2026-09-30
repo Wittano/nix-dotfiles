@@ -5,6 +5,29 @@
   ...
 }:
 with lib;
+let
+  colors = {
+    latte = {
+      red = "0xd20f39";
+      sky = "0x04a5e5";
+      green = "0x40a02b";
+      yellow = "0xdf8e1d";
+      mauve = "0x8839ef";
+      overlay = "0x9ca0b0";
+    };
+    macchiato = {
+      red = "0xed8796";
+      sky = "0x91d7e3";
+      green = "0xa6da95";
+      yellow = "0xeed49f";
+      mauve = "0xc6a0f6";
+      overlay = "0x6e738d";
+    };
+  };
+
+  currentFlavor = config.catppuccin.flavor;
+  currentColor = colors."${currentFlavor}";
+in
 {
   options = {
     desktop.mangowc.enable = mkEnableOption "wangowm - tilling windows manager powerers by Wayland";
@@ -49,7 +72,7 @@ with lib;
         shadows_blur = 15
         shadows_position_x = 0
         shadows_position_y = 0
-        shadowscolor= 0x000000ff
+        shadowscolor= ${currentColor.overlay}
 
         border_radius=6
         no_radius_when_single=0
@@ -148,13 +171,13 @@ with lib;
         scratchpad_width_ratio=0.8
         scratchpad_height_ratio=0.9
         borderpx=4
-        rootcolor=0x201b14ff
-        bordercolor=0x444444ff
-        focuscolor=0xc9b890ff
+        rootcolor=${currentColor.yellow}
+        bordercolor=${currentColor.sky}
+        focuscolor=${currentColor.green}
         maximizescreencolor=0x89aa61ff
-        urgentcolor=0xad401fff
+        urgentcolor=${currentColor.red}
         scratchpadcolor=0x516c93ff
-        globalcolor=0xb153a7ff
+        globalcolor=${currentColor.mauve}
         overlaycolor=0x14a57cff
 
         # layout support:
