@@ -27,6 +27,11 @@ let
 
   currentFlavor = config.catppuccin.flavor;
   currentColor = colors."${currentFlavor}";
+
+  autostartPrograms =
+    config.home-manager.users.wittano.desktop.autostart.programs
+    |> map (x: "exec-once=${x}")
+    |> builtins.concatStringsSep "\n";
 in
 {
   options = {
@@ -308,7 +313,8 @@ in
         # layer rule
         layerrule=animation_type_open:zoom,layer_name:rofi
         layerrule=animation_type_close:zoom,layer_name:rofi
-      '';
+      ''
+      + autostartPrograms;
     };
   };
 }
