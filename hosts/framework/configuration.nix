@@ -112,6 +112,7 @@ in
             ];
 
             programs = {
+              virutal-keyboard.enable = true;
               spotify.enable = true;
               feishin.enable = true;
               discord.wittano = {
