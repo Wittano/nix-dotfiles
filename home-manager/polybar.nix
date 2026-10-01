@@ -217,6 +217,7 @@ in
           format-foreground = colors.wifi;
           label-connected = " %upspeed%  %downspeed%";
           label-connected-foreground = colors.wifi;
+          ramp-signal-0 = "";
 
           format-disconnected = "None";
           format-disconnected-foreground = colors.wifi;
