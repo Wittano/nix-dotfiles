@@ -160,7 +160,6 @@ in
       services = {
         polybar.wittano.enable = true;
         redshift.wittano.enable = true;
-        picom.wittano.enable = true;
         sxhkd = {
           enable = true;
           keybindings =
