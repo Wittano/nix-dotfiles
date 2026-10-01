@@ -2,7 +2,7 @@
 with lib;
 with lib.my;
 let
-  fontSize = "12";
+  fontSize = "14";
   colors = {
     background = "#212337";
     background-alt = "#444";
@@ -107,15 +107,34 @@ in
           module-margin-left = 1;
           module-margin-right = 2;
 
-          font-0 = "fixed:pixelsize=10;1";
-          font-1 = "unifont:fontformat=truetype:size=8:antialias=false;0";
-          font-2 = "siji:pixelsize=10;1";
-          font-3 = "all-the-icons:pixelsize=10";
-          font-4 = "Font Awesome 5 Brands:pixelsize=10";
-          font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=10";
-
-          modules-left = [ "logo" "bspwm" "xwindow" ];
-          modules-right = [ "kernel" "sep" "filesystem" "sep" "alsa" "sep" "memory" "sep" "cpu" "sep" "wifi-laptop" "sep" "battery" "sep" "date" ];
+          font-0 = "fixed:pixelsize=${fontSize};1";
+          font-1 = "unifont:fontformat=truetype:size=${fontSize}:antialias=false;0";
+          font-2 = "siji:pixelsize=${fontSize};1";
+          font-3 = "all-the-icons:pixelsize=${fontSize}";
+          font-4 = "Font Awesome 5 Brands:pixelsize=${fontSize}";
+          font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=${fontSize}";
+          modules-left = [
+            "logo"
+            "bspwm"
+            "xwindow"
+          ];
+          modules-right = [
+            "kernel"
+            "sep"
+            "filesystem"
+            "sep"
+            "alsa"
+            "sep"
+            "memory"
+            "sep"
+            "cpu"
+            "sep"
+            "wifi-laptop"
+            "sep"
+            "battery"
+            "sep"
+            "date"
+          ];
 
           tray-position = "right";
           tray-padding = 2;
