@@ -41,5 +41,6 @@
     ./ghostty.nix
     ./wireguard.nix
     ./feishin.nix
+    ./virutal-keyboard.nix
   ];
 }
