@@ -183,7 +183,7 @@ in
         urgentcolor=${currentColor.red}
         scratchpadcolor=0x516c93ff
         globalcolor=${currentColor.mauve}
-        overlaycolor=0x14a57cff
+        overlaycolor=${currentColor.overlay}
 
         # layout support:
         # tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
