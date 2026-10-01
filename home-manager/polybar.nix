@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with lib.my;
 let
@@ -26,13 +31,15 @@ in
   options.services.polybar.wittano = {
     enable = mkEnableOption "Enable custom polybar config";
     profile = mkOption {
-      type = types.enum [ "wittano" "laptop" ];
+      type = types.enum [
+        "wittano"
+        "laptop"
+      ];
       description = "Select polybar profile";
     };
     wifiAdapter = mkOption {
       type = types.str;
       description = "wifi adapter on the laptop";
-      default = "wlp3s0";
     };
     monitor = mkOption {
       type = types.str;
@@ -43,8 +50,12 @@ in
 
   config = mkIf config.services.polybar.wittano.enable {
     fonts.fontconfig.enable = true;
-    home.packages = with pkgs; [ font-awesome font-awesome_5 siji emacs-all-the-icons-fonts ];
-
+    home.packages = with pkgs; [
+      font-awesome
+      font-awesome_5
+      siji
+      emacs-all-the-icons-fonts
+    ];
 
     catppuccin.polybar.enable = false;
 
@@ -78,8 +89,26 @@ in
           font-5 = "Font Awesome 5 Brands:pixelsize=${fontSize}";
           font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=${fontSize}";
 
-          modules-left = [ "logo" "bspwm" "xwindow" ];
-          modules-right = [ "kernel" "sep" "filesystem" "sep" "alsa" "sep" "memory" "sep" "cpu" "sep" "wlan" "sep" "date" ];
+          modules-left = [
+            "logo"
+            "bspwm"
+            "xwindow"
+          ];
+          modules-right = [
+            "kernel"
+            "sep"
+            "filesystem"
+            "sep"
+            "alsa"
+            "sep"
+            "memory"
+            "sep"
+            "cpu"
+            "sep"
+            "wlan"
+            "sep"
+            "date"
+          ];
 
           tray-position = "right";
           tray-padding = 2;
@@ -113,6 +142,7 @@ in
           font-3 = "all-the-icons:pixelsize=${fontSize}";
           font-4 = "Font Awesome 5 Brands:pixelsize=${fontSize}";
           font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=${fontSize}";
+
           modules-left = [
             "logo"
             "bspwm"
