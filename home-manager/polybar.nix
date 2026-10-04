@@ -40,6 +40,7 @@ in
     wifiAdapter = mkOption {
       type = types.str;
       description = "wifi adapter on the laptop";
+      default = "";
     };
     monitor = mkOption {
       type = types.str;
@@ -49,6 +50,17 @@ in
   };
 
   config = mkIf config.services.polybar.wittano.enable {
+    assertions = [
+      {
+        assertion =
+          !(
+            config.services.polybar.wittano.profile == "laptop"
+            && config.services.polybar.wittano.wifiAdapter == ""
+          );
+        message = "Missing requires wifiAdapter to configure Polybar";
+      }
+    ];
+
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
       font-awesome

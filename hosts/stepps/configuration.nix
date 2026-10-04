@@ -94,6 +94,7 @@ in
         services.polybar.wittano = {
           monitor = "HDMI-1";
           profile = "laptop";
+          wifiAdapter = "wlan0";
         };
 
         home = {
