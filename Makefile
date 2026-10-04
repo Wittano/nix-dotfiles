@@ -5,6 +5,15 @@ else
 	nh os switch --cores $(shell nproc) --no-update-lock-file --specialisation $(THEME_MODE)-theme .#$(PROFILE) || systemctl restart home-manager-$(shell whoami).service
 endif
 
+activate-wayland:
+ifneq (,$(windcard /run/current-system/sw/bin/nh))
+		NIX_BUILD_CORES=$(shell nproc) sudo nixos-rebuild switch --flake .#$(PROFILE) --specialisation $(THEME_MODE)-theme
+else
+		nh os switch --cores $(shell nproc) --no-update-lock-file --specialisation $(THEME_MODE)-theme .#$(PROFILE)
+endif
+	rm -rf ~/.config/tint2.backup || echo "Missing expected tint2 backup"
+	sudo systemctl restart display-manager.service
+
 clean:
 ifneq (,$(windcard result))
 	unlink result
