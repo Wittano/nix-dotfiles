@@ -111,7 +111,6 @@ in
               krita
               inkscape # Vector images editor
               kdePackages.kdenlive
-              obs-studio
               audacity
               xournalpp # Handwritten notebook
             ];
@@ -135,6 +134,7 @@ in
       };
 
       programs = {
+        obs-studio.wittano.enable = true;
         nh.wittano.enable = true;
         ffmpeg.enable = true;
         steam.wittano = enableAutostart // {

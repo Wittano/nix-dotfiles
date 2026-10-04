@@ -188,7 +188,10 @@ in
 
     services = {
       displayManager.sddm.wayland.enable = true;
-      xserver.desktopManager.xfce.waylandSessionCompositor = "labwc --startup";
+      xserver = {
+        enable = mkForce false;
+        desktopManager.xfce.waylandSessionCompositor = "labwc --startup";
+      };
     };
   };
 }

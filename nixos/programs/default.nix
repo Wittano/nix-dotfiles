@@ -2,6 +2,7 @@
 {
   imports = [
     ./mihoyo.nix
+    ./obs.nix
     ./nh.nix
     ./steam.nix
     ./krusader.nix
