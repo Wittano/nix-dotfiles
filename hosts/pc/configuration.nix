@@ -113,6 +113,7 @@ in
               kdePackages.kdenlive
               audacity
               xournalpp # Handwritten notebook
+              wget-2-zim # Download website to ZIM file
             ];
 
             programs = {
