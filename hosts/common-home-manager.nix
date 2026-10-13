@@ -32,11 +32,11 @@
 
       # Apps
       keepassxc # Password manager
-      obsidian
     ];
   };
 
   programs = {
+    joplin.enable = true;
     nemo.enable = true;
     thunderbird.wittano.enable = true;
     file-roller.enable = true;
