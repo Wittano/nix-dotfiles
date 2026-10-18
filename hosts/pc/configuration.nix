@@ -75,7 +75,7 @@ in
         };
         amd.enable = true; # AMD GPU
         nfs-client.enable = true; # Local network NFS server
-        samba.wittano.onlyBookmarks = true;
+        samba.wittano.mountAsSystem = true;
         bluetooth.wittano.enable = true;
       };
 
