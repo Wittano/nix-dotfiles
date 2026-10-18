@@ -79,7 +79,10 @@ in
         bluetooth.wittano.enable = true;
       };
 
-      programs.kdeconnect.enable = true;
+      programs = {
+        kdeconnect.enable = true;
+        video-edititng.enable = true;
+      };
 
       desktop.bspwm.deviceType = "pc";
 
@@ -110,8 +113,6 @@ in
               remmina
               krita
               inkscape # Vector images editor
-              kdePackages.kdenlive
-              audacity
               xournalpp # Handwritten notebook
               wget-2-zim # Download website to ZIM file
             ];

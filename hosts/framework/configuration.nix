@@ -107,8 +107,6 @@ in
 
             home.packages = with pkgs; [
               krita
-              audacity
-              kdePackages.kdenlive
             ];
 
             programs = {
@@ -144,6 +142,7 @@ in
       };
 
       programs = {
+        video-edititng.enable = true;
         nh.wittano.enable = true;
         mihoyo = {
           enable = true;

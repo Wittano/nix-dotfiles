@@ -8,5 +8,7 @@
     ./krusader.nix
     ./ffmpeg.nix
     ./alock.nix
+    ./python.nix
+    ./video-editing.nix
   ];
 }
