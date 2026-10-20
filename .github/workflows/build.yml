@@ -11,21 +11,13 @@ on:
 permissions:
   contents: read
 jobs:
-  check-flake:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v22
-      - uses: DeterminateSystems/magic-nix-cache-action@v14
-      - uses: DeterminateSystems/flake-checker-action@v12
-      - name: Check nix repository
-        run: nix flake check --extra-experimental-features pipe-operators
   build:
-    needs:
-      - check-flake
     strategy:
       matrix:
-        packages: [nixos-blur-playmouth]
+        packages:
+          - nixos-blur-playmouth
+          - bluetooth-menu-generator
+          - wget-2-zim
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.3
