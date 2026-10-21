@@ -53,6 +53,7 @@ in
         };
       };
       programs = {
+        waypaper.enable = true;
         waybar = {
           enable = true;
           systemd.enable = true;
@@ -143,7 +144,6 @@ in
         autostart = [
           "wlr-randr --output HDMI-A-1 --transform normal --pos 1080,0 --preferred --output HDMI-A-2 --right-of HDMI-A-1 --transform 270 --pos 0,0"
           "wl-paste --watch cliphist store &"
-          "waypaper --restore &"
         ]
         ++ autostartPrograms;
       };
@@ -154,7 +154,6 @@ in
 
       home = {
         packages = with pkgs; [
-          waypaper
           swaybg
           wlr-randr
           slurp
