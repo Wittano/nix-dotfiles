@@ -1,0 +1,381 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+let
+  colors = {
+    latte = {
+      red = "0xd20f39";
+      sky = "0x04a5e5";
+      green = "0x40a02b";
+      yellow = "0xdf8e1d";
+      mauve = "0x8839ef";
+      overlay = "0x9ca0b0";
+    };
+    macchiato = {
+      red = "0xed8796";
+      sky = "0x91d7e3";
+      green = "0xa6da95";
+      yellow = "0xeed49f";
+      mauve = "0xc6a0f6";
+      overlay = "0x6e738d";
+    };
+  };
+
+  currentFlavor = config.catppuccin.flavor;
+  currentColor = colors."${currentFlavor}";
+
+  autostartPrograms =
+    config.home-manager.users.wittano.desktop.autostart.programs
+    |> map (x: "exec-once=${x}")
+    |> builtins.concatStringsSep "\n";
+
+  xblacklightPackage = pkgs.acpilight;
+  xblackLightPath = meta.getExe xblacklightPackage;
+in
+{
+  options = {
+    desktop.mangowc = {
+      enable = mkEnableOption "wangowm - tilling windows manager powerers by Wayland";
+      deviceType = mkOption {
+        type = types.enum [
+          "laptop"
+          "pc"
+        ];
+        description = "Type of device which Mango configuration is launched";
+      };
+    };
+  };
+
+  config = mkIf config.desktop.mangowc.enable {
+    programs.mangowc.enable = true;
+
+    security.sudo.extraRules = [
+      {
+        users = [ "wittano" ];
+        commands = [
+          {
+            options = [ "NOPASSWD" ];
+            command = "${xblackLightPath} -inc 5";
+          }
+          {
+            options = [ "NOPASSWD" ];
+            command = "${xblackLightPath} -dec 5";
+          }
+        ];
+      }
+    ];
+
+    home-manager.users.wittano = {
+      services = {
+        cliphist.enable = true;
+        dunst.wittano.enable = mkForce false;
+        mako.wittano.enable = true;
+        wlsunset.wittano.enable = true;
+      };
+
+      home.packages = with pkgs; [
+        wlr-randr
+        slurp
+        grim
+        wlrctl
+      ];
+
+      programs = {
+        virutal-keyboard.enable = mkForce false;
+        waypaper.enable = true;
+      };
+
+      xdg.configFile."mango/config.conf".text =
+        let
+
+          functionalKeyBinds =
+            if config.services.pipewire.wittano.enable then
+              ''
+                bind=super,m,spawn,pactl set-sink-mute @DEFAULT_SINK@ toggle
+                bind=XF86AudioMute,spawn,pactl set-sink-mute @DEFAULT_SINK@ toggle
+                bind=super,p,spawn,pactl set-sink-volume @DEFAULT_SINK@ +5%
+                bind=XF86AudioRaiseVolume,spawn,pactl set-sink-volume @DEFAULT_SINK@ +5%
+                bind=super,o,spawn,pactl set-sink-volume @DEFAULT_SINK@ -5%
+                bind=XF86AudioLowerVolume,spawn,pactl set-sink-volume @DEFAULT_SINK@ -5%
+              ''
+            else
+              ''
+                bind=super,m,spawn,amixer sset Master toggle
+                bind=XF86AudioMute,spawn,amixer sset Master toggle
+                bind=super,p,spawn,amixer sset Master 5%+
+                bind=XF86AudioRaiseVolume,spawn,amixer sset Master 5%+
+                bind=super,o,spawn,amixer sset Master 5%-
+                bind=XF86AudioLowerVolume,spawn,amixer sset Master 5%-
+              '';
+          lightnessBinds = ''
+            bind=XF86MonBrightnessDown,spawn,sudo ${xblackLightPath} -dec 5
+            bind=XF86MonBrightnessUp,spawn,sudo ${xblackLightPath} -inc 5
+          '';
+        in
+        ''
+          # Window effect
+          blur=0
+          blur_layer=0
+          blur_optimized=1
+          blur_params_num_passes = 2
+          blur_params_radius = 5
+          blur_params_noise = 0.02
+          blur_params_brightness = 0.9
+          blur_params_contrast = 0.9
+          blur_params_saturation = 1.2
+
+          shadows = 0
+          layer_shadows = 0
+          shadow_only_floating = 1
+          shadows_size = 10
+          shadows_blur = 15
+          shadows_position_x = 0
+          shadows_position_y = 0
+          shadowscolor= ${currentColor.overlay}
+
+          border_radius=6
+          no_radius_when_single=0
+          focused_opacity=1.0
+          unfocused_opacity=1.0
+
+          # Animation Configuration(support type:zoom,slide)
+          # tag_animation_direction: 1-horizontal,0-vertical
+          animations=1
+          layer_animations=1
+          animation_type_open=slide
+          animation_type_close=slide
+          animation_fade_in=1
+          animation_fade_out=1
+          tag_animation_direction=1
+          zoom_initial_ratio=0.4
+          zoom_end_ratio=0.8
+          fadein_begin_opacity=0.5
+          fadeout_begin_opacity=0.8
+          animation_duration_move=500
+          animation_duration_open=400
+          animation_duration_tag=350
+          animation_duration_close=800
+          animation_duration_focus=0
+          animation_curve_open=0.46,1.0,0.29,1
+          animation_curve_move=0.46,1.0,0.29,1
+          animation_curve_tag=0.46,1.0,0.29,1
+          animation_curve_close=0.08,0.92,0,1
+          animation_curve_focus=0.46,1.0,0.29,1
+          animation_curve_opafadeout=0.5,0.5,0.5,0.5
+          animation_curve_opafadein=0.46,1.0,0.29,1
+
+          # Scroller Layout Setting
+          scroller_structs=20
+          scroller_default_proportion=0.8
+          scroller_focus_center=0
+          scroller_prefer_center=0
+          edge_scroller_pointer_focus=1
+          scroller_default_proportion_single=1.0
+          scroller_proportion_preset=0.5,0.8,1.0
+
+          # Master-Stack Layout Setting
+          new_is_master=1
+          default_mfact=0.55
+          default_nmaster=1
+          smartgaps=0
+
+          # Overview Setting
+          hotarea_size=10
+          enable_hotarea=1
+          ov_tab_mode=0
+          overviewgappi=5
+          overviewgappo=30
+
+          # Misc
+          no_border_when_single=0
+          axis_bind_apply_timeout=100
+          focus_on_activate=1
+          idleinhibit_ignore_visible=0
+          sloppyfocus=1
+          warpcursor=1
+          focus_cross_monitor=0
+          focus_cross_tag=0
+          enable_floating_snap=0
+          snap_distance=30
+          cursor_size=24
+          drag_tile_to_tile=1
+
+          # keyboard
+          repeat_rate=25
+          repeat_delay=600
+          numlockon=0
+          xkb_rules_layout=pl
+
+          # Trackpad
+          # need relogin to make it apply
+          disable_trackpad=0
+          tap_to_click=1
+          tap_and_drag=1
+          drag_lock=1
+          trackpad_natural_scrolling=0
+          disable_while_typing=1
+          left_handed=0
+          middle_button_emulation=0
+          swipe_min_threshold=1
+
+          # mouse
+          # need relogin to make it apply
+          mouse_natural_scrolling=0
+
+          # Appearance
+          gappih=5
+          gappiv=5
+          gappoh=10
+          gappov=10
+          scratchpad_width_ratio=0.8
+          scratchpad_height_ratio=0.9
+          borderpx=4
+          rootcolor=${currentColor.yellow}
+          bordercolor=${currentColor.sky}
+          focuscolor=${currentColor.green}
+          maximizescreencolor=0x89aa61ff
+          urgentcolor=${currentColor.red}
+          scratchpadcolor=0x516c93ff
+          globalcolor=${currentColor.mauve}
+          overlaycolor=${currentColor.overlay}
+
+          # layout support:
+          # tile,scroller,grid,deck,monocle,center_tile,vertical_tile,vertical_scroller
+          tagrule=id:1,layout_name:tile
+          tagrule=id:2,layout_name:tile
+          tagrule=id:3,layout_name:tile
+          tagrule=id:4,layout_name:tile
+          tagrule=id:5,layout_name:tile
+          tagrule=id:6,layout_name:tile
+          tagrule=id:7,layout_name:tile
+          tagrule=id:8,layout_name:tile
+          tagrule=id:9,layout_name:tile
+
+          # Key Bindings
+          # key name refer to `xev` or `wev` command output,
+          # mod keys name: super,ctrl,alt,shift,none
+
+          # reload config
+          bind=SUPER,r,reload_config
+
+          # menu and terminal
+          bind=SUPER,e,spawn,rofi -show drun
+          bind=SUPER,w,spawn,rofi -show window
+          bind=SUPER,Return,spawn,ghostty
+
+          # exit
+          bind=SUPER+SHIFT,q,quit
+          bind=SUPER,q,killclient,
+
+          # switch window focus
+          bind=SUPER,Tab,focusstack,next
+          bind=Super,h,focusdir,left
+          bind=Super,l,focusdir,right
+          bind=Super,j,focusdir,up
+          bind=Super,l,focusdir,down
+
+          # swap window
+          bind=SUPER+SHIFT,Up,exchange_client,up
+          bind=SUPER+SHIFT,Down,exchange_client,down
+          bind=SUPER+SHIFT,Left,exchange_client,left
+          bind=SUPER+SHIFT,Right,exchange_client,right
+
+          # switch window status
+          bind=Alt,g,toggleglobal,
+          bind=ALT,Tab,toggleoverview,
+          bind=ALT,backslash,togglefloating,
+          bind=ALT,a,togglemaximizescreen,
+          bind=ALT,f,togglefullscreen,
+          bind=ALT+SHIFT,f,togglefakefullscreen,
+          bind=Alt,i,minimized,
+          bind=Alt,o,toggleoverlay,
+          bind=Alt+SHIFT,I,restore_minimized
+          bind=ALT,z,toggle_scratchpad
+
+          # scroller layout
+          bind=ALT,e,set_proportion,1.0
+          bind=ALT,x,switch_proportion_preset,
+
+          # switch layout
+          bind=SUPER,n,switch_layout
+
+          # tag switch
+          bind=SUPER,Left,viewtoleft,0
+          # bind=CTRL,Left,viewtoleft_have_client,0
+          bind=SUPER,Right,viewtoright,0
+          # bind=CTRL,Right,viewtoright_have_client,0
+          bind=CTRL+SUPER,Left,tagtoleft,0
+          bind=CTRL+SUPER,Right,tagtoright,0
+
+          bind=Super,1,view,1,0
+          bind=Super,2,view,2,0
+          bind=Super,3,view,3,0
+          bind=Super,4,view,4,0
+          bind=Super,5,view,5,0
+          bind=Super,6,view,6,0
+          bind=Super,7,view,7,0
+          bind=Super,8,view,8,0
+          bind=Super,9,view,9,0
+
+          # tag: move client to the tag and focus it
+          # tagsilent: move client to the tag and not focus it
+          # bind=Alt,1,tagsilent,1
+          bind=Super+Shift,1,tag,1,0
+          bind=Super+Shift,2,tag,2,0
+          bind=Super+Shift,3,tag,3,0
+          bind=Super+Shift,4,tag,4,0
+          bind=Super+Shift,5,tag,5,0
+          bind=Super+Shift,6,tag,6,0
+          bind=Super+Shift,7,tag,7,0
+          bind=Super+Shift,8,tag,8,0
+          bind=Super+Shift,9,tag,9,0
+
+          # monitor switch
+          bind=alt+shift,Left,focusmon,left
+          bind=alt+shift,Right,focusmon,right
+          bind=SUPER+Alt,Left,tagmon,left
+          bind=SUPER+Alt,Right,tagmon,right
+
+          # gaps
+          bind=ALT+SHIFT,X,incgaps,1
+          bind=ALT+SHIFT,Z,incgaps,-1
+          bind=ALT+SHIFT,R,togglegaps
+
+          # movewin
+          bind=CTRL+SHIFT,Up,movewin,+0,-50
+          bind=CTRL+SHIFT,Down,movewin,+0,+50
+          bind=CTRL+SHIFT,Left,movewin,-50,+0
+          bind=CTRL+SHIFT,Right,movewin,+50,+0
+
+          # resizewin
+          bind=CTRL+ALT,Up,resizewin,+0,-50
+          bind=CTRL+ALT,Down,resizewin,+0,+50
+          bind=CTRL+ALT,Left,resizewin,-50,+0
+          bind=CTRL+ALT,Right,resizewin,+50,+0
+
+          # Mouse Button Bindings
+          # btn_left and btn_right can't bind none mod key
+          mousebind=SUPER,btn_left,moveresize,curmove
+          mousebind=NONE,btn_middle,togglemaximizescreen,0
+          mousebind=SUPER,btn_right,moveresize,curresize
+
+
+          # Axis Bindings
+          axisbind=SUPER,UP,viewtoleft_have_client
+          axisbind=SUPER,DOWN,viewtoright_have_client
+
+
+          # layer rule
+          layerrule=animation_type_open:zoom,layer_name:rofi
+          layerrule=animation_type_close:zoom,layer_name:rofi
+        ''
+        + autostartPrograms
+        + lightnessBinds
+        + functionalKeyBinds;
+    };
+  };
+}

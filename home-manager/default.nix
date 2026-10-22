@@ -1,9 +1,11 @@
 { ... }: {
   imports = [
+    ./waypaper.nix
     ./mako.nix
     ./file-roller.nix
     ./alacritty.nix
     ./matrix.nix
+    ./wlsunset.nix
     ./nemo.nix
     ./zed.nix
     ./pomodoro.nix

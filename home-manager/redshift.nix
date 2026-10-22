@@ -7,8 +7,8 @@ with lib;
     services.redshift = {
       inherit (config.services.redshift.wittano) enable;
 
-      latitude = "50.50";
-      longitude = "23.41";
+      latitude = "51.765";
+      longitude = "19.495";
       provider = "manual";
       temperature = {
         day = 6000;

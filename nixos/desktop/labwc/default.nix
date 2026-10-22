@@ -42,17 +42,10 @@ in
         cliphist.enable = true;
         dunst.wittano.enable = mkForce false;
         mako.wittano.enable = true;
-        wlsunset = {
-          enable = true;
-          latitude = "50.50";
-          longitude = "23.41";
-          temperature = {
-            day = 6000;
-            night = 4300;
-          };
-        };
+        wlsunset.wittano.enable = true;
       };
       programs = {
+        waypaper.enable = true;
         waybar = {
           enable = true;
           systemd.enable = true;
@@ -143,7 +136,6 @@ in
         autostart = [
           "wlr-randr --output HDMI-A-1 --transform normal --pos 1080,0 --preferred --output HDMI-A-2 --right-of HDMI-A-1 --transform 270 --pos 0,0"
           "wl-paste --watch cliphist store &"
-          "waypaper --restore &"
         ]
         ++ autostartPrograms;
       };
@@ -154,7 +146,6 @@ in
 
       home = {
         packages = with pkgs; [
-          waypaper
           swaybg
           wlr-randr
           slurp
