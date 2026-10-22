@@ -95,25 +95,25 @@ in
           functionalKeyBinds =
             if config.services.pipewire.wittano.enable then
               ''
-                bind=super,m,spwam,pactl set-sink-mute @DEFAULT_SINK@ toggle
+                bind=super,m,spawn,pactl set-sink-mute @DEFAULT_SINK@ toggle
                 bind=XF86AudioMute,spawn,pactl set-sink-mute @DEFAULT_SINK@ toggle
-                bind=super,p,spwan,pactl set-sink-volume @DEFAULT_SINK@ +5%
-                bind=XF86AudioRaiseVolume,spwan,pactl set-sink-volume @DEFAULT_SINK@ +5%
-                bind=super,o,spwan,pactl set-sink-volume @DEFAULT_SINK@ -5%
-                bind=XF86AudioLowerVolume,spwan,pactl set-sink-volume @DEFAULT_SINK@ -5%
+                bind=super,p,spawn,pactl set-sink-volume @DEFAULT_SINK@ +5%
+                bind=XF86AudioRaiseVolume,spawn,pactl set-sink-volume @DEFAULT_SINK@ +5%
+                bind=super,o,spawn,pactl set-sink-volume @DEFAULT_SINK@ -5%
+                bind=XF86AudioLowerVolume,spawn,pactl set-sink-volume @DEFAULT_SINK@ -5%
               ''
             else
               ''
                 bind=super,m,spawn,amixer sset Master toggle
-                bind=XF86AudioMute,spwan,amixer sset Master toggle
-                bind=super,p,spwan,amixer sset Master 5%+
-                bind=XF86AudioRaiseVolume,spwan,amixer sset Master 5%+
-                bind=super,o,spwan,amixer sset Master 5%-
-                bind=XF86AudioLowerVolume,spwan,amixer sset Master 5%-
+                bind=XF86AudioMute,spawn,amixer sset Master toggle
+                bind=super,p,spawn,amixer sset Master 5%+
+                bind=XF86AudioRaiseVolume,spawn,amixer sset Master 5%+
+                bind=super,o,spawn,amixer sset Master 5%-
+                bind=XF86AudioLowerVolume,spawn,amixer sset Master 5%-
               '';
           lightnessBinds = ''
-            bind=XF86MonBrightnessDown,spwan,sudo ${xblackLightPath} -dec 5
-            bind=XF86MonBrightnessUp,spwan,sudo ${xblackLightPath} -inc 5
+            bind=XF86MonBrightnessDown,spawn,sudo ${xblackLightPath} -dec 5
+            bind=XF86MonBrightnessUp,spawn,sudo ${xblackLightPath} -inc 5
           '';
         in
         ''
@@ -285,15 +285,15 @@ in
           bind=SUPER+SHIFT,Right,exchange_client,right
 
           # switch window status
-          bind=SUPER,g,toggleglobal,
+          bind=Alt,g,toggleglobal,
           bind=ALT,Tab,toggleoverview,
           bind=ALT,backslash,togglefloating,
           bind=ALT,a,togglemaximizescreen,
           bind=ALT,f,togglefullscreen,
           bind=ALT+SHIFT,f,togglefakefullscreen,
-          bind=SUPER,i,minimized,
-          bind=SUPER,o,toggleoverlay,
-          bind=SUPER+SHIFT,I,restore_minimized
+          bind=Alt,i,minimized,
+          bind=Alt,o,toggleoverlay,
+          bind=Alt+SHIFT,I,restore_minimized
           bind=ALT,z,toggle_scratchpad
 
           # scroller layout
@@ -305,9 +305,9 @@ in
 
           # tag switch
           bind=SUPER,Left,viewtoleft,0
-          bind=CTRL,Left,viewtoleft_have_client,0
+          # bind=CTRL,Left,viewtoleft_have_client,0
           bind=SUPER,Right,viewtoright,0
-          bind=CTRL,Right,viewtoright_have_client,0
+          # bind=CTRL,Right,viewtoright_have_client,0
           bind=CTRL+SUPER,Left,tagtoleft,0
           bind=CTRL+SUPER,Right,tagtoright,0
 
