@@ -46,14 +46,17 @@ jobs:
           - pc-labwc
           - pc-qtile
           - pc-xmonad
+          - pc-mangowc
           - stepps-bspwm
           - stepps-labwc
           - stepps-qtile
           - stepps-xmonad
+          - stepps-mangowc
           - framework-bspwm
           - framework-labwc
           - framework-qtile
           - framework-xmonad
+          - framework-mangowc
     steps:
       - uses: actions/checkout@v6.0.3
       - uses: cachix/install-nix-action@v31
