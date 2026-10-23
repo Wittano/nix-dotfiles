@@ -57,6 +57,7 @@ in
       };
 
       desktop = {
+        mangowc.mode = "laptop";
         bspwm.deviceType = "laptop";
         qtile.profile = "LAPTOP";
       };

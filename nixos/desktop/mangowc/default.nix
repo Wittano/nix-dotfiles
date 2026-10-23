@@ -40,7 +40,7 @@ in
   options = {
     desktop.mangowc = {
       enable = mkEnableOption "wangowm - tilling windows manager powerers by Wayland";
-      deviceType = mkOption {
+      mode = mkOption {
         type = types.enum [
           "laptop"
           "pc"
@@ -91,7 +91,9 @@ in
 
       xdg.configFile."mango/config.conf".text =
         let
-
+          laptopConfiguration = strings.optionalString (config.desktop.mangowc.mode == "laptop") ''
+            touch_enable=1
+          '';
           functionalKeyBinds =
             if config.services.pipewire.wittano.enable then
               ''
@@ -116,7 +118,8 @@ in
             bind=XF86MonBrightnessUp,spawn,sudo ${xblackLightPath} -inc 5
           '';
         in
-        ''
+        laptopConfiguration
+        + ''
           # Window effect
           blur=0
           blur_layer=0
@@ -360,7 +363,7 @@ in
           # Mouse Button Bindings
           # btn_left and btn_right can't bind none mod key
           mousebind=SUPER,btn_left,moveresize,curmove
-          mousebind=NONE,btn_middle,togglemaximizescreen,0
+          # mousebind=NONE,btn_middle,togglemaximizescreen,0
           mousebind=SUPER,btn_right,moveresize,curresize
 
 
