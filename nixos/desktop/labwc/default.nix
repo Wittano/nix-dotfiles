@@ -7,16 +7,6 @@
 }:
 with lib;
 let
-  screenshot = pkgs.writeShellApplication {
-    name = "screenshot";
-    runtimeInputs = with pkgs; [
-      slurp
-      grim
-      wl-clipboard
-    ];
-    text = "slurp | grim -g - - | wl-copy";
-  };
-
   autostartPrograms = map (x: "${x} &") config.home-manager.users.wittano.desktop.autostart.programs;
 in
 {
@@ -45,6 +35,7 @@ in
         wlsunset.wittano.enable = true;
       };
       programs = {
+        screencast.enable = true;
         waypaper.enable = true;
         waybar.wittano = {
           enable = true;
@@ -84,7 +75,6 @@ in
           wlr-randr
           slurp
           grim
-          screenshot
           wlrctl
           unstable.labwc-tweaks
           unstable.labwc-menu-generator
@@ -97,19 +87,6 @@ in
     fonts.packages = [
       pkgs.font-awesome
     ];
-
-    xdg.portal = {
-      enable = true;
-      wlr = {
-        enable = true;
-        settings.screencast = {
-          output_name = "HDMI-A-1";
-          max_fps = 60;
-          chooser_type = "simple";
-          chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
-        };
-      };
-    };
 
     services = {
       displayManager.sddm.wayland.enable = true;

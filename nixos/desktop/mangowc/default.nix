@@ -51,7 +51,10 @@ in
   };
 
   config = mkIf config.desktop.mangowc.enable {
-    programs.mangowc.enable = true;
+    programs = {
+      mangowc.enable = true;
+      screencast.enable = true;
+    };
 
     security.sudo.extraRules = [
       {

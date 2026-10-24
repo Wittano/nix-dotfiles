@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./screncast.nix
     ./mihoyo.nix
     ./obs.nix
     ./nh.nix
