@@ -111,6 +111,7 @@ in
             ];
 
             programs = {
+              waybar.wittano.mode = "laptop";
               virutal-keyboard.enable = true;
               spotify.enable = true;
               feishin.enable = true;

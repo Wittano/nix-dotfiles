@@ -87,6 +87,10 @@ in
       programs = {
         virutal-keyboard.enable = mkForce false;
         waypaper.enable = true;
+        waybar.wittano = {
+          enable = true;
+          monitors = [ "eDP-1" ];
+        };
       };
 
       xdg.configFile."mango/config.conf".text =

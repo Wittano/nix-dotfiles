@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./waybar.nix
     ./waypaper.nix
     ./mako.nix
     ./file-roller.nix
