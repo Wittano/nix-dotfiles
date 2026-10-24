@@ -29,7 +29,7 @@ in
 
       wayland.systemd.target = "labwc-session.target";
       services = {
-        cliphist.enable = true;
+        wayland-clipboard.enable = true;
         dunst.wittano.enable = mkForce false;
         mako.wittano.enable = true;
         wlsunset.wittano.enable = true;
@@ -60,7 +60,6 @@ in
         ];
         autostart = [
           "wlr-randr --output HDMI-A-1 --transform normal --pos 1080,0 --preferred --output HDMI-A-2 --right-of HDMI-A-1 --transform 270 --pos 0,0"
-          "wl-paste --watch cliphist store &"
         ]
         ++ autostartPrograms;
       };

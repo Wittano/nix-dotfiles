@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./wayland-clipboard.nix
     ./waybar.nix
     ./waypaper.nix
     ./mako.nix

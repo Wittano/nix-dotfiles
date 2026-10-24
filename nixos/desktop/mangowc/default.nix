@@ -74,7 +74,7 @@ in
 
     home-manager.users.wittano = {
       services = {
-        cliphist.enable = true;
+        wayland-clipboard.enable = true;
         dunst.wittano.enable = mkForce false;
         mako.wittano.enable = true;
         wlsunset.wittano.enable = true;
