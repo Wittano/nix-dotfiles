@@ -125,8 +125,10 @@ in
             bind=XF86MonBrightnessUp,spawn,sudo ${xblackLightPath} -inc 5
           '';
         in
-        laptopConfiguration
-        + ''
+        ''
+          # Laptop configuration
+          ${laptopConfiguration}
+
           # Window effect
           blur=0
           blur_layer=0
@@ -382,10 +384,16 @@ in
           # layer rule
           layerrule=animation_type_open:zoom,layer_name:rofi
           layerrule=animation_type_close:zoom,layer_name:rofi
-        ''
-        + autostartPrograms
-        + lightnessBinds
-        + functionalKeyBinds;
+
+          # Autostart
+          ${autostartPrograms}
+
+          # Brightness configuration
+          ${lightnessBinds}
+
+          # Functional keys binds
+          ${functionalKeyBinds}
+        '';
     };
   };
 }
