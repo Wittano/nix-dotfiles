@@ -278,6 +278,7 @@ in
           bind=SUPER,e,spawn,rofi -show drun
           bind=SUPER,w,spawn,rofi -show window
           bind=SUPER,Return,spawn,ghostty
+          bind=SUPER+SHIFT,p,spawn,screenshot
 
           # exit
           bind=SUPER+SHIFT,q,quit
