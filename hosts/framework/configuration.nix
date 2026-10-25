@@ -111,6 +111,10 @@ in
             ];
 
             programs = {
+              zed-editor.userSettings = {
+                ui_font_size = mkForce 18;
+                buffer_font_size = mkForce 18;
+              };
               waybar.wittano.mode = "laptop";
               virutal-keyboard.enable = true;
               spotify.enable = true;
