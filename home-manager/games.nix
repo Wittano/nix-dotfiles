@@ -1,8 +1,9 @@
-{ lib
-, config
-, pkgs
-, unstable ? pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  unstable ? pkgs,
+  ...
 }:
 with lib;
 with lib.my;
@@ -16,6 +17,7 @@ let
     xivlauncher # FF XIV
     prismlauncher # Minecraft
     # zeroad-unwrapped # 0 A.D
+    unstable.beyond-all-reason
   ];
 
   fixAge2Sync = pkgs.writeShellApplication {
