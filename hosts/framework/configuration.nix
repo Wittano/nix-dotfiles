@@ -148,6 +148,7 @@ in
       };
 
       programs = {
+        alock.wallpaper = ./../../home-manager/wallpapers/two-sides.png;
         video-edititng.enable = true;
         nh.wittano.enable = true;
         mihoyo = {
