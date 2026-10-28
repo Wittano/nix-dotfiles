@@ -15,6 +15,11 @@ in
       type = types.listOf types.str;
       description = "list of monitors to display waybar";
     };
+    systemdTarget = mkOption {
+      type = types.str;
+      default = "graphical-session.target";
+      description = "Assige waybar systemd target to desktop target";
+    };
     mode = mkOption {
       type = types.enum [
         "pc"
@@ -25,10 +30,13 @@ in
     };
   };
 
-  config = {
+  config = mkIf config.programs.waybar.wittano.enable {
     programs.waybar = {
       enable = true;
-      systemd.enable = true;
+      systemd = {
+        enable = true;
+        target = config.programs.waybar.wittano.systemdTarget;
+      };
       style = ''
         .active {
           color: @green;
@@ -98,7 +106,6 @@ in
             format = "{:%H:%M}";
           };
           pulseaudio = {
-
             format = "{icon} {volume}%";
             format-muted = "";
             format-icons = {

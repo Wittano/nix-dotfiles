@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
@@ -81,6 +82,8 @@ in
         mako.wittano.enable = true;
         wlsunset.wittano.enable = true;
       };
+
+      wayland.windowManager.mango.wittano.enable = true;
 
       home.packages = with pkgs; [
         wlr-randr

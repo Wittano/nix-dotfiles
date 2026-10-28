@@ -5,7 +5,15 @@
 }:
 with lib;
 {
-  options.services.wlsunset.wittano.enable = mkEnableOption "wlsunset";
+  options.services.wlsunset.wittano = {
+    enable = mkEnableOption "wlsunset";
+    systemdTarget = mkOption {
+      type = types.str;
+      default = "graphical-session.target";
+      description = "Assige wlsunset systemd target to desktop target";
+    };
+  };
+
   config = {
     services.wlsunset = {
       enable = config.services.wlsunset.wittano.enable;
@@ -15,6 +23,7 @@ with lib;
         day = 6000;
         night = 4300;
       };
+      systemdTarget = config.services.wlsunset.wittano.systemdTarget;
     };
   };
 }
