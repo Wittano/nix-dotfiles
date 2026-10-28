@@ -72,6 +72,8 @@ in
       }
     ];
 
+    programs.alock.enable = true;
+
     home-manager.users.wittano = {
       services = {
         wayland-clipboard.enable = true;
@@ -279,6 +281,7 @@ in
           bind=SUPER,w,spawn,rofi -show window
           bind=SUPER,Return,spawn,ghostty
           bind=SUPER+SHIFT,p,spawn,screenshot
+          bind=SUPER+SHIFT,l,spawn,nixos-alock
 
           # exit
           bind=SUPER+SHIFT,q,quit
