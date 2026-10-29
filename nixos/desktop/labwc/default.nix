@@ -20,9 +20,12 @@ in
   };
 
   config = mkIf config.desktop.labwc.enable {
-    programs.labwc = {
-      enable = true;
-      package = unstable.labwc;
+    programs = {
+      screencast.enable = true;
+      labwc = {
+        enable = true;
+        package = unstable.labwc;
+      };
     };
     home-manager.users.wittano = {
       desktop.autostart.enable = mkForce false;
@@ -35,7 +38,6 @@ in
         wlsunset.wittano.enable = true;
       };
       programs = {
-        screencast.enable = true;
         waypaper.enable = true;
         waybar.wittano = {
           enable = true;
