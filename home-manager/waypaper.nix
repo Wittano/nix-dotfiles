@@ -15,7 +15,7 @@ with lib;
     ];
 
     desktop.autostart.programs = [
-      "waypaper --restore &"
+      "waypaper --restore"
     ];
   };
 }

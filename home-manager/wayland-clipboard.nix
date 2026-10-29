@@ -14,7 +14,7 @@ with lib;
     home.packages = [ pkgs.wl-clipboard ];
 
     desktop.autostart.programs = [
-      "wl-paste --watch cliphist store &"
+      "wl-paste --watch cliphist store"
     ];
   };
 }
