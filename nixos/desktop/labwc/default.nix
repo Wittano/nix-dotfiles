@@ -27,7 +27,7 @@ in
         package = unstable.labwc;
       };
     };
-    home-manager.users.wittano = {
+    home-manager.users.wittano = rec {
       desktop.autostart.enable = mkForce false;
 
       wayland.systemd.target = "labwc-session.target";
@@ -41,6 +41,7 @@ in
         waypaper.enable = true;
         waybar.wittano = {
           enable = true;
+          systemdTarget = wayland.systemd.target;
           monitors = [ "HDMI-A-1" ];
         };
         swaylock.enable = true;
