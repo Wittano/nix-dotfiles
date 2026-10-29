@@ -3,7 +3,6 @@
   imports = [
     ./backup.nix
     ./boinc.nix
-    ./filebot.nix
     ./flatpak.nix
     ./polkit.nix
     ./prometheus.nix
