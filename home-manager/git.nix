@@ -26,7 +26,7 @@ in
         enable = true;
         settings = {
           user = {
-            name = "Wittano Bonarotti";
+            name = "Wittano";
             email = "radoslaw.ratyna@gmail.com";
           };
           core.editor = "vim";
