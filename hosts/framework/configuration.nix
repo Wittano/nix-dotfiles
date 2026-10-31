@@ -111,7 +111,7 @@ in
             ];
 
             programs = {
-              zed-editor.userSettings = {
+              zed-editor.userSettings = mkIf (config.desktop.labwc.enable || config.desktop.mangowc.enable) {
                 ui_font_size = mkForce 18;
                 buffer_font_size = mkForce 18;
               };
