@@ -19,6 +19,7 @@
     packages = with pkgs; [
       # Utils
       textsnatcher # Text extractor
+      picard # MP3 metadata
 
       # Folder Dialog menu
       zenity
