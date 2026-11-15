@@ -84,7 +84,11 @@ in
         video-edititng.enable = true;
       };
 
-      desktop.bspwm.deviceType = "pc";
+      desktop = {
+        mangowc.mode = "pc";
+        bspwm.deviceType = "pc";
+        qtile.profile = "PC";
+      };
 
       home-manager.users = {
         wittano = mkMerge [
