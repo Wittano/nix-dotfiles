@@ -337,7 +337,7 @@ in
 
     services = {
       ssh.wittano.enable = true;
-      glances.wittano.enable = cfg.enableWindowsVM;
+      glances.wittano.enable = false; # Temporary disable cuz security vunaribility: CVE-2026-120459
       ntopng.wittano.enable = cfg.enableWindowsVM;
 
       xserver.displayManager.session = mkIf cfg.enableWindowsVM [
