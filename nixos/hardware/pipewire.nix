@@ -12,6 +12,7 @@ in
     environment.systemPackages = with pkgs; [
       pulseaudio
       pavucontrol
+      easyeffects
     ];
 
     security.rtkit.enable = true;
