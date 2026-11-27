@@ -14,6 +14,8 @@ in
   options.programs.obs-studio.wittano.enable = mkEnableOption "osb-studio with plugins";
 
   config = mkIf config.programs.obs-studio.wittano.enable {
+    home-manager.users.wittano.home.packages = [ pkgs.arandr ];
+
     programs.obs-studio = {
       enable = true;
       enableVirtualCamera = config.programs.droidcam.enable;
