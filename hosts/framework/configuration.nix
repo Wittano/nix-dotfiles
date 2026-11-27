@@ -145,6 +145,15 @@ in
       services = {
         ly.wittano.enable = true;
         printers.wittano.enable = true;
+        tlp = {
+          enable = true;
+          settings = {
+            TLP_DEFAULT_MODE = "BAT1";
+            TLP_PERSISTENT_DEFAULT = 1;
+            START_CHARGE_THRESH_BAT1 = 15;
+            STOP_CHARGE_THRESH_BAT0 = 80;
+          };
+        };
       };
 
       programs = {
